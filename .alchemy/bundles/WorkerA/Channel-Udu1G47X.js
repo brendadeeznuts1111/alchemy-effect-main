@@ -1,19 +1,7504 @@
-var e=Object.create,t=Object.defineProperty,__name=(e,n)=>t(e,`name`,{value:n,configurable:!0}),n=Object.getOwnPropertyDescriptor,r=Object.getOwnPropertyNames,i=Object.getPrototypeOf,a=Object.prototype.hasOwnProperty,__commonJSMin=(e,t)=>()=>(t||(e((t={exports:{}}).exports,t),e=null),t.exports),__exportAll=(e,n)=>{let r={};for(var i in e)t(r,i,{get:e[i],enumerable:!0});return n||t(r,Symbol.toStringTag,{value:`Module`}),r},__copyProps=(e,i,o,s)=>{if(i&&typeof i==`object`||typeof i==`function`)for(var c=r(i),l=0,u=c.length,d;l<u;l++)d=c[l],!a.call(e,d)&&d!==o&&t(e,d,{get:(e=>i[e]).bind(null,d),enumerable:!(s=n(i,d))||s.enumerable});return e},__toESM=(n,r,a)=>(a=n==null?{}:e(i(n)),__copyProps(r||!n||!n.__esModule?t(a,`default`,{value:n,enumerable:!0}):a,n));const pipeArguments=(e,t)=>{switch(t.length){case 0:return e;case 1:return t[0](e);case 2:return t[1](t[0](e));case 3:return t[2](t[1](t[0](e)));case 4:return t[3](t[2](t[1](t[0](e))));case 5:return t[4](t[3](t[2](t[1](t[0](e)))));case 6:return t[5](t[4](t[3](t[2](t[1](t[0](e))))));case 7:return t[6](t[5](t[4](t[3](t[2](t[1](t[0](e)))))));case 8:return t[7](t[6](t[5](t[4](t[3](t[2](t[1](t[0](e))))))));case 9:return t[8](t[7](t[6](t[5](t[4](t[3](t[2](t[1](t[0](e)))))))));default:{let n=e;for(let e=0,r=t.length;e<r;e++)n=t[e](n);return n}}},o={pipe(){return pipeArguments(this,arguments)}},s=function(){function PipeableBase(){}return PipeableBase.prototype=o,PipeableBase}(),dual=function(e,t){if(typeof e==`function`)return function(){return e(arguments)?t.apply(this,arguments):e=>t(e,...arguments)};switch(e){case 0:case 1:throw RangeError(`Invalid arity ${e}`);case 2:return function(e,n){return arguments.length>=2?t(e,n):function(n){return t(n,e)}};case 3:return function(e,n,r){return arguments.length>=3?t(e,n,r):function(r){return t(r,e,n)}};default:return function(){if(arguments.length>=e)return t.apply(this,arguments);let n=arguments;return function(e){return t(e,...n)}}}},identity=e=>e,constant=e=>()=>e,c=constant(!0),l=constant(!1),u=constant(void 0),d=u;function pipe(e,...t){return pipeArguments(e,t)}function flow(e,t,n,r,i,a,o,s,c){switch(arguments.length){case 1:return e;case 2:return function(){return t(e.apply(this,arguments))};case 3:return function(){return n(t(e.apply(this,arguments)))};case 4:return function(){return r(n(t(e.apply(this,arguments))))};case 5:return function(){return i(r(n(t(e.apply(this,arguments)))))};case 6:return function(){return a(i(r(n(t(e.apply(this,arguments))))))};case 7:return function(){return o(a(i(r(n(t(e.apply(this,arguments)))))))};case 8:return function(){return s(o(a(i(r(n(t(e.apply(this,arguments))))))))};case 9:return function(){return c(s(o(a(i(r(n(t(e.apply(this,arguments)))))))))}}}function memoize(e){let t=new WeakMap;return n=>{if(t.has(n))return t.get(n);let r=e(n);return t.set(n,r),r}}const getAllObjectKeys=e=>{let t=new Set(Reflect.ownKeys(e));if(e.constructor===Object)return t;e instanceof Error&&t.delete(`stack`);let n=Object.getPrototypeOf(e),r=n;for(;r!==null&&r!==Object.prototype;){let e=Reflect.ownKeys(r);for(let n=0;n<e.length;n++)t.add(e[n]);r=Object.getPrototypeOf(r)}return t.has(`constructor`)&&typeof e.constructor==`function`&&n===e.constructor.prototype&&t.delete(`constructor`),t},f=new WeakSet;function isString(e){return typeof e==`string`}function isNumber(e){return typeof e==`number`}function isSymbol(e){return typeof e==`symbol`}function isPropertyKey(e){return isString(e)||isNumber(e)||isSymbol(e)}function isFunction(e){return typeof e==`function`}function isUndefined(e){return e===void 0}function isNotUndefined(e){return e!==void 0}function isNotNull(e){return e!==null}function isNullish(e){return e==null}function isNotNullish(e){return e!=null}function isUnknown(e){return!0}function isObject(e){return typeof e==`object`&&!!e&&!Array.isArray(e)}function isObjectKeyword(e){return typeof e==`object`&&!!e||isFunction(e)}const p=dual(2,(e,t)=>isObjectKeyword(e)&&t in e),m=dual(2,(e,t)=>p(e,`_tag`)&&e._tag===t);function isIterable(e){return p(e,Symbol.iterator)||isString(e)}const h=`~effect/interfaces/Hash`,hash=e=>{switch(typeof e){case`number`:return ee(e);case`bigint`:return _(e.toString(10));case`boolean`:return _(String(e));case`symbol`:return _(String(e));case`string`:return _(e);case`undefined`:return _(`undefined`);case`function`:case`object`:if(e===null)return _(`null`);if(e instanceof Date)return _(e.toISOString());if(e instanceof RegExp)return _(e.toString());{if(f.has(e))return random(e);if(ae.has(e))return ae.get(e);let t=withVisitedTracking$1(e,()=>isHash(e)?e[h]():typeof e==`function`?random(e):Array.isArray(e)||ArrayBuffer.isView(e)?te(e):e instanceof Map?ne(e):e instanceof Set?re(e):structure(e));return ae.set(e,t),t}default:throw Error(`BUG: unhandled typeof ${typeof e} - please report an issue at https://github.com/Effect-TS/effect/issues`)}},random=e=>(ie.has(e)||ie.set(e,ee(Math.floor(Math.random()*(2**53-1)))),ie.get(e)),g=dual(2,(e,t)=>e*53^t),optimize=e=>e&3221225471|e>>>1&1073741824,isHash=e=>p(e,h),ee=__name(e=>{if(e!==e)return _(`NaN`);if(e===1/0)return _(`Infinity`);if(e===-1/0)return _(`-Infinity`);let t=e|0;for(t!==e&&(t^=e*4294967295);e>4294967295;)t^=e/=4294967295;return optimize(t)},`number`),_=__name(e=>{let t=5381,n=e.length;for(;n;)t=t*33^e.charCodeAt(--n);return optimize(t)},`string`),structureKeys=(e,t)=>{let n=12289;for(let r of t)n^=g(hash(r),hash(e[r]));return optimize(n)},structure=e=>structureKeys(e,getAllObjectKeys(e)),iterableWith=(e,t)=>n=>{let r=e;for(let e of n)r^=t(e);return optimize(r)},te=iterableWith(6151,hash),ne=iterableWith(_(`Map`),([e,t])=>g(hash(e),hash(t))),re=iterableWith(_(`Set`),hash),ie=new WeakMap,ae=new WeakMap,oe=new WeakSet;function withVisitedTracking$1(e,t){if(oe.has(e))return _(`[Circular]`);oe.add(e);let n=t();return oe.delete(e),n}__name(withVisitedTracking$1,`withVisitedTracking`);const v=`~effect/interfaces/Equal`;function equals$2(){return arguments.length===1?e=>compareBoth(e,arguments[0]):compareBoth(arguments[0],arguments[1])}__name(equals$2,`equals`);function compareBoth(e,t){if(e===t)return!0;if(e==null||t==null)return!1;let n=typeof e;return n===typeof t?n===`number`&&e!==e&&t!==t?!0:n!==`object`&&n!==`function`||f.has(e)||f.has(t)?!1:withCache(e,t,compareObjects):!1}function withVisitedTracking(e,t,n){let r=se.has(e),i=ce.has(t);if(r&&i)return!0;if(r||i)return!1;se.add(e),ce.add(t);let a=n();return se.delete(e),ce.delete(t),a}const se=new WeakSet,ce=new WeakSet;function compareObjects(e,t){if(hash(e)!==hash(t))return!1;if(e instanceof Date)return t instanceof Date?e.toISOString()===t.toISOString():!1;if(e instanceof RegExp)return t instanceof RegExp?e.toString()===t.toString():!1;let n=isEqual(e),r=isEqual(t);if(n!==r)return!1;let i=n&&r;return typeof e==`function`&&!i?!1:withVisitedTracking(e,t,()=>i?e[v](t):Array.isArray(e)?!Array.isArray(t)||e.length!==t.length?!1:compareArrays(e,t):ArrayBuffer.isView(e)?!ArrayBuffer.isView(t)||e.byteLength!==t.byteLength?!1:compareTypedArrays(e,t):e instanceof Map?!(t instanceof Map)||e.size!==t.size?!1:ue(e,t):e instanceof Set?!(t instanceof Set)||e.size!==t.size?!1:de(e,t):compareRecords(e,t))}function withCache(e,t,n){let r=le.get(e);if(!r)r=new WeakMap,le.set(e,r);else if(r.has(t))return r.get(t);let i=n(e,t);r.set(t,i);let a=le.get(t);return a||(a=new WeakMap,le.set(t,a)),a.set(e,i),i}const le=new WeakMap;function compareArrays(e,t){for(let n=0;n<e.length;n++)if(!compareBoth(e[n],t[n]))return!1;return!0}function compareTypedArrays(e,t){if(e.length!==t.length)return!1;for(let n=0;n<e.length;n++)if(e[n]!==t[n])return!1;return!0}function compareRecords(e,t){let n=getAllObjectKeys(e),r=getAllObjectKeys(t);if(n.size!==r.size)return!1;for(let i of n)if(!r.has(i)||!compareBoth(e[i],t[i]))return!1;return!0}function makeCompareMap(e,t){return function compareMaps(n,r){for(let[i,a]of n){let n=!1;for(let[o,s]of r)if(e(i,o)&&t(a,s)){n=!0;break}if(!n)return!1}return!0}}const ue=makeCompareMap(compareBoth,compareBoth);function makeCompareSet(e){return function compareSets(t,n){for(let r of t){let t=!1;for(let i of n)if(e(r,i)){t=!0;break}if(!t)return!1}return!0}}const de=makeCompareSet(compareBoth),isEqual=e=>p(e,v),asEquivalence=()=>equals$2,fe=__name(e=>(t,n)=>t===n||e(t,n),`make`),isStrictEquivalent=(e,t)=>e===t,strictEqual=()=>isStrictEquivalent;function Tuple$1(e){return fe((t,n)=>{if(t.length!==n.length)return!1;for(let r=0;r<t.length;r++)if(!e[r](t[r],n[r]))return!1;return!0})}__name(Tuple$1,`Tuple`);function Array_(e){return fe((t,n)=>{if(t.length!==n.length)return!1;for(let r=0;r<t.length;r++)if(!e(t[r],n[r]))return!1;return!0})}const pe=__name(e=>e.length>0,`isArrayNonEmpty`),me=Symbol.for(`~effect/Redactable`),isRedactable=e=>p(e,me);function redact(e){return isRedactable(e)?getRedacted(e):e}function getRedacted(e){return e[me](globalThis[`~effect/Fiber/currentFiber`]?.context??ge)}const he=`~effect/Fiber/currentFiber`,ge={"~effect/Context":{},mapUnsafe:new Map,pipe(){return pipeArguments(this,arguments)}};function format$1(e,t){let n=t?.space??0,r=new WeakSet,i=n?typeof n==`number`?` `.repeat(n):n:``,ind=e=>i.repeat(e),wrap=(e,t)=>{let n=e?.constructor;return n&&n!==Object.prototype.constructor&&n.name?`${n.name}(${t})`:t},ownKeys=e=>{try{return Reflect.ownKeys(e)}catch{return[`[ownKeys threw]`]}};function recur(e,n=0){if(Array.isArray(e)){if(r.has(e))return _e;if(r.add(e),!i||e.length<=1)return`[${e.map(e=>recur(e,n)).join(`,`)}]`;let t=e.map(e=>recur(e,n+1)).join(`,
-`+ind(n+1));return`[\n${ind(n+1)}${t}\n${ind(n)}]`}if(e instanceof Date)return formatDate(e);if(!t?.ignoreToString&&p(e,`toString`)&&typeof e.toString==`function`&&e.toString!==Object.prototype.toString&&e.toString!==Array.prototype.toString){let t=safeToString(e);return e instanceof Error&&e.cause?`${t} (cause: ${recur(e.cause,n)})`:t}if(typeof e==`string`)return JSON.stringify(e);if(typeof e==`number`||e==null||typeof e==`boolean`||typeof e==`symbol`)return String(e);if(typeof e==`bigint`)return String(e)+`n`;if(typeof e==`object`||typeof e==`function`){if(r.has(e))return _e;if(r.add(e),me in e)return format$1(getRedacted(e));if(Symbol.iterator in e)return`${e.constructor.name}(${recur(Array.from(e),n)})`;let t=ownKeys(e);return!i||t.length<=1?wrap(e,`{${t.map(t=>`${formatPropertyKey(t)}:${recur(e[t],n)}`).join(`,`)}}`):wrap(e,`{\n${t.map(t=>`${ind(n+1)}${formatPropertyKey(t)}: ${recur(e[t],n+1)}`).join(`,
-`)}\n${ind(n)}}`)}return String(e)}return recur(e,0)}__name(format$1,`format`);const _e=`[Circular]`;function formatPropertyKey(e){return typeof e==`string`?JSON.stringify(e):String(e)}function formatPath(e){return e.map(e=>`[${formatPropertyKey(e)}]`).join(``)}function formatDate(e){try{return e.toISOString()}catch{return`Invalid Date`}}function safeToString(e){try{let t=e.toString();return typeof t==`string`?t:String(t)}catch{return`[toString threw]`}}function formatJson(e,t){let n=[];return JSON.stringify(e,function(e,t){let r=redact(t);if(typeof r!=`object`||!r)return r;for(;n.length>0&&n[n.length-1]!==this;)n.pop();if(!n.includes(r))return n.push(r),r},t?.space)}const y=Symbol.for(`nodejs.util.inspect.custom`),toJson=e=>{try{if(p(e,`toJSON`)&&isFunction(e.toJSON)&&e.toJSON.length===0)return e.toJSON();if(Array.isArray(e))return e.map(toJson)}catch{return`[toJSON threw]`}return redact(e)},toStringUnknown=(e,t=2)=>{if(typeof e==`string`)return e;try{return typeof e==`object`?formatJson(e,{space:t}):String(e)}catch{return String(e)}},ve={toJSON(){return toJson(this)},[y](){return this.toJSON()},toString(){return format$1(this.toJSON())}};var Class$1=class{static{__name(this,`Class`)}[y](){return this.toJSON()}toString(){return format$1(this.toJSON())}},ye=class SingleShotGen{called=!1;self;constructor(e){this.self=e}next(e){return this.called?{value:e,done:!0}:(this.called=!0,{value:this.self,done:!1})}[Symbol.iterator](){return new SingleShotGen(this.self)}};const be=`~effect/Utils/internal`,xe={[be]:e=>e()},Se={[be]:e=>{try{return e()}finally{}}},b=xe[be](()=>Error().stack)?.includes(be)===!0?xe[be]:Se[be],Ce=`~effect/Effect`,we=`~effect/Exit`,Te={_A:identity,_E:identity,_R:identity},Ee=`${Ce}/identifier`,x=`${Ce}/args`,S=`${Ce}/evaluate`,C=`${Ce}/successCont`,De=`${Ce}/failureCont`,Oe=`${Ce}/ensureCont`,ke=Symbol.for(`effect/Effect/Yield`),Ae={pipe(){return pipeArguments(this,arguments)},toJSON(){return{...this}},toString(){return format$1(this.toJSON(),{ignoreToString:!0,space:2})},[y](){return this.toJSON()}},je={[Ce]:Te,...Ae,[Symbol.iterator](){return new ye(this)},toJSON(){return{_id:`Effect`,op:this[Ee],...x in this?{args:this[x]}:void 0}}},w=__name(e=>p(e,Ce),`isEffect`),isExit=e=>p(e,we),Me=`~effect/Cause`,Ne=`~effect/Cause/Reason`,isCause=e=>p(e,Me);var CauseImpl=class{[Me];reasons;constructor(e){this[Me]=Me,this.reasons=e}pipe(){return pipeArguments(this,arguments)}toJSON(){return{_id:`Cause`,failures:this.reasons.map(e=>e.toJSON())}}toString(){return`Cause(${format$1(this.reasons)})`}[y](){return this.toJSON()}[v](e){return isCause(e)&&this.reasons.length===e.reasons.length&&this.reasons.every((t,n)=>equals$2(t,e.reasons[n]))}[h](){return te(this.reasons)}};const Pe=new WeakMap;var ReasonBase=class{[Ne];annotations;_tag;constructor(e,t,n){if(this[Ne]=Ne,this._tag=e,t!==Fe&&typeof n==`object`&&n&&t.size>0){let e=Pe.get(n);e&&(t=new Map([...e,...t])),Pe.set(n,t)}this.annotations=t}annotate(e,t){if(e.mapUnsafe.size===0)return this;let n=new Map(this.annotations);e.mapUnsafe.forEach((e,r)=>{t?.overwrite!==!0&&n.has(r)||n.set(r,e)});let r=Object.assign(Object.create(Object.getPrototypeOf(this)),this);return r.annotations=n,r}pipe(){return pipeArguments(this,arguments)}toString(){return format$1(this)}[y](){return this.toString()}};const Fe=new Map;var Fail=class extends ReasonBase{error;constructor(e,t=Fe){super(`Fail`,t,e),this.error=e}toString(){return`Fail(${format$1(this.error)})`}toJSON(){return{_tag:`Fail`,error:this.error}}[v](e){return Re(e)&&equals$2(this.error,e.error)&&equals$2(this.annotations,e.annotations)}[h](){return g(_(this._tag))(g(hash(this.error))(hash(this.annotations)))}};const causeFromReasons=e=>new CauseImpl(e),Ie=new CauseImpl([]),causeFail=e=>new CauseImpl([new Fail(e)]);var Die=class extends ReasonBase{defect;constructor(e,t=Fe){super(`Die`,t,e),this.defect=e}toString(){return`Die(${format$1(this.defect)})`}toJSON(){return{_tag:`Die`,defect:this.defect}}[v](e){return ze(e)&&equals$2(this.defect,e.defect)&&equals$2(this.annotations,e.annotations)}[h](){return g(_(this._tag))(g(hash(this.defect))(hash(this.annotations)))}};const causeDie=e=>new CauseImpl([new Die(e)]),Le=dual(e=>isCause(e[0]),(e,t,n)=>t.mapUnsafe.size===0?e:new CauseImpl(e.reasons.map(e=>e.annotate(t,n)))),Re=__name(e=>e._tag===`Fail`,`isFailReason`),ze=__name(e=>e._tag===`Die`,`isDieReason`),isInterruptReason=e=>e._tag===`Interrupt`;function defaultEvaluate(e){return exitDie(`Effect.evaluate: Not implemented`)}const makePrimitiveProto=e=>({...je,[Ee]:e.op,[S]:e[S]??defaultEvaluate,[C]:e[C],[De]:e[De],[Oe]:e[Oe]}),makePrimitive=e=>{let t=makePrimitiveProto(e);return function(){let n=Object.create(t);return n[x]=e.single===!1?arguments:arguments[0],n}},makeExit=e=>{let t={...makePrimitiveProto(e),[we]:we,_tag:e.op,get[e.prop](){return this[x]},toString(){return`${e.op}(${format$1(this[x])})`},toJSON(){return{_id:`Exit`,_tag:e.op,[e.prop]:this[x]}},[v](e){return isExit(e)&&e._tag===this._tag&&equals$2(this[x],e[x])},[h](){return g(_(e.op),hash(this[x]))}};return function(e){let n=Object.create(t);return n[x]=e,n}},T=makeExit({op:`Success`,prop:`value`,[S](e){let t=e.getCont(C);return t?t[C](this[x],e,this):e.yieldWith(this)}}),Be={key:`effect/Cause/StackTrace`},Ve={key:`effect/Cause/InterruptorStackTrace`},E=makeExit({op:`Failure`,prop:`cause`,[S](e){let t=this[x],n=!1;e.currentStackFrame&&(t=Le(t,{mapUnsafe:new Map([[Be.key,e.currentStackFrame]])}),n=!0);let r=e.getCont(De);for(;e.interruptible&&e._interruptedCause&&r;)r=e.getCont(De);return r?r[De](t,e,n?void 0:this):e.yieldWith(n?this:E(t))}}),exitFail=e=>E(causeFail(e)),exitDie=e=>E(causeDie(e)),D=makePrimitive({op:`WithFiber`,[S](e){return this[x](e)}}),He=function(){class YieldableError extends globalThis.Error{}let e=makePrimitiveProto({op:`YieldableError`,[S](){return exitFail(this)}});return delete e.toString,Object.assign(YieldableError.prototype,e),YieldableError}(),Ue=function(){let e=Symbol.for(`effect/Data/Error/plainArgs`);return class Base extends He{constructor(t){super(t?.message,t?.cause?{cause:t.cause}:void 0),t&&(Object.assign(this,t),Object.defineProperty(this,e,{value:t,enumerable:!1}))}toJSON(){return{...this[e],...this}}}}(),We=__name(e=>{class Base extends Ue{_tag=e}return Base.prototype.name=e,Base},`TaggedError`);We(`NoSuchElementError`);const Ge=`~effect/Cause/Done`,Ke=__name(e=>p(e,Ge),`isDone`),qe={[Ge]:Ge,_tag:`Done`,value:void 0},Je=__name(e=>e===void 0?qe:{[Ge]:Ge,_tag:`Done`,value:e},`Done`),Ye=exitFail(qe),Xe=__name(e=>e===void 0?Ye:exitFail(Je(e)),`done`),Ze=`~effect/data/Option`,Qe={[Ze]:{_A:e=>e},...Ae,[Symbol.iterator](){return new ye(this)}},$e=Object.assign(Object.create(Qe),{_tag:`Some`,_op:`Some`,[v](e){return isOption(e)&&rt(e)&&equals$2(this.value,e.value)},[h](){return g(hash(this._tag))(hash(this.value))},toString(){return`some(${format$1(this.value)})`},toJSON(){return{_id:`Option`,_tag:this._tag,value:toJson(this.value)}}}),et=hash(`None`),tt=Object.assign(Object.create(Qe),{_tag:`None`,_op:`None`,valueOrUndefined:void 0,[v](e){return isOption(e)&&nt(e)},[h](){return et},toString(){return`none()`},toJSON(){return{_id:`Option`,_tag:this._tag}}}),isOption=e=>p(e,Ze),nt=__name(e=>e._tag===`None`,`isNone`),rt=__name(e=>e._tag===`Some`,`isSome`),it=Object.create(tt),at=__name(e=>{let t=Object.create($e);return t.value=e,t},`some`),ot=`~effect/data/Result`,st={[ot]:{_A:e=>e,_E:e=>e},...Ae,[Symbol.iterator](){return new ye(this)}},ct=Object.assign(Object.create(st),{_tag:`Success`,_op:`Success`,[v](e){return isResult(e)&&dt(e)&&equals$2(this.success,e.success)},[h](){return g(hash(this._tag))(hash(this.success))},toString(){return`success(${format$1(this.success)})`},toJSON(){return{_id:`Result`,_tag:this._tag,value:toJson(this.success)}}}),lt=Object.assign(Object.create(st),{_tag:`Failure`,_op:`Failure`,[v](e){return isResult(e)&&ut(e)&&equals$2(this.failure,e.failure)},[h](){return g(hash(this._tag))(hash(this.failure))},toString(){return`failure(${format$1(this.failure)})`},toJSON(){return{_id:`Result`,_tag:this._tag,failure:toJson(this.failure)}}}),isResult=e=>p(e,ot),ut=__name(e=>e._tag===`Failure`,`isFailure`),dt=__name(e=>e._tag===`Success`,`isSuccess`),ft=__name(e=>{let t=Object.create(lt);return t.failure=e,t},`fail`),pt=__name(e=>{let t=Object.create(ct);return t.success=e,t},`succeed`);function make$15(e){return(t,n)=>t===n?0:e(t,n)}__name(make$15,`make`);const mt=make$15((e,t)=>globalThis.Number.isNaN(e)&&globalThis.Number.isNaN(t)?0:globalThis.Number.isNaN(e)?-1:globalThis.Number.isNaN(t)?1:e<t?-1:1),ht=dual(2,(e,t)=>make$15((n,r)=>e(t(n),t(r)))),gt=__name(e=>dual(2,(t,n)=>e(t,n)===1),`isGreaterThan`),_t=__name(e=>dual(2,(t,n)=>t===n||e(t,n)>-1?t:n),`max`),none=()=>it,O=at,k=nt,vt=rt,yt=dual(2,(e,{onNone:t,onSome:n})=>k(e)?t():n(e.value)),bt=dual(2,(e,t)=>k(e)?t():e.value),fromNullishOr=e=>e==null?none():O(e),fromUndefinedOr=e=>e===void 0?none():O(e),xt=bt(u),St=dual(2,(e,t)=>k(e)?none():O(t(e.value))),Ct=dual(2,(e,t)=>k(e)?none():t(e.value)),wt=dual(2,(e,t)=>k(e)?none():t(e.value)?O(e.value):none()),A=pt,j=ft,M=ut,Tt=dt,Et=dual(2,(e,{onFailure:t,onSuccess:n})=>M(e)?t(e.failure):n(e.success)),Dt=Tuple$1,headUnsafe=e=>{let t=e[Symbol.iterator]().next();if(t.done)throw Error(`headUnsafe: empty iterable`);return t.value},Ot={[Symbol.iterator](){return kt}},kt={next(){return{done:!0,value:void 0}}},At=__name(()=>Ot,`empty`),isEmptyRecord=e=>Object.keys(e).length===0,jt=dual(2,(e,t)=>{let n={...e};for(let r of keys(e))n[r]=t(e[r],r);return n}),keys=e=>Object.keys(e),Mt=globalThis.Array,fromIterable=e=>Mt.isArray(e)?e:Mt.from(e),ensure=e=>Mt.isArray(e)?e:[e],Nt=dual(2,(e,t)=>[...e,t]),Pt=dual(2,(e,t)=>fromIterable(e).concat(fromIterable(t)));Mt.isArray;const Ft=pe,It=pe;function isOutOfBounds(e,t){return e<0||e>=t.length}const Lt=dual(2,(e,t)=>{let n=Math.floor(t);if(isOutOfBounds(n,e))throw Error(`Index out of bounds: ${n}`);return e[n]}),Rt=Lt(0),tailNonEmpty=e=>e.slice(1),zt=dual(3,(e,t,n)=>{let r=fromIterable(e),i=fromIterable(t);return It(r)?It(i)?Wt(n)(Pt(r,i)):r:i}),Bt=dual(2,(e,t)=>zt(e,t,asEquivalence())),Vt=__name(()=>[],`empty`),of=e=>[e],Ht=dual(2,(e,t)=>e.map(t)),Ut=Array_,Wt=dual(2,(e,t)=>{let n=fromIterable(e);if(It(n)){let e=[Rt(n)],r=tailNonEmpty(n);for(let n of r)e.every(e=>!t(n,e))&&e.push(n);return e}return[]}),Gt=`~effect/BigDecimal`,Kt={[Gt]:Gt,[h](){let e=normalize(this);return g(hash(e.value),ee(e.scale))},[v](e){return isBigDecimal(e)&&$t(this,e)},toString(){return`BigDecimal(${format(this)})`},toJSON(){return{_id:`BigDecimal`,value:String(this.value),scale:this.scale}},[y](){return this.toJSON()},pipe(){return pipeArguments(this,arguments)}},isBigDecimal=e=>p(e,Gt),qt=__name((e,t)=>{let n=Object.create(Kt);return n.value=e,n.scale=t,n},`make`),makeNormalizedUnsafe=(e,t)=>{if(e!==Jt&&e%Yt===Jt)throw RangeError(`Value must be normalized`);let n=qt(e,t);return n.normalized=n,n},Jt=BigInt(0),Yt=BigInt(10),Xt=makeNormalizedUnsafe(Jt,0),normalize=e=>{if(e.normalized===void 0)if(e.value===Jt)e.normalized=Xt;else{let t=`${e.value}`,n=0;for(let e=t.length-1;e>=0&&t[e]===`0`;e--)n++;n===0&&(e.normalized=e),e.normalized=makeNormalizedUnsafe(BigInt(t.substring(0,t.length-n)),e.scale-n)}return e.normalized},Zt=dual(2,(e,t)=>t>e.scale?qt(e.value*Yt**BigInt(t-e.scale),t):t<e.scale?qt(e.value/Yt**BigInt(e.scale-t),t):e),abs=e=>e.value<Jt?qt(-e.value,e.scale):e,Qt=fe((e,t)=>e.scale>t.scale?Zt(t,e.scale).value===e.value:e.scale<t.scale?Zt(e,t.scale).value===t.value:e.value===t.value),$t=dual(2,(e,t)=>Qt(e,t)),format=e=>{let t=normalize(e);if(Math.abs(t.scale)>=16)return toExponential(t);let n=t.value<Jt,r=n?`${t.value}`.substring(1):`${t.value}`,i,a;if(t.scale>=r.length)i=`0`,a=`0`.repeat(t.scale-r.length)+r;else{let e=r.length-t.scale;if(e>r.length){let t=e-r.length;i=`${r}${`0`.repeat(t)}`,a=``}else a=r.slice(e),i=r.slice(0,e)}let o=a===``?i:`${i}.${a}`;return n?`-${o}`:o},toExponential=e=>{if(isZero(e))return`0e+0`;let t=normalize(e),n=`${abs(t).value}`,r=n.slice(0,1),i=n.slice(1),a=`${isNegative(t)?`-`:``}${r}`;i!==``&&(a+=`.${i}`);let o=i.length-t.scale;return`${a}e${o>=0?`+`:``}${o}`},isZero=e=>e.value===Jt,isNegative=e=>e.value<Jt,Prototype=e=>makePrimitiveProto({op:e.label,[S]:e.evaluate}),en=`~effect/Context/Service`,Service=function(){let e=Error.stackTraceLimit;Error.stackTraceLimit=2;let t=Error();Error.stackTraceLimit=e;function KeyClass(){}let n=KeyClass;return Object.setPrototypeOf(n,tn),Object.defineProperty(n,`stack`,{get(){return t.stack}}),arguments.length>0?(n.key=arguments[0],arguments[1]?.defaultValue&&(n[nn]=nn,n.defaultValue=arguments[1].defaultValue),n):function(e,t){return n.key=e,t?.make&&(n.make=t.make),n}},tn={[en]:en,...Prototype({label:`Service`,evaluate(e){return T(pn(e.context,this))}}),toJSON(){return{_id:`Service`,key:this.key,stack:this.stack}},of(e){return e},context(e){return ln(this,e)},use(e){return D(t=>e(pn(t.context,this)))},useSync(e){return D(t=>T(e(pn(t.context,this))))}},nn=`~effect/Context/Reference`,rn=`~effect/Context`,an=__name(e=>{let t=Object.create(on);return t.mapUnsafe=e,t.mutable=!1,t},`makeUnsafe`),on={...Ae,[rn]:{_Services:e=>e},toJSON(){return{_id:`Context`,services:Array.from(this.mapUnsafe).map(([e,t])=>({key:e,value:t}))}},[v](e){if(!isContext(e)||this.mapUnsafe.size!==e.mapUnsafe.size)return!1;for(let t of this.mapUnsafe.keys())if(!e.mapUnsafe.has(t)||!equals$2(this.mapUnsafe.get(t),e.mapUnsafe.get(t)))return!1;return!0},[h](){return ee(this.mapUnsafe.size)}},isContext=e=>p(e,rn),isReference=e=>p(e,nn),sn=__name(()=>cn,`empty`),cn=an(new Map),ln=__name((e,t)=>an(new Map([[e.key,t]])),`make`),un=dual(3,(e,t,n)=>withMapUnsafe(e,e=>{e.set(t.key,n)})),dn=dual(3,(e,t,n)=>e.mapUnsafe.has(t.key)?e.mapUnsafe.get(t.key):isReference(t)?getDefaultValue(t):n()),fn=dual(2,(e,t)=>{if(!e.mapUnsafe.has(t.key)){if(nn in t)return getDefaultValue(t);throw serviceNotFoundError(t)}return e.mapUnsafe.get(t.key)}),pn=fn,getReferenceUnsafe=(e,t)=>e.mapUnsafe.has(t.key)?e.mapUnsafe.get(t.key):getDefaultValue(t),mn=`~effect/Context/defaultValue`,getDefaultValue=e=>mn in e?e[mn]:e[mn]=e.defaultValue(),serviceNotFoundError=e=>{let t=Error(`Service not found${e.key?`: ${String(e.key)}`:``}`);if(e.stack){let n=e.stack.split(`
-`);if(n.length>2){let e=n[2].match(/at (.*)/);e&&(t.message+=` (defined at ${e[1]})`)}}if(t.stack){let e=t.stack.split(`
-`);e.splice(1,3),t.stack=e.join(`
-`)}return t},hn=dual(2,(e,t)=>e.mapUnsafe.has(t.key)?O(e.mapUnsafe.get(t.key)):isReference(t)?O(getDefaultValue(t)):none()),gn=dual(2,(e,t)=>e.mapUnsafe.size===0?t:t.mapUnsafe.size===0?e:withMapUnsafe(e,e=>{t.mapUnsafe.forEach((t,n)=>e.set(n,t))})),_n=__name((...e)=>{let t=new Map;for(let n=0;n<e.length;n++)e[n].mapUnsafe.forEach((e,n)=>{t.set(n,e)});return an(t)},`mergeAll`),withMapUnsafe=(e,t)=>{if(e.mutable)return t(e.mapUnsafe),e;let n=new Map(e.mapUnsafe);return t(n),an(n)},N=Service,vn=`~effect/time/Duration`,yn=BigInt(0),bn=BigInt(1e3),xn=BigInt(1e6),Sn=/^(-?\d+(?:\.\d+)?)\s+(nanos?|micros?|millis?|seconds?|minutes?|hours?|days?|weeks?)$/,fromInputUnsafe=e=>{switch(typeof e){case`number`:return millis(e);case`bigint`:return nanos(e);case`string`:{if(e===`Infinity`)return On;if(e===`-Infinity`)return kn;let t=Sn.exec(e);if(!t)break;let[n,r,i]=t,a=Number(r);switch(i){case`nano`:case`nanos`:return nanos(BigInt(r));case`micro`:case`micros`:return micros(BigInt(r));case`milli`:case`millis`:return millis(a);case`second`:case`seconds`:return seconds(a);case`minute`:case`minutes`:return minutes(a);case`hour`:case`hours`:return hours(a);case`day`:case`days`:return days(a);case`week`:case`weeks`:return weeks(a)}break}case`object`:{if(e===null)break;if(vn in e)return e;if(Array.isArray(e))return e.length!==2||!e.every(isNumber)?invalid(e):Number.isNaN(e[0])||Number.isNaN(e[1])?Dn:e[0]===-1/0||e[1]===-1/0?kn:e[0]===1/0||e[1]===1/0?On:P(BigInt(Math.round(e[0]*1e9))+BigInt(Math.round(e[1])));let t=e,n=0;if(t.weeks&&(n+=t.weeks*6048e5),t.days&&(n+=t.days*864e5),t.hours&&(n+=t.hours*36e5),t.minutes&&(n+=t.minutes*6e4),t.seconds&&(n+=t.seconds*1e3),t.milliseconds&&(n+=t.milliseconds),!t.microseconds&&!t.nanoseconds)return P(n);let r=BigInt(n)*xn;return t.microseconds&&(r+=BigInt(t.microseconds)*bn),t.nanoseconds&&(r+=BigInt(t.nanoseconds)),P(r)}}return invalid(e)},invalid=e=>{throw Error(`Invalid Input: ${e}`)},Cn={_tag:`Millis`,millis:0},wn={_tag:`Infinity`},Tn={_tag:`NegativeInfinity`},En={[vn]:vn,[h](){return structure(this.value)},[v](e){return isDuration(e)&&Fn(this,e)},toString(){switch(this.value._tag){case`Infinity`:return`Infinity`;case`NegativeInfinity`:return`-Infinity`;case`Nanos`:return`${this.value.nanos} nanos`;case`Millis`:return`${this.value.millis} millis`}},toJSON(){switch(this.value._tag){case`Millis`:return{_id:`Duration`,_tag:`Millis`,millis:this.value.millis};case`Nanos`:return{_id:`Duration`,_tag:`Nanos`,nanos:String(this.value.nanos)};case`Infinity`:return{_id:`Duration`,_tag:`Infinity`};case`NegativeInfinity`:return{_id:`Duration`,_tag:`NegativeInfinity`}}},[y](){return this.toJSON()},pipe(){return pipeArguments(this,arguments)}},P=__name(e=>{let t=Object.create(En);return typeof e==`number`?isNaN(e)||e===0||Object.is(e,-0)?t.value=Cn:Number.isFinite(e)?Number.isInteger(e)?t.value={_tag:`Millis`,millis:e}:t.value={_tag:`Nanos`,nanos:BigInt(Math.round(e*1e6))}:t.value=e>0?wn:Tn:e===yn?t.value=Cn:t.value={_tag:`Nanos`,nanos:e},t},`make`),isDuration=e=>p(e,vn),isFinite=e=>e.value._tag!==`Infinity`&&e.value._tag!==`NegativeInfinity`,Dn=P(0),On=P(1/0),kn=P(-1/0),nanos=e=>P(e),micros=e=>P(e*bn),millis=e=>P(e),seconds=e=>P(e*1e3),minutes=e=>P(e*6e4),hours=e=>P(e*36e5),days=e=>P(e*864e5),weeks=e=>P(e*6048e5),toMillis=e=>An(fromInputUnsafe(e),{onMillis:identity,onNanos:e=>Number(e)/1e6,onInfinity:()=>1/0,onNegativeInfinity:()=>-1/0}),toSeconds=e=>An(fromInputUnsafe(e),{onMillis:e=>e/1e3,onNanos:e=>Number(e)/1e9,onInfinity:()=>1/0,onNegativeInfinity:()=>-1/0}),toNanosUnsafe=e=>{let t=fromInputUnsafe(e);switch(t.value._tag){case`Infinity`:case`NegativeInfinity`:throw Error(`Cannot convert infinite duration to nanos`);case`Nanos`:return t.value.nanos;case`Millis`:return BigInt(Math.round(t.value.millis*1e6))}},An=dual(2,(e,t)=>{switch(e.value._tag){case`Millis`:return t.onMillis(e.value.millis);case`Nanos`:return t.onNanos(e.value.nanos);case`Infinity`:return t.onInfinity();case`NegativeInfinity`:return(t.onNegativeInfinity??t.onInfinity)()}}),jn=dual(3,(e,t,n)=>e.value._tag===`Infinity`||e.value._tag===`NegativeInfinity`||t.value._tag===`Infinity`||t.value._tag===`NegativeInfinity`?n.onInfinity(e,t):e.value._tag===`Millis`?t.value._tag===`Millis`?n.onMillis(e.value.millis,t.value.millis):n.onNanos(toNanosUnsafe(e),t.value.nanos):n.onNanos(e.value.nanos,toNanosUnsafe(t))),Mn=make$15((e,t)=>jn(e,t,{onMillis:(e,t)=>e<t?-1:+(e>t),onNanos:(e,t)=>e<t?-1:+(e>t),onInfinity:(e,t)=>e.value._tag===t.value._tag?0:e.value._tag===`Infinity`?1:e.value._tag===`NegativeInfinity`||t.value._tag===`Infinity`?-1:1})),Nn=__name((e,t)=>jn(e,t,{onMillis:(e,t)=>e===t,onNanos:(e,t)=>e===t,onInfinity:(e,t)=>e.value._tag===t.value._tag}),`Equivalence`),Pn=_t(Mn),Fn=dual(2,(e,t)=>Nn(e,t)),fromPredicate=e=>t=>e(t)?A(t):j(t),toPredicate=e=>t=>!M(e(t)),has=e=>t=>t.has(e)?A(t):j(t),In=dual(2,(e,t)=>n=>{let r=e(n);return M(r)?r:t(r.success)}),Ln=dual(2,(e,t)=>n=>{let r=e(n);if(M(r))return j(n);let i=t(r.success);return M(i)?j(n):i}),toOption=e=>t=>{let n=e(t);return M(n)?none():O(n.success)},Rn=N(`effect/Scheduler`,{defaultValue:()=>new MixedScheduler}),zn=`setImmediate`in globalThis?e=>{let t=globalThis.setImmediate(e);return()=>globalThis.clearImmediate(t)}:e=>{let t=setTimeout(e,0);return()=>clearTimeout(t)};var PriorityBuckets=class{buckets=[];scheduleTask(e,t){let n=this.buckets,r=n.length,i,a=0;for(;a<r&&!(n[a][0]>t);a++)i=n[a];i&&i[0]===t?i[1].push(e):a===r?n.push([t,[e]]):n.splice(a,0,[t,[e]])}drain(){let e=this.buckets;return this.buckets=[],e}},MixedScheduler=class{executionMode;setImmediate;constructor(e=`async`,t=zn){this.executionMode=e,this.setImmediate=t}shouldYield(e){return e.currentOpCount>=e.maxOpsBeforeYield}makeDispatcher(){return new MixedSchedulerDispatcher(this.setImmediate)}},MixedSchedulerDispatcher=class{tasks=new PriorityBuckets;running=void 0;setImmediate;constructor(e=zn){this.setImmediate=e}scheduleTask(e,t){this.tasks.scheduleTask(e,t),this.running===void 0&&(this.running=this.setImmediate(this.afterScheduled))}afterScheduled=()=>{this.running=void 0,this.runTasks()};runTasks(){let e=this.tasks.drain();for(let t=0;t<e.length;t++){let n=e[t][1];for(let e=0;e<n.length;e++)n[e]()}}flush(){for(;this.tasks.buckets.length>0;)this.running!==void 0&&(this.running(),this.running=void 0),this.runTasks()}};const Bn=N(`effect/Scheduler/MaxOpsBeforeYield`,{defaultValue:()=>2048}),Vn=N(`effect/Scheduler/PreventSchedulerYield`,{defaultValue:()=>!1}),Hn=`effect/Tracer/ParentSpan`;var ParentSpan=class extends Service()(Hn){};const Un=__name(e=>e,`make`),Wn=N(`effect/Tracer/DisablePropagation`,{defaultValue:l}),Gn=N(`effect/Tracer/CurrentTraceLevel`,{defaultValue:()=>`Info`}),Kn=N(`effect/Tracer/MinimumTraceLevel`,{defaultValue:()=>`All`}),qn=`effect/Tracer`,Jn=N(qn,{defaultValue:()=>Un({span:e=>new NativeSpan(e)})});var NativeSpan=class{_tag=`Span`;spanId;traceId=`native`;sampled;name;parent;annotations;links;startTime;kind;status;attributes;events=[];constructor(e){this.name=e.name,this.parent=e.parent,this.annotations=e.annotations,this.links=e.links,this.startTime=e.startTime,this.kind=e.kind,this.sampled=e.sampled,this.status={_tag:`Started`,startTime:e.startTime},this.attributes=new Map,this.traceId=xt(e.parent)?.traceId??Yn(32),this.spanId=Yn(16)}end(e,t){this.status={_tag:`Ended`,endTime:e,exit:t,startTime:this.status.startTime}}attribute(e,t){this.attributes.set(e,t)}event(e,t,n){this.events.push([e,t,n??{}])}addLinks(e){this.links.push(...e)}};const Yn=function(){return function(e){let t=``;for(let n=0;n<e;n++)t+=`abcdef0123456789`.charAt(Math.floor(Math.random()*16));return t}}(),Xn=N(`effect/References/CurrentConcurrency`,{defaultValue:()=>`unbounded`}),Zn=N(`effect/References/CurrentStackFrame`,{defaultValue:u}),Qn=N(`effect/References/TracerEnabled`,{defaultValue:c}),$n=N(`effect/References/TracerTimingEnabled`,{defaultValue:c}),er=N(`effect/References/TracerSpanAnnotations`,{defaultValue:()=>({})}),tr=N(`effect/References/TracerSpanLinks`,{defaultValue:()=>[]}),nr=N(`effect/References/CurrentLogAnnotations`,{defaultValue:()=>({})}),rr=N(`effect/References/CurrentLogLevel`,{defaultValue:()=>`Info`}),ir=N(`effect/References/MinimumLogLevel`,{defaultValue:()=>`Info`}),ar=N(`effect/References/CurrentLogSpans`,{defaultValue:()=>[]}),addSpanStackTrace=e=>{if(e?.captureStackTrace===!1||e?.captureStackTrace!==void 0&&typeof e.captureStackTrace!=`boolean`)return e;let t=Error.stackTraceLimit;Error.stackTraceLimit=3;let n=Error();return Error.stackTraceLimit=t,{...e,captureStackTrace:or(()=>n.stack)}},makeStackCleaner=e=>t=>{let n;return()=>{if(n!==void 0)return n;let r=t();if(!r)return;let i=r.split(`
-`);if(i[e]!==void 0)return n=i[e].trim(),n}},or=makeStackCleaner(3);var Interrupt=class extends ReasonBase{fiberId;constructor(e,t=Fe){super(`Interrupt`,t,`Interrupted`),this.fiberId=e}toString(){return`Interrupt(${this.fiberId})`}toJSON(){return{_tag:`Interrupt`,fiberId:this.fiberId}}[v](e){return isInterruptReason(e)&&this.fiberId===e.fiberId&&this.annotations===e.annotations}[h](){return g(_(`${this._tag}:${this.fiberId}`))(random(this.annotations))}};const causeInterrupt=e=>new CauseImpl([new Interrupt(e)]),findFail=e=>{let t=e.reasons.find(Re);return t?A(t):j(e)},sr=__name(e=>{for(let t=0;t<e.reasons.length;t++){let n=e.reasons[t];if(n._tag===`Fail`)return A(n.error)}return j(e)},`findError`),cr=toOption(sr),lr=__name(e=>e.reasons.some(isInterruptReason),`hasInterrupts`),causeFilterInterruptors=e=>{let t;for(let n=0;n<e.reasons.length;n++){let r=e.reasons[n];r._tag===`Interrupt`&&(t??=new Set,r.fiberId!==void 0&&t.add(r.fiberId))}return t?A(t):j(e)},ur=__name(e=>e.reasons.length>0&&e.reasons.every(isInterruptReason),`hasInterruptsOnly`),dr=dual(2,(e,t)=>{if(e.reasons.length===0)return t;if(t.reasons.length===0)return e;let n=new CauseImpl(Bt(e.reasons,t.reasons));return equals$2(e,n)?e:n}),causePartition=e=>{let t={Fail:[],Die:[],Interrupt:[]};for(let n=0;n<e.reasons.length;n++)t[e.reasons[n]._tag].push(e.reasons[n]);return t},causeSquash=e=>{let t=causePartition(e);return t.Fail.length>0?t.Fail[0].error:t.Die.length>0?t.Die[0].defect:t.Interrupt.length>0?new globalThis.Error(`All fibers interrupted without error`):new globalThis.Error(`Empty cause`)},causePrettyErrors=e=>{let t=[],n=[];if(e.reasons.length===0)return t;let r=Error.stackTraceLimit;Error.stackTraceLimit=1;for(let r of e.reasons){if(r._tag===`Interrupt`){n.push(r);continue}t.push(causePrettyError(r._tag===`Die`?r.defect:r.error,r.annotations))}if(t.length===0){let e=Error(`The fiber was interrupted by:`);e.name=`InterruptCause`,e.stack=interruptCauseStack(e,n);let r=new globalThis.Error(`All fibers interrupted without error`,{cause:e});r.name=`InterruptError`,r.stack=`${r.name}: ${r.message}`,t.push(causePrettyError(r,n[0].annotations))}return Error.stackTraceLimit=r,t},causePrettyError=(e,t)=>{let n=typeof e,r;if(e&&n===`object`){if(r=new globalThis.Error(causePrettyMessage(e),{cause:e.cause?causePrettyError(e.cause):void 0}),typeof e.name==`string`&&(r.name=e.name),typeof e.stack==`string`)r.stack=cleanErrorStack(e.stack,r,t);else{let e=`${r.name}: ${r.message}`;r.stack=t?addStackAnnotations(e,t):e}for(let t of Object.keys(e))t in r||(r[t]=e[t])}else r=new globalThis.Error(e?n===`string`?e:formatJson(e):`Unknown error: ${e}`);return r},causePrettyMessage=e=>{if(typeof e.message==`string`)return e.message;if(typeof e.toString==`function`&&e.toString!==Object.prototype.toString&&e.toString!==Array.prototype.toString)try{return e.toString()}catch{}return formatJson(e)},fr=/\((.*)\)/g,cleanErrorStack=(e,t,n)=>{let r=`${t.name}: ${t.message}`,i=(e.startsWith(r)?e.slice(r.length):e).split(`
-`),a=[r];for(let e=1;e<i.length&&!/(?:Generator\.next|~effect\/Effect)/.test(i[e]);e++)a.push(i[e]);return n?addStackAnnotations(a.join(`
-`),n):a.join(`
-`)},addStackAnnotations=(e,t)=>{let n=t?.get(Be.key);return n&&(e=`${e}\n${currentStackTrace(n)}`),e},interruptCauseStack=(e,t)=>{let n=[`${e.name}: ${e.message}`];for(let e of t){let t=e.fiberId===void 0?`unknown`:`#${e.fiberId}`,r=e.annotations.get(Ve.key);n.push(`    at fiber (${t})`),r&&n.push(currentStackTrace(r))}return n.join(`
-`)},currentStackTrace=e=>{let t=[],n=e,r=0;for(;n&&r<10;){let e=n.stack();if(e){let r=e.matchAll(fr),i=!1;for(let[,e]of r)i=!0,t.push(`    at ${n.name} (${e})`);i||t.push(`    at ${n.name} (${e.replace(/^at /,``)})`)}else t.push(`    at ${n.name}`);n=n.parent,r++}return t.join(`
-`)},causePretty=e=>causePrettyErrors(e).map(e=>e.cause?`${e.stack} {\n${renderErrorCause(e.cause,`  `)}\n}`:e.stack).join(`
-`),renderErrorCause=(e,t)=>{let n=e.stack.split(`
-`),r=`${t}[cause]: ${n[0]}`;for(let e=1,i=n.length;e<i;e++)r+=`\n${t}${n[e]}`;return e.cause&&(r+=` {\n${renderErrorCause(e.cause,`${t}  `)}\n${t}}`),r},pr=`~effect/Fiber/dev`,mr={_A:identity,_E:identity},hr={id:0},getCurrentFiber=()=>globalThis[he];var FiberImpl=class{constructor(e,t=!0){this[pr]=mr,this.setContext(e),this.id=++hr.id,this.currentOpCount=0,this.currentLoopCount=0,this.interruptible=t,this._stack=[],this._observers=[],this._exit=void 0,this._children=void 0,this._interruptedCause=void 0,this._yielded=void 0,this.runtimeMetrics?.recordFiberStart(this.context)}[pr];id;interruptible;currentOpCount;currentLoopCount;_stack;_observers;_exit;_currentExit;_children;_interruptedCause;_yielded;context;currentScheduler;currentTracerContext;currentSpan;currentLogLevel;minimumLogLevel;currentStackFrame;runtimeMetrics;maxOpsBeforeYield;currentPreventYield;_dispatcher=void 0;get currentDispatcher(){return this._dispatcher??=this.currentScheduler.makeDispatcher()}getRef(e){return getReferenceUnsafe(this.context,e)}addObserver(e){return this._exit?(e(this._exit),d):(this._observers.push(e),()=>{let t=this._observers.indexOf(e);t>=0&&this._observers.splice(t,1)})}interruptUnsafe(e,t){if(this._exit)return;let n=causeInterrupt(e);this.currentStackFrame&&(n=Le(n,ln(Be,this.currentStackFrame))),t&&(n=Le(n,t)),this._interruptedCause=this._interruptedCause?dr(this._interruptedCause,n):n,this.interruptible&&this.evaluate(I(this._interruptedCause))}pollUnsafe(){return this._exit}evaluate(e){if(this._exit)return;if(this._yielded!==void 0){let e=this._yielded;this._yielded=void 0,e()}let t=this.runLoop(e);if(t===ke)return;let n=gr.interruptChildren&&gr.interruptChildren(this);if(n!==void 0)return this.evaluate(V(n,()=>t));this._exit=t,this.runtimeMetrics?.recordFiberEnd(this.context,this._exit);for(let e=0;e<this._observers.length;e++)this._observers[e](t);this._observers.length=0}runLoop(e){let t=globalThis[he];globalThis[he]=this;let n=!1,r=e;this.currentOpCount=0;let i=++this.currentLoopCount;try{for(;;){if(this.currentOpCount++,!n&&!this.currentPreventYield&&this.currentScheduler.shouldYield(this)){n=!0;let e=r;r=V(br,()=>e)}if(r=this.currentTracerContext?this.currentTracerContext(r,this):r[S](this),i!==this.currentLoopCount)return ke;if(r===ke){let e=this._yielded;return we in e?(this._yielded=void 0,e):ke}}}catch(e){return p(r,S)?this.runLoop(exitDie(e)):exitDie(`Fiber.runLoop: Not a valid effect: ${String(r)}`)}finally{globalThis[he]=t}}getCont(e){for(;;){let t=this._stack.pop();if(!t)return;let n=t[Oe]&&t[Oe](this);if(n)return n[e]=n,n;if(t[e])return t}}yieldWith(e){return this._yielded=e,ke}children(){return this._children??=new Set}pipe(){return pipeArguments(this,arguments)}setContext(e){this.context=e;let t=this.getRef(Rn);t!==this.currentScheduler&&(this.currentScheduler=t,this._dispatcher=void 0),this.currentSpan=e.mapUnsafe.get(Hn),this.currentLogLevel=this.getRef(rr),this.minimumLogLevel=this.getRef(ir),this.currentStackFrame=e.mapUnsafe.get(Zn.key),this.maxOpsBeforeYield=this.getRef(Bn),this.currentPreventYield=this.getRef(Vn),this.runtimeMetrics=e.mapUnsafe.get(`effect/observability/Metric/FiberRuntimeMetricsKey`);let n=e.mapUnsafe.get(qn);this.currentTracerContext=n?n.context:void 0}get currentSpanLocal(){return this.currentSpan?._tag===`Span`?this.currentSpan:void 0}};const gr={interruptChildren:void 0},fiberStackAnnotations=e=>{if(!e.currentStackFrame)return;let t=new Map;return t.set(Be.key,e.currentStackFrame),an(t)},fiberInterruptChildren=e=>{if(!(e._children===void 0||e._children.size===0))return fiberInterruptAll(e._children)},fiberAwait=e=>{let t=e;return t._exit?F(t._exit):B(n=>t._exit?n(F(t._exit)):L(e.addObserver(e=>n(F(e)))))},fiberAwaitAll=e=>B(t=>{let n=e[Symbol.iterator](),r=[],i;function loop(){let e=n.next();for(;!e.done;){if(e.value._exit){r.push(e.value._exit),e=n.next();continue}i=e.value.addObserver(e=>{r.push(e),loop()});return}t(F(r))}return loop(),L(()=>i?.())}),fiberJoin=e=>{let t=e;return t._exit?t._exit:B(n=>t._exit?n(t._exit):L(e.addObserver(n)))},fiberInterrupt=e=>D(t=>_r(e,t.id)),_r=dual(e=>p(e[0],pr),(e,t,n)=>D(r=>{let i=fiberStackAnnotations(r);return i=i&&n?gn(i,n):i??n,e.interruptUnsafe(t,i),zr(fiberAwait(e))})),fiberInterruptAll=e=>D(t=>{let n=fiberStackAnnotations(t);for(let r of e)r.interruptUnsafe(t.id,n);return zr(fiberAwaitAll(e))}),F=T,I=E,vr=exitFail,L=makePrimitive({op:`Sync`,[S](e){let t=this[x](),n=e.getCont(C);return n?n[C](t,e):e.yieldWith(T(t))}}),R=makePrimitive({op:`Suspend`,[S](e){return this[x]()}}),yr=Et({onFailure:vr,onSuccess:F}),br=makePrimitive({op:`Yield`,[S](e){let t=!1;return e.currentDispatcher.scheduleTask(()=>{t||e.evaluate(U)},this[x]??0),e.yieldWith(()=>{t=!0})}})(0),xr=__name(e=>F(O(e)),`succeedSome`),Sr=F(none()),Cr=__name(e=>exitDie(e),`die`),failSync=e=>R(()=>vr(b(e))),z=F(void 0),wr=__name(e=>R(()=>{try{return F(b(e.try))}catch(t){return vr(b(()=>e.catch(t)))}}),`try_`),Tr=__name(e=>Dr(function(t,n){b(()=>e(n)).then(e=>t(F(e)),e=>t(Cr(e)))},e.length!==0),`promise`),Er=__name(e=>{let t=typeof e==`function`?e:e.try,n=typeof e==`function`?e=>new UnknownError$1(e,`An error occurred in Effect.tryPromise`):e.catch;return Dr(function(e,r){try{b(()=>t(r)).then(t=>e(F(t)),t=>e(vr(b(()=>n(t)))))}catch(t){e(vr(b(()=>n(t))))}},eval.length!==0)},`tryPromise`),withFiberId=e=>D(t=>e(t.id)),Dr=makePrimitive({op:`Async`,single:!1,[S](e){let t=b(()=>this[x][0].bind(e.currentScheduler)),n=!1,r=!1,i=this[x][1]?new AbortController:void 0,a=t(t=>{n||(n=!0,r?e.evaluate(t):r=t)},i?.signal);return r===!1?(r=!0,e._yielded=()=>{n=!0},i===void 0&&a===void 0||e._stack.push(Or(()=>(n=!0,i?.abort(),a??U))),ke):r}}),Or=makePrimitive({op:`AsyncFinalizer`,[Oe](e){e.interruptible&&(e.interruptible=!1,e._stack.push(Zi))},[De](e,t){return lr(e)?V(this[x](),()=>I(e)):I(e)}}),B=__name(e=>Dr(e,e.length>=2),`callback`),kr=__name((...e)=>R(()=>Pr(e.length===1?e[0]():e[1].call(e[0].self))),`gen`),Ar=__name((e,...t)=>{let n=t.length===0?function(){return R(()=>Pr(e.apply(this,arguments)))}:function(){let n=R(()=>Pr(e.apply(this,arguments)));for(let e=0;e<t.length;e++)n=t[e](n,...arguments);return n};return defineFunctionLength(e.length,n)},`fnUntraced`),defineFunctionLength=(e,t)=>Object.defineProperty(t,`length`,{value:e,configurable:!0}),jr=makeStackCleaner(2),Mr=__name(function(){let e=typeof arguments[0]==`string`,t=e?arguments[0]:`Effect.fn`,n=e?arguments[1]:void 0,r=globalThis.Error.stackTraceLimit;globalThis.Error.stackTraceLimit=2;let i=new globalThis.Error;return globalThis.Error.stackTraceLimit=r,e?(r,...a)=>makeFn(t,r,i,a,e,n):makeFn(t,arguments[0],i,Array.prototype.slice.call(arguments,1),e,n)},`fn`),makeFn=(e,t,n,r,i,a)=>{let o=typeof t==`function`?t:r.pop().bind(t.self);return defineFunctionLength(o.length,function(...t){let s=R(()=>{let e=o.apply(this,arguments);return w(e)?e:Pr(e)});for(let e=0;e<r.length;e++)s=r[e](s,...t);if(!w(s))return s;let c=globalThis.Error.stackTraceLimit;globalThis.Error.stackTraceLimit=2;let l=new globalThis.Error;return globalThis.Error.stackTraceLimit=c,$r(i?ba(e,a,e=>xa(s,e)):s,Zn,t=>({name:e,stack:jr(()=>l.stack),parent:{name:`${e} (definition)`,stack:jr(()=>n.stack),parent:t}}))})},Nr=__name((e,...t)=>defineFunctionLength(e.length,t.length===0?function(){return fromIteratorEagerUnsafe(()=>e.apply(this,arguments))}:function(){let n=fromIteratorEagerUnsafe(()=>e.apply(this,arguments));for(let e of t)n=e(n);return n}),`fnUntracedEager`),fromIteratorEagerUnsafe=e=>{try{let t=e(),n;for(;;){let r=t.next(n);if(r.done)return F(r.value);let i=r.value;if(i&&i._tag===`Success`){n=i.value;continue}else if(i&&i._tag===`Failure`)return r.value;else{let n=!0;return R(()=>n?(n=!1,V(r.value,e=>Pr(t,e))):R(()=>Pr(e())))}}}catch(e){return Cr(e)}},Pr=makePrimitive({op:`Iterator`,single:!1,[C](e,t){let n=this[x][0];for(;;){let r=n.next(e);if(r.done)return F(r.value);if(!effectIsExit(r.value))return t._stack.push(this),r.value;if(r.value._tag===`Failure`)return r.value;e=r.value.value}},[S](e){return this[C](this[x][1],e)}}),Fr=dual(2,(e,t)=>{let n=F(t);return V(e,e=>n)}),Ir=__name(e=>H(e,O),`asSome`),Lr=dual(2,(e,t)=>V(e,e=>w(t)?t:b(()=>t(e)))),Rr=dual(2,(e,t)=>V(e,e=>Fr(w(t)?t:b(()=>t(e)),e))),zr=__name(e=>V(e,e=>U),`asVoid`),raceAllFirst=(e,t)=>D(n=>B(r=>{let i=!1,a=new Set,onExit=e=>{i=!0,r(a.size===0?e:V(Yi(fiberInterruptAll(a)),()=>e))},o=0;for(let r of e){if(i)break;let e=o++,s=aa(n,r,!0,!0,!1);a.add(s),s.addObserver(r=>{a.delete(s);let o=!i;onExit(r),o&&t?.onWinner&&t.onWinner({fiber:s,index:e,parentFiber:n})})}return fiberInterruptAll(a)})),Br=dual(e=>w(e[1]),(e,t,n)=>raceAllFirst([e,t],n)),V=dual(2,(e,t)=>{let n=Object.create(Vr);return n[x]=e,n[C]=t.length===1?t:e=>t(e),n}),Vr=makePrimitiveProto({op:`OnSuccess`,[S](e){return e._stack.push(this),this[x]}}),effectIsExit=e=>we in e,Hr=dual(2,(e,t)=>effectIsExit(e)?e._tag===`Success`?t(e.value):e:V(e,t)),Ur=__name(e=>V(e,identity),`flatten`),H=dual(2,(e,t)=>V(e,e=>F(b(()=>t(e))))),Wr=dual(2,(e,t)=>effectIsExit(e)?Jr(e,t):H(e,t)),Gr=dual(2,(e,t)=>effectIsExit(e)?Yr(e,t):hi(e,t)),Kr=dual(2,(e,t)=>{if(effectIsExit(e)){if(e._tag===`Success`)return e;let n=sr(e.cause);return M(n)?e:t(n.success)}return di(e,t)}),qr=__name(e=>E(causeInterrupt(e)),`exitInterrupt`),exitIsSuccess=e=>e._tag===`Success`,exitIsFailure=e=>e._tag===`Failure`,exitFilterCause=e=>e._tag===`Failure`?A(e.cause):j(e),U=T(void 0),Jr=dual(2,(e,t)=>e._tag===`Success`?T(t(e.value)):e),Yr=dual(2,(e,t)=>{if(e._tag===`Success`)return e;let n=sr(e.cause);return M(n)?e:exitFail(t(n.success))}),Xr=dual(2,(e,t)=>exitIsSuccess(e)?t:e),exitAsVoidAll=e=>{let t=[];for(let n of e)n._tag===`Failure`&&t.push(...n.cause.reasons);return t.length===0?U:E(causeFromReasons(t))},exitGetSuccess=e=>exitIsSuccess(e)?O(e.value):none(),Zr=__name(e=>D(t=>F(hn(t.context,e))),`serviceOption`),Qr=dual(2,(e,t)=>D(n=>{let r=n.context,i=t(r);return r===i?e:(n.setContext(i),Ri(e,()=>{n.setContext(r)}))})),$r=dual(3,(e,t,n)=>Qr(e,e=>{let r=fn(e,t),i=n(r);return r===i?e:un(e,t,i)})),ei=__name(()=>ti,`context`),ti=D(e=>F(e.context)),ni=__name(e=>D(t=>e(t.context)),`contextWith`),ri=dual(2,(e,t)=>effectIsExit(e)?e:Qr(e,gn(t))),ii=__name(function(){return arguments.length===1?dual(2,(e,t)=>provideServiceImpl(e,arguments[0],t)):dual(3,(e,t,n)=>provideServiceImpl(e,t,n)).apply(this,arguments)},`provideService`),provideServiceImpl=(e,t,n)=>Qr(e,e=>e.mapUnsafe.get(t.key)===n?e:un(e,t,n)),ai=dual(e=>w(e[1]),(e,t,n)=>oi(e,t,(e,t)=>[e,t],n)),oi=dual(e=>w(e[1]),(e,t,n,r)=>r?.concurrent?H(ea([e,t],{concurrency:2}),([e,t])=>b(()=>n(e,t))):V(e,e=>H(t,t=>b(()=>n(e,t))))),si=dual(e=>w(e[0]),(e,t)=>ta({while:c,body:constant(t?.disableYield?e:V(e,e=>br)),step:d})),ci=dual(2,(e,t)=>{let n=Object.create(li);return n[x]=e,n[De]=t.length===1?t:e=>t(e),n}),li=makePrimitiveProto({op:`OnFailure`,[S](e){return e._stack.push(this),this[x]}}),ui=dual(3,(e,t,n)=>ci(e,e=>{let r=t(e);return M(r)?I(r.failure):b(()=>n(r.success,e))})),di=dual(2,(e,t)=>ui(e,sr,e=>t(e))),fi=dual(e=>w(e[0]),(e,t,n,r)=>ci(e,e=>{let i=sr(e);return M(i)?I(i.failure):t(i.success)?b(()=>n(i.success)):r?b(()=>r(i.success)):I(e)})),pi=dual(e=>w(e[0]),(e,t,n,r)=>ci(e,e=>{let i=sr(e);if(M(i))return I(i.failure);let a=t(i.success);return M(a)?r?b(()=>r(a.failure)):I(e):b(()=>n(a.success))})),mi=dual(e=>w(e[0]),(e,t,n,r)=>fi(e,Array.isArray(t)?e=>p(e,`_tag`)&&t.includes(e._tag):m(t),n,r)),hi=dual(2,(e,t)=>di(e,e=>failSync(()=>t(e)))),gi=__name(e=>di(e,Cr),`orDie`),_i=dual(2,(e,t)=>di(e,e=>L(t))),vi=dual(e=>w(e[0]),(e,t)=>{if(!t?.log)return xi(e,{onFailure:e=>z,onSuccess:e=>z});let n=logWithLevel(t.log===!0?void 0:t.log);return yi(e,{onFailure(e){let r=findFail(e);return M(r)?I(r.failure):t.message===void 0?n(e):n(t.message,e)},onSuccess:e=>z})}),result=e=>Ci(e,{onFailure:j,onSuccess:A}),yi=dual(2,(e,t)=>{let n=Object.create(bi);return n[x]=e,n[C]=t.onSuccess.length===1?t.onSuccess:e=>t.onSuccess(e),n[De]=t.onFailure.length===1?t.onFailure:e=>t.onFailure(e),n}),bi=makePrimitiveProto({op:`OnSuccessAndFailure`,[S](e){return e._stack.push(this),this[x]}}),xi=dual(2,(e,t)=>yi(e,{onFailure:e=>{let n=e.reasons.find(Re);return n?b(()=>t.onFailure(n.error)):I(e)},onSuccess:t.onSuccess})),Si=dual(2,(e,t)=>xi(e,{onFailure:e=>L(()=>t.onFailure(e)),onSuccess:e=>L(()=>t.onSuccess(e))})),Ci=dual(2,(e,t)=>{if(effectIsExit(e)){if(e._tag===`Success`)return T(t.onSuccess(e.value));let n=sr(e.cause);return M(n)?e:T(t.onFailure(n.success))}return Si(e,t)}),wi=__name(e=>effectIsExit(e)?T(e):Ti(e),`exit`),Ti=makePrimitive({op:`Exit`,[S](e){return e._stack.push(this),this[x]},[C](e,t,n){return F(n??T(e))},[De](e,t,n){return F(n??E(e))}}),Ei=dual(2,(e,t)=>Br(e,V(Oa(t.duration),t.orElse))),Di=`~effect/Scope`,Oi=`~effect/Scope/Closeable`,ki=Service(`effect/Scope`),scopeClose=(e,t)=>R(()=>scopeCloseUnsafe(e,t)??z),scopeCloseUnsafe=(e,t)=>{if(e.state._tag===`Closed`)return;let n={_tag:`Closed`,exit:t};if(e.state._tag===`Empty`){e.state=n;return}let{finalizers:r}=e.state;if(e.state=n,r.size!==0)return r.size===1?r.values().next().value(t):Ai(e,r,t)},Ai=Ar(function*(e,t,n){let r=[],i=[],a=Array.from(t.values()),o=getCurrentFiber();for(let t=a.length-1;t>=0;t--){let s=a[t];e.strategy===`sequential`?r.push(yield*wi(s(n))):i.push(aa(o,s(n),!0,!0,`inherit`))}return i.length>0&&(r=yield*fiberAwaitAll(i)),yield*exitAsVoidAll(r)}),scopeFork=(e,t)=>L(()=>scopeForkUnsafe(e,t)),scopeForkUnsafe=(e,t)=>{let n=scopeMakeUnsafe(t);if(e.state._tag===`Closed`)return n.state=e.state,n;let r={};return scopeAddFinalizerUnsafe(e,r,e=>scopeClose(n,e)),scopeAddFinalizerUnsafe(n,r,t=>L(()=>scopeRemoveFinalizerUnsafe(e,r))),n},scopeAddFinalizerExit=(e,t)=>R(()=>e.state._tag===`Closed`?t(e.state.exit):(scopeAddFinalizerUnsafe(e,{},t),z)),scopeAddFinalizer=(e,t)=>scopeAddFinalizerExit(e,constant(t)),scopeAddFinalizerUnsafe=(e,t,n)=>{e.state._tag===`Empty`?e.state={_tag:`Open`,finalizers:new Map([[t,n]])}:e.state._tag===`Open`&&e.state.finalizers.set(t,n)},scopeRemoveFinalizerUnsafe=(e,t)=>{e.state._tag===`Open`&&e.state.finalizers.delete(t)},scopeMakeUnsafe=(e=`sequential`)=>({[Oi]:Oi,[Di]:Di,strategy:e,state:ji}),ji={_tag:`Empty`},Mi=ki,Ni=ii(ki),Pi=__name(e=>D(t=>{let n=t.context,r=scopeMakeUnsafe();return t.setContext(un(t.context,ki,r)),Ri(e,e=>(t.setContext(n),scopeCloseUnsafe(r,e)))}),`scoped`),Fi=__name(e=>R(()=>{let t=scopeMakeUnsafe();return zi(e(t),e=>R(()=>scopeCloseUnsafe(t,e)??z))}),`scopedWith`),Ii=__name((e,t,n)=>ni(r=>$i(i=>V(Mi,a=>Rr(n?.interruptible?i(e):e,e=>scopeAddFinalizerExit(a,n=>ri(t(e,n),r)))))),`acquireRelease`),Li=__name(e=>V(Mi,t=>ni(n=>scopeAddFinalizerExit(t,t=>ri(e(t),n)))),`addFinalizer`),Ri=makePrimitive({op:`OnExit`,single:!1,[S](e){return e._stack.push(this),this[x][0]},[Oe](e){e.interruptible&&this[x][2]!==!0&&(e._stack.push(Zi),e.interruptible=!1)},[C](e,t,n){n??=T(e);let r=this[x][1](n);return r?V(r,e=>n):n},[De](e,t,n){n??=E(e);let r=this[x][1](n);return r?V(r,e=>n):n}}),zi=dual(2,Ri),Bi=dual(2,(e,t)=>zi(e,e=>t)),Vi=dual(3,(e,t,n)=>zi(e,e=>{let r=t(e);return M(r)?z:n(r.success,e)})),Hi=dual(2,(e,t)=>Vi(e,exitFilterCause,t)),Ui=dual(3,(e,t,n)=>zi(e,e=>{if(e._tag!==`Failure`)return z;let r=t(e.cause);return M(r)?z:n(r.success,e.cause)})),Wi=dual(2,(e,t)=>Ui(causeFilterInterruptors,t)(e)),Gi=dual(2,(e,t)=>L(()=>{let n=toMillis(fromInputUnsafe(t)),r=Number.isFinite(n),i=makeLatchUnsafe(!1),a=0,o=!1,s,c=V(i.await,()=>s);return[D(t=>{let l=t.getRef(Ca),u=r?l.currentTimeMillisUnsafe():0;return o||u<a?s??c:(o=!0,i.closeUnsafe(),s=void 0,zi(e,e=>L(()=>{o=!1,a=l.currentTimeMillisUnsafe()+n,s=e,i.openUnsafe()})))}),L(()=>{a=0,i.closeUnsafe(),s=void 0})]})),Ki=dual(2,(e,t)=>H(Gi(e,t),e=>e[0])),qi=__name(e=>Ki(e,On),`cached`),Ji=D(e=>I(causeInterrupt(e.id))),Yi=__name(e=>D(t=>t.interruptible?(t.interruptible=!1,t._stack.push(Zi),e):e),`uninterruptible`),Xi=makePrimitive({op:`SetInterruptible`,[Oe](e){if(e.interruptible=this[x],e._interruptedCause&&e.interruptible)return()=>I(e._interruptedCause)}}),Zi=Xi(!0),Qi=Xi(!1),interruptible=e=>D(t=>t.interruptible?e:(t.interruptible=!0,t._stack.push(Qi),t._interruptedCause?I(t._interruptedCause):e)),$i=__name(e=>D(t=>t.interruptible?(t.interruptible=!1,t._stack.push(Zi),e(interruptible)):e(identity)),`uninterruptibleMask`),ea=__name((e,t)=>isIterable(e)?t?.mode===`result`?na(e,result,t):na(e,identity,t):t?.discard?t.mode===`result`?na(Object.values(e),result,t):na(Object.values(e),identity,t):R(()=>{let n={};return Fr(na(Object.entries(e),([e,r])=>H(t?.mode===`result`?result(r):r,t=>{n[e]=t}),{discard:!0,concurrency:t?.concurrency}),n)}),`all`),ta=makePrimitive({op:`While`,[C](e,t){return this[x].step(e),this[x].while()?(t._stack.push(this),this[x].body()):U},[S](e){return this[x].while()?(e._stack.push(this),this[x].body()):U}}),na=dual(e=>typeof e[1]==`function`,(e,t,n)=>D(r=>{let i=n?.concurrency===`inherit`?r.getRef(Xn):n?.concurrency??1,a=i===`unbounded`?1/0:Math.max(1,i);if(a===1)return forEachSequential(e,t,n);let o=fromIterable(e),s=o.length;if(s===0)return n?.discard?z:F([]);let c=n?.discard?void 0:Array(s),l=ra({f:t,out:c},o,{concurrency:a});return l?Fr(l,c):F(c)})),forEachSequential=(e,t,n)=>R(()=>{let r=n?.discard?void 0:[],i=e[Symbol.iterator](),a=i.next(),o=0;return Fr(ta({while:()=>!a.done,body:()=>t(a.value,o++),step:e=>{r&&r.push(e),a=i.next()}}),r)}),iterateEagerImpl=e=>{let t=e.onItem,n=e.step;return(e,r,i)=>{let a=i?.start??0,o=i?.end??r.length,s=i?.concurrency??1,c=!1,l,u,d,f=!1,p,m,go=()=>{let i=!1;for(;!p&&a<o;a++){let o=r[a],h=m??t(e,o,a);if(effectIsExit(h)){if(p=n(e,o,h,a),p)break}else if(s===1)return V(wi(h),t=>(p=n(e,o,t,a),a++,p??go()??z));else if(l){m=void 0;let t=aa(l,h,!0,!0,`inherit`);if(t._exit){if(p=n(e,o,t._exit,a),p)break;continue}u?u.add(t):u=new Set([t]);let r=a;if(t.addObserver(a=>{if(u.delete(t),p){if(!f&&a._tag===`Failure`)for(let e of a.cause.reasons)if(e._tag===`Interrupt`)continue;else p._tag===`Failure`?p.cause.reasons.push(e):p=E(causeFromReasons([e]))}else{let t=n(e,o,a,r);t&&(p=t._tag===`Failure`?E(causeFromReasons(t.cause.reasons.slice())):t,go())}if(i){let e=go();e&&d(e)}else c&&u.size===0&&d(p??z)}),u.size<s)continue;i=!0,a++;return}else return B(e=>{l=getCurrentFiber(),m=h,d=e;let t=go();return t?e(t):R(()=>(p=U,f=!0,u?fiberInterruptAll(u):z))})}if(c=!0,p){if(u&&u.size>0){let e=fiberStackAnnotations(l);u.forEach(t=>t.interruptUnsafe(l.id,e));return}if(d||p._tag===`Failure`)return p}else if(d)if(u)u.size===0&&d(z);else return U};return go()}},iterateEager=()=>iterateEagerImpl,ra=iterateEagerImpl({onItem(e,t,n){return e.f(t,n)},step(e,t,n,r){if(n._tag===`Failure`)return n;e.out&&(e.out[r]=n.value)}}),ia=dual(e=>w(e[0]),(e,t)=>D(n=>(interruptChildrenPatch(),F(aa(n,e,t?.startImmediately,!1,t?.uninterruptible??!1))))),aa=__name((e,t,n=!1,r=!1,i=!1)=>{let a=i===`inherit`?e.interruptible:!i,o=new FiberImpl(e.context,a);return n?o.evaluate(t):e.currentDispatcher.scheduleTask(()=>o.evaluate(t),0),!r&&!o._exit&&(e.children().add(o),o.addObserver(()=>e._children.delete(o))),o},`forkUnsafe`),oa=dual(e=>w(e[0]),(e,t)=>D(n=>F(aa(n,e,t?.startImmediately,!0,t?.uninterruptible)))),sa=dual(e=>w(e[0]),(e,t,n)=>D(r=>{let i=aa(r,e,n?.startImmediately,!0,n?.uninterruptible);if(!i._exit)if(t.state._tag!==`Closed`){let e={},finalizer=()=>withFiberId(e=>e===i.id?z:fiberInterrupt(i));scopeAddFinalizerUnsafe(t,e,finalizer),i.addObserver(()=>scopeRemoveFinalizerUnsafe(t,e))}else i.interruptUnsafe(r.id,fiberStackAnnotations(r));return F(i)})),ca=dual(e=>w(e[0]),(e,t)=>V(Mi,n=>sa(e,n,t))),la=__name(e=>(t,n)=>{let r=new FiberImpl(n?.scheduler?un(e,Rn,n.scheduler):e,n?.uninterruptible!==!0);if(r.evaluate(t),r._exit)return r;if(n?.signal)if(n.signal.aborted)r.interruptUnsafe();else{let abort=()=>r.interruptUnsafe();n.signal.addEventListener(`abort`,abort,{once:!0}),r.addObserver(()=>n.signal.removeEventListener(`abort`,abort))}return n?.onFiberStart&&n.onFiberStart(r),r},`runForkWith`),ua=dual(2,(e,t)=>{if(e._exit)return e;if(t.state._tag===`Closed`)return e.interruptUnsafe(e.id),e;let n={};return scopeAddFinalizerUnsafe(t,n,()=>fiberInterrupt(e)),e.addObserver(()=>scopeRemoveFinalizerUnsafe(t,n)),e}),da=la(sn()),runPromiseExitWith=e=>{let t=la(e);return(e,n)=>{let r=t(e,n);return new Promise(e=>{r.addObserver(t=>e(t))})}},fa=runPromiseExitWith(sn()),runPromiseWith=e=>{let t=runPromiseExitWith(e);return(e,n)=>t(e,n).then(e=>{if(e._tag===`Failure`)throw causeSquash(e.cause);return e.value})},pa=runPromiseWith(sn()),runSyncExitWith=e=>{let t=la(e);return e=>{if(effectIsExit(e))return e;let n=t(e,{scheduler:new MixedScheduler(`sync`)});return n.currentDispatcher?.flush(),n._exit??exitDie(new AsyncFiberError(n))}},ma=runSyncExitWith(sn()),runSyncWith=e=>{let t=runSyncExitWith(e);return e=>{let n=t(e);if(n._tag===`Failure`)throw causeSquash(n.cause);return n.value}},ha=runSyncWith(sn()),ga=F(!0),_a=F(!1);var Latch=class{waiters=[];scheduled=!1;isOpen;constructor(e){this.isOpen=e}scheduleUnsafe(e){return this.scheduled||this.waiters.length===0?ga:(this.scheduled=!0,e.currentDispatcher.scheduleTask(this.flushWaiters,0),ga)}flushWaiters=()=>{this.scheduled=!1;let e=this.waiters;this.waiters=[];for(let t=0;t<e.length;t++)e[t](U)};open=D(e=>this.isOpen?_a:(this.isOpen=!0,this.scheduleUnsafe(e)));release=D(e=>this.isOpen?_a:this.scheduleUnsafe(e));openUnsafe(){return this.isOpen?!1:(this.isOpen=!0,this.flushWaiters(),!0)}await=B(e=>this.isOpen?e(z):(this.waiters.push(e),L(()=>{let t=this.waiters.indexOf(e);t!==-1&&this.waiters.splice(t,1)})));closeUnsafe(){return this.isOpen?(this.isOpen=!1,!0):!1}close=L(()=>this.closeUnsafe());whenOpen=e=>V(this.await,()=>e)};const makeLatchUnsafe=e=>new Latch(e??!1),makeLatch=e=>L(()=>makeLatchUnsafe(e)),va=BigInt(0),ya={_tag:`Span`,spanId:`noop`,traceId:`noop`,sampled:!1,status:{_tag:`Ended`,startTime:va,endTime:va,exit:U},attributes:new Map,links:[],kind:`internal`,attribute(){},event(){},end(){},addLinks(){}},noopSpan=e=>Object.assign(Object.create(ya),e),filterDisablePropagation=e=>e?pn(e.annotations,Wn)?e._tag===`Span`?filterDisablePropagation(xt(e.parent)):none():O(e):none(),makeSpanUnsafe=(e,t,n)=>{let r=!e.getRef(Qn)||n?.annotations&&pn(n.annotations,Wn),i=n?.parent===void 0?n?.root?none():filterDisablePropagation(e.currentSpan):O(n.parent),a;if(r)a=noopSpan({name:t,parent:i,annotations:un(n?.annotations??sn(),Wn,!0)});else{let r=e.getRef(Jn),o=e.getRef(Ca),s=e.getRef($n),c=e.getRef(er),l=e.getRef(tr),u=n?.level??e.getRef(Gn),d=n?.links===void 0?l.slice():[...l,...n.links];a=r.span({name:t,parent:i,annotations:n?.annotations??sn(),links:d,startTime:s?o.currentTimeNanosUnsafe():BigInt(0),kind:n?.kind??`internal`,root:n?.root??k(i),sampled:n?.sampled??(vt(i)&&i.value.sampled===!1?!1:!Na(e.getRef(Kn),u))});for(let[e,t]of Object.entries(c))a.attribute(e,t);if(n?.attributes!==void 0)for(let[e,t]of Object.entries(n.attributes))a.attribute(e,t)}return a},provideSpanStackFrame=(e,t)=>(t=typeof t==`function`?t:u,$r(Zn,n=>({name:e,stack:t,parent:n}))),ba=__name((e,...t)=>{let n=t.length===1?void 0:t[0],r=t[t.length-1];return D(t=>{let i=makeSpanUnsafe(t,e,n),a=t.getRef(Ca);return zi(b(()=>r(i)),e=>L(()=>{i.status._tag!==`Ended`&&i.end(a.currentTimeNanosUnsafe(),e)}))})},`useSpan`),xa=ii(ParentSpan),Sa=__name(function(){let e=w(arguments[0]),t=e?arguments[1]:arguments[0],n=e?arguments[2]:arguments[1],r=identity;return t._tag===`Span`&&(n=addSpanStackTrace(n),r=provideSpanStackFrame(t.name,n?.captureStackTrace)),e?xa(r(arguments[0]),t):e=>xa(r(e),t)},`withParentSpan`),Ca=N(`effect/Clock`,{defaultValue:()=>new ClockImpl}),wa=2**31-1;var ClockImpl=class{currentTimeMillisUnsafe(){return Date.now()}currentTimeMillis=L(()=>this.currentTimeMillisUnsafe());currentTimeNanosUnsafe(){return Ea()}currentTimeNanos=L(()=>this.currentTimeNanosUnsafe());sleep(e){let t=toMillis(e);return t<=0?br:B(e=>{if(t>wa)return;let n=setTimeout(()=>e(z),t);return L(()=>clearTimeout(n))})}};const Ta=function(){let e=BigInt(1e6);if(typeof performance>`u`||performance.now===void 0)return()=>BigInt(Date.now())*e;if(typeof performance.timeOrigin==`number`&&performance.timeOrigin===0)return()=>BigInt(Math.round(performance.now()*1e6));let t=BigInt(Date.now())*e-BigInt(Math.round(performance.now()*1e6));return()=>t+BigInt(Math.round(performance.now()*1e6))}(),Ea=function(){let e=typeof process==`object`&&`hrtime`in process&&typeof process.hrtime.bigint==`function`?process.hrtime:void 0;if(!e)return Ta;let t=Ta()-e.bigint();return()=>t+e.bigint()}(),Da=__name(e=>D(t=>e(t.getRef(Ca))),`clockWith`),Oa=__name(e=>Da(t=>t.sleep(fromInputUnsafe(e))),`sleep`);We(`TimeoutError`);const ka=`~effect/Cause/IllegalArgumentError`;(class extends We(`IllegalArgumentError`){static{__name(this,`IllegalArgumentError`)}[ka]=ka;constructor(e){super({message:e})}}),We(`ExceededCapacityError`);const Aa=`~effect/Cause/AsyncFiberError`;var AsyncFiberError=class extends We(`AsyncFiberError`){[Aa]=Aa;constructor(e){super({message:`An asynchronous Effect was executed with Effect.runSync`,fiber:e})}};const ja=`~effect/Cause/UnknownError`;var UnknownError$1=class extends We(`UnknownError`){static{__name(this,`UnknownError`)}[ja]=ja;constructor(e,t){super({message:t,cause:e})}};const Ma=N(`effect/Console/CurrentConsole`,{defaultValue:()=>globalThis.console}),logLevelToOrder=e=>{switch(e){case`All`:return-(2**53-1);case`Fatal`:return 5e4;case`Error`:return 4e4;case`Warn`:return 3e4;case`Info`:return 2e4;case`Debug`:return 1e4;case`Trace`:return 0;case`None`:return 2**53-1}},Na=gt(ht(mt,logLevelToOrder)),Pa=N(`effect/Loggers/CurrentLoggers`,{defaultValue:()=>new Set([Ha,Ua])}),Fa=N(`effect/Logger/LogToStderr`,{defaultValue:l}),Ia={"~effect/Logger":{_Message:identity,_Output:identity},pipe(){return pipeArguments(this,arguments)}},loggerMake=e=>{let t=Object.create(Ia);return t.log=e,t},formatLabel=e=>e.replace(/[\s="]/g,`_`),formatLogSpan=(e,t)=>`${formatLabel(e[0])}=${t-e[1]}ms`,structuredMessage=e=>{switch(typeof e){case`bigint`:case`function`:case`symbol`:return String(e);default:return toJson(e)}},logWithLevel=e=>(...t)=>{let n;for(let e=0,r=t.length;e<r;e++){let r=t[e];isCause(r)&&(n?t.splice(e,1):t=t.slice(0,e).concat(t.slice(e+1)),n=n?causeFromReasons(n.reasons.concat(r.reasons)):r,e--)}return n===void 0&&(n=Ie),D(r=>{let i=e??r.currentLogLevel;if(Na(r.minimumLogLevel,i))return z;let a=r.getRef(Ca),o=r.getRef(Pa);if(o.size>0){let e=new Date(a.currentTimeMillisUnsafe());for(let a of o)a.log({cause:n,fiber:r,date:e,logLevel:i,message:t})}return z})},withColor=(e,...t)=>{let n=``;for(let e=0;e<t.length;e++)n+=`\x1b[${t[e]}m`;return n+e+`\x1B[0m`},withColorNoop=(e,...t)=>e,W={bold:`1`,red:`31`,green:`32`,yellow:`33`,blue:`34`,cyan:`36`,white:`37`,gray:`90`,black:`30`,bgBrightRed:`101`},La={None:[],All:[],Trace:[W.gray],Debug:[W.blue],Info:[W.green],Warn:[W.yellow],Error:[W.red],Fatal:[W.bgBrightRed,W.black]},Ra={None:``,All:``,Trace:`color:gray`,Debug:`color:blue`,Info:`color:green`,Warn:`color:orange`,Error:`color:red`,Fatal:`background-color:red;color:white`},defaultDateFormat=e=>`${e.getHours().toString().padStart(2,`0`)}:${e.getMinutes().toString().padStart(2,`0`)}:${e.getSeconds().toString().padStart(2,`0`)}.${e.getMilliseconds().toString().padStart(3,`0`)}`,za=typeof process==`object`&&process!==null&&typeof process.stdout==`object`&&process.stdout!==null,Ba=za&&process.stdout.isTTY===!0,Va=za||`Deno`in globalThis,consolePretty=e=>{let t=e?.mode??`auto`,n=(t===`auto`?Va?`tty`:`browser`:t)===`browser`,r=typeof e?.colors==`boolean`?e.colors:Ba||n,i=e?.formatDate??defaultDateFormat;return n?prettyLoggerBrowser({colors:r,formatDate:i}):prettyLoggerTty({colors:r,formatDate:i})},prettyLoggerTty=e=>{let t=typeof process==`object`&&`isBun`in process&&process.isBun===!0,n=e.colors?withColor:withColorNoop;return loggerMake(({cause:r,date:i,fiber:a,logLevel:o,message:s})=>{let c=a.getRef(Ma),l=a.getRef(Fa)?c.error:c.log,u=Array.isArray(s)?s.slice():[s],d=n(`[${e.formatDate(i)}]`,W.white)+` ${n(o.toUpperCase(),...La[o])} (#${a.id})`,f=i.getTime(),p=a.getRef(ar);for(let e of p)d+=` `+formatLogSpan(e,f);d+=`:`;let m=0;if(u.length>0){let e=structuredMessage(u[0]);typeof e==`string`&&(d+=` `+n(e,W.bold,W.cyan),m++)}if(l(d),t||c.group(),r.reasons.length>0&&l(causePretty(r)),m<u.length)for(;m<u.length;m++)l(redact(u[m]));let h=a.getRef(nr);for(let[e,t]of Object.entries(h))l(n(`${e}:`,W.bold,W.white),redact(t));t||c.groupEnd()})},prettyLoggerBrowser=e=>{let t=e.colors?`%c`:``;return loggerMake(({cause:n,date:r,fiber:i,logLevel:a,message:o})=>{let s=i.getRef(Ma),c=Array.isArray(o)?o.slice():[o],l=`${t}[${e.formatDate(r)}]`,u=[];e.colors&&u.push(`color:gray`),l+=` ${t}${a.toUpperCase()}${t} (#${i.id})`,e.colors&&u.push(Ra[a],``);let d=r.getTime(),f=i.getRef(ar);for(let e of f)l+=` `+formatLogSpan(e,d);l+=`:`;let p=0;if(c.length>0){let n=structuredMessage(c[0]);typeof n==`string`&&(l+=` ${t}${n}`,e.colors&&u.push(`color:deepskyblue`),p++)}if(s.groupCollapsed(l,...u),n.reasons.length>0&&s.error(causePretty(n)),p<c.length)for(;p<c.length;p++)s.log(redact(c[p]));let m=i.getRef(nr);for(let[t,n]of Object.entries(m)){let r=redact(n);e.colors?s.log(`%c${t}:`,`color:gray`,r):s.log(`${t}:`,r)}s.groupEnd()})},Ha=loggerMake(({cause:e,date:t,fiber:n,logLevel:r,message:i})=>{let a=Array.isArray(i)?i.slice():[i];e.reasons.length>0&&a.push(causePretty(e));let o=t.getTime(),s=n.getRef(ar),c=``;for(let e of s)c+=` ${formatLogSpan(e,o)}`;let l=n.getRef(nr);Object.keys(l).length>0&&a.push(l);let u=n.getRef(Ma);(n.getRef(Fa)?u.error:u.log)(`[${defaultDateFormat(t)}] ${r.toUpperCase()} (#${n.id})${c}:`,...a)}),Ua=loggerMake(({cause:e,fiber:t,logLevel:n,message:r})=>{let i=t.getRef(Ca),a=t.getRef(nr),o=t.currentSpan;if(o===void 0||o._tag===`ExternalSpan`)return;let s={};for(let[e,t]of Object.entries(a))s[e]=t;s[`effect.fiberId`]=t.id,s[`effect.logLevel`]=n.toUpperCase(),e.reasons.length>0&&(s[`effect.cause`]=causePretty(e)),o.event(toStringUnknown(Array.isArray(r)&&r.length===1?r[0]:r),i.currentTimeNanosUnsafe(),s)});function interruptChildrenPatch(){gr.interruptChildren??=fiberInterruptChildren}const Wa=Re,Ga=ze,Ka=causeFail,qa=ur,Ja=causeSquash,Ya=sr,Xa=cr,Za=lr,Qa=causeFilterInterruptors,$a=Ke,eo=Je,G=Xe,to=UnknownError$1;var StackTrace=class extends Service()(`effect/Cause/StackTrace`){};Service()(`effect/Cause/InterruptorStackTrace`);const no=Ue,ro=We,io=T,ao=E,oo=exitFail,so=U,co=exitIsSuccess,lo=exitIsFailure,uo=exitGetSuccess,fo={"~effect/Deferred":{_A:identity,_E:identity},pipe(){return pipeArguments(this,arguments)}},po=__name(()=>{let e=Object.create(fo);return e.resumes=void 0,e.effect=void 0,e},`makeUnsafe`),_await=e=>B(t=>e.effect?t(e.effect):(e.resumes??=[],e.resumes.push(t),L(()=>{let n=e.resumes.indexOf(t);e.resumes.splice(n,1)}))),mo=dual(2,(e,t)=>L(()=>doneUnsafe(e,t))),ho=dual(2,(e,t)=>mo(e,exitFail(t))),isDone=e=>L(()=>isDoneUnsafe(e)),isDoneUnsafe=e=>e.effect!==void 0,doneUnsafe=(e,t)=>{if(e.effect)return!1;if(e.effect=t,e.resumes){for(let n=0;n<e.resumes.length;n++)e.resumes[n](t);e.resumes=void 0}return!0},_o=dual(2,(e,t)=>$i(n=>V(wi(n(e)),e=>mo(t,e)))),vo=nr,yo=ar,bo=ir,xo=ki,So=scopeMakeUnsafe,Co=Ni,wo=scopeAddFinalizerExit,To=scopeAddFinalizer,Eo=scopeFork,K=scopeForkUnsafe,Do=scopeClose,Oo=`~effect/Layer/MemoMap`,memoMapReuse=(e,t)=>(e.observers++,Lr(scopeAddFinalizerExit(t,t=>e.finalizer(t)),e.effect)),ko={"~effect/Layer":{_ROut:identity,_E:identity,_RIn:identity},pipe(){return pipeArguments(this,arguments)}},fromBuildUnsafe=e=>{let t=Object.create(ko);return t.build=e,t},fromBuild=e=>fromBuildUnsafe((t,n)=>{let r=K(n);return zi(e(t,r),e=>e._tag===`Failure`?Do(r,e):z)}),fromBuildMemo=e=>{let t=fromBuild((n,r)=>n.getOrElseMemoize(t,r,e));return t},memoMapBuild=(e,t,n,r)=>{let i=So(),a=po(),o={observers:1,effect:_await(a),finalizer:n=>R(()=>(o.observers--,o.observers===0?(e.map.delete(t),Do(i,n)):z))};return e.map.set(t,o),scopeAddFinalizerExit(n,o.finalizer).pipe(V(()=>r(e,i)),zi(e=>(o.effect=e,mo(a,e))))};var MemoMapImpl=class{get[Oo](){return Oo}parent;constructor(e){this.parent=e}map=new Map;get(e,t){let n=this.map.get(e);return n?memoMapReuse(n,t):this.parent?.get(e,t)}getOrElseMemoize(e,t,n){return this.get(e,t)||memoMapBuild(this,e,t,n)}};const makeMemoMapUnsafe=()=>new MemoMapImpl;var CurrentMemoMap=class extends Service()(`effect/Layer/CurrentMemoMap`){static getOrCreate=dn(this,makeMemoMapUnsafe)};const Ao=dual(3,(e,t,n)=>ii(H(e.build(t,n),un(CurrentMemoMap,t)),CurrentMemoMap,t)),jo=dual(2,(e,t)=>D(n=>Ao(e,CurrentMemoMap.getOrCreate(n.context),t))),Mo=__name(function(){return arguments.length===1?e=>succeedContext(ln(arguments[0],e)):succeedContext(ln(arguments[0],arguments[1]))},`succeed`),succeedContext=e=>fromBuildUnsafe(constant(F(e))),No=succeedContext(sn()),Po=__name(function(){return arguments.length===1?e=>syncContext(()=>ln(arguments[0],e())):syncContext(()=>ln(arguments[0],arguments[1]()))},`sync`),syncContext=e=>fromBuildMemo(constant(L(e))),effect=function(){return arguments.length===1?e=>effectImpl(arguments[0],e):effectImpl(arguments[0],arguments[1])},effectImpl=(e,t)=>effectContext(H(t,t=>ln(e,t))),effectContext=e=>fromBuildMemo((t,n)=>Co(e,n)),Fo=__name(e=>{let t=Service(`effect/Layer/unwrap`);return Bo(effect(t)(e),pn(t))},`unwrap`),mergeAllEffect=(e,t,n)=>{let r=K(n,`parallel`);return na(e,e=>e.build(t,K(r,`sequential`)),{concurrency:e.length}).pipe(H(e=>_n(...e)))},Io=__name((...e)=>fromBuild((t,n)=>mergeAllEffect(e,t,n)),`mergeAll`),Lo=dual(2,(e,t)=>Io(e,...Array.isArray(t)?t:[t])),provideWith=(e,t,n)=>fromBuild((r,i)=>V(Array.isArray(t)?mergeAllEffect(t,r,i):t.build(r,i),t=>e.build(r,i).pipe(ri(t),H(e=>n(e,t))))),Ro=dual(2,(e,t)=>provideWith(e,t,identity)),zo=dual(2,(e,t)=>provideWith(e,t,(e,t)=>gn(t,e))),Bo=dual(2,(e,t)=>fromBuild((n,r)=>V(e.build(n,r),e=>t(e).build(n,r)))),Vo=`~effect/time/DateTime`,Ho=`~effect/time/DateTime/TimeZone`,Uo={[Vo]:Vo,pipe(){return pipeArguments(this,arguments)},[y](){return this.toString()},toJSON(){return Go(this).toJSON()}};({...Uo}),{...Uo};const Wo={[Ho]:Ho,[y](){return this.toString()}};({...Wo}),{...Wo};const Go=__name(e=>new Date(e.epochMilliseconds),`toDateUtc`),Ko=dual(2,(e,t)=>ui(e,Yo,e=>t(e))),isDoneCause=e=>e.reasons.some(isDoneFailure),isDoneFailure=e=>e._tag===`Fail`&&$a(e.error),qo=Ln(Ya,e=>$a(e)?A(e):j(e)),Jo=fromPredicate(e=>e.reasons.every(e=>!isDoneFailure(e))),Yo=Ln(Ya,e=>$a(e)?A(e.value):j(e)),doneExitFromCause=e=>{let t=qo(e);return M(t)?ao(t.failure):io(t.success.value)},Xo=dual(2,(e,t)=>yi(e,{onSuccess:t.onSuccess,onFailure:e=>{let n=qo(e);return M(n)?t.onFailure(n.failure):t.onDone(n.success.value)}})),Zo={"~effect/Schedule":{_Out:identity,_In:identity,_Env:identity},pipe(){return pipeArguments(this,arguments)}},fromStep=e=>{let t=Object.create(Zo);return t.step=e,t},metadataFn=()=>{let e=0,t,n;return(r,i)=>{n===void 0&&(n=r);let a=r-n,o=t===void 0?0:r-t;return t=r,{input:i,attempt:++e,start:n,now:r,elapsed:a,elapsedSincePrevious:o}}},fromStepWithMetadata=e=>fromStep(H(e,e=>{let t=metadataFn();return(n,r)=>e(t(n,r))})),toStep=e=>ci(e.step,e=>F(()=>I(e))),Qo=dual(2,(e,t)=>$o(e,t,(e,t)=>[e,t])),$o=dual(3,(e,t,n)=>fromStep(H(ai(toStep(e),toStep(t)),([e,t])=>(r,i)=>Xo(e(r,i),{onSuccess:e=>t(r,i).pipe(H(t=>[n(e[0],t[0]),Pn(e[1],t[1])]),Ko(t=>G(n(e[0],t)))),onDone:e=>t(r,i).pipe(V(t=>G(n(e,t[0]))),Ko(t=>G(n(e,t)))),onFailure:I})))),exponential=(e,t=2)=>{let n=toMillis(fromInputUnsafe(e));return fromStepWithMetadata(F(e=>{let r=millis(n*t**(e.attempt-1));return F([r,r])}))},recurs=e=>es(ts,({attempt:t})=>F(t<=e)),spaced=e=>{let t=fromInputUnsafe(e);return fromStepWithMetadata(F(e=>F([e.attempt-1,t])))},es=dual(2,(e,t)=>fromStep(H(toStep(e),e=>{let n=metadataFn();return(r,i)=>V(e(r,i),e=>{let[a,o]=e,s=t({...n(r,i),output:a,duration:o});return V(w(s)?s:F(s),t=>t?F(e):G(a))})}))),ts=spaced(Dn),provideLayer=(e,t,n)=>Fi(r=>V(n?.local?Ao(t,makeMemoMapUnsafe(),r):jo(t,r),t=>ri(e,t))),ns=dual(e=>w(e[0]),(e,t,n)=>isContext(t)?ri(e,t):provideLayer(e,Array.isArray(t)?Io(...t):t,n)),rs=w,is=ea,as=na,os=ta,ss=Tr,cs=Er,q=F,ls=Sr,us=xr,J=R,ds=L,fs=z,ps=B,ms=kr,Y=vr,hs=I,gs=Cr,_s=wr,vs=br,ys=D,bs=yr,X=V,xs=Ur,Ss=Lr,Cs=Rr,ws=wi,Ts=H,Es=Fr,Ds=Ir,Os=zr,ks=ai,As=di,js=mi,Ms=ci,Ns=pi,Ps=ui,Fs=hi,Is=gi,Ls=vi,Rs=_i,zs=Ei,Bs=Oa,Vs=Br,Hs=yi,Us=xi,Ws=ei,Gs=ni,Ks=ns,qs=ri,Js=Zr,Ys=Qr,Xs=ii,Zs=Mi,Qs=Pi,$s=Fi,ec=Ii,tc=Li,nc=Bi,rc=Hi,ic=zi,ac=qi,oc=Ji,sc=Wi,cc=Yi,lc=$i,uc=si,dc=ba,fc=Sa,pc=ia,mc=sa,hc=ca,gc=da,_c=la,vc=pa,yc=fa,bc=ha,xc=ma,Sc=Ar,Cc=Mr,wc=Da,Tc=logWithLevel(`Error`);Service()(`effect/Effect/Transaction`);const effectify=(e,t,n)=>(...r)=>ps(i=>{try{e(...r,(e,n)=>{i(e?Y(t?t(e,r):e):q(n))})}catch(e){i(n?Y(n(e,r)):gs(e))}}),Ec=Wr,Dc=Gr,Oc=Hr,kc=Kr,Ac=Nr;Service()(`effect/DateTime/CurrentTimeZone`),ro(`EncodingError`);function resolve(e){return e.checks?e.checks[e.checks.length-1].annotations:e.annotations}function resolveAt(e){return t=>resolve(t)?.[e]}const jc=resolveAt(`identifier`),Mc=memoize(e=>{let t=jc(e);return typeof t==`string`?t:e.getExpected(Mc)});function set(e,t,n){return t===`__proto__`?Object.defineProperty(e,t,{value:n,writable:!0,enumerable:!0,configurable:!0}):e[t]=n,e}globalThis.RegExp;const escape=e=>e.replace(/[/\\^$*+?.()|[\]{}]/g,`\\$&`),Nc=new WeakMap,Pc=__name(e=>{if(Nc.has(e))return Nc.get(e);throw Error(`Unable to get redacted value`+(e.label?` with label: "${e.label}"`:``))},`value`),Fc=`~effect/data/Redacted`,isRedacted=e=>p(e,Fc),Ic=__name((e,t)=>{let n=Object.create(Lc);return t?.label&&(n.label=t.label),Nc.set(n,e),n},`make`),Lc={[Fc]:{_A:e=>e},label:void 0,...Ae,toJSON(){return this.toString()},toString(){return`<redacted${isString(this.label)?`:`+this.label:``}>`},[h](){return hash(Nc.get(this))},[v](e){return isRedacted(e)&&equals$2(Nc.get(this),Nc.get(e))}},Rc=Pc,zc=`~effect/SchemaIssue/Issue`;function isIssue(e){return p(e,zc)}var Base$1=class{static{__name(this,`Base`)}[zc]=zc;toString(){return Bc(this)}},Filter$1=class extends Base$1{static{__name(this,`Filter`)}_tag=`Filter`;actual;filter;issue;constructor(e,t,n){super(),this.actual=e,this.filter=t,this.issue=n}},Encoding=class extends Base$1{_tag=`Encoding`;ast;actual;issue;constructor(e,t,n){super(),this.ast=e,this.actual=t,this.issue=n}},Pointer=class extends Base$1{_tag=`Pointer`;path;issue;constructor(e,t){super(),this.path=e,this.issue=t}},MissingKey=class extends Base$1{_tag=`MissingKey`;annotations;constructor(e){super(),this.annotations=e}},UnexpectedKey=class extends Base$1{_tag=`UnexpectedKey`;ast;actual;constructor(e,t){super(),this.ast=e,this.actual=t}},Composite=class extends Base$1{_tag=`Composite`;ast;actual;issues;constructor(e,t,n){super(),this.ast=e,this.actual=t,this.issues=n}},InvalidType=class extends Base$1{_tag=`InvalidType`;ast;actual;constructor(e,t){super(),this.ast=e,this.actual=t}},InvalidValue=class extends Base$1{_tag=`InvalidValue`;actual;annotations;constructor(e,t){super(),this.actual=e,this.annotations=t}},AnyOf=class extends Base$1{_tag=`AnyOf`;ast;actual;issues;constructor(e,t,n){super(),this.ast=e,this.actual=t,this.issues=n}},OneOf=class extends Base$1{_tag=`OneOf`;ast;actual;successes;constructor(e,t,n){super(),this.ast=e,this.actual=t,this.successes=n}};function makeFilterIssue(e,t){if(isIssue(t))return t;if(typeof t==`string`)return new InvalidValue(O(e),{message:t});let n=typeof t.issue==`string`?new InvalidValue(O(e),{message:t.issue}):t.issue;return new Pointer(t.path,n)}function makeSingle(e,t){if(t!==void 0)return typeof t==`boolean`?t?void 0:new InvalidValue(O(e)):makeFilterIssue(e,t)}function make$7(e,t,n){return Array.isArray(n)?It(n)?n.length===1?makeFilterIssue(e,n[0]):new Composite(t,O(e),Ht(n,t=>makeFilterIssue(e,t))):void 0:makeSingle(e,n)}__name(make$7,`make`);const defaultLeafHook=e=>{let t=findMessage(e);if(t!==void 0)return t;switch(e._tag){case`InvalidType`:return getExpectedMessage(Mc(e.ast),formatOption(e.actual));case`InvalidValue`:return`Invalid data ${formatOption(e.actual)}`;case`MissingKey`:return`Missing key`;case`UnexpectedKey`:return`Unexpected key with value ${format$1(e.actual)}`;case`Forbidden`:return`Forbidden operation`;case`OneOf`:return`Expected exactly one member to match the input ${format$1(e.actual)}`}},defaultCheckHook=e=>findMessage(e.issue)??findMessage(e);function getExpectedMessage(e,t){return`Expected ${e}, got ${t}`}function toDefaultIssues(e,t,n,r){switch(e._tag){case`Filter`:{let i=r(e);if(i!==void 0)return[{path:t,message:i}];switch(e.issue._tag){case`InvalidValue`:return[{path:t,message:getExpectedMessage(formatCheck(e.filter),format$1(e.actual))}];default:return toDefaultIssues(e.issue,t,n,r)}}case`Encoding`:return toDefaultIssues(e.issue,t,n,r);case`Pointer`:return toDefaultIssues(e.issue,[...t,...e.path],n,r);case`Composite`:return e.issues.flatMap(e=>toDefaultIssues(e,t,n,r));case`AnyOf`:{let i=findMessage(e);return e.issues.length===0?i===void 0?[{path:t,message:getExpectedMessage(Mc(e.ast),format$1(e.actual))}]:[{path:t,message:i}]:e.issues.flatMap(e=>toDefaultIssues(e,t,n,r))}default:return[{path:t,message:n(e)}]}}function formatCheck(e){let t=e.annotations?.expected;if(typeof t==`string`)return t;switch(e._tag){case`Filter`:return`<filter>`;case`FilterGroup`:return e.checks.map(e=>formatCheck(e)).join(` & `)}}function makeFormatterDefault(){return e=>toDefaultIssues(e,[],defaultLeafHook,defaultCheckHook).map(formatDefaultIssue).join(`
-`)}const Bc=makeFormatterDefault();function formatDefaultIssue(e){let t=e.message;if(e.path&&e.path.length>0){let n=formatPath(e.path);t+=`\n  at ${n}`}return t}function findMessage(e){switch(e._tag){case`InvalidType`:case`OneOf`:case`Composite`:case`AnyOf`:return getMessageAnnotation(e.ast.annotations);case`InvalidValue`:case`Forbidden`:return getMessageAnnotation(e.annotations);case`MissingKey`:return getMessageAnnotation(e.annotations,`messageMissingKey`);case`UnexpectedKey`:return getMessageAnnotation(e.ast.annotations,`messageUnexpectedKey`);case`Filter`:return getMessageAnnotation(e.filter.annotations);case`Encoding`:return findMessage(e.issue)}}function getMessageAnnotation(e,t=`message`){let n=e?.[t];if(typeof n==`string`)return n}function formatOption(e){return k(e)?`no value provided`:format$1(e.value)}var Vc=class Getter extends s{run;constructor(e){super(),this.run=e}map(e){return new Getter((t,n)=>this.run(t,n).pipe(Ec(St(e))))}compose(e){return isPassthrough(this)?e:isPassthrough(e)?this:new Getter((t,n)=>this.run(t,n).pipe(Oc(t=>e.run(t,n))))}};const Hc=new Vc(q);function isPassthrough(e){return e.run===Hc.run}function passthrough$1(){return Hc}__name(passthrough$1,`passthrough`);function onSome(e){return new Vc((t,n)=>k(t)?ls:e(t.value,n))}function transform$1(e){return transformOptional(St(e))}__name(transform$1,`transform`);function transformOrFail$1(e){return onSome((t,n)=>e(t,n).pipe(Ec(O)))}__name(transformOrFail$1,`transformOrFail`);function transformOptional(e){return new Vc(t=>q(e(t)))}function withDefault(e){return new Vc(t=>{let n=wt(t,isNotUndefined);return vt(n)?q(n):Ec(e,O)})}function String$3(){return transform$1(globalThis.String)}__name(String$3,`String`);function Number$3(){return transform$1(globalThis.Number)}__name(Number$3,`Number`);function BigInt$1(){return transform$1(globalThis.BigInt)}__name(BigInt$1,`BigInt`);function Date$2(){return transform$1(e=>new globalThis.Date(e))}__name(Date$2,`Date`);function split(e){let t=e?.separator??`,`;return transform$1(e=>e===``?[]:e.split(t))}const Uc=`~effect/SchemaTransformation/Transformation`;var Z=class Transformation{[Uc]=Uc;_tag=`Transformation`;decode;encode;constructor(e,t){this.decode=e,this.encode=t}flip(){return new Transformation(this.encode,this.decode)}compose(e){return new Transformation(this.decode.compose(e.decode),e.encode.compose(this.encode))}};function isTransformation(e){return p(e,Uc)}const Wc=__name(e=>isTransformation(e)?e:new Z(e.decode,e.encode),`make`);function transform(e){return new Z(transform$1(e.decode),transform$1(e.encode))}const Gc=new Z(passthrough$1(),passthrough$1());function passthrough(){return Gc}const Kc=new Z(Number$3(),String$3()),errorFromErrorJsonEncoded=e=>transform({decode:e=>{let t=Error(e.message);return typeof e.name==`string`&&e.name!==`Error`&&(t.name=e.name),typeof e.stack==`string`&&(t.stack=e.stack),t},encode:t=>{let n={name:t.name,message:t.message};return e?.includeStack&&typeof t.stack==`string`&&(n.stack=t.stack),n}});function makeGuard(e){return t=>t._tag===e}const qc=makeGuard(`Declaration`),Jc=makeGuard(`Never`),Yc=makeGuard(`Literal`),Xc=makeGuard(`UniqueSymbol`),Zc=makeGuard(`Arrays`),Qc=makeGuard(`Objects`),$c=makeGuard(`Union`);var Link=class{to;transformation;constructor(e,t){this.to=e,this.transformation=t}};const el={};var Context=class{isOptional;isMutable;defaultValue;annotations;constructor(e,t,n=void 0,r=void 0){this.isOptional=e,this.isMutable=t,this.defaultValue=n,this.annotations=r}};const tl=`~effect/Schema`;var Base=class{[tl]=tl;annotations;checks;encoding;context;constructor(e=void 0,t=void 0,n=void 0,r=void 0){this.annotations=e,this.checks=t,this.encoding=n,this.context=r}toString(){return`<${this._tag}>`}},nl=class Declaration extends Base{_tag=`Declaration`;typeParameters;run;constructor(e,t,n,r,i,a){super(n,r,i,a),this.typeParameters=e,this.run=t}getParser(){let e=this.run(this.typeParameters);return(t,n)=>k(t)?ls:Ec(e(t.value,this,n),O)}recur(e){let t=mapOrSame(this.typeParameters,e);return t===this.typeParameters?this:new Declaration(t,this.run,this.annotations,this.checks,void 0,this.context)}getExpected(){let e=this.annotations?.expected;return typeof e==`string`?e:`<Declaration>`}},Null=class extends Base{_tag=`Null`;getParser(){return fromConst(this,null)}getExpected(){return`null`}};const rl=new Null;var Undefined$1=class extends Base{static{__name(this,`Undefined`)}_tag=`Undefined`;getParser(){return fromConst(this,void 0)}toCodecJson(){return replaceEncoding(this,[il])}getExpected(){return`undefined`}};const il=new Link(rl,new Z(transform$1(()=>void 0),transform$1(()=>null))),al=new Undefined$1;var Any$1=class extends Base{static{__name(this,`Any`)}_tag=`Any`;getParser(){return fromRefinement(this,isUnknown)}getExpected(){return`any`}};const ol=new Any$1;var Unknown$1=class extends Base{static{__name(this,`Unknown`)}_tag=`Unknown`;getParser(){return fromRefinement(this,isUnknown)}getExpected(){return`unknown`}};const sl=new Unknown$1;var Literal$1=class extends Base{static{__name(this,`Literal`)}_tag=`Literal`;literal;constructor(e,t,n,r,i){if(super(t,n,r,i),typeof e==`number`&&!globalThis.Number.isFinite(e))throw Error(`A numeric literal must be finite, got ${format$1(e)}`);this.literal=e}getParser(){return fromConst(this,this.literal)}toCodecJson(){return typeof this.literal==`bigint`?literalToString(this):this}toCodecStringTree(){return typeof this.literal==`string`?this:literalToString(this)}getExpected(){return typeof this.literal==`string`?JSON.stringify(this.literal):globalThis.String(this.literal)}};function literalToString(e){let t=globalThis.String(e.literal);return replaceEncoding(e,[new Link(new Literal$1(t),new Z(transform$1(()=>e.literal),transform$1(()=>t)))])}var String$2=class extends Base{static{__name(this,`String`)}_tag=`String`;getParser(){return fromRefinement(this,isString)}getExpected(){return`string`}};const cl=new String$2;var Number$2=class extends Base{static{__name(this,`Number`)}_tag=`Number`;getParser(){return fromRefinement(this,isNumber)}toCodecJson(){return this.checks&&(hasCheck(this.checks,`isFinite`)||hasCheck(this.checks,`isInt`))?this:replaceEncoding(this,[xl])}toCodecStringTree(){return this.checks&&(hasCheck(this.checks,`isFinite`)||hasCheck(this.checks,`isInt`))?replaceEncoding(this,[Nl]):replaceEncoding(this,[Pl])}getExpected(){return`number`}};function hasCheck(e,t){return e.some(e=>{switch(e._tag){case`Filter`:return e.annotations?.meta?._tag===t;case`FilterGroup`:return hasCheck(e.checks,t)}})}const ll=new Number$2;var ul=class Arrays extends Base{_tag=`Arrays`;isMutable;elements;rest;constructor(e,t,n,r,i,a,o){super(r,i,a,o),this.isMutable=e,this.elements=t,this.rest=n;let s=t.findIndex(isOptional);if(s!==-1&&(t.slice(s+1).some(e=>!isOptional(e))||n.length>1))throw Error(`A required element cannot follow an optional element. ts(1257)`);if(n.length>1&&n.slice(1).some(isOptional))throw Error(`An optional element cannot follow a rest element. ts(1266)`)}getParser(e){let t=this,n=t.elements.map(t=>({ast:t,parser:e(t)})),r=t.rest.map(t=>({ast:t,parser:e(t)})),i=n.length,[a,...o]=r,s=o.length;function getParser(e,t){return t<i?n[t]:t>=e?o[t-e]:a}return Ac(function*(e,n){if(e._tag===`None`)return e;let r=e.value;if(!Array.isArray(r))return yield*Y(new InvalidType(t,e));let a=r.length,o={ast:t,getParser,oinput:e,len:a,tailThreshold:resolveTailThreshold(a,i,s),output:new globalThis.Array(a),issues:void 0,options:n},c=dl(o,r,{concurrency:resolveConcurrency(n?.concurrency)?.concurrency,end:t.rest.length===0?i:Math.max(a,i+s)});if(c&&(yield*c),t.rest.length===0&&a>i)for(let s=i;s<=a-1;s++){let i=new Pointer([s],new UnexpectedKey(t,r[s]));if(n.errors===`all`)o.issues?o.issues.push(i):o.issues=[i];else return yield*Y(new Composite(t,e,[i]))}return o.issues?yield*Y(new Composite(t,e,o.issues)):O(o.output)})}recur(e){let t=mapOrSame(this.elements,e),n=mapOrSame(this.rest,e);return t===this.elements&&n===this.rest?this:new Arrays(this.isMutable,t,n,this.annotations,this.checks,void 0,this.context)}getExpected(){return`array`}};const dl=iterateEager()({onItem(e,t,n){let r=n<e.len?O(t):none();return e.getParser(e.tailThreshold,n).parser(r,e.options)},step(e,t,n,r){if(n._tag===`Failure`)return wrapPropertyKeyIssue(e,e.ast,r,n);if(n.value._tag===`Some`)e.output[r]=n.value.value;else{let t=e.getParser(e.tailThreshold,r);if(isOptional(t.ast))return;let n=new Pointer([r],new MissingKey(t.ast.context?.annotations));if(e.options.errors===`all`)e.issues?e.issues.push(n):e.issues=[n];else return oo(new Composite(e.ast,e.oinput,[n]))}}});function resolveTailThreshold(e,t,n){return Math.max(t,e-n)}const resolveConcurrency=e=>(e=e===`unbounded`?1/0:e??1,e>1?{concurrency:e}:void 0),wrapPropertyKeyIssue=(e,t,n,r)=>{let i=Ya(r.cause);if(M(i))return r;let a=new Pointer([n],i.success);if(e.options.errors===`all`)e.issues?e.issues.push(a):e.issues=[a];else return oo(new Composite(t,e.oinput,[a]))},fl=`[+-]?\\d*\\.?\\d+(?:[Ee][+-]?\\d+)?`,pl=new globalThis.RegExp(`(?:${fl}|Infinity|-Infinity|NaN)`);function getIndexSignatureKeys(e,t){let n=El(t);switch(n._tag){case`String`:return Object.keys(e);case`TemplateLiteral`:{let t=Ol(n);return Object.keys(e).filter(e=>t.test(e))}case`Symbol`:return Object.getOwnPropertySymbols(e);case`Number`:return Object.keys(e).filter(e=>pl.test(e));case`Union`:return[...new Set(n.types.flatMap(t=>getIndexSignatureKeys(e,t)))];default:return[]}}var PropertySignature=class{name;type;constructor(e,t){this.name=e,this.type=t}},ml=class KeyValueCombiner{decode;encode;constructor(e,t){this.decode=e,this.encode=t}flip(){return new KeyValueCombiner(this.encode,this.decode)}},IndexSignature=class{parameter;type;merge;constructor(e,t,n){if(this.parameter=e,this.type=t,this.merge=n,isOptional(t)&&!containsUndefined(t))throw Error("Cannot use `Schema.optionalKey` with index signatures, use `Schema.optional` instead.")}},hl=class Objects extends Base{_tag=`Objects`;propertySignatures;indexSignatures;constructor(e,t,n,r,i,a){super(n,r,i,a),this.propertySignatures=e,this.indexSignatures=t;let o=e.map(e=>e.name).filter((e,t,n)=>n.indexOf(e)!==t);if(o.length>0)throw Error(`Duplicate identifiers: ${JSON.stringify(o)}. ts(2300)`)}getParser(e){let t=this,n=[],r=new Set,i=[];for(let a of t.propertySignatures)n.push(a.name),r.add(a.name),i.push({ps:a,parser:e(a.type),name:a.name,type:a.type});let a=t.indexSignatures.length;if(t.propertySignatures.length===0&&t.indexSignatures.length===0)return fromRefinement(t,isNotNullish);let o=a>0?iterateEager()({onItem:Ac(function*(n,[r,i]){let a=e(kl(i.parameter))(O(r),n.options),o=effectIsExit(a)?a:yield*ws(a);if(o._tag===`Failure`){let e=wrapPropertyKeyIssue(n,t,r,o);e&&(yield*e);return}let s=O(n.input[r]),c=e(i.type)(s,n.options),l=effectIsExit(c)?c:yield*ws(c);if(l._tag===`Failure`){let e=wrapPropertyKeyIssue(n,t,r,l);e&&(yield*e);return}else if(o.value._tag===`Some`&&l.value._tag===`Some`){let e=o.value.value,t=l.value.value;if(i.merge&&i.merge.decode&&Object.hasOwn(n.out,e)){let[r,a]=i.merge.decode.combine([e,n.out[e]],[e,t]);set(n.out,r,a)}else set(n.out,e,t)}}),step:(e,t,n)=>n._tag===`Failure`?n:void 0}):void 0;return Ac(function*(e,s){if(e._tag===`None`)return e;let c=e.value;if(!(typeof c==`object`&&c&&!Array.isArray(c)))return yield*Y(new InvalidType(t,e));let l={},u={ast:t,oinput:e,input:c,out:l,issues:void 0,options:s},d=s.errors===`all`,f=s.onExcessProperty===`error`,p=s.onExcessProperty===`preserve`,m;if(t.indexSignatures.length===0&&(f||p)){m=Reflect.ownKeys(c);for(let n=0;n<m.length;n++){let i=m[n];if(!r.has(i))if(f){let n=new Pointer([i],new UnexpectedKey(t,c[i]));if(d){u.issues?u.issues.push(n):u.issues=[n];continue}else return yield*Y(new Composite(t,e,[n]))}else set(l,i,c[i])}}let h=resolveConcurrency(s?.concurrency),g=gl(u,i,h);if(g&&(yield*g),o){let e=Vt();for(let n=0;n<a;n++){let r=t.indexSignatures[n],i=getIndexSignatureKeys(c,r.parameter);for(let t=0;t<i.length;t++){let n=i[t];e.push([n,r])}}let n=o(u,e,h);n&&(yield*n)}if(u.issues)return yield*Y(new Composite(t,e,u.issues));if(s.propertyOrder===`original`){let e=(m??Reflect.ownKeys(c)).concat(n),t={};for(let n of e)Object.hasOwn(l,n)&&set(t,n,l[n]);return O(t)}return O(l)})}rebuild(e,t){let n=mapOrSame(this.propertySignatures,t=>{let n=e(t.type);return n===t.type?t:new PropertySignature(t.name,n)}),r=mapOrSame(this.indexSignatures,n=>{let r=e(n.parameter),i=e(n.type),a=t?n.merge?.flip():n.merge;return r===n.parameter&&i===n.type&&a===n.merge?n:new IndexSignature(r,i,a)});return n===this.propertySignatures&&r===this.indexSignatures?this:new Objects(n,r,this.annotations,this.checks,void 0,this.context)}flip(e){return this.rebuild(e,!0)}recur(e){return this.rebuild(e,!1)}getExpected(){return this.propertySignatures.length===0&&this.indexSignatures.length===0?`object | array`:`object`}};const gl=iterateEager()({onItem(e,t){let n=Object.hasOwn(e.input,t.name)?O(e.input[t.name]):none();return t.parser(n,e.options)},step(e,t,n){if(n._tag===`Failure`)return wrapPropertyKeyIssue(e,e.ast,t.name,n);if(n.value._tag===`Some`)set(e.out,t.name,n.value.value);else if(!isOptional(t.type)){let n=new Pointer([t.name],new MissingKey(t.type.context?.annotations));if(e.options.errors===`all`){e.issues?e.issues.push(n):e.issues=[n];return}else return oo(new Composite(e.ast,e.oinput,[n]))}}});function struct(e,t,n){return new hl(Reflect.ownKeys(e).map(t=>new PropertySignature(t,e[t].ast)),[],n,t)}function getAST(e){return e.ast}function tuple(e,t=void 0){return new ul(!1,e.map(e=>e.ast),[],void 0,t)}function union(e,t,n){return new vl(e.map(getAST),t,void 0,n)}function getCandidateTypes(e){switch(e._tag){case`Null`:return[`null`];case`Undefined`:case`Void`:return[`undefined`];case`String`:case`TemplateLiteral`:return[`string`];case`Number`:return[`number`];case`Boolean`:return[`boolean`];case`Symbol`:case`UniqueSymbol`:return[`symbol`];case`BigInt`:return[`bigint`];case`Arrays`:return[`array`];case`ObjectKeyword`:return[`object`,`array`,`function`];case`Objects`:return e.propertySignatures.length||e.indexSignatures.length?[`object`]:[`object`,`array`];case`Enum`:return Array.from(new Set(e.enums.map(([,e])=>typeof e)));case`Literal`:return[typeof e.literal];case`Union`:return Array.from(new Set(e.types.flatMap(getCandidateTypes)));default:return[`null`,`undefined`,`string`,`number`,`boolean`,`symbol`,`bigint`,`object`,`array`,`function`]}}function collectSentinels(e){switch(e._tag){default:return[];case`Declaration`:{let t=e.annotations?.[`~sentinels`];return Array.isArray(t)?t:[]}case`Objects`:return e.propertySignatures.flatMap(e=>{let t=e.type;if(!isOptional(t)){if(Yc(t))return[{key:e.name,literal:t.literal}];if(Xc(t))return[{key:e.name,literal:t.symbol}]}return[]});case`Arrays`:return e.elements.flatMap((e,t)=>Yc(e)&&!isOptional(e)?[{key:t,literal:e.literal}]:[]);case`Suspend`:return collectSentinels(e.thunk())}}const _l=new WeakMap;function getIndex(e){let t=_l.get(e);if(t)return t;t={};for(let n of e){let e=El(n);if(Jc(e))continue;let r=getCandidateTypes(e),i=collectSentinels(e);t.byType??={};for(let e of r)(t.byType[e]??=[]).push(n);if(i.length>0){t.bySentinel??=new Map;for(let{key:e,literal:r}of i){let i=t.bySentinel.get(e);i||t.bySentinel.set(e,i=new Map);let a=i.get(r);a||i.set(r,a=[]),a.push(n)}}else{t.otherwise??={};for(let e of r)(t.otherwise[e]??=[]).push(n)}}return _l.set(e,t),t}function filterLiterals(e){return t=>{let n=El(t);return n._tag===`Literal`?n.literal===e:n._tag===`UniqueSymbol`?n.symbol===e:!0}}function getCandidates(e,t){let n=getIndex(t),r=e===null?`null`:Array.isArray(e)?`array`:typeof e;if(n.bySentinel){let t=n.otherwise?.[r]??[];if(r===`object`||r===`array`){for(let[r,i]of n.bySentinel)if(Object.hasOwn(e,r)){let n=i.get(e[r]);if(n)return[...n,...t].filter(filterLiterals(e))}}return t}return(n.byType?.[r]??[]).filter(filterLiterals(e))}var vl=class Union$1 extends Base{static{__name(this,`Union`)}_tag=`Union`;types;mode;constructor(e,t,n,r,i,a){super(n,r,i,a),this.types=e,this.mode=t}getParser(e){let t=this;return(n,r)=>{if(n._tag===`None`)return q(n);let i=n.value,a=getCandidates(i,t.types),o={ast:t,recur:e,oinput:n,input:i,out:void 0,successes:[],issues:void 0,options:r},s=yl(o,a,resolveConcurrency(r?.concurrency));return s?X(s,e=>o.out?q(o.out):Y(new AnyOf(t,i,o.issues??[]))):o.out?q(o.out):Y(new AnyOf(t,i,o.issues??[]))}}recur(e){let t=mapOrSame(this.types,e);return t===this.types?this:new Union$1(t,this.mode,this.annotations,this.checks,void 0,this.context)}getExpected(e){let t=this.annotations?.expected;if(typeof t==`string`)return t;if(this.types.length===0)return`never`;let n=this.types.map(t=>{let n=El(t);switch(n._tag){case`Arrays`:{let t=n.elements.filter(Yc);if(t.length>0)return`${formatIsMutable(n.isMutable)}[ ${t.map(t=>e(t)+formatIsOptional(t.context?.isOptional)).join(`, `)}, ... ]`;break}case`Objects`:{let t=n.propertySignatures.filter(e=>Yc(e.type));if(t.length>0)return`{ ${t.map(t=>`${formatIsMutable(t.type.context?.isMutable)}${formatPropertyKey(t.name)}${formatIsOptional(t.type.context?.isOptional)}: ${e(t.type)}`).join(`, `)}, ... }`;break}}return e(n)});return Array.from(new Set(n)).join(` | `)}};const yl=iterateEager()({onItem(e,t){return e.recur(t)(e.oinput,e.options)},step(e,t,n){if(n._tag===`Failure`){let t=Ya(n.cause);if(M(t))return n;e.issues?e.issues.push(t.success):e.issues=[t.success]}else{if(e.out&&e.ast.mode===`oneOf`)return e.successes.push(t),oo(new OneOf(e.ast,e.input,e.successes));if(e.out=n.value,e.successes.push(t),e.ast.mode===`anyOf`)return so}}}),bl=new vl([new Literal$1(`Infinity`),new Literal$1(`-Infinity`),new Literal$1(`NaN`)],`anyOf`),xl=new Link(new vl([ll,bl],`anyOf`),new Z(Number$3(),transform$1(e=>globalThis.Number.isFinite(e)?e:globalThis.String(e))));function formatIsMutable(e){return e?``:`readonly `}function formatIsOptional(e){return e?`?`:``}var Sl=class Filter extends s{_tag=`Filter`;run;annotations;aborted;constructor(e,t=void 0,n=!1){super(),this.run=e,this.annotations=t,this.aborted=n}annotate(e){return new Filter(this.run,{...this.annotations,...e},this.aborted)}abort(){return new Filter(this.run,this.annotations,!0)}and(e,t){return new Cl([this,e],t)}},Cl=class FilterGroup extends s{_tag=`FilterGroup`;checks;annotations;constructor(e,t=void 0){super(),this.checks=e,this.annotations=t}annotate(e){return new FilterGroup(this.checks,{...this.annotations,...e})}and(e,t){return new FilterGroup([this,e],t)}};function makeFilter$1(e,t,n=!1){return new Sl((t,n,r)=>make$7(t,n,e(t,n,r)),t,n)}__name(makeFilter$1,`makeFilter`);function isPattern$1(e,t){let n=e.source;return makeFilter$1(t=>e.test(t),{expected:`a string matching the RegExp ${n}`,meta:{_tag:`isPattern`,regExp:e},toArbitraryConstraint:{string:{patterns:[e.source]}},...t})}__name(isPattern$1,`isPattern`);function modifyOwnPropertyDescriptors(e,t){let n=Object.getOwnPropertyDescriptors(e);return t(n),Object.create(Object.getPrototypeOf(e),n)}function replaceEncoding(e,t){return e.encoding===t?e:modifyOwnPropertyDescriptors(e,e=>{e.encoding.value=t})}function replaceContext(e,t){return e.context===t?e:modifyOwnPropertyDescriptors(e,e=>{e.context.value=t})}function annotate(e,t){if(e.checks){let n=e.checks[e.checks.length-1];return replaceChecks(e,Nt(e.checks.slice(0,-1),n.annotate(t)))}return modifyOwnPropertyDescriptors(e,e=>{e.annotations.value={...e.annotations.value,...t}})}function replaceChecks(e,t){return e.checks===t?e:modifyOwnPropertyDescriptors(e,e=>{e.checks.value=t})}function appendChecks(e,t){return replaceChecks(e,e.checks?[...e.checks,...t]:t)}function updateLastLink(e,t){let n=e,r=n[n.length-1],i=t(r.to);return i===r.to?e:Nt(e.slice(0,e.length-1),new Link(i,r.transformation))}function applyToLastLink(e){return t=>t.encoding?replaceEncoding(t,updateLastLink(t.encoding,e)):t}function appendTransformation(e,t,n){let r=new Link(e,t);return replaceEncoding(n,n.encoding?[...n.encoding,r]:[r])}function mapOrSame(e,t){let n=!1,r=Array(e.length);for(let i=0;i<e.length;i++){let a=e[i],o=t(a);o!==a&&(n=!0),r[i]=o}return n?r:e}function annotateKey(e,t){return replaceContext(e,e.context?new Context(e.context.isOptional,e.context.isMutable,e.context.defaultValue,{...e.context.annotations,...t}):new Context(!1,!1,void 0,t))}const wl=applyToLastLink(optionalKey$1);function optionalKey$1(e){return wl(replaceContext(e,e.context?e.context.isOptional===!1?new Context(!0,e.context.isMutable,e.context.defaultValue,e.context.annotations):e.context:new Context(!0,!1)))}__name(optionalKey$1,`optionalKey`);function withConstructorDefault$1(e,t){let n=[new Link(sl,new Z(withDefault(t),passthrough$1()))];return replaceContext(e,e.context?new Context(e.context.isOptional,e.context.isMutable,n,e.context.annotations):new Context(!1,!1,n))}__name(withConstructorDefault$1,`withConstructorDefault`);function decodeTo$1(e,t,n){return appendTransformation(e,n,t)}__name(decodeTo$1,`decodeTo`);function parseParameter(e){switch(e._tag){case`Literal`:return{literals:isPropertyKey(e.literal)?[e.literal]:[],parameters:[]};case`UniqueSymbol`:return{literals:[e.symbol],parameters:[]};case`String`:case`Number`:case`Symbol`:case`TemplateLiteral`:return{literals:[],parameters:[e]};case`Union`:{let t={literals:[],parameters:[]};for(let n=0;n<e.types.length;n++){let r=parseParameter(e.types[n]);t.literals=t.literals.concat(r.literals),t.parameters=t.parameters.concat(r.parameters)}return t}}return{literals:[],parameters:[]}}function record(e,t,n){let{literals:r,parameters:i}=parseParameter(e);return new hl(r.map(e=>new PropertySignature(e,t)),i.map(e=>new IndexSignature(e,t,n)))}function isOptional(e){return e.context?.isOptional??!1}const Tl=memoize(e=>{if(e.encoding)return Tl(replaceEncoding(e,void 0));let t=e;return t.recur?.(Tl)??t}),El=memoize(e=>Tl(Dl(e)));function flipEncoding(e,t){let n=t,r=n.length,i=n[r-1],a=[new Link(Dl(replaceEncoding(e,void 0)),n[0].transformation.flip())];for(let e=1;e<r;e++)a.unshift(new Link(Dl(n[e-1].to),n[e].transformation.flip()));let o=Dl(i.to);return o.encoding?replaceEncoding(o,[...o.encoding,...a]):replaceEncoding(o,a)}const Dl=memoize(e=>{if(e.encoding)return flipEncoding(e,e.encoding);let t=e;return t.flip?.(Dl)??t.recur?.(Dl)??t});function containsUndefined(e){switch(e._tag){case`Undefined`:return!0;case`Union`:return e.types.some(containsUndefined);default:return!1}}function getTemplateLiteralSource(e,t){return e.encodedParts.map(e=>handleTemplateLiteralASTPartParens(e,getTemplateLiteralASTPartPattern(e),t)).join(``)}const Ol=memoize(e=>new globalThis.RegExp(`^${getTemplateLiteralSource(e,!0)}$`));function getTemplateLiteralASTPartPattern(e){switch(e._tag){case`Literal`:return escape(globalThis.String(e.literal));case`String`:return Al;case`Number`:return fl;case`BigInt`:return Fl;case`TemplateLiteral`:return getTemplateLiteralSource(e,!1);case`Union`:return e.types.map(getTemplateLiteralASTPartPattern).join(`|`)}}function handleTemplateLiteralASTPartParens(e,t,n){if($c(e)){if(!n)return`(?:${t})`}else if(!n)return t;return`(${t})`}function fromConst(e,t){let n=us(t);return r=>r._tag===`None`?ls:r.value===t?n:Y(new InvalidType(e,r))}function fromRefinement(e,t){return n=>n._tag===`None`?ls:t(n.value)?q(n):Y(new InvalidType(e,n))}function toCodec(e){function out(t){return t.encoding?replaceEncoding(t,updateLastLink(t.encoding,out)):e(t)}return memoize(out)}const kl=toCodec(e=>{switch(e._tag){default:return e;case`Number`:return e.toCodecStringTree();case`Union`:return e.recur(kl)}}),Al=`[\\s\\S]*?`,jl=new globalThis.RegExp(`^${fl}$`);function isStringFinite(e){return isPattern$1(jl,{expected:`a string representing a finite number`,meta:{_tag:`isStringFinite`,regExp:jl},...e})}const Ml=appendChecks(cl,[isStringFinite()]),Nl=new Link(Ml,Kc),Pl=new Link(new vl([Ml,bl],`anyOf`),Kc),Fl=`-?\\d+`;`${Fl}`;function collectIssues(e,t,n,r,i){for(let a=0;a<e.length;a++){let o=e[a];if(o._tag===`FilterGroup`)collectIssues(o.checks,t,n,r,i);else{let e=o.run(t,r,i);if(e&&(n.push(new Filter$1(t,o,e)),o.aborted||i?.errors!==`all`))return}}}const Il=`~effect/Schema/Class`;function isStringTree(e){let t=new Set;return recur(e);function recur(e){return e===void 0||typeof e==`string`?!0:typeof e!=`object`||!e||t.has(e)?!1:(t.add(e),Array.isArray(e)?e.every(recur):Object.keys(e).every(t=>recur(e[t])))}}const Ll=new Link(new nl([],()=>(e,t)=>isStringTree(e)?q(e):Y(new InvalidType(t,O(e))),{expected:`StringTree`,toCodecStringTree:()=>new Link(sl,passthrough())}),passthrough()),lambda=e=>e,Rl=memoize(e=>{switch(e._tag){case`Declaration`:{let t=e.annotations?.[Il];if(isFunction(t)){let n=t(e.typeParameters),r=Rl(n.to);return replaceEncoding(e,r===n.to?[n]:[new Link(r,n.transformation)])}return e}case`Objects`:case`Arrays`:return e.recur(e=>{let t=e.context?.defaultValue;return t?replaceEncoding(Rl(e),t):Rl(e)});case`Suspend`:return e.recur(Rl);default:return e}});function makeEffect(e){let t=run(Rl(Tl(e.ast)));return(e,n)=>t(e,n?.disableChecks?n?.parseOptions?{...n.parseOptions,disableChecks:!0}:{disableChecks:!0}:n?.parseOptions)}function makeOption(e){let t=makeEffect(e);return(e,n)=>uo(xc(t(e,n)))}function make$5(e){let t=makeEffect(e);return(e,n)=>bc(Dc(t(e,n),e=>Error(e.toString(),{cause:e})))}__name(make$5,`make`);function _is(e){let t=asExit(run(Tl(e)));return e=>co(t(e,el))}function decodeUnknownEffect(e,t){let n=run(e.ast);return t===void 0?n:(e,r)=>n(e,mergeParseOptions(t,r))}const mergeParseOptions=(e,t)=>t===void 0?e:{...e,...t};function run(e){let t=zl(e);return(e,n)=>Oc(t(O(e),n??el),e=>e._tag===`None`?Y(new InvalidValue(e)):q(e.value))}function asExit(e){return(t,n)=>xc(e(t,n))}const zl=memoize(e=>{let t,n=resolve(e)?.parseOptions;if(!e.context&&!e.encoding&&!e.checks)return(r,i)=>(t??=e.getParser(zl),n&&(i={...i,...n}),t(r,i));let r=Zc(e)||Qc(e)||qc(e)&&e.typeParameters.length>0;return(i,a)=>{n&&(a={...a,...n});let o=e.encoding,s;if(o){let t=o,n=t.length;for(let e=n-1;e>=0;e--){let n=t[e],r=n.to,o=zl(r);if(s=s?Oc(s,e=>o(e,a)):o(i,a),n.transformation._tag===`Transformation`){let e=n.transformation.decode;s=Oc(s,t=>e.run(t,a))}else s=n.transformation.decode(s,a)}s=Dc(s,t=>new Encoding(e,i,t))}t??=e.getParser(zl);let c=s?Oc(s,e=>t(e,a)):t(i,a);if(e.checks&&!a?.disableChecks){let t=e.checks;a?.errors===`all`&&r&&vt(i)&&(c=kc(c,n=>{let r=[];return collectIssues(t.filter(e=>e.annotations?.[`~structural`]),i.value,r,e,a),Y(Ft(r)?n._tag===`Composite`&&n.ast===e?new Composite(e,n.actual,[...n.issues,...r]):new Composite(e,i,[n,...r]):n)})),c=Oc(c,n=>{if(vt(n)){let r=n.value,i=[];if(collectIssues(t,r,i,e,a),Ft(i))return Y(new Composite(e,n,i))}return q(n)})}return c}}),Bl=`~effect/Schema/Schema`,Vl={[Bl]:Bl,pipe(){return pipeArguments(this,arguments)},annotate(e){return this.rebuild(annotate(this.ast,e))},annotateKey(e){return this.rebuild(annotateKey(this.ast,e))},check(...e){return this.rebuild(appendChecks(this.ast,e))}};function make$4(e,t){let n=Object.create(Vl);return t&&Object.assign(n,t),n.ast=e,n.rebuild=e=>make$4(e,t),n.makeEffect=flow(makeEffect(n),Dc(e=>new SchemaError(e))),n.make=make$5(n),n.makeOption=makeOption(n),n}__name(make$4,`make`);const Hl=`~effect/Schema/SchemaError`;var SchemaError=class{[Hl]=Hl;_tag=`SchemaError`;name=`SchemaError`;issue;constructor(e){this.issue=e}get message(){return this.issue.toString()}toString(){return`SchemaError(${this.message})`}};function makeReorder(e){return t=>{let n=new Map;for(let e=0;e<t.length;e++)n.set(El(t[e]),e);let r=[...t].sort((t,r)=>{t=El(t),r=El(r);let i=e(t),a=e(r);return i===a?n.get(t)-n.get(r):i-a});return r.some((e,n)=>e!==t[n])?r:t}}const Ul=Bl;function declareConstructor(){return(e,t,n)=>Q(new nl(e.map(getAST),e=>t(e.map(e=>Q(e))),n))}function declare(e,t){return declareConstructor()([],()=>(t,n)=>e(t)?q(t):Y(new InvalidType(n,O(t))),t)}function isSchemaError(e){return p(e,Hl)}const Q=make$4;function isSchema(e){return p(e,Ul)&&e[Ul]===Ul}const Wl=lambda(e=>Q(optionalKey$1(e.ast),{schema:e})),Gl=lambda(e=>Wl($l(e)));function Literal(e){let t=Q(new Literal$1(e),{literal:e,transform(n){return t.pipe(decodeTo(Literal(n),{decode:transform$1(()=>n),encode:transform$1(()=>e)}))}});return t}const Kl=Q(ol),ql=Q(sl),Jl=Q(al),Yl=Q(cl),Xl=Q(ll);function makeStruct(e,t){return Q(e,{fields:t,mapFields(e,t){let n=e(this.fields);return makeStruct(struct(n,t?.unsafePreserveChecks?this.ast.checks:void 0),n)}})}function Struct(e){return makeStruct(struct(e,void 0),e)}function Record(e,t,n){let r=n?.keyValueCombiner?.decode||n?.keyValueCombiner?.encode?new ml(n.keyValueCombiner.decode,n.keyValueCombiner.encode):void 0;return Q(record(e.ast,t.ast,r),{key:e,value:t})}function makeTuple(e,t){return Q(e,{elements:t,mapElements(e,t){let n=e(this.elements);return makeTuple(tuple(n,t?.unsafePreserveChecks?this.ast.checks:void 0),n)}})}function Tuple(e){return makeTuple(tuple(e),e)}const Zl=lambda(e=>Q(new ul(!1,[],[e.ast]),{value:e})),Ql=lambda(e=>Q(new ul(!1,[e.ast],[e.ast]),{value:e}));function makeUnion(e,t){return Q(e,{members:t,mapMembers(e,t){let n=e(this.members);return makeUnion(union(n,this.ast.mode,t?.unsafePreserveChecks?this.ast.checks:void 0),n)}})}function Union(e,t){return makeUnion(union(e,t?.mode??`anyOf`,void 0),e)}function Literals(e){let t=e.map(Literal);return Q(union(t,`anyOf`,void 0),{literals:e,members:t,mapMembers(e){return Union(e(this.members))},pick(e){return Literals(e)},transform(e){return Union(t.map((t,n)=>t.transform(e[n])))}})}const $l=lambda(e=>Union([e,Jl]));function decodeTo(e,t){return n=>Q(decodeTo$1(n.ast,e.ast,t?Wc(t):passthrough()),{from:n,to:e})}function withConstructorDefault(e){return t=>Q(withConstructorDefault$1(t.ast,Dc(e,e=>e.issue)),{schema:t})}function tag(e){return Literal(e).pipe(withConstructorDefault(q(e)))}function TaggedStruct(e,t){return Struct({_tag:tag(e),...t})}function instanceOf(e,t){return declare(t=>t instanceof e,t)}function link(){return(e,t)=>new Link(e.ast,Wc(t))}const eu=Struct({message:Yl,name:Wl(Yl),stack:Wl(Yl)}),tu=instanceOf(globalThis.Error,{typeConstructor:{_tag:`Error`},generation:{runtime:`Schema.Error`,Type:`globalThis.Error`},expected:`Error`,toCodecJson:()=>link()(eu,errorFromErrorJsonEncoded()),toArbitrary:()=>e=>e.string().map(e=>new globalThis.Error(e))});globalThis.Error;const nu=new Z(passthrough$1(),transform$1(e=>{try{return JSON.parse(JSON.stringify(e))}catch{return format$1(e)}})),ru=Union([eu.pipe(decodeTo(tu,errorFromErrorJsonEncoded())),Kl.pipe(decodeTo(ql.annotate({toCodecJson:()=>link()(Kl,nu),toArbitrary:()=>e=>e.json()}),nu))]);globalThis.RegExp,globalThis.URL,globalThis.File,globalThis.FormData,globalThis.URLSearchParams,globalThis.Uint8Array;const iu=globalThis.Symbol.for(`immer-draftable`);function makeClass(e,t,n,r,i){let a=getClassSchemaFactory(n,t,r),o=getClassTypeId(t),out=class extends e{constructor(...[e,t]){e??={};let r=n.make(e,t);super({...e,...r},{...t,disableChecks:!0})}static[Ul]=Ul;get[o](){return o}static[iu]=!0;static identifier=t;static fields=n.fields;static get ast(){return a(this).ast}static pipe(){return pipeArguments(this,arguments)}static rebuild(e){return a(this).rebuild(e)}static make(e,t){return new this(e,t)}static makeOption(e,t){return makeOption(a(this))(e??{},t)}static makeEffect(e,t){return a(this).makeEffect(e??{},t)}static annotate(e){return this.rebuild(annotate(this.ast,e))}static annotateKey(e){return this.rebuild(annotateKey(this.ast,e))}static check(...e){return this.rebuild(appendChecks(this.ast,e))}static extend(e){return(t,r)=>{let a={...n.fields,...t};return makeClass(this,e,makeStruct(struct(a,n.ast.checks,{identifier:e}),a),r,i)}}static mapFields(e,t){return n.mapFields(e,t)}};return i!==void 0&&Object.assign(out.prototype,i(t)),out}function getClassTransformation(e){return new Z(transform$1(t=>new e(t)),passthrough$1())}function getClassTypeId(e){return`~effect/Schema/Class/${e}`}function getClassSchemaFactory(e,t,n){let r;return i=>{if(r===void 0){let a=getClassTransformation(i),o=Q(new nl([e.ast],()=>(e,n)=>e instanceof i||p(e,getClassTypeId(t))?q(e):Y(new InvalidType(n,O(e))),{identifier:t,[Il]:([e])=>new Link(e,a),toCodec:([e])=>new Link(e.ast,a),toArbitrary:([e])=>()=>e.map(e=>new i(e)),toFormatter:([e])=>t=>`${i.identifier}(${e(t)})`,"~sentinels":collectSentinels(e.ast),...n}));r=e.pipe(decodeTo(o,a))}return r}}function isStruct(e){return isSchema(e)}const ErrorClass=e=>(t,n)=>makeClass(Ue,e,isStruct(t)?t:Struct(t),n,e=>({name:e})),TaggedErrorClass=e=>(t,n,r)=>{let i=isStruct(n)?n.mapFields(e=>({_tag:tag(t),...e}),{unsafePreserveChecks:!0}):TaggedStruct(t,n);return ErrorClass(e??t)(i,r)};function toCodecStringTree(e,t){return Q(fu(t?.keepDeclarations===!0?uu(e.ast):cu(e.ast)))}function getStringTreePriority(e){switch(e._tag){case`Null`:case`Boolean`:case`Number`:case`BigInt`:case`Symbol`:case`UniqueSymbol`:return 0;default:return 1}}const au=makeReorder(getStringTreePriority);function serializerTree(e,t,n){switch(e._tag){case`Declaration`:{let r=e.annotations?.toCodecJson??e.annotations?.toCodec;if(isFunction(r)){let n=r(qc(e)?e.typeParameters.map(e=>Q(t(El(e)))):[]),i=t(n.to);return replaceEncoding(e,i===n.to?[n]:[new Link(i,n.transformation)])}return n(e)}case`Null`:return replaceEncoding(e,[ou]);case`Boolean`:return replaceEncoding(e,[su]);case`Unknown`:case`ObjectKeyword`:return replaceEncoding(e,[Ll]);case`Enum`:case`Number`:case`Literal`:case`UniqueSymbol`:case`Symbol`:case`BigInt`:return e.toCodecStringTree();case`Objects`:if(e.propertySignatures.some(e=>typeof e.name!=`string`))throw new globalThis.Error(`Objects property names must be strings`,{cause:e});return e.recur(t);case`Union`:{let n=au(e.types);return n===e.types?e.recur(t):new vl(n,e.mode,e.annotations,e.checks,e.encoding,e.context).recur(t)}case`Arrays`:case`Suspend`:return e.recur(t)}return e}const ou=new Link(new Literal$1(`null`),new Z(transform$1(()=>null),transform$1(()=>`null`))),su=new Link(new vl([new Literal$1(`true`),new Literal$1(`false`)],`anyOf`),new Z(transform$1(e=>e===`true`),String$3())),cu=toCodec(e=>{let t=serializerTree(e,cu,e=>replaceEncoding(e,[lu]));return t!==e&&isOptional(e)?wl(t):t}),lu=new Link(al,new Z(passthrough$1(),transform$1(()=>void 0))),uu=toCodec(e=>{let t=serializerTree(e,uu,identity);return t!==e&&isOptional(e)?wl(t):t}),du=`~effect/Schema/SERIALIZER_ENSURE_ARRAY`,fu=toCodec(e=>{if($c(e)&&e.annotations?.[du])return e;let t=onSerializerEnsureArray(e);if(Zc(t)){let n=new vl([t,decodeTo$1(cl,t,new Z(split(),passthrough$1()))],`anyOf`,{[du]:!0});return isOptional(e)?optionalKey$1(n):n}return t});function onSerializerEnsureArray(e){switch(e._tag){default:return e;case`Declaration`:case`Arrays`:case`Objects`:case`Union`:case`Suspend`:return e.recur(fu)}}const pu=fiberJoin,mu=fiberInterrupt,hu=fiberInterruptAll,gu=ua,_u=makeLatchUnsafe,vu=makeLatch,yu=Symbol.for(`effect/MutableList/Empty`),bu=__name(()=>({head:void 0,tail:void 0,length:0}),`make`),emptyBucket=()=>({array:[],mutable:!0,offset:0,next:void 0}),append=(e,t)=>{e.tail?e.tail.mutable||(e.tail.next=emptyBucket(),e.tail=e.tail.next):e.head=e.tail=emptyBucket(),e.tail.array.push(t),e.length++},clear=e=>{e.head=e.tail=void 0,e.length=0},takeN=(e,t)=>{if(t<=0||!e.head)return[];if(t=Math.min(t,e.length),t===e.length&&e.head?.offset===0&&!e.head.next){let t=e.head.array;return clear(e),t}let n=Array(t),r=0,i=e.head;for(;i;){for(;i.offset<i.array.length;)if(n[r++]=i.array[i.offset],i.mutable&&(i.array[i.offset]=void 0),i.offset++,r===t)return e.head=i,e.length-=t,e.length===0&&clear(e),n;i=i.next}return clear(e),n},xu=__name(e=>{if(!e.head)return yu;let t=e.head.array[e.head.offset];return e.head.mutable&&(e.head.array[e.head.offset]=void 0),e.head.offset++,e.length--,e.head.offset===e.head.array.length&&(e.head.next?e.head=e.head.next:clear(e)),t},`take`),Su={_A:identity,_E:identity},Cu={"~effect/Queue":Su,"~effect/Queue/Enqueue":Su,"~effect/Queue/Dequeue":Su,...Ae,toJSON(){return{_id:`effect/Queue`,state:this.state._tag,size:sizeUnsafe(this)}}},make=e=>D(t=>{let n=Object.create(Cu);return n.dispatcher=t.currentDispatcher,n.capacity=e?.capacity??1/0,n.strategy=e?.strategy??`suspend`,n.messages=bu(),n.scheduleRunning=!1,n.state={_tag:`Open`,takers:new Set,offers:new Set,awaiters:new Set},F(n)}),bounded=e=>make({capacity:e}),offer=(e,t)=>R(()=>{if(e.state._tag!==`Open`)return Tu;if(e.messages.length>=e.capacity)switch(e.strategy){case`dropping`:return Tu;case`suspend`:return e.capacity<=0&&e.state.takers.size>0?(append(e.messages,t),releaseTakers(e),Eu):offerRemainingSingle(e,t);case`sliding`:return xu(e.messages),append(e.messages,t),Eu}return append(e.messages,t),scheduleReleaseTaker(e),Eu}),offerUnsafe=(e,t)=>e.state._tag===`Open`?e.messages.length>=e.capacity?e.strategy===`sliding`?(xu(e.messages),append(e.messages,t),!0):e.capacity<=0&&e.state.takers.size>0?(append(e.messages,t),releaseTakers(e),!0):!1:(append(e.messages,t),scheduleReleaseTaker(e),!0):!1,$=dual(2,(e,t)=>L(()=>failCauseUnsafe(e,t))),failCauseUnsafe=(e,t)=>{if(e.state._tag!==`Open`)return!1;let n=Xr(E(t),Du);return e.state.offers.size===0&&e.messages.length===0?(finalize(e,n),!0):(e.state={...e.state,_tag:`Closing`,exit:n},!0)},end=e=>$(e,causeFail(Je())),endUnsafe=e=>failCauseUnsafe(e,causeFail(Je())),shutdown=e=>L(()=>{if(e.state._tag===`Done`)return!0;clear(e.messages);let t=e.state.offers;if(finalize(e,e.state._tag===`Open`?Ou:e.state.exit),t.size>0){for(let e of t)e._tag===`Single`?e.resume(Tu):e.resume(T(e.remaining.slice(e.offset)));t.clear()}return!0}),takeAll=e=>takeBetween(e,1,1/0),takeBetween=(e,t,n)=>R(()=>takeBetweenUnsafe(e,t,n)??Lr(awaitTake(e),takeBetween(e,1,n))),take=e=>R(()=>takeUnsafe(e)??Lr(awaitTake(e),take(e))),takeUnsafe=e=>{if(e.state._tag===`Done`)return e.state.exit;if(e.messages.length>0){let t=xu(e.messages);return releaseCapacity(e),T(t)}else if(e.capacity<=0&&e.state.offers.size>0){e.capacity=1,releaseCapacity(e),e.capacity=0;let t=xu(e.messages);return releaseCapacity(e),T(t)}},sizeUnsafe=e=>e.state._tag===`Done`?0:e.messages.length,wu=dual(2,(e,t)=>$i(n=>yi(n(e),{onFailure:e=>$(t,e),onSuccess:e=>end(t)}))),Tu=T(!1),Eu=T(!0),Du=exitFail(Je()),Ou=qr(),releaseTakers=e=>{if(e.scheduleRunning=!1,!(e.state._tag===`Done`||e.state.takers.size===0)){for(let t of e.state.takers)if(e.state.takers.delete(t),t(U),e.messages.length===0)break}},scheduleReleaseTaker=e=>{e.scheduleRunning||e.state._tag===`Done`||e.state.takers.size===0||(e.scheduleRunning=!0,e.dispatcher.scheduleTask(()=>releaseTakers(e),0))},takeBetweenUnsafe=(e,t,n)=>{if(e.state._tag===`Done`)return e.state.exit;if(n<=0||t<=0)return T([]);if(e.capacity<=0&&e.state.offers.size>0){e.capacity=1,releaseCapacity(e),e.capacity=0;let t=[xu(e.messages)];return releaseCapacity(e),T(t)}if(t=Math.min(t,e.capacity||1),t<=e.messages.length){let t=takeN(e.messages,n);return releaseCapacity(e),T(t)}},offerRemainingSingle=(e,t)=>B(n=>{if(e.state._tag!==`Open`)return n(Tu);let r={_tag:`Single`,message:t,resume:n};return e.state.offers.add(r),L(()=>{e.state._tag===`Open`&&e.state.offers.delete(r)})}),releaseCapacity=e=>{if(e.state._tag===`Done`)return isDoneCause(e.state.exit.cause);if(e.state.offers.size===0)return e.state._tag===`Closing`&&e.messages.length===0?(finalize(e,e.state.exit),isDoneCause(e.state.exit.cause)):!1;let t=e.capacity-e.messages.length;for(let n of e.state.offers)if(t===0)break;else if(n._tag===`Single`)append(e.messages,n.message),t--,n.resume(Eu),e.state.offers.delete(n);else{for(;n.offset<n.remaining.length;n.offset++){if(t===0)return!1;append(e.messages,n.remaining[n.offset]),t--}n.resume(T([])),e.state.offers.delete(n)}return!1},awaitTake=e=>B(t=>e.state._tag===`Done`?t(e.state.exit):(e.state.takers.add(t),L(()=>{e.state._tag!==`Done`&&e.state.takers.delete(t)}))),finalize=(e,t)=>{if(e.state._tag===`Done`)return;let n=e.state;e.state={_tag:`Done`,exit:t};for(let e of n.takers)e(t);n.takers.clear();for(let e of n.awaiters)e(t);n.awaiters.clear()},makeUnsafe=e=>new SemaphoreImpl(e);var SemaphoreImpl=class{waiters=new Set;taken=0;permits;constructor(e){this.permits=e}get free(){return this.permits-this.taken}take(e){let t=R(()=>this.free<e?B(n=>{if(this.free>=e)return n(t);let observer=()=>{this.free<e||(this.waiters.delete(observer),n(t))};return this.waiters.add(observer),L(()=>{this.waiters.delete(observer)})}):(this.taken+=e,F(e)));return t}updateTakenUnsafe(e,t){return this.taken=t(this.taken),this.waiters.size>0&&e.currentDispatcher.scheduleTask(()=>{let e=this.waiters.values(),t=e.next();for(;t.done===!1&&this.free>0;)t.value(),t=e.next()},0),this.free}updateTaken(e){return D(t=>F(this.updateTakenUnsafe(t,e)))}resize(e){return D(t=>(this.permits=e,this.free<0||this.updateTakenUnsafe(t,e=>e),z))}release(e){return this.updateTaken(t=>t-e)}get releaseAll(){return this.updateTaken(e=>0)}withPermits(e){return t=>$i(n=>V(n(this.take(e)),e=>Ri(n(t),()=>{this.updateTakenUnsafe(getCurrentFiber(),t=>t-e)},!0)))}withPermit=this.withPermits(1);withPermitsIfAvailable(e){return t=>$i(n=>this.free<e?Sr:(this.taken+=e,Ri(n(Ir(t)),()=>{this.updateTakenUnsafe(getCurrentFiber(),t=>t-e)},!0)))}};const ku=`~effect/Channel`,isChannel=e=>p(e,ku),Au={[ku]:{_Env:identity,_InErr:identity,_InElem:identity,_OutErr:identity,_OutElem:identity},pipe(){return pipeArguments(this,arguments)}},fromTransform=e=>{let t=Object.create(Au);return t.transform=(t,n)=>Ms(e(t,n),e=>q(hs(e))),t},transformPull=(e,t)=>fromTransform((n,r)=>X(toTransform(e)(n,r),e=>t(e,r))),fromPull=e=>fromTransform((t,n)=>e),fromTransformBracket=e=>fromTransform(Sc(function*(t,n){let r=K(n),onCause=e=>Do(r,doneExitFromCause(e));return rc(yield*rc(e(t,n,r),onCause),onCause)})),toTransform=e=>e.transform,ju=4096,asyncQueue=(e,t,n)=>make({capacity:n?.bufferSize,strategy:n?.strategy}).pipe(Cs(t=>To(e,shutdown(t))),Cs(n=>mc(Co(t(n),e),e))),callbackArray=(e,t)=>fromTransform((n,r)=>Ts(asyncQueue(r,e,t),takeAll)),suspend=e=>fromTransform((t,n)=>J(()=>toTransform(e())(t,n))),fromIteratorArray=(e,t=ju)=>fromPull(ds(()=>{let n=e(),r=none();return J(()=>{if(r._tag===`Some`)return G(r.value);let e=[];for(;e.length<t;){let t=n.next();if(t.done){if(e.length===0)return G(t.value);r=O(t.value);break}e.push(t.value)}return q(e)})})),fromIterableArray=(e,t=ju)=>fromIteratorArray(()=>e[Symbol.iterator](),t),succeed=e=>fromEffect(q(e)),Mu=fromPull(q(G())),fail=e=>fromPull(q(Y(e))),failCause=e=>fromPull(hs(e)),fromEffect=e=>fromPull(ds(()=>{let t=!1;return J(()=>t?G():(t=!0,e))})),Nu=dual(2,(e,t)=>transformPull(e,e=>ds(()=>{let n=0;return Ts(e,e=>t(e,n++))}))),Pu=dual(2,(e,t)=>Fu(e,e=>q(t(e)))),Fu=dual(2,(e,t)=>transformPull(e,e=>q(Ko(e,e=>X(t(e),G))))),concurrencyIsSequential=e=>e===void 0||e!==`unbounded`&&e<=1,Iu=dual(e=>isChannel(e[0]),(e,t,n)=>concurrencyIsSequential(n?.concurrency)?mapEffectSequential(e,t):mapEffectConcurrent(e,t,n)),mapEffectSequential=(e,t)=>fromTransform((n,r)=>{let i=0;return Ts(toTransform(e)(n,r),X(e=>t(e,i++)))}),mapEffectConcurrent=(e,t,n)=>fromTransformBracket(Sc(function*(r,i,a){let o=0,s=yield*toTransform(e)(r,i),c=n.concurrency===`unbounded`?2**53-1:n.concurrency,l=yield*bounded(0);yield*To(a,shutdown(l));let u=_c(yield*Ws()),d=gu(a);if(n.unordered){let e=makeUnsafe(c),n=constant(e.release(1)),r=Hs({onFailure:e=>X($(l,e),n),onSuccess:e=>X(offer(l,e),n)});yield*e.take(1).pipe(X(()=>s),X(e=>(d(u(r(t(e,o++)))),fs)),uc({disableYield:!0}),Ms(t=>e.withPermits(c-1)($(l,t))),mc(a))}else{let e=yield*bounded(c-2);yield*To(a,shutdown(l)),yield*take(e).pipe(xs,X(e=>offer(l,e)),uc({disableYield:!0}),Ms(e=>$(l,e)),mc(a));let n,onExit=e=>{e._tag!==`Success`&&(n=e.cause,failCauseUnsafe(l,e.cause))};yield*s.pipe(X(r=>{if(n)return hs(n);let i=u(t(r,o++));return d(i),i.addObserver(onExit),offer(e,pu(i))}),uc({disableYield:!0}),Ms(t=>offer(e,ao(t)).pipe(Ss($(e,t)))),mc(a))}return take(l)})),Lu=dual(e=>isChannel(e[0]),(e,t,n)=>concurrencyIsSequential(n?.concurrency)?flatMapSequential(e,t):flatMapConcurrent(e,t,n)),flatMapSequential=(e,t)=>fromTransform((n,r)=>Ts(toTransform(e)(n,r),e=>{let i,a,o=X(e,e=>(a??=K(r),Oc(toTransform(t(e))(n,a),e=>(i=s(e),i)))),s=Ko(e=>{if(i=void 0,a.state._tag===`Open`&&a.state.finalizers.size===1)return o;let t=Do(a,so);return a=void 0,X(t,()=>o)});return J(()=>i??o)})),flatMapConcurrent=(e,t,n)=>e.pipe(Nu(t),Uu(n)),flattenArray=e=>transformPull(e,e=>{let t,n=0;return q(J(function loop(){if(t===void 0)return X(e,e=>{switch(e.length){case 0:return loop();case 1:return q(e[0]);default:return t=e,q(e[n++])}});let r=t[n++];return n>=t.length&&(t=void 0,n=0),q(r)}))}),Ru=dual(2,(e,t)=>transformPull(e,e=>q(X(e,function loop(n){let r=[];for(let e=0;e<n.length;e++)t(n[e])&&r.push(n[e]);return It(r)?q(r):X(e,loop)})))),zu=dual(2,(e,t)=>fromTransform((n,r)=>{let i=K(r);return Ts(toTransform(e)(n,i),e=>{let a=e.pipe(Ms(e=>{if(isDoneCause(e))return hs(e);let o=i;return i=K(r),Do(o,ao(e)).pipe(Ss(toTransform(t(e))(n,i)),X(e=>(a=e,e)))}));return J(()=>a)})})),Bu=dual(3,(e,t,n)=>zu(e,e=>{let r=t(e);return M(r)?failCause(r.failure):n(r.success,e)})),Vu=dual(2,(e,t)=>Bu(e,Ya,e=>t(e))),Hu=dual(2,(e,t)=>Vu(e,e=>fail(t(e)))),Uu=dual(2,(e,{bufferSize:t=16,concurrency:n,switch:r=!1})=>fromTransformBracket(Sc(function*(i,a,o){let s=n===`unbounded`?2**53-1:Math.max(1,n),c=r?void 0:makeUnsafe(s),l=yield*vu(!0),u=new Set,d=yield*bounded(t);yield*To(o,shutdown(d));let f=yield*toTransform(e)(i,a);return yield*ms(function*(){for(;;){c&&(yield*c.take(1));let e=yield*f,t=K(o),n=yield*toTransform(e)(i,t);for(;u.size>=s;){let e=headUnsafe(u);u.delete(e),u.size===0&&(yield*l.open),yield*mu(e)}let r=yield*n.pipe(Cs(()=>vs),X(e=>offer(d,e)),uc({disableYield:!0}),rc(Sc(function*(e){let n=qo(e);if(yield*ws(Do(t,M(n)?ao(n.failure):io(n.success.value))),u.has(r)&&(u.delete(r),c&&(yield*c.release(1)),u.size===0&&(yield*l.open),!Tt(n)))return yield*$(d,e)})),pc);l.closeUnsafe(),u.add(r)}}).pipe(Ms(e=>l.whenOpen($(d,e))),mc(o)),take(d)}))),Wu=dual(e=>isChannel(e[0])&&isChannel(e[1]),(e,t,n)=>fromTransformBracket(Sc(function*(r,i,a){let o=n?.haltStrategy??`both`,s=yield*bounded(0);yield*To(a,shutdown(s));let c=0;function onExit(e,t){if(c++,!isDoneCause(t))return $(s,t);switch(o){case`both`:return c===2?$(s,t):fs;case`left`:case`right`:return e===o?$(s,t):fs;case`either`:return $(s,t)}}let runSide=(e,t,n)=>toTransform(t)(r,n).pipe(X(e=>e.pipe(X(e=>offer(s,e)),uc)),rc(t=>Ss(Do(n,doneExitFromCause(t)),onExit(e,t))),mc(a));return yield*runSide(`left`,e,K(a)),yield*runSide(`right`,t,K(a)),take(s)}))),splitLines=()=>fromTransform((e,t)=>ds(()=>{let t=``,n=!1,r=none();function splitLinesArray(e){let r=[];function pushLine(e){t.length===0?r.push(e):(r.push(t+e),t=``)}for(let r=0;r<e.length;r++){let i=e[r];if(i.length!==0){let e=0,r=i.indexOf(`\r`),a=i.indexOf(`
-`);for(n&&=(a===0?(pushLine(``),e=1,a=i.indexOf(`
-`,e)):pushLine(``),!1);r!==-1||a!==-1;)r===-1||a!==-1&&a<r?(pushLine(i.substring(e,a)),e=a+1,a=i.indexOf(`
-`,e)):i.length===r+1?(n=!0,r=-1):(pushLine(i.substring(e,r)),e=r+(a===r+1?2:1),r=i.indexOf(`\r`,e),a=i.indexOf(`
-`,e));t+=i.substring(e,i.length-+!!n)}}return It(r)?r:null}let i=J(()=>r._tag===`Some`?G(r.value):Xo(e,{onSuccess:loop,onFailure:hs,onDone:e=>{if(r=O(e),t.length>0||n){let e=t;return t=``,n=!1,q([e])}return G(e)}}));function loop(e){let t=splitLinesArray(e);return t===null?i:q(t)}return i})),Gu=dual(2,(e,t)=>fromTransform((n,r)=>X(toTransform(e)(n,r),e=>toTransform(t)(e,r)))),unwrap=e=>fromTransform((t,n)=>{let r;return q(J(()=>r||e.pipe(Co(n),X(e=>toTransform(e)(t,n)),X(e=>r=e))))}),Ku=dual(2,(e,t)=>fromTransformBracket((n,r,i)=>wo(i,t).pipe(Ss(toTransform(e)(n,r))))),qu=dual(2,(e,t)=>Ku(e,e=>t)),runWith=(e,t,n)=>J(()=>{let r=So();return Ko(X(toTransform(e)(G(),r),t),n||q).pipe(ic(e=>Do(r,e)))}),Ju=dual(2,(e,t)=>runWith(e,e=>uc(X(e,t),{disableYield:!0}))),runHead=e=>J(()=>{let t=none();return runWith(e,e=>e.pipe(Ds,X(e=>(t=e,G()))),()=>q(t))}),Yu=dual(3,(e,t,n)=>J(()=>{let r=t();return runWith(e,e=>os({while:c,body:()=>e,step:e=>{r=n(r,e)}}),()=>q(r))})),Xu=Sc(function*(e){let t=makeUnsafe(1),n=yield*Ws(),r=pn(n,xo);return(yield*toTransform(e)(G(),r)).pipe(qs(n),t.withPermits(1))},Ms(e=>q(hs(e)))),toPullScoped=(e,t)=>toTransform(e)(G(),t);export{decodeTo as $,me as $i,To as $n,$i as $r,Us as $t,$ as A,Tt as Ai,fs as An,Ga as Ar,gs as At,gu as B,yt as Bi,isDoneCause as Bn,V as Br,uc as Bt,suspend as C,__name as Ca,of as Ci,zs as Cn,to as Cr,Ps as Ct,unwrap as D,Dt as Di,lc as Dn,Xa as Dr,wc as Dt,toTransform as E,At as Ei,cc as En,Qa as Er,As as Et,offerUnsafe as F,bt as Fi,Qo as Fn,Lr as Fr,X as Ft,Ql as G,D as Gi,Io as Gn,formatLogSpan as Gr,Ls as Gt,ru as H,O as Hi,effect as Hn,si as Hr,hc as Ht,takeAll as I,xt as Ii,exponential as In,Fr as Ir,Oc as It,Yl as J,Class$1 as Ji,Mo as Jn,loggerMake as Jr,Tc as Jt,Xl as K,ye as Ki,Ro as Kn,kr as Kr,oc as Kt,_u as L,k as Li,recurs as Ln,causePretty as Lr,Cc as Lt,wu as M,Ct as Mi,ys as Mn,Ja as Mr,nc as Mt,make as N,fromNullishOr as Ni,fc as Nn,Pa as Nr,Y as Nt,makeUnsafe as O,j as Oi,Ys as On,Za as Or,Ws as Ot,offer as P,fromUndefinedOr as Pi,ks as Pn,Li as Pr,hs as Pt,declare as Q,redact as Qi,xo as Qn,R as Qr,Hs as Qt,mu as R,vt as Ri,Ko as Rn,consolePretty as Rr,Sc as Rt,succeed as S,__exportAll as Sa,Ht as Si,Cs as Sn,StackTrace as Sr,Ms as St,toPullScoped as T,jt as Ti,_s as Tn,Ka as Tr,js as Tt,ErrorClass as U,Ae as Ui,No as Un,oa as Ur,bs as Ut,Zl as V,none as Vi,jo as Vn,Ar as Vr,mc as Vt,Literals as W,w as Wi,Lo as Wn,formatLabel as Wr,ms as Wt,Tuple as X,toJson as Xi,Po as Xn,scopeAddFinalizerExit as Xr,Fs as Xt,TaggedErrorClass as Y,y as Yi,succeedContext as Yn,Mi as Yr,Ts as Yt,Union as Z,format$1 as Zi,Fo as Zn,Oa as Zr,Dc as Zt,Gu as _,flow as _a,ensure as _i,Js as _n,io as _r,Ss as _t,fail as a,p as aa,fromInputUnsafe as ai,Ks as an,vo as ar,SchemaError as at,runHead as b,pipeArguments as ba,It as bi,J as bn,ro as br,ac as bt,flattenArray as c,isNullish as ca,toSeconds as ci,Vs as cn,_await as cr,El as ct,fromTransform as d,l as da,un as di,vc as dn,_o as dr,isRedacted as dt,fe as ea,z as ei,ic as en,wo as er,isSchemaError as et,Nu as f,c as fa,sn as fi,yc as fn,isDone as fr,Ic as ft,Wu as g,dual as ga,Prototype as gi,$s as gn,lo as gr,is as gt,Hu as h,constant as ha,gn as hi,Qs as hn,ao as hr,tc as ht,qu as i,h as ia,toPredicate as ii,ss as in,Co as ir,toCodecStringTree as it,failCauseUnsafe as j,A as ji,os as jn,Wa as jr,effectify as jt,endUnsafe as k,M as ki,dc as kn,qa as kr,Gs as kt,fromIterableArray as l,isObject as la,N as li,gc as ln,doneUnsafe as lr,transform as lt,Iu as m,d as ma,fn as mi,Zs as mn,oo as mr,ec as mt,zu as n,v as na,In as ni,Is as nn,Eo as nr,Gl as nt,Ru as o,isNotNull as oa,isFinite as oi,qs as on,yo as or,_is as ot,Pu as p,u as pa,pn as pi,bc as pn,po as pr,Rc as pt,Record as q,ve as qi,zo as qn,vi as qr,rs as qt,Mu as r,te as ra,has as ri,Rs as rn,So as rr,tag as rt,Lu as s,isNotUndefined as sa,seconds as si,Xs as sn,bo as sr,decodeUnknownEffect as st,callbackArray as t,strictEqual as ta,Wn as ti,sc as tn,Do as tr,link as tt,fromPull as u,isUndefined as ua,Service as ui,_c as un,ho as ur,Pointer as ut,Yu as v,identity as va,fromIterable as vi,Bs as vn,so as vr,Es as vt,Xu as w,__toESM as wa,isEmptyRecord as wi,cs as wn,G as wr,Ns as wt,splitLines as x,__commonJSMin as xa,Ut as xi,ds as xn,eo as xr,ps as xt,Ju as y,pipe as ya,Lt as yi,q as yn,no as yr,Os as yt,hu as z,St as zi,Jo as zn,fiberInterrupt as zr,as as zt};
+var e = Object.create,
+  t = Object.defineProperty,
+  __name = (e, n) => t(e, `name`, { value: n, configurable: !0 }),
+  n = Object.getOwnPropertyDescriptor,
+  r = Object.getOwnPropertyNames,
+  i = Object.getPrototypeOf,
+  a = Object.prototype.hasOwnProperty,
+  __commonJSMin = (e, t) => () => (
+    t || (e((t = { exports: {} }).exports, t), (e = null)),
+    t.exports
+  ),
+  __exportAll = (e, n) => {
+    let r = {};
+    for (var i in e) t(r, i, { get: e[i], enumerable: !0 });
+    return (n || t(r, Symbol.toStringTag, { value: `Module` }), r);
+  },
+  __copyProps = (e, i, o, s) => {
+    if ((i && typeof i == `object`) || typeof i == `function`)
+      for (var c = r(i), l = 0, u = c.length, d; l < u; l++)
+        ((d = c[l]),
+          !a.call(e, d) &&
+            d !== o &&
+            t(e, d, {
+              get: ((e) => i[e]).bind(null, d),
+              enumerable: !(s = n(i, d)) || s.enumerable,
+            }));
+    return e;
+  },
+  __toESM = (n, r, a) => (
+    (a = n == null ? {} : e(i(n))),
+    __copyProps(
+      r || !n || !n.__esModule
+        ? t(a, `default`, { value: n, enumerable: !0 })
+        : a,
+      n,
+    )
+  );
+const pipeArguments = (e, t) => {
+    switch (t.length) {
+      case 0:
+        return e;
+      case 1:
+        return t[0](e);
+      case 2:
+        return t[1](t[0](e));
+      case 3:
+        return t[2](t[1](t[0](e)));
+      case 4:
+        return t[3](t[2](t[1](t[0](e))));
+      case 5:
+        return t[4](t[3](t[2](t[1](t[0](e)))));
+      case 6:
+        return t[5](t[4](t[3](t[2](t[1](t[0](e))))));
+      case 7:
+        return t[6](t[5](t[4](t[3](t[2](t[1](t[0](e)))))));
+      case 8:
+        return t[7](t[6](t[5](t[4](t[3](t[2](t[1](t[0](e))))))));
+      case 9:
+        return t[8](t[7](t[6](t[5](t[4](t[3](t[2](t[1](t[0](e)))))))));
+      default: {
+        let n = e;
+        for (let e = 0, r = t.length; e < r; e++) n = t[e](n);
+        return n;
+      }
+    }
+  },
+  o = {
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  s = (function () {
+    function PipeableBase() {}
+    return ((PipeableBase.prototype = o), PipeableBase);
+  })(),
+  dual = function (e, t) {
+    if (typeof e == `function`)
+      return function () {
+        return e(arguments)
+          ? t.apply(this, arguments)
+          : (e) => t(e, ...arguments);
+      };
+    switch (e) {
+      case 0:
+      case 1:
+        throw RangeError(`Invalid arity ${e}`);
+      case 2:
+        return function (e, n) {
+          return arguments.length >= 2
+            ? t(e, n)
+            : function (n) {
+                return t(n, e);
+              };
+        };
+      case 3:
+        return function (e, n, r) {
+          return arguments.length >= 3
+            ? t(e, n, r)
+            : function (r) {
+                return t(r, e, n);
+              };
+        };
+      default:
+        return function () {
+          if (arguments.length >= e) return t.apply(this, arguments);
+          let n = arguments;
+          return function (e) {
+            return t(e, ...n);
+          };
+        };
+    }
+  },
+  identity = (e) => e,
+  constant = (e) => () => e,
+  c = constant(!0),
+  l = constant(!1),
+  u = constant(void 0),
+  d = u;
+function pipe(e, ...t) {
+  return pipeArguments(e, t);
+}
+function flow(e, t, n, r, i, a, o, s, c) {
+  switch (arguments.length) {
+    case 1:
+      return e;
+    case 2:
+      return function () {
+        return t(e.apply(this, arguments));
+      };
+    case 3:
+      return function () {
+        return n(t(e.apply(this, arguments)));
+      };
+    case 4:
+      return function () {
+        return r(n(t(e.apply(this, arguments))));
+      };
+    case 5:
+      return function () {
+        return i(r(n(t(e.apply(this, arguments)))));
+      };
+    case 6:
+      return function () {
+        return a(i(r(n(t(e.apply(this, arguments))))));
+      };
+    case 7:
+      return function () {
+        return o(a(i(r(n(t(e.apply(this, arguments)))))));
+      };
+    case 8:
+      return function () {
+        return s(o(a(i(r(n(t(e.apply(this, arguments))))))));
+      };
+    case 9:
+      return function () {
+        return c(s(o(a(i(r(n(t(e.apply(this, arguments)))))))));
+      };
+  }
+}
+function memoize(e) {
+  let t = new WeakMap();
+  return (n) => {
+    if (t.has(n)) return t.get(n);
+    let r = e(n);
+    return (t.set(n, r), r);
+  };
+}
+const getAllObjectKeys = (e) => {
+    let t = new Set(Reflect.ownKeys(e));
+    if (e.constructor === Object) return t;
+    e instanceof Error && t.delete(`stack`);
+    let n = Object.getPrototypeOf(e),
+      r = n;
+    for (; r !== null && r !== Object.prototype; ) {
+      let e = Reflect.ownKeys(r);
+      for (let n = 0; n < e.length; n++) t.add(e[n]);
+      r = Object.getPrototypeOf(r);
+    }
+    return (
+      t.has(`constructor`) &&
+        typeof e.constructor == `function` &&
+        n === e.constructor.prototype &&
+        t.delete(`constructor`),
+      t
+    );
+  },
+  f = new WeakSet();
+function isString(e) {
+  return typeof e == `string`;
+}
+function isNumber(e) {
+  return typeof e == `number`;
+}
+function isSymbol(e) {
+  return typeof e == `symbol`;
+}
+function isPropertyKey(e) {
+  return isString(e) || isNumber(e) || isSymbol(e);
+}
+function isFunction(e) {
+  return typeof e == `function`;
+}
+function isUndefined(e) {
+  return e === void 0;
+}
+function isNotUndefined(e) {
+  return e !== void 0;
+}
+function isNotNull(e) {
+  return e !== null;
+}
+function isNullish(e) {
+  return e == null;
+}
+function isNotNullish(e) {
+  return e != null;
+}
+function isUnknown(e) {
+  return !0;
+}
+function isObject(e) {
+  return typeof e == `object` && !!e && !Array.isArray(e);
+}
+function isObjectKeyword(e) {
+  return (typeof e == `object` && !!e) || isFunction(e);
+}
+const p = dual(2, (e, t) => isObjectKeyword(e) && t in e),
+  m = dual(2, (e, t) => p(e, `_tag`) && e._tag === t);
+function isIterable(e) {
+  return p(e, Symbol.iterator) || isString(e);
+}
+const h = `~effect/interfaces/Hash`,
+  hash = (e) => {
+    switch (typeof e) {
+      case `number`:
+        return ee(e);
+      case `bigint`:
+        return _(e.toString(10));
+      case `boolean`:
+        return _(String(e));
+      case `symbol`:
+        return _(String(e));
+      case `string`:
+        return _(e);
+      case `undefined`:
+        return _(`undefined`);
+      case `function`:
+      case `object`:
+        if (e === null) return _(`null`);
+        if (e instanceof Date) return _(e.toISOString());
+        if (e instanceof RegExp) return _(e.toString());
+        {
+          if (f.has(e)) return random(e);
+          if (ae.has(e)) return ae.get(e);
+          let t = withVisitedTracking$1(e, () =>
+            isHash(e)
+              ? e[h]()
+              : typeof e == `function`
+                ? random(e)
+                : Array.isArray(e) || ArrayBuffer.isView(e)
+                  ? te(e)
+                  : e instanceof Map
+                    ? ne(e)
+                    : e instanceof Set
+                      ? re(e)
+                      : structure(e),
+          );
+          return (ae.set(e, t), t);
+        }
+      default:
+        throw Error(
+          `BUG: unhandled typeof ${typeof e} - please report an issue at https://github.com/Effect-TS/effect/issues`,
+        );
+    }
+  },
+  random = (e) => (
+    ie.has(e) || ie.set(e, ee(Math.floor(Math.random() * (2 ** 53 - 1)))),
+    ie.get(e)
+  ),
+  g = dual(2, (e, t) => (e * 53) ^ t),
+  optimize = (e) => (e & 3221225471) | ((e >>> 1) & 1073741824),
+  isHash = (e) => p(e, h),
+  ee = __name((e) => {
+    if (e !== e) return _(`NaN`);
+    if (e === 1 / 0) return _(`Infinity`);
+    if (e === -1 / 0) return _(`-Infinity`);
+    let t = e | 0;
+    for (t !== e && (t ^= e * 4294967295); e > 4294967295; )
+      t ^= e /= 4294967295;
+    return optimize(t);
+  }, `number`),
+  _ = __name((e) => {
+    let t = 5381,
+      n = e.length;
+    for (; n; ) t = (t * 33) ^ e.charCodeAt(--n);
+    return optimize(t);
+  }, `string`),
+  structureKeys = (e, t) => {
+    let n = 12289;
+    for (let r of t) n ^= g(hash(r), hash(e[r]));
+    return optimize(n);
+  },
+  structure = (e) => structureKeys(e, getAllObjectKeys(e)),
+  iterableWith = (e, t) => (n) => {
+    let r = e;
+    for (let e of n) r ^= t(e);
+    return optimize(r);
+  },
+  te = iterableWith(6151, hash),
+  ne = iterableWith(_(`Map`), ([e, t]) => g(hash(e), hash(t))),
+  re = iterableWith(_(`Set`), hash),
+  ie = new WeakMap(),
+  ae = new WeakMap(),
+  oe = new WeakSet();
+function withVisitedTracking$1(e, t) {
+  if (oe.has(e)) return _(`[Circular]`);
+  oe.add(e);
+  let n = t();
+  return (oe.delete(e), n);
+}
+__name(withVisitedTracking$1, `withVisitedTracking`);
+const v = `~effect/interfaces/Equal`;
+function equals$2() {
+  return arguments.length === 1
+    ? (e) => compareBoth(e, arguments[0])
+    : compareBoth(arguments[0], arguments[1]);
+}
+__name(equals$2, `equals`);
+function compareBoth(e, t) {
+  if (e === t) return !0;
+  if (e == null || t == null) return !1;
+  let n = typeof e;
+  return n === typeof t
+    ? n === `number` && e !== e && t !== t
+      ? !0
+      : (n !== `object` && n !== `function`) || f.has(e) || f.has(t)
+        ? !1
+        : withCache(e, t, compareObjects)
+    : !1;
+}
+function withVisitedTracking(e, t, n) {
+  let r = se.has(e),
+    i = ce.has(t);
+  if (r && i) return !0;
+  if (r || i) return !1;
+  (se.add(e), ce.add(t));
+  let a = n();
+  return (se.delete(e), ce.delete(t), a);
+}
+const se = new WeakSet(),
+  ce = new WeakSet();
+function compareObjects(e, t) {
+  if (hash(e) !== hash(t)) return !1;
+  if (e instanceof Date)
+    return t instanceof Date ? e.toISOString() === t.toISOString() : !1;
+  if (e instanceof RegExp)
+    return t instanceof RegExp ? e.toString() === t.toString() : !1;
+  let n = isEqual(e),
+    r = isEqual(t);
+  if (n !== r) return !1;
+  let i = n && r;
+  return typeof e == `function` && !i
+    ? !1
+    : withVisitedTracking(e, t, () =>
+        i
+          ? e[v](t)
+          : Array.isArray(e)
+            ? !Array.isArray(t) || e.length !== t.length
+              ? !1
+              : compareArrays(e, t)
+            : ArrayBuffer.isView(e)
+              ? !ArrayBuffer.isView(t) || e.byteLength !== t.byteLength
+                ? !1
+                : compareTypedArrays(e, t)
+              : e instanceof Map
+                ? !(t instanceof Map) || e.size !== t.size
+                  ? !1
+                  : ue(e, t)
+                : e instanceof Set
+                  ? !(t instanceof Set) || e.size !== t.size
+                    ? !1
+                    : de(e, t)
+                  : compareRecords(e, t),
+      );
+}
+function withCache(e, t, n) {
+  let r = le.get(e);
+  if (!r) ((r = new WeakMap()), le.set(e, r));
+  else if (r.has(t)) return r.get(t);
+  let i = n(e, t);
+  r.set(t, i);
+  let a = le.get(t);
+  return (a || ((a = new WeakMap()), le.set(t, a)), a.set(e, i), i);
+}
+const le = new WeakMap();
+function compareArrays(e, t) {
+  for (let n = 0; n < e.length; n++) if (!compareBoth(e[n], t[n])) return !1;
+  return !0;
+}
+function compareTypedArrays(e, t) {
+  if (e.length !== t.length) return !1;
+  for (let n = 0; n < e.length; n++) if (e[n] !== t[n]) return !1;
+  return !0;
+}
+function compareRecords(e, t) {
+  let n = getAllObjectKeys(e),
+    r = getAllObjectKeys(t);
+  if (n.size !== r.size) return !1;
+  for (let i of n) if (!r.has(i) || !compareBoth(e[i], t[i])) return !1;
+  return !0;
+}
+function makeCompareMap(e, t) {
+  return function compareMaps(n, r) {
+    for (let [i, a] of n) {
+      let n = !1;
+      for (let [o, s] of r)
+        if (e(i, o) && t(a, s)) {
+          n = !0;
+          break;
+        }
+      if (!n) return !1;
+    }
+    return !0;
+  };
+}
+const ue = makeCompareMap(compareBoth, compareBoth);
+function makeCompareSet(e) {
+  return function compareSets(t, n) {
+    for (let r of t) {
+      let t = !1;
+      for (let i of n)
+        if (e(r, i)) {
+          t = !0;
+          break;
+        }
+      if (!t) return !1;
+    }
+    return !0;
+  };
+}
+const de = makeCompareSet(compareBoth),
+  isEqual = (e) => p(e, v),
+  asEquivalence = () => equals$2,
+  fe = __name((e) => (t, n) => t === n || e(t, n), `make`),
+  isStrictEquivalent = (e, t) => e === t,
+  strictEqual = () => isStrictEquivalent;
+function Tuple$1(e) {
+  return fe((t, n) => {
+    if (t.length !== n.length) return !1;
+    for (let r = 0; r < t.length; r++) if (!e[r](t[r], n[r])) return !1;
+    return !0;
+  });
+}
+__name(Tuple$1, `Tuple`);
+function Array_(e) {
+  return fe((t, n) => {
+    if (t.length !== n.length) return !1;
+    for (let r = 0; r < t.length; r++) if (!e(t[r], n[r])) return !1;
+    return !0;
+  });
+}
+const pe = __name((e) => e.length > 0, `isArrayNonEmpty`),
+  me = Symbol.for(`~effect/Redactable`),
+  isRedactable = (e) => p(e, me);
+function redact(e) {
+  return isRedactable(e) ? getRedacted(e) : e;
+}
+function getRedacted(e) {
+  return e[me](globalThis[`~effect/Fiber/currentFiber`]?.context ?? ge);
+}
+const he = `~effect/Fiber/currentFiber`,
+  ge = {
+    "~effect/Context": {},
+    mapUnsafe: new Map(),
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  };
+function format$1(e, t) {
+  let n = t?.space ?? 0,
+    r = new WeakSet(),
+    i = n ? (typeof n == `number` ? ` `.repeat(n) : n) : ``,
+    ind = (e) => i.repeat(e),
+    wrap = (e, t) => {
+      let n = e?.constructor;
+      return n && n !== Object.prototype.constructor && n.name
+        ? `${n.name}(${t})`
+        : t;
+    },
+    ownKeys = (e) => {
+      try {
+        return Reflect.ownKeys(e);
+      } catch {
+        return [`[ownKeys threw]`];
+      }
+    };
+  function recur(e, n = 0) {
+    if (Array.isArray(e)) {
+      if (r.has(e)) return _e;
+      if ((r.add(e), !i || e.length <= 1))
+        return `[${e.map((e) => recur(e, n)).join(`,`)}]`;
+      let t = e
+        .map((e) => recur(e, n + 1))
+        .join(
+          `,
+` + ind(n + 1),
+        );
+      return `[\n${ind(n + 1)}${t}\n${ind(n)}]`;
+    }
+    if (e instanceof Date) return formatDate(e);
+    if (
+      !t?.ignoreToString &&
+      p(e, `toString`) &&
+      typeof e.toString == `function` &&
+      e.toString !== Object.prototype.toString &&
+      e.toString !== Array.prototype.toString
+    ) {
+      let t = safeToString(e);
+      return e instanceof Error && e.cause
+        ? `${t} (cause: ${recur(e.cause, n)})`
+        : t;
+    }
+    if (typeof e == `string`) return JSON.stringify(e);
+    if (
+      typeof e == `number` ||
+      e == null ||
+      typeof e == `boolean` ||
+      typeof e == `symbol`
+    )
+      return String(e);
+    if (typeof e == `bigint`) return String(e) + `n`;
+    if (typeof e == `object` || typeof e == `function`) {
+      if (r.has(e)) return _e;
+      if ((r.add(e), me in e)) return format$1(getRedacted(e));
+      if (Symbol.iterator in e)
+        return `${e.constructor.name}(${recur(Array.from(e), n)})`;
+      let t = ownKeys(e);
+      return !i || t.length <= 1
+        ? wrap(
+            e,
+            `{${t.map((t) => `${formatPropertyKey(t)}:${recur(e[t], n)}`).join(`,`)}}`,
+          )
+        : wrap(
+            e,
+            `{\n${t.map(
+              (t) =>
+                `${ind(n + 1)}${formatPropertyKey(t)}: ${recur(e[t], n + 1)}`,
+            ).join(`,
+`)}\n${ind(n)}}`,
+          );
+    }
+    return String(e);
+  }
+  return recur(e, 0);
+}
+__name(format$1, `format`);
+const _e = `[Circular]`;
+function formatPropertyKey(e) {
+  return typeof e == `string` ? JSON.stringify(e) : String(e);
+}
+function formatPath(e) {
+  return e.map((e) => `[${formatPropertyKey(e)}]`).join(``);
+}
+function formatDate(e) {
+  try {
+    return e.toISOString();
+  } catch {
+    return `Invalid Date`;
+  }
+}
+function safeToString(e) {
+  try {
+    let t = e.toString();
+    return typeof t == `string` ? t : String(t);
+  } catch {
+    return `[toString threw]`;
+  }
+}
+function formatJson(e, t) {
+  let n = [];
+  return JSON.stringify(
+    e,
+    function (e, t) {
+      let r = redact(t);
+      if (typeof r != `object` || !r) return r;
+      for (; n.length > 0 && n[n.length - 1] !== this; ) n.pop();
+      if (!n.includes(r)) return (n.push(r), r);
+    },
+    t?.space,
+  );
+}
+const y = Symbol.for(`nodejs.util.inspect.custom`),
+  toJson = (e) => {
+    try {
+      if (p(e, `toJSON`) && isFunction(e.toJSON) && e.toJSON.length === 0)
+        return e.toJSON();
+      if (Array.isArray(e)) return e.map(toJson);
+    } catch {
+      return `[toJSON threw]`;
+    }
+    return redact(e);
+  },
+  toStringUnknown = (e, t = 2) => {
+    if (typeof e == `string`) return e;
+    try {
+      return typeof e == `object` ? formatJson(e, { space: t }) : String(e);
+    } catch {
+      return String(e);
+    }
+  },
+  ve = {
+    toJSON() {
+      return toJson(this);
+    },
+    [y]() {
+      return this.toJSON();
+    },
+    toString() {
+      return format$1(this.toJSON());
+    },
+  };
+var Class$1 = class {
+    static {
+      __name(this, `Class`);
+    }
+    [y]() {
+      return this.toJSON();
+    }
+    toString() {
+      return format$1(this.toJSON());
+    }
+  },
+  ye = class SingleShotGen {
+    called = !1;
+    self;
+    constructor(e) {
+      this.self = e;
+    }
+    next(e) {
+      return this.called
+        ? { value: e, done: !0 }
+        : ((this.called = !0), { value: this.self, done: !1 });
+    }
+    [Symbol.iterator]() {
+      return new SingleShotGen(this.self);
+    }
+  };
+const be = `~effect/Utils/internal`,
+  xe = { [be]: (e) => e() },
+  Se = {
+    [be]: (e) => {
+      try {
+        return e();
+      } finally {
+      }
+    },
+  },
+  b = xe[be](() => Error().stack)?.includes(be) === !0 ? xe[be] : Se[be],
+  Ce = `~effect/Effect`,
+  we = `~effect/Exit`,
+  Te = { _A: identity, _E: identity, _R: identity },
+  Ee = `${Ce}/identifier`,
+  x = `${Ce}/args`,
+  S = `${Ce}/evaluate`,
+  C = `${Ce}/successCont`,
+  De = `${Ce}/failureCont`,
+  Oe = `${Ce}/ensureCont`,
+  ke = Symbol.for(`effect/Effect/Yield`),
+  Ae = {
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+    toJSON() {
+      return { ...this };
+    },
+    toString() {
+      return format$1(this.toJSON(), { ignoreToString: !0, space: 2 });
+    },
+    [y]() {
+      return this.toJSON();
+    },
+  },
+  je = {
+    [Ce]: Te,
+    ...Ae,
+    [Symbol.iterator]() {
+      return new ye(this);
+    },
+    toJSON() {
+      return {
+        _id: `Effect`,
+        op: this[Ee],
+        ...(x in this ? { args: this[x] } : void 0),
+      };
+    },
+  },
+  w = __name((e) => p(e, Ce), `isEffect`),
+  isExit = (e) => p(e, we),
+  Me = `~effect/Cause`,
+  Ne = `~effect/Cause/Reason`,
+  isCause = (e) => p(e, Me);
+var CauseImpl = class {
+  [Me];
+  reasons;
+  constructor(e) {
+    ((this[Me] = Me), (this.reasons = e));
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+  toJSON() {
+    return { _id: `Cause`, failures: this.reasons.map((e) => e.toJSON()) };
+  }
+  toString() {
+    return `Cause(${format$1(this.reasons)})`;
+  }
+  [y]() {
+    return this.toJSON();
+  }
+  [v](e) {
+    return (
+      isCause(e) &&
+      this.reasons.length === e.reasons.length &&
+      this.reasons.every((t, n) => equals$2(t, e.reasons[n]))
+    );
+  }
+  [h]() {
+    return te(this.reasons);
+  }
+};
+const Pe = new WeakMap();
+var ReasonBase = class {
+  [Ne];
+  annotations;
+  _tag;
+  constructor(e, t, n) {
+    if (
+      ((this[Ne] = Ne),
+      (this._tag = e),
+      t !== Fe && typeof n == `object` && n && t.size > 0)
+    ) {
+      let e = Pe.get(n);
+      (e && (t = new Map([...e, ...t])), Pe.set(n, t));
+    }
+    this.annotations = t;
+  }
+  annotate(e, t) {
+    if (e.mapUnsafe.size === 0) return this;
+    let n = new Map(this.annotations);
+    e.mapUnsafe.forEach((e, r) => {
+      (t?.overwrite !== !0 && n.has(r)) || n.set(r, e);
+    });
+    let r = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    return ((r.annotations = n), r);
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+  toString() {
+    return format$1(this);
+  }
+  [y]() {
+    return this.toString();
+  }
+};
+const Fe = new Map();
+var Fail = class extends ReasonBase {
+  error;
+  constructor(e, t = Fe) {
+    (super(`Fail`, t, e), (this.error = e));
+  }
+  toString() {
+    return `Fail(${format$1(this.error)})`;
+  }
+  toJSON() {
+    return { _tag: `Fail`, error: this.error };
+  }
+  [v](e) {
+    return (
+      Re(e) &&
+      equals$2(this.error, e.error) &&
+      equals$2(this.annotations, e.annotations)
+    );
+  }
+  [h]() {
+    return g(_(this._tag))(g(hash(this.error))(hash(this.annotations)));
+  }
+};
+const causeFromReasons = (e) => new CauseImpl(e),
+  Ie = new CauseImpl([]),
+  causeFail = (e) => new CauseImpl([new Fail(e)]);
+var Die = class extends ReasonBase {
+  defect;
+  constructor(e, t = Fe) {
+    (super(`Die`, t, e), (this.defect = e));
+  }
+  toString() {
+    return `Die(${format$1(this.defect)})`;
+  }
+  toJSON() {
+    return { _tag: `Die`, defect: this.defect };
+  }
+  [v](e) {
+    return (
+      ze(e) &&
+      equals$2(this.defect, e.defect) &&
+      equals$2(this.annotations, e.annotations)
+    );
+  }
+  [h]() {
+    return g(_(this._tag))(g(hash(this.defect))(hash(this.annotations)));
+  }
+};
+const causeDie = (e) => new CauseImpl([new Die(e)]),
+  Le = dual(
+    (e) => isCause(e[0]),
+    (e, t, n) =>
+      t.mapUnsafe.size === 0
+        ? e
+        : new CauseImpl(e.reasons.map((e) => e.annotate(t, n))),
+  ),
+  Re = __name((e) => e._tag === `Fail`, `isFailReason`),
+  ze = __name((e) => e._tag === `Die`, `isDieReason`),
+  isInterruptReason = (e) => e._tag === `Interrupt`;
+function defaultEvaluate(e) {
+  return exitDie(`Effect.evaluate: Not implemented`);
+}
+const makePrimitiveProto = (e) => ({
+    ...je,
+    [Ee]: e.op,
+    [S]: e[S] ?? defaultEvaluate,
+    [C]: e[C],
+    [De]: e[De],
+    [Oe]: e[Oe],
+  }),
+  makePrimitive = (e) => {
+    let t = makePrimitiveProto(e);
+    return function () {
+      let n = Object.create(t);
+      return ((n[x] = e.single === !1 ? arguments : arguments[0]), n);
+    };
+  },
+  makeExit = (e) => {
+    let t = {
+      ...makePrimitiveProto(e),
+      [we]: we,
+      _tag: e.op,
+      get [e.prop]() {
+        return this[x];
+      },
+      toString() {
+        return `${e.op}(${format$1(this[x])})`;
+      },
+      toJSON() {
+        return { _id: `Exit`, _tag: e.op, [e.prop]: this[x] };
+      },
+      [v](e) {
+        return isExit(e) && e._tag === this._tag && equals$2(this[x], e[x]);
+      },
+      [h]() {
+        return g(_(e.op), hash(this[x]));
+      },
+    };
+    return function (e) {
+      let n = Object.create(t);
+      return ((n[x] = e), n);
+    };
+  },
+  T = makeExit({
+    op: `Success`,
+    prop: `value`,
+    [S](e) {
+      let t = e.getCont(C);
+      return t ? t[C](this[x], e, this) : e.yieldWith(this);
+    },
+  }),
+  Be = { key: `effect/Cause/StackTrace` },
+  Ve = { key: `effect/Cause/InterruptorStackTrace` },
+  E = makeExit({
+    op: `Failure`,
+    prop: `cause`,
+    [S](e) {
+      let t = this[x],
+        n = !1;
+      e.currentStackFrame &&
+        ((t = Le(t, { mapUnsafe: new Map([[Be.key, e.currentStackFrame]]) })),
+        (n = !0));
+      let r = e.getCont(De);
+      for (; e.interruptible && e._interruptedCause && r; ) r = e.getCont(De);
+      return r ? r[De](t, e, n ? void 0 : this) : e.yieldWith(n ? this : E(t));
+    },
+  }),
+  exitFail = (e) => E(causeFail(e)),
+  exitDie = (e) => E(causeDie(e)),
+  D = makePrimitive({
+    op: `WithFiber`,
+    [S](e) {
+      return this[x](e);
+    },
+  }),
+  He = (function () {
+    class YieldableError extends globalThis.Error {}
+    let e = makePrimitiveProto({
+      op: `YieldableError`,
+      [S]() {
+        return exitFail(this);
+      },
+    });
+    return (
+      delete e.toString,
+      Object.assign(YieldableError.prototype, e),
+      YieldableError
+    );
+  })(),
+  Ue = (function () {
+    let e = Symbol.for(`effect/Data/Error/plainArgs`);
+    return class Base extends He {
+      constructor(t) {
+        (super(t?.message, t?.cause ? { cause: t.cause } : void 0),
+          t &&
+            (Object.assign(this, t),
+            Object.defineProperty(this, e, { value: t, enumerable: !1 })));
+      }
+      toJSON() {
+        return { ...this[e], ...this };
+      }
+    };
+  })(),
+  We = __name((e) => {
+    class Base extends Ue {
+      _tag = e;
+    }
+    return ((Base.prototype.name = e), Base);
+  }, `TaggedError`);
+We(`NoSuchElementError`);
+const Ge = `~effect/Cause/Done`,
+  Ke = __name((e) => p(e, Ge), `isDone`),
+  qe = { [Ge]: Ge, _tag: `Done`, value: void 0 },
+  Je = __name(
+    (e) => (e === void 0 ? qe : { [Ge]: Ge, _tag: `Done`, value: e }),
+    `Done`,
+  ),
+  Ye = exitFail(qe),
+  Xe = __name((e) => (e === void 0 ? Ye : exitFail(Je(e))), `done`),
+  Ze = `~effect/data/Option`,
+  Qe = {
+    [Ze]: { _A: (e) => e },
+    ...Ae,
+    [Symbol.iterator]() {
+      return new ye(this);
+    },
+  },
+  $e = Object.assign(Object.create(Qe), {
+    _tag: `Some`,
+    _op: `Some`,
+    [v](e) {
+      return isOption(e) && rt(e) && equals$2(this.value, e.value);
+    },
+    [h]() {
+      return g(hash(this._tag))(hash(this.value));
+    },
+    toString() {
+      return `some(${format$1(this.value)})`;
+    },
+    toJSON() {
+      return { _id: `Option`, _tag: this._tag, value: toJson(this.value) };
+    },
+  }),
+  et = hash(`None`),
+  tt = Object.assign(Object.create(Qe), {
+    _tag: `None`,
+    _op: `None`,
+    valueOrUndefined: void 0,
+    [v](e) {
+      return isOption(e) && nt(e);
+    },
+    [h]() {
+      return et;
+    },
+    toString() {
+      return `none()`;
+    },
+    toJSON() {
+      return { _id: `Option`, _tag: this._tag };
+    },
+  }),
+  isOption = (e) => p(e, Ze),
+  nt = __name((e) => e._tag === `None`, `isNone`),
+  rt = __name((e) => e._tag === `Some`, `isSome`),
+  it = Object.create(tt),
+  at = __name((e) => {
+    let t = Object.create($e);
+    return ((t.value = e), t);
+  }, `some`),
+  ot = `~effect/data/Result`,
+  st = {
+    [ot]: { _A: (e) => e, _E: (e) => e },
+    ...Ae,
+    [Symbol.iterator]() {
+      return new ye(this);
+    },
+  },
+  ct = Object.assign(Object.create(st), {
+    _tag: `Success`,
+    _op: `Success`,
+    [v](e) {
+      return isResult(e) && dt(e) && equals$2(this.success, e.success);
+    },
+    [h]() {
+      return g(hash(this._tag))(hash(this.success));
+    },
+    toString() {
+      return `success(${format$1(this.success)})`;
+    },
+    toJSON() {
+      return { _id: `Result`, _tag: this._tag, value: toJson(this.success) };
+    },
+  }),
+  lt = Object.assign(Object.create(st), {
+    _tag: `Failure`,
+    _op: `Failure`,
+    [v](e) {
+      return isResult(e) && ut(e) && equals$2(this.failure, e.failure);
+    },
+    [h]() {
+      return g(hash(this._tag))(hash(this.failure));
+    },
+    toString() {
+      return `failure(${format$1(this.failure)})`;
+    },
+    toJSON() {
+      return { _id: `Result`, _tag: this._tag, failure: toJson(this.failure) };
+    },
+  }),
+  isResult = (e) => p(e, ot),
+  ut = __name((e) => e._tag === `Failure`, `isFailure`),
+  dt = __name((e) => e._tag === `Success`, `isSuccess`),
+  ft = __name((e) => {
+    let t = Object.create(lt);
+    return ((t.failure = e), t);
+  }, `fail`),
+  pt = __name((e) => {
+    let t = Object.create(ct);
+    return ((t.success = e), t);
+  }, `succeed`);
+function make$15(e) {
+  return (t, n) => (t === n ? 0 : e(t, n));
+}
+__name(make$15, `make`);
+const mt = make$15((e, t) =>
+    globalThis.Number.isNaN(e) && globalThis.Number.isNaN(t)
+      ? 0
+      : globalThis.Number.isNaN(e)
+        ? -1
+        : globalThis.Number.isNaN(t)
+          ? 1
+          : e < t
+            ? -1
+            : 1,
+  ),
+  ht = dual(2, (e, t) => make$15((n, r) => e(t(n), t(r)))),
+  gt = __name((e) => dual(2, (t, n) => e(t, n) === 1), `isGreaterThan`),
+  _t = __name(
+    (e) => dual(2, (t, n) => (t === n || e(t, n) > -1 ? t : n)),
+    `max`,
+  ),
+  none = () => it,
+  O = at,
+  k = nt,
+  vt = rt,
+  yt = dual(2, (e, { onNone: t, onSome: n }) => (k(e) ? t() : n(e.value))),
+  bt = dual(2, (e, t) => (k(e) ? t() : e.value)),
+  fromNullishOr = (e) => (e == null ? none() : O(e)),
+  fromUndefinedOr = (e) => (e === void 0 ? none() : O(e)),
+  xt = bt(u),
+  St = dual(2, (e, t) => (k(e) ? none() : O(t(e.value)))),
+  Ct = dual(2, (e, t) => (k(e) ? none() : t(e.value))),
+  wt = dual(2, (e, t) => (k(e) ? none() : t(e.value) ? O(e.value) : none())),
+  A = pt,
+  j = ft,
+  M = ut,
+  Tt = dt,
+  Et = dual(2, (e, { onFailure: t, onSuccess: n }) =>
+    M(e) ? t(e.failure) : n(e.success),
+  ),
+  Dt = Tuple$1,
+  headUnsafe = (e) => {
+    let t = e[Symbol.iterator]().next();
+    if (t.done) throw Error(`headUnsafe: empty iterable`);
+    return t.value;
+  },
+  Ot = {
+    [Symbol.iterator]() {
+      return kt;
+    },
+  },
+  kt = {
+    next() {
+      return { done: !0, value: void 0 };
+    },
+  },
+  At = __name(() => Ot, `empty`),
+  isEmptyRecord = (e) => Object.keys(e).length === 0,
+  jt = dual(2, (e, t) => {
+    let n = { ...e };
+    for (let r of keys(e)) n[r] = t(e[r], r);
+    return n;
+  }),
+  keys = (e) => Object.keys(e),
+  Mt = globalThis.Array,
+  fromIterable = (e) => (Mt.isArray(e) ? e : Mt.from(e)),
+  ensure = (e) => (Mt.isArray(e) ? e : [e]),
+  Nt = dual(2, (e, t) => [...e, t]),
+  Pt = dual(2, (e, t) => fromIterable(e).concat(fromIterable(t)));
+Mt.isArray;
+const Ft = pe,
+  It = pe;
+function isOutOfBounds(e, t) {
+  return e < 0 || e >= t.length;
+}
+const Lt = dual(2, (e, t) => {
+    let n = Math.floor(t);
+    if (isOutOfBounds(n, e)) throw Error(`Index out of bounds: ${n}`);
+    return e[n];
+  }),
+  Rt = Lt(0),
+  tailNonEmpty = (e) => e.slice(1),
+  zt = dual(3, (e, t, n) => {
+    let r = fromIterable(e),
+      i = fromIterable(t);
+    return It(r) ? (It(i) ? Wt(n)(Pt(r, i)) : r) : i;
+  }),
+  Bt = dual(2, (e, t) => zt(e, t, asEquivalence())),
+  Vt = __name(() => [], `empty`),
+  of = (e) => [e],
+  Ht = dual(2, (e, t) => e.map(t)),
+  Ut = Array_,
+  Wt = dual(2, (e, t) => {
+    let n = fromIterable(e);
+    if (It(n)) {
+      let e = [Rt(n)],
+        r = tailNonEmpty(n);
+      for (let n of r) e.every((e) => !t(n, e)) && e.push(n);
+      return e;
+    }
+    return [];
+  }),
+  Gt = `~effect/BigDecimal`,
+  Kt = {
+    [Gt]: Gt,
+    [h]() {
+      let e = normalize(this);
+      return g(hash(e.value), ee(e.scale));
+    },
+    [v](e) {
+      return isBigDecimal(e) && $t(this, e);
+    },
+    toString() {
+      return `BigDecimal(${format(this)})`;
+    },
+    toJSON() {
+      return {
+        _id: `BigDecimal`,
+        value: String(this.value),
+        scale: this.scale,
+      };
+    },
+    [y]() {
+      return this.toJSON();
+    },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  isBigDecimal = (e) => p(e, Gt),
+  qt = __name((e, t) => {
+    let n = Object.create(Kt);
+    return ((n.value = e), (n.scale = t), n);
+  }, `make`),
+  makeNormalizedUnsafe = (e, t) => {
+    if (e !== Jt && e % Yt === Jt) throw RangeError(`Value must be normalized`);
+    let n = qt(e, t);
+    return ((n.normalized = n), n);
+  },
+  Jt = BigInt(0),
+  Yt = BigInt(10),
+  Xt = makeNormalizedUnsafe(Jt, 0),
+  normalize = (e) => {
+    if (e.normalized === void 0)
+      if (e.value === Jt) e.normalized = Xt;
+      else {
+        let t = `${e.value}`,
+          n = 0;
+        for (let e = t.length - 1; e >= 0 && t[e] === `0`; e--) n++;
+        (n === 0 && (e.normalized = e),
+          (e.normalized = makeNormalizedUnsafe(
+            BigInt(t.substring(0, t.length - n)),
+            e.scale - n,
+          )));
+      }
+    return e.normalized;
+  },
+  Zt = dual(2, (e, t) =>
+    t > e.scale
+      ? qt(e.value * Yt ** BigInt(t - e.scale), t)
+      : t < e.scale
+        ? qt(e.value / Yt ** BigInt(e.scale - t), t)
+        : e,
+  ),
+  abs = (e) => (e.value < Jt ? qt(-e.value, e.scale) : e),
+  Qt = fe((e, t) =>
+    e.scale > t.scale
+      ? Zt(t, e.scale).value === e.value
+      : e.scale < t.scale
+        ? Zt(e, t.scale).value === t.value
+        : e.value === t.value,
+  ),
+  $t = dual(2, (e, t) => Qt(e, t)),
+  format = (e) => {
+    let t = normalize(e);
+    if (Math.abs(t.scale) >= 16) return toExponential(t);
+    let n = t.value < Jt,
+      r = n ? `${t.value}`.substring(1) : `${t.value}`,
+      i,
+      a;
+    if (t.scale >= r.length)
+      ((i = `0`), (a = `0`.repeat(t.scale - r.length) + r));
+    else {
+      let e = r.length - t.scale;
+      if (e > r.length) {
+        let t = e - r.length;
+        ((i = `${r}${`0`.repeat(t)}`), (a = ``));
+      } else ((a = r.slice(e)), (i = r.slice(0, e)));
+    }
+    let o = a === `` ? i : `${i}.${a}`;
+    return n ? `-${o}` : o;
+  },
+  toExponential = (e) => {
+    if (isZero(e)) return `0e+0`;
+    let t = normalize(e),
+      n = `${abs(t).value}`,
+      r = n.slice(0, 1),
+      i = n.slice(1),
+      a = `${isNegative(t) ? `-` : ``}${r}`;
+    i !== `` && (a += `.${i}`);
+    let o = i.length - t.scale;
+    return `${a}e${o >= 0 ? `+` : ``}${o}`;
+  },
+  isZero = (e) => e.value === Jt,
+  isNegative = (e) => e.value < Jt,
+  Prototype = (e) => makePrimitiveProto({ op: e.label, [S]: e.evaluate }),
+  en = `~effect/Context/Service`,
+  Service = function () {
+    let e = Error.stackTraceLimit;
+    Error.stackTraceLimit = 2;
+    let t = Error();
+    Error.stackTraceLimit = e;
+    function KeyClass() {}
+    let n = KeyClass;
+    return (
+      Object.setPrototypeOf(n, tn),
+      Object.defineProperty(n, `stack`, {
+        get() {
+          return t.stack;
+        },
+      }),
+      arguments.length > 0
+        ? ((n.key = arguments[0]),
+          arguments[1]?.defaultValue &&
+            ((n[nn] = nn), (n.defaultValue = arguments[1].defaultValue)),
+          n)
+        : function (e, t) {
+            return ((n.key = e), t?.make && (n.make = t.make), n);
+          }
+    );
+  },
+  tn = {
+    [en]: en,
+    ...Prototype({
+      label: `Service`,
+      evaluate(e) {
+        return T(pn(e.context, this));
+      },
+    }),
+    toJSON() {
+      return { _id: `Service`, key: this.key, stack: this.stack };
+    },
+    of(e) {
+      return e;
+    },
+    context(e) {
+      return ln(this, e);
+    },
+    use(e) {
+      return D((t) => e(pn(t.context, this)));
+    },
+    useSync(e) {
+      return D((t) => T(e(pn(t.context, this))));
+    },
+  },
+  nn = `~effect/Context/Reference`,
+  rn = `~effect/Context`,
+  an = __name((e) => {
+    let t = Object.create(on);
+    return ((t.mapUnsafe = e), (t.mutable = !1), t);
+  }, `makeUnsafe`),
+  on = {
+    ...Ae,
+    [rn]: { _Services: (e) => e },
+    toJSON() {
+      return {
+        _id: `Context`,
+        services: Array.from(this.mapUnsafe).map(([e, t]) => ({
+          key: e,
+          value: t,
+        })),
+      };
+    },
+    [v](e) {
+      if (!isContext(e) || this.mapUnsafe.size !== e.mapUnsafe.size) return !1;
+      for (let t of this.mapUnsafe.keys())
+        if (
+          !e.mapUnsafe.has(t) ||
+          !equals$2(this.mapUnsafe.get(t), e.mapUnsafe.get(t))
+        )
+          return !1;
+      return !0;
+    },
+    [h]() {
+      return ee(this.mapUnsafe.size);
+    },
+  },
+  isContext = (e) => p(e, rn),
+  isReference = (e) => p(e, nn),
+  sn = __name(() => cn, `empty`),
+  cn = an(new Map()),
+  ln = __name((e, t) => an(new Map([[e.key, t]])), `make`),
+  un = dual(3, (e, t, n) =>
+    withMapUnsafe(e, (e) => {
+      e.set(t.key, n);
+    }),
+  ),
+  dn = dual(3, (e, t, n) =>
+    e.mapUnsafe.has(t.key)
+      ? e.mapUnsafe.get(t.key)
+      : isReference(t)
+        ? getDefaultValue(t)
+        : n(),
+  ),
+  fn = dual(2, (e, t) => {
+    if (!e.mapUnsafe.has(t.key)) {
+      if (nn in t) return getDefaultValue(t);
+      throw serviceNotFoundError(t);
+    }
+    return e.mapUnsafe.get(t.key);
+  }),
+  pn = fn,
+  getReferenceUnsafe = (e, t) =>
+    e.mapUnsafe.has(t.key) ? e.mapUnsafe.get(t.key) : getDefaultValue(t),
+  mn = `~effect/Context/defaultValue`,
+  getDefaultValue = (e) => (mn in e ? e[mn] : (e[mn] = e.defaultValue())),
+  serviceNotFoundError = (e) => {
+    let t = Error(`Service not found${e.key ? `: ${String(e.key)}` : ``}`);
+    if (e.stack) {
+      let n = e.stack.split(`
+`);
+      if (n.length > 2) {
+        let e = n[2].match(/at (.*)/);
+        e && (t.message += ` (defined at ${e[1]})`);
+      }
+    }
+    if (t.stack) {
+      let e = t.stack.split(`
+`);
+      (e.splice(1, 3),
+        (t.stack = e.join(`
+`)));
+    }
+    return t;
+  },
+  hn = dual(2, (e, t) =>
+    e.mapUnsafe.has(t.key)
+      ? O(e.mapUnsafe.get(t.key))
+      : isReference(t)
+        ? O(getDefaultValue(t))
+        : none(),
+  ),
+  gn = dual(2, (e, t) =>
+    e.mapUnsafe.size === 0
+      ? t
+      : t.mapUnsafe.size === 0
+        ? e
+        : withMapUnsafe(e, (e) => {
+            t.mapUnsafe.forEach((t, n) => e.set(n, t));
+          }),
+  ),
+  _n = __name((...e) => {
+    let t = new Map();
+    for (let n = 0; n < e.length; n++)
+      e[n].mapUnsafe.forEach((e, n) => {
+        t.set(n, e);
+      });
+    return an(t);
+  }, `mergeAll`),
+  withMapUnsafe = (e, t) => {
+    if (e.mutable) return (t(e.mapUnsafe), e);
+    let n = new Map(e.mapUnsafe);
+    return (t(n), an(n));
+  },
+  N = Service,
+  vn = `~effect/time/Duration`,
+  yn = BigInt(0),
+  bn = BigInt(1e3),
+  xn = BigInt(1e6),
+  Sn =
+    /^(-?\d+(?:\.\d+)?)\s+(nanos?|micros?|millis?|seconds?|minutes?|hours?|days?|weeks?)$/,
+  fromInputUnsafe = (e) => {
+    switch (typeof e) {
+      case `number`:
+        return millis(e);
+      case `bigint`:
+        return nanos(e);
+      case `string`: {
+        if (e === `Infinity`) return On;
+        if (e === `-Infinity`) return kn;
+        let t = Sn.exec(e);
+        if (!t) break;
+        let [n, r, i] = t,
+          a = Number(r);
+        switch (i) {
+          case `nano`:
+          case `nanos`:
+            return nanos(BigInt(r));
+          case `micro`:
+          case `micros`:
+            return micros(BigInt(r));
+          case `milli`:
+          case `millis`:
+            return millis(a);
+          case `second`:
+          case `seconds`:
+            return seconds(a);
+          case `minute`:
+          case `minutes`:
+            return minutes(a);
+          case `hour`:
+          case `hours`:
+            return hours(a);
+          case `day`:
+          case `days`:
+            return days(a);
+          case `week`:
+          case `weeks`:
+            return weeks(a);
+        }
+        break;
+      }
+      case `object`: {
+        if (e === null) break;
+        if (vn in e) return e;
+        if (Array.isArray(e))
+          return e.length !== 2 || !e.every(isNumber)
+            ? invalid(e)
+            : Number.isNaN(e[0]) || Number.isNaN(e[1])
+              ? Dn
+              : e[0] === -1 / 0 || e[1] === -1 / 0
+                ? kn
+                : e[0] === 1 / 0 || e[1] === 1 / 0
+                  ? On
+                  : P(
+                      BigInt(Math.round(e[0] * 1e9)) + BigInt(Math.round(e[1])),
+                    );
+        let t = e,
+          n = 0;
+        if (
+          (t.weeks && (n += t.weeks * 6048e5),
+          t.days && (n += t.days * 864e5),
+          t.hours && (n += t.hours * 36e5),
+          t.minutes && (n += t.minutes * 6e4),
+          t.seconds && (n += t.seconds * 1e3),
+          t.milliseconds && (n += t.milliseconds),
+          !t.microseconds && !t.nanoseconds)
+        )
+          return P(n);
+        let r = BigInt(n) * xn;
+        return (
+          t.microseconds && (r += BigInt(t.microseconds) * bn),
+          t.nanoseconds && (r += BigInt(t.nanoseconds)),
+          P(r)
+        );
+      }
+    }
+    return invalid(e);
+  },
+  invalid = (e) => {
+    throw Error(`Invalid Input: ${e}`);
+  },
+  Cn = { _tag: `Millis`, millis: 0 },
+  wn = { _tag: `Infinity` },
+  Tn = { _tag: `NegativeInfinity` },
+  En = {
+    [vn]: vn,
+    [h]() {
+      return structure(this.value);
+    },
+    [v](e) {
+      return isDuration(e) && Fn(this, e);
+    },
+    toString() {
+      switch (this.value._tag) {
+        case `Infinity`:
+          return `Infinity`;
+        case `NegativeInfinity`:
+          return `-Infinity`;
+        case `Nanos`:
+          return `${this.value.nanos} nanos`;
+        case `Millis`:
+          return `${this.value.millis} millis`;
+      }
+    },
+    toJSON() {
+      switch (this.value._tag) {
+        case `Millis`:
+          return { _id: `Duration`, _tag: `Millis`, millis: this.value.millis };
+        case `Nanos`:
+          return {
+            _id: `Duration`,
+            _tag: `Nanos`,
+            nanos: String(this.value.nanos),
+          };
+        case `Infinity`:
+          return { _id: `Duration`, _tag: `Infinity` };
+        case `NegativeInfinity`:
+          return { _id: `Duration`, _tag: `NegativeInfinity` };
+      }
+    },
+    [y]() {
+      return this.toJSON();
+    },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  P = __name((e) => {
+    let t = Object.create(En);
+    return (
+      typeof e == `number`
+        ? isNaN(e) || e === 0 || Object.is(e, -0)
+          ? (t.value = Cn)
+          : Number.isFinite(e)
+            ? Number.isInteger(e)
+              ? (t.value = { _tag: `Millis`, millis: e })
+              : (t.value = {
+                  _tag: `Nanos`,
+                  nanos: BigInt(Math.round(e * 1e6)),
+                })
+            : (t.value = e > 0 ? wn : Tn)
+        : e === yn
+          ? (t.value = Cn)
+          : (t.value = { _tag: `Nanos`, nanos: e }),
+      t
+    );
+  }, `make`),
+  isDuration = (e) => p(e, vn),
+  isFinite = (e) =>
+    e.value._tag !== `Infinity` && e.value._tag !== `NegativeInfinity`,
+  Dn = P(0),
+  On = P(1 / 0),
+  kn = P(-1 / 0),
+  nanos = (e) => P(e),
+  micros = (e) => P(e * bn),
+  millis = (e) => P(e),
+  seconds = (e) => P(e * 1e3),
+  minutes = (e) => P(e * 6e4),
+  hours = (e) => P(e * 36e5),
+  days = (e) => P(e * 864e5),
+  weeks = (e) => P(e * 6048e5),
+  toMillis = (e) =>
+    An(fromInputUnsafe(e), {
+      onMillis: identity,
+      onNanos: (e) => Number(e) / 1e6,
+      onInfinity: () => 1 / 0,
+      onNegativeInfinity: () => -1 / 0,
+    }),
+  toSeconds = (e) =>
+    An(fromInputUnsafe(e), {
+      onMillis: (e) => e / 1e3,
+      onNanos: (e) => Number(e) / 1e9,
+      onInfinity: () => 1 / 0,
+      onNegativeInfinity: () => -1 / 0,
+    }),
+  toNanosUnsafe = (e) => {
+    let t = fromInputUnsafe(e);
+    switch (t.value._tag) {
+      case `Infinity`:
+      case `NegativeInfinity`:
+        throw Error(`Cannot convert infinite duration to nanos`);
+      case `Nanos`:
+        return t.value.nanos;
+      case `Millis`:
+        return BigInt(Math.round(t.value.millis * 1e6));
+    }
+  },
+  An = dual(2, (e, t) => {
+    switch (e.value._tag) {
+      case `Millis`:
+        return t.onMillis(e.value.millis);
+      case `Nanos`:
+        return t.onNanos(e.value.nanos);
+      case `Infinity`:
+        return t.onInfinity();
+      case `NegativeInfinity`:
+        return (t.onNegativeInfinity ?? t.onInfinity)();
+    }
+  }),
+  jn = dual(3, (e, t, n) =>
+    e.value._tag === `Infinity` ||
+    e.value._tag === `NegativeInfinity` ||
+    t.value._tag === `Infinity` ||
+    t.value._tag === `NegativeInfinity`
+      ? n.onInfinity(e, t)
+      : e.value._tag === `Millis`
+        ? t.value._tag === `Millis`
+          ? n.onMillis(e.value.millis, t.value.millis)
+          : n.onNanos(toNanosUnsafe(e), t.value.nanos)
+        : n.onNanos(e.value.nanos, toNanosUnsafe(t)),
+  ),
+  Mn = make$15((e, t) =>
+    jn(e, t, {
+      onMillis: (e, t) => (e < t ? -1 : +(e > t)),
+      onNanos: (e, t) => (e < t ? -1 : +(e > t)),
+      onInfinity: (e, t) =>
+        e.value._tag === t.value._tag
+          ? 0
+          : e.value._tag === `Infinity`
+            ? 1
+            : e.value._tag === `NegativeInfinity` || t.value._tag === `Infinity`
+              ? -1
+              : 1,
+    }),
+  ),
+  Nn = __name(
+    (e, t) =>
+      jn(e, t, {
+        onMillis: (e, t) => e === t,
+        onNanos: (e, t) => e === t,
+        onInfinity: (e, t) => e.value._tag === t.value._tag,
+      }),
+    `Equivalence`,
+  ),
+  Pn = _t(Mn),
+  Fn = dual(2, (e, t) => Nn(e, t)),
+  fromPredicate = (e) => (t) => (e(t) ? A(t) : j(t)),
+  toPredicate = (e) => (t) => !M(e(t)),
+  has = (e) => (t) => (t.has(e) ? A(t) : j(t)),
+  In = dual(2, (e, t) => (n) => {
+    let r = e(n);
+    return M(r) ? r : t(r.success);
+  }),
+  Ln = dual(2, (e, t) => (n) => {
+    let r = e(n);
+    if (M(r)) return j(n);
+    let i = t(r.success);
+    return M(i) ? j(n) : i;
+  }),
+  toOption = (e) => (t) => {
+    let n = e(t);
+    return M(n) ? none() : O(n.success);
+  },
+  Rn = N(`effect/Scheduler`, { defaultValue: () => new MixedScheduler() }),
+  zn =
+    `setImmediate` in globalThis
+      ? (e) => {
+          let t = globalThis.setImmediate(e);
+          return () => globalThis.clearImmediate(t);
+        }
+      : (e) => {
+          let t = setTimeout(e, 0);
+          return () => clearTimeout(t);
+        };
+var PriorityBuckets = class {
+    buckets = [];
+    scheduleTask(e, t) {
+      let n = this.buckets,
+        r = n.length,
+        i,
+        a = 0;
+      for (; a < r && !(n[a][0] > t); a++) i = n[a];
+      i && i[0] === t
+        ? i[1].push(e)
+        : a === r
+          ? n.push([t, [e]])
+          : n.splice(a, 0, [t, [e]]);
+    }
+    drain() {
+      let e = this.buckets;
+      return ((this.buckets = []), e);
+    }
+  },
+  MixedScheduler = class {
+    executionMode;
+    setImmediate;
+    constructor(e = `async`, t = zn) {
+      ((this.executionMode = e), (this.setImmediate = t));
+    }
+    shouldYield(e) {
+      return e.currentOpCount >= e.maxOpsBeforeYield;
+    }
+    makeDispatcher() {
+      return new MixedSchedulerDispatcher(this.setImmediate);
+    }
+  },
+  MixedSchedulerDispatcher = class {
+    tasks = new PriorityBuckets();
+    running = void 0;
+    setImmediate;
+    constructor(e = zn) {
+      this.setImmediate = e;
+    }
+    scheduleTask(e, t) {
+      (this.tasks.scheduleTask(e, t),
+        this.running === void 0 &&
+          (this.running = this.setImmediate(this.afterScheduled)));
+    }
+    afterScheduled = () => {
+      ((this.running = void 0), this.runTasks());
+    };
+    runTasks() {
+      let e = this.tasks.drain();
+      for (let t = 0; t < e.length; t++) {
+        let n = e[t][1];
+        for (let e = 0; e < n.length; e++) n[e]();
+      }
+    }
+    flush() {
+      for (; this.tasks.buckets.length > 0; )
+        (this.running !== void 0 && (this.running(), (this.running = void 0)),
+          this.runTasks());
+    }
+  };
+const Bn = N(`effect/Scheduler/MaxOpsBeforeYield`, {
+    defaultValue: () => 2048,
+  }),
+  Vn = N(`effect/Scheduler/PreventSchedulerYield`, { defaultValue: () => !1 }),
+  Hn = `effect/Tracer/ParentSpan`;
+var ParentSpan = class extends Service()(Hn) {};
+const Un = __name((e) => e, `make`),
+  Wn = N(`effect/Tracer/DisablePropagation`, { defaultValue: l }),
+  Gn = N(`effect/Tracer/CurrentTraceLevel`, { defaultValue: () => `Info` }),
+  Kn = N(`effect/Tracer/MinimumTraceLevel`, { defaultValue: () => `All` }),
+  qn = `effect/Tracer`,
+  Jn = N(qn, { defaultValue: () => Un({ span: (e) => new NativeSpan(e) }) });
+var NativeSpan = class {
+  _tag = `Span`;
+  spanId;
+  traceId = `native`;
+  sampled;
+  name;
+  parent;
+  annotations;
+  links;
+  startTime;
+  kind;
+  status;
+  attributes;
+  events = [];
+  constructor(e) {
+    ((this.name = e.name),
+      (this.parent = e.parent),
+      (this.annotations = e.annotations),
+      (this.links = e.links),
+      (this.startTime = e.startTime),
+      (this.kind = e.kind),
+      (this.sampled = e.sampled),
+      (this.status = { _tag: `Started`, startTime: e.startTime }),
+      (this.attributes = new Map()),
+      (this.traceId = xt(e.parent)?.traceId ?? Yn(32)),
+      (this.spanId = Yn(16)));
+  }
+  end(e, t) {
+    this.status = {
+      _tag: `Ended`,
+      endTime: e,
+      exit: t,
+      startTime: this.status.startTime,
+    };
+  }
+  attribute(e, t) {
+    this.attributes.set(e, t);
+  }
+  event(e, t, n) {
+    this.events.push([e, t, n ?? {}]);
+  }
+  addLinks(e) {
+    this.links.push(...e);
+  }
+};
+const Yn = (function () {
+    return function (e) {
+      let t = ``;
+      for (let n = 0; n < e; n++)
+        t += `abcdef0123456789`.charAt(Math.floor(Math.random() * 16));
+      return t;
+    };
+  })(),
+  Xn = N(`effect/References/CurrentConcurrency`, {
+    defaultValue: () => `unbounded`,
+  }),
+  Zn = N(`effect/References/CurrentStackFrame`, { defaultValue: u }),
+  Qn = N(`effect/References/TracerEnabled`, { defaultValue: c }),
+  $n = N(`effect/References/TracerTimingEnabled`, { defaultValue: c }),
+  er = N(`effect/References/TracerSpanAnnotations`, {
+    defaultValue: () => ({}),
+  }),
+  tr = N(`effect/References/TracerSpanLinks`, { defaultValue: () => [] }),
+  nr = N(`effect/References/CurrentLogAnnotations`, {
+    defaultValue: () => ({}),
+  }),
+  rr = N(`effect/References/CurrentLogLevel`, { defaultValue: () => `Info` }),
+  ir = N(`effect/References/MinimumLogLevel`, { defaultValue: () => `Info` }),
+  ar = N(`effect/References/CurrentLogSpans`, { defaultValue: () => [] }),
+  addSpanStackTrace = (e) => {
+    if (
+      e?.captureStackTrace === !1 ||
+      (e?.captureStackTrace !== void 0 &&
+        typeof e.captureStackTrace != `boolean`)
+    )
+      return e;
+    let t = Error.stackTraceLimit;
+    Error.stackTraceLimit = 3;
+    let n = Error();
+    return (
+      (Error.stackTraceLimit = t),
+      { ...e, captureStackTrace: or(() => n.stack) }
+    );
+  },
+  makeStackCleaner = (e) => (t) => {
+    let n;
+    return () => {
+      if (n !== void 0) return n;
+      let r = t();
+      if (!r) return;
+      let i = r.split(`
+`);
+      if (i[e] !== void 0) return ((n = i[e].trim()), n);
+    };
+  },
+  or = makeStackCleaner(3);
+var Interrupt = class extends ReasonBase {
+  fiberId;
+  constructor(e, t = Fe) {
+    (super(`Interrupt`, t, `Interrupted`), (this.fiberId = e));
+  }
+  toString() {
+    return `Interrupt(${this.fiberId})`;
+  }
+  toJSON() {
+    return { _tag: `Interrupt`, fiberId: this.fiberId };
+  }
+  [v](e) {
+    return (
+      isInterruptReason(e) &&
+      this.fiberId === e.fiberId &&
+      this.annotations === e.annotations
+    );
+  }
+  [h]() {
+    return g(_(`${this._tag}:${this.fiberId}`))(random(this.annotations));
+  }
+};
+const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
+  findFail = (e) => {
+    let t = e.reasons.find(Re);
+    return t ? A(t) : j(e);
+  },
+  sr = __name((e) => {
+    for (let t = 0; t < e.reasons.length; t++) {
+      let n = e.reasons[t];
+      if (n._tag === `Fail`) return A(n.error);
+    }
+    return j(e);
+  }, `findError`),
+  cr = toOption(sr),
+  lr = __name((e) => e.reasons.some(isInterruptReason), `hasInterrupts`),
+  causeFilterInterruptors = (e) => {
+    let t;
+    for (let n = 0; n < e.reasons.length; n++) {
+      let r = e.reasons[n];
+      r._tag === `Interrupt` &&
+        ((t ??= new Set()), r.fiberId !== void 0 && t.add(r.fiberId));
+    }
+    return t ? A(t) : j(e);
+  },
+  ur = __name(
+    (e) => e.reasons.length > 0 && e.reasons.every(isInterruptReason),
+    `hasInterruptsOnly`,
+  ),
+  dr = dual(2, (e, t) => {
+    if (e.reasons.length === 0) return t;
+    if (t.reasons.length === 0) return e;
+    let n = new CauseImpl(Bt(e.reasons, t.reasons));
+    return equals$2(e, n) ? e : n;
+  }),
+  causePartition = (e) => {
+    let t = { Fail: [], Die: [], Interrupt: [] };
+    for (let n = 0; n < e.reasons.length; n++)
+      t[e.reasons[n]._tag].push(e.reasons[n]);
+    return t;
+  },
+  causeSquash = (e) => {
+    let t = causePartition(e);
+    return t.Fail.length > 0
+      ? t.Fail[0].error
+      : t.Die.length > 0
+        ? t.Die[0].defect
+        : t.Interrupt.length > 0
+          ? new globalThis.Error(`All fibers interrupted without error`)
+          : new globalThis.Error(`Empty cause`);
+  },
+  causePrettyErrors = (e) => {
+    let t = [],
+      n = [];
+    if (e.reasons.length === 0) return t;
+    let r = Error.stackTraceLimit;
+    Error.stackTraceLimit = 1;
+    for (let r of e.reasons) {
+      if (r._tag === `Interrupt`) {
+        n.push(r);
+        continue;
+      }
+      t.push(
+        causePrettyError(r._tag === `Die` ? r.defect : r.error, r.annotations),
+      );
+    }
+    if (t.length === 0) {
+      let e = Error(`The fiber was interrupted by:`);
+      ((e.name = `InterruptCause`), (e.stack = interruptCauseStack(e, n)));
+      let r = new globalThis.Error(`All fibers interrupted without error`, {
+        cause: e,
+      });
+      ((r.name = `InterruptError`),
+        (r.stack = `${r.name}: ${r.message}`),
+        t.push(causePrettyError(r, n[0].annotations)));
+    }
+    return ((Error.stackTraceLimit = r), t);
+  },
+  causePrettyError = (e, t) => {
+    let n = typeof e,
+      r;
+    if (e && n === `object`) {
+      if (
+        ((r = new globalThis.Error(causePrettyMessage(e), {
+          cause: e.cause ? causePrettyError(e.cause) : void 0,
+        })),
+        typeof e.name == `string` && (r.name = e.name),
+        typeof e.stack == `string`)
+      )
+        r.stack = cleanErrorStack(e.stack, r, t);
+      else {
+        let e = `${r.name}: ${r.message}`;
+        r.stack = t ? addStackAnnotations(e, t) : e;
+      }
+      for (let t of Object.keys(e)) t in r || (r[t] = e[t]);
+    } else
+      r = new globalThis.Error(
+        e ? (n === `string` ? e : formatJson(e)) : `Unknown error: ${e}`,
+      );
+    return r;
+  },
+  causePrettyMessage = (e) => {
+    if (typeof e.message == `string`) return e.message;
+    if (
+      typeof e.toString == `function` &&
+      e.toString !== Object.prototype.toString &&
+      e.toString !== Array.prototype.toString
+    )
+      try {
+        return e.toString();
+      } catch {}
+    return formatJson(e);
+  },
+  fr = /\((.*)\)/g,
+  cleanErrorStack = (e, t, n) => {
+    let r = `${t.name}: ${t.message}`,
+      i = (e.startsWith(r) ? e.slice(r.length) : e).split(`
+`),
+      a = [r];
+    for (
+      let e = 1;
+      e < i.length && !/(?:Generator\.next|~effect\/Effect)/.test(i[e]);
+      e++
+    )
+      a.push(i[e]);
+    return n
+      ? addStackAnnotations(
+          a.join(`
+`),
+          n,
+        )
+      : a.join(`
+`);
+  },
+  addStackAnnotations = (e, t) => {
+    let n = t?.get(Be.key);
+    return (n && (e = `${e}\n${currentStackTrace(n)}`), e);
+  },
+  interruptCauseStack = (e, t) => {
+    let n = [`${e.name}: ${e.message}`];
+    for (let e of t) {
+      let t = e.fiberId === void 0 ? `unknown` : `#${e.fiberId}`,
+        r = e.annotations.get(Ve.key);
+      (n.push(`    at fiber (${t})`), r && n.push(currentStackTrace(r)));
+    }
+    return n.join(`
+`);
+  },
+  currentStackTrace = (e) => {
+    let t = [],
+      n = e,
+      r = 0;
+    for (; n && r < 10; ) {
+      let e = n.stack();
+      if (e) {
+        let r = e.matchAll(fr),
+          i = !1;
+        for (let [, e] of r) ((i = !0), t.push(`    at ${n.name} (${e})`));
+        i || t.push(`    at ${n.name} (${e.replace(/^at /, ``)})`);
+      } else t.push(`    at ${n.name}`);
+      ((n = n.parent), r++);
+    }
+    return t.join(`
+`);
+  },
+  causePretty = (e) =>
+    causePrettyErrors(e).map((e) =>
+      e.cause ? `${e.stack} {\n${renderErrorCause(e.cause, `  `)}\n}` : e.stack,
+    ).join(`
+`),
+  renderErrorCause = (e, t) => {
+    let n = e.stack.split(`
+`),
+      r = `${t}[cause]: ${n[0]}`;
+    for (let e = 1, i = n.length; e < i; e++) r += `\n${t}${n[e]}`;
+    return (
+      e.cause && (r += ` {\n${renderErrorCause(e.cause, `${t}  `)}\n${t}}`), r
+    );
+  },
+  pr = `~effect/Fiber/dev`,
+  mr = { _A: identity, _E: identity },
+  hr = { id: 0 },
+  getCurrentFiber = () => globalThis[he];
+var FiberImpl = class {
+  constructor(e, t = !0) {
+    ((this[pr] = mr),
+      this.setContext(e),
+      (this.id = ++hr.id),
+      (this.currentOpCount = 0),
+      (this.currentLoopCount = 0),
+      (this.interruptible = t),
+      (this._stack = []),
+      (this._observers = []),
+      (this._exit = void 0),
+      (this._children = void 0),
+      (this._interruptedCause = void 0),
+      (this._yielded = void 0),
+      this.runtimeMetrics?.recordFiberStart(this.context));
+  }
+  [pr];
+  id;
+  interruptible;
+  currentOpCount;
+  currentLoopCount;
+  _stack;
+  _observers;
+  _exit;
+  _currentExit;
+  _children;
+  _interruptedCause;
+  _yielded;
+  context;
+  currentScheduler;
+  currentTracerContext;
+  currentSpan;
+  currentLogLevel;
+  minimumLogLevel;
+  currentStackFrame;
+  runtimeMetrics;
+  maxOpsBeforeYield;
+  currentPreventYield;
+  _dispatcher = void 0;
+  get currentDispatcher() {
+    return (this._dispatcher ??= this.currentScheduler.makeDispatcher());
+  }
+  getRef(e) {
+    return getReferenceUnsafe(this.context, e);
+  }
+  addObserver(e) {
+    return this._exit
+      ? (e(this._exit), d)
+      : (this._observers.push(e),
+        () => {
+          let t = this._observers.indexOf(e);
+          t >= 0 && this._observers.splice(t, 1);
+        });
+  }
+  interruptUnsafe(e, t) {
+    if (this._exit) return;
+    let n = causeInterrupt(e);
+    (this.currentStackFrame && (n = Le(n, ln(Be, this.currentStackFrame))),
+      t && (n = Le(n, t)),
+      (this._interruptedCause = this._interruptedCause
+        ? dr(this._interruptedCause, n)
+        : n),
+      this.interruptible && this.evaluate(I(this._interruptedCause)));
+  }
+  pollUnsafe() {
+    return this._exit;
+  }
+  evaluate(e) {
+    if (this._exit) return;
+    if (this._yielded !== void 0) {
+      let e = this._yielded;
+      ((this._yielded = void 0), e());
+    }
+    let t = this.runLoop(e);
+    if (t === ke) return;
+    let n = gr.interruptChildren && gr.interruptChildren(this);
+    if (n !== void 0) return this.evaluate(V(n, () => t));
+    ((this._exit = t),
+      this.runtimeMetrics?.recordFiberEnd(this.context, this._exit));
+    for (let e = 0; e < this._observers.length; e++) this._observers[e](t);
+    this._observers.length = 0;
+  }
+  runLoop(e) {
+    let t = globalThis[he];
+    globalThis[he] = this;
+    let n = !1,
+      r = e;
+    this.currentOpCount = 0;
+    let i = ++this.currentLoopCount;
+    try {
+      for (;;) {
+        if (
+          (this.currentOpCount++,
+          !n &&
+            !this.currentPreventYield &&
+            this.currentScheduler.shouldYield(this))
+        ) {
+          n = !0;
+          let e = r;
+          r = V(br, () => e);
+        }
+        if (
+          ((r = this.currentTracerContext
+            ? this.currentTracerContext(r, this)
+            : r[S](this)),
+          i !== this.currentLoopCount)
+        )
+          return ke;
+        if (r === ke) {
+          let e = this._yielded;
+          return we in e ? ((this._yielded = void 0), e) : ke;
+        }
+      }
+    } catch (e) {
+      return p(r, S)
+        ? this.runLoop(exitDie(e))
+        : exitDie(`Fiber.runLoop: Not a valid effect: ${String(r)}`);
+    } finally {
+      globalThis[he] = t;
+    }
+  }
+  getCont(e) {
+    for (;;) {
+      let t = this._stack.pop();
+      if (!t) return;
+      let n = t[Oe] && t[Oe](this);
+      if (n) return ((n[e] = n), n);
+      if (t[e]) return t;
+    }
+  }
+  yieldWith(e) {
+    return ((this._yielded = e), ke);
+  }
+  children() {
+    return (this._children ??= new Set());
+  }
+  pipe() {
+    return pipeArguments(this, arguments);
+  }
+  setContext(e) {
+    this.context = e;
+    let t = this.getRef(Rn);
+    (t !== this.currentScheduler &&
+      ((this.currentScheduler = t), (this._dispatcher = void 0)),
+      (this.currentSpan = e.mapUnsafe.get(Hn)),
+      (this.currentLogLevel = this.getRef(rr)),
+      (this.minimumLogLevel = this.getRef(ir)),
+      (this.currentStackFrame = e.mapUnsafe.get(Zn.key)),
+      (this.maxOpsBeforeYield = this.getRef(Bn)),
+      (this.currentPreventYield = this.getRef(Vn)),
+      (this.runtimeMetrics = e.mapUnsafe.get(
+        `effect/observability/Metric/FiberRuntimeMetricsKey`,
+      )));
+    let n = e.mapUnsafe.get(qn);
+    this.currentTracerContext = n ? n.context : void 0;
+  }
+  get currentSpanLocal() {
+    return this.currentSpan?._tag === `Span` ? this.currentSpan : void 0;
+  }
+};
+const gr = { interruptChildren: void 0 },
+  fiberStackAnnotations = (e) => {
+    if (!e.currentStackFrame) return;
+    let t = new Map();
+    return (t.set(Be.key, e.currentStackFrame), an(t));
+  },
+  fiberInterruptChildren = (e) => {
+    if (!(e._children === void 0 || e._children.size === 0))
+      return fiberInterruptAll(e._children);
+  },
+  fiberAwait = (e) => {
+    let t = e;
+    return t._exit
+      ? F(t._exit)
+      : B((n) => (t._exit ? n(F(t._exit)) : L(e.addObserver((e) => n(F(e))))));
+  },
+  fiberAwaitAll = (e) =>
+    B((t) => {
+      let n = e[Symbol.iterator](),
+        r = [],
+        i;
+      function loop() {
+        let e = n.next();
+        for (; !e.done; ) {
+          if (e.value._exit) {
+            (r.push(e.value._exit), (e = n.next()));
+            continue;
+          }
+          i = e.value.addObserver((e) => {
+            (r.push(e), loop());
+          });
+          return;
+        }
+        t(F(r));
+      }
+      return (loop(), L(() => i?.()));
+    }),
+  fiberJoin = (e) => {
+    let t = e;
+    return t._exit
+      ? t._exit
+      : B((n) => (t._exit ? n(t._exit) : L(e.addObserver(n))));
+  },
+  fiberInterrupt = (e) => D((t) => _r(e, t.id)),
+  _r = dual(
+    (e) => p(e[0], pr),
+    (e, t, n) =>
+      D((r) => {
+        let i = fiberStackAnnotations(r);
+        return (
+          (i = i && n ? gn(i, n) : (i ?? n)),
+          e.interruptUnsafe(t, i),
+          zr(fiberAwait(e))
+        );
+      }),
+  ),
+  fiberInterruptAll = (e) =>
+    D((t) => {
+      let n = fiberStackAnnotations(t);
+      for (let r of e) r.interruptUnsafe(t.id, n);
+      return zr(fiberAwaitAll(e));
+    }),
+  F = T,
+  I = E,
+  vr = exitFail,
+  L = makePrimitive({
+    op: `Sync`,
+    [S](e) {
+      let t = this[x](),
+        n = e.getCont(C);
+      return n ? n[C](t, e) : e.yieldWith(T(t));
+    },
+  }),
+  R = makePrimitive({
+    op: `Suspend`,
+    [S](e) {
+      return this[x]();
+    },
+  }),
+  yr = Et({ onFailure: vr, onSuccess: F }),
+  br = makePrimitive({
+    op: `Yield`,
+    [S](e) {
+      let t = !1;
+      return (
+        e.currentDispatcher.scheduleTask(() => {
+          t || e.evaluate(U);
+        }, this[x] ?? 0),
+        e.yieldWith(() => {
+          t = !0;
+        })
+      );
+    },
+  })(0),
+  xr = __name((e) => F(O(e)), `succeedSome`),
+  Sr = F(none()),
+  Cr = __name((e) => exitDie(e), `die`),
+  failSync = (e) => R(() => vr(b(e))),
+  z = F(void 0),
+  wr = __name(
+    (e) =>
+      R(() => {
+        try {
+          return F(b(e.try));
+        } catch (t) {
+          return vr(b(() => e.catch(t)));
+        }
+      }),
+    `try_`,
+  ),
+  Tr = __name(
+    (e) =>
+      Dr(function (t, n) {
+        b(() => e(n)).then(
+          (e) => t(F(e)),
+          (e) => t(Cr(e)),
+        );
+      }, e.length !== 0),
+    `promise`,
+  ),
+  Er = __name((e) => {
+    let t = typeof e == `function` ? e : e.try,
+      n =
+        typeof e == `function`
+          ? (e) =>
+              new UnknownError$1(e, `An error occurred in Effect.tryPromise`)
+          : e.catch;
+    return Dr(function (e, r) {
+      try {
+        b(() => t(r)).then(
+          (t) => e(F(t)),
+          (t) => e(vr(b(() => n(t)))),
+        );
+      } catch (t) {
+        e(vr(b(() => n(t))));
+      }
+    }, eval.length !== 0);
+  }, `tryPromise`),
+  withFiberId = (e) => D((t) => e(t.id)),
+  Dr = makePrimitive({
+    op: `Async`,
+    single: !1,
+    [S](e) {
+      let t = b(() => this[x][0].bind(e.currentScheduler)),
+        n = !1,
+        r = !1,
+        i = this[x][1] ? new AbortController() : void 0,
+        a = t((t) => {
+          n || ((n = !0), r ? e.evaluate(t) : (r = t));
+        }, i?.signal);
+      return r === !1
+        ? ((r = !0),
+          (e._yielded = () => {
+            n = !0;
+          }),
+          (i === void 0 && a === void 0) ||
+            e._stack.push(Or(() => ((n = !0), i?.abort(), a ?? U))),
+          ke)
+        : r;
+    },
+  }),
+  Or = makePrimitive({
+    op: `AsyncFinalizer`,
+    [Oe](e) {
+      e.interruptible && ((e.interruptible = !1), e._stack.push(Zi));
+    },
+    [De](e, t) {
+      return lr(e) ? V(this[x](), () => I(e)) : I(e);
+    },
+  }),
+  B = __name((e) => Dr(e, e.length >= 2), `callback`),
+  kr = __name(
+    (...e) => R(() => Pr(e.length === 1 ? e[0]() : e[1].call(e[0].self))),
+    `gen`,
+  ),
+  Ar = __name((e, ...t) => {
+    let n =
+      t.length === 0
+        ? function () {
+            return R(() => Pr(e.apply(this, arguments)));
+          }
+        : function () {
+            let n = R(() => Pr(e.apply(this, arguments)));
+            for (let e = 0; e < t.length; e++) n = t[e](n, ...arguments);
+            return n;
+          };
+    return defineFunctionLength(e.length, n);
+  }, `fnUntraced`),
+  defineFunctionLength = (e, t) =>
+    Object.defineProperty(t, `length`, { value: e, configurable: !0 }),
+  jr = makeStackCleaner(2),
+  Mr = __name(function () {
+    let e = typeof arguments[0] == `string`,
+      t = e ? arguments[0] : `Effect.fn`,
+      n = e ? arguments[1] : void 0,
+      r = globalThis.Error.stackTraceLimit;
+    globalThis.Error.stackTraceLimit = 2;
+    let i = new globalThis.Error();
+    return (
+      (globalThis.Error.stackTraceLimit = r),
+      e
+        ? (r, ...a) => makeFn(t, r, i, a, e, n)
+        : makeFn(
+            t,
+            arguments[0],
+            i,
+            Array.prototype.slice.call(arguments, 1),
+            e,
+            n,
+          )
+    );
+  }, `fn`),
+  makeFn = (e, t, n, r, i, a) => {
+    let o = typeof t == `function` ? t : r.pop().bind(t.self);
+    return defineFunctionLength(o.length, function (...t) {
+      let s = R(() => {
+        let e = o.apply(this, arguments);
+        return w(e) ? e : Pr(e);
+      });
+      for (let e = 0; e < r.length; e++) s = r[e](s, ...t);
+      if (!w(s)) return s;
+      let c = globalThis.Error.stackTraceLimit;
+      globalThis.Error.stackTraceLimit = 2;
+      let l = new globalThis.Error();
+      return (
+        (globalThis.Error.stackTraceLimit = c),
+        $r(i ? ba(e, a, (e) => xa(s, e)) : s, Zn, (t) => ({
+          name: e,
+          stack: jr(() => l.stack),
+          parent: {
+            name: `${e} (definition)`,
+            stack: jr(() => n.stack),
+            parent: t,
+          },
+        }))
+      );
+    });
+  },
+  Nr = __name(
+    (e, ...t) =>
+      defineFunctionLength(
+        e.length,
+        t.length === 0
+          ? function () {
+              return fromIteratorEagerUnsafe(() => e.apply(this, arguments));
+            }
+          : function () {
+              let n = fromIteratorEagerUnsafe(() => e.apply(this, arguments));
+              for (let e of t) n = e(n);
+              return n;
+            },
+      ),
+    `fnUntracedEager`,
+  ),
+  fromIteratorEagerUnsafe = (e) => {
+    try {
+      let t = e(),
+        n;
+      for (;;) {
+        let r = t.next(n);
+        if (r.done) return F(r.value);
+        let i = r.value;
+        if (i && i._tag === `Success`) {
+          n = i.value;
+          continue;
+        } else if (i && i._tag === `Failure`) return r.value;
+        else {
+          let n = !0;
+          return R(() =>
+            n ? ((n = !1), V(r.value, (e) => Pr(t, e))) : R(() => Pr(e())),
+          );
+        }
+      }
+    } catch (e) {
+      return Cr(e);
+    }
+  },
+  Pr = makePrimitive({
+    op: `Iterator`,
+    single: !1,
+    [C](e, t) {
+      let n = this[x][0];
+      for (;;) {
+        let r = n.next(e);
+        if (r.done) return F(r.value);
+        if (!effectIsExit(r.value)) return (t._stack.push(this), r.value);
+        if (r.value._tag === `Failure`) return r.value;
+        e = r.value.value;
+      }
+    },
+    [S](e) {
+      return this[C](this[x][1], e);
+    },
+  }),
+  Fr = dual(2, (e, t) => {
+    let n = F(t);
+    return V(e, (e) => n);
+  }),
+  Ir = __name((e) => H(e, O), `asSome`),
+  Lr = dual(2, (e, t) => V(e, (e) => (w(t) ? t : b(() => t(e))))),
+  Rr = dual(2, (e, t) => V(e, (e) => Fr(w(t) ? t : b(() => t(e)), e))),
+  zr = __name((e) => V(e, (e) => U), `asVoid`),
+  raceAllFirst = (e, t) =>
+    D((n) =>
+      B((r) => {
+        let i = !1,
+          a = new Set(),
+          onExit = (e) => {
+            ((i = !0),
+              r(a.size === 0 ? e : V(Yi(fiberInterruptAll(a)), () => e)));
+          },
+          o = 0;
+        for (let r of e) {
+          if (i) break;
+          let e = o++,
+            s = aa(n, r, !0, !0, !1);
+          (a.add(s),
+            s.addObserver((r) => {
+              a.delete(s);
+              let o = !i;
+              (onExit(r),
+                o &&
+                  t?.onWinner &&
+                  t.onWinner({ fiber: s, index: e, parentFiber: n }));
+            }));
+        }
+        return fiberInterruptAll(a);
+      }),
+    ),
+  Br = dual(
+    (e) => w(e[1]),
+    (e, t, n) => raceAllFirst([e, t], n),
+  ),
+  V = dual(2, (e, t) => {
+    let n = Object.create(Vr);
+    return ((n[x] = e), (n[C] = t.length === 1 ? t : (e) => t(e)), n);
+  }),
+  Vr = makePrimitiveProto({
+    op: `OnSuccess`,
+    [S](e) {
+      return (e._stack.push(this), this[x]);
+    },
+  }),
+  effectIsExit = (e) => we in e,
+  Hr = dual(2, (e, t) =>
+    effectIsExit(e) ? (e._tag === `Success` ? t(e.value) : e) : V(e, t),
+  ),
+  Ur = __name((e) => V(e, identity), `flatten`),
+  H = dual(2, (e, t) => V(e, (e) => F(b(() => t(e))))),
+  Wr = dual(2, (e, t) => (effectIsExit(e) ? Jr(e, t) : H(e, t))),
+  Gr = dual(2, (e, t) => (effectIsExit(e) ? Yr(e, t) : hi(e, t))),
+  Kr = dual(2, (e, t) => {
+    if (effectIsExit(e)) {
+      if (e._tag === `Success`) return e;
+      let n = sr(e.cause);
+      return M(n) ? e : t(n.success);
+    }
+    return di(e, t);
+  }),
+  qr = __name((e) => E(causeInterrupt(e)), `exitInterrupt`),
+  exitIsSuccess = (e) => e._tag === `Success`,
+  exitIsFailure = (e) => e._tag === `Failure`,
+  exitFilterCause = (e) => (e._tag === `Failure` ? A(e.cause) : j(e)),
+  U = T(void 0),
+  Jr = dual(2, (e, t) => (e._tag === `Success` ? T(t(e.value)) : e)),
+  Yr = dual(2, (e, t) => {
+    if (e._tag === `Success`) return e;
+    let n = sr(e.cause);
+    return M(n) ? e : exitFail(t(n.success));
+  }),
+  Xr = dual(2, (e, t) => (exitIsSuccess(e) ? t : e)),
+  exitAsVoidAll = (e) => {
+    let t = [];
+    for (let n of e) n._tag === `Failure` && t.push(...n.cause.reasons);
+    return t.length === 0 ? U : E(causeFromReasons(t));
+  },
+  exitGetSuccess = (e) => (exitIsSuccess(e) ? O(e.value) : none()),
+  Zr = __name((e) => D((t) => F(hn(t.context, e))), `serviceOption`),
+  Qr = dual(2, (e, t) =>
+    D((n) => {
+      let r = n.context,
+        i = t(r);
+      return r === i
+        ? e
+        : (n.setContext(i),
+          Ri(e, () => {
+            n.setContext(r);
+          }));
+    }),
+  ),
+  $r = dual(3, (e, t, n) =>
+    Qr(e, (e) => {
+      let r = fn(e, t),
+        i = n(r);
+      return r === i ? e : un(e, t, i);
+    }),
+  ),
+  ei = __name(() => ti, `context`),
+  ti = D((e) => F(e.context)),
+  ni = __name((e) => D((t) => e(t.context)), `contextWith`),
+  ri = dual(2, (e, t) => (effectIsExit(e) ? e : Qr(e, gn(t)))),
+  ii = __name(function () {
+    return arguments.length === 1
+      ? dual(2, (e, t) => provideServiceImpl(e, arguments[0], t))
+      : dual(3, (e, t, n) => provideServiceImpl(e, t, n)).apply(
+          this,
+          arguments,
+        );
+  }, `provideService`),
+  provideServiceImpl = (e, t, n) =>
+    Qr(e, (e) => (e.mapUnsafe.get(t.key) === n ? e : un(e, t, n))),
+  ai = dual(
+    (e) => w(e[1]),
+    (e, t, n) => oi(e, t, (e, t) => [e, t], n),
+  ),
+  oi = dual(
+    (e) => w(e[1]),
+    (e, t, n, r) =>
+      r?.concurrent
+        ? H(ea([e, t], { concurrency: 2 }), ([e, t]) => b(() => n(e, t)))
+        : V(e, (e) => H(t, (t) => b(() => n(e, t)))),
+  ),
+  si = dual(
+    (e) => w(e[0]),
+    (e, t) =>
+      ta({
+        while: c,
+        body: constant(t?.disableYield ? e : V(e, (e) => br)),
+        step: d,
+      }),
+  ),
+  ci = dual(2, (e, t) => {
+    let n = Object.create(li);
+    return ((n[x] = e), (n[De] = t.length === 1 ? t : (e) => t(e)), n);
+  }),
+  li = makePrimitiveProto({
+    op: `OnFailure`,
+    [S](e) {
+      return (e._stack.push(this), this[x]);
+    },
+  }),
+  ui = dual(3, (e, t, n) =>
+    ci(e, (e) => {
+      let r = t(e);
+      return M(r) ? I(r.failure) : b(() => n(r.success, e));
+    }),
+  ),
+  di = dual(2, (e, t) => ui(e, sr, (e) => t(e))),
+  fi = dual(
+    (e) => w(e[0]),
+    (e, t, n, r) =>
+      ci(e, (e) => {
+        let i = sr(e);
+        return M(i)
+          ? I(i.failure)
+          : t(i.success)
+            ? b(() => n(i.success))
+            : r
+              ? b(() => r(i.success))
+              : I(e);
+      }),
+  ),
+  pi = dual(
+    (e) => w(e[0]),
+    (e, t, n, r) =>
+      ci(e, (e) => {
+        let i = sr(e);
+        if (M(i)) return I(i.failure);
+        let a = t(i.success);
+        return M(a)
+          ? r
+            ? b(() => r(a.failure))
+            : I(e)
+          : b(() => n(a.success));
+      }),
+  ),
+  mi = dual(
+    (e) => w(e[0]),
+    (e, t, n, r) =>
+      fi(
+        e,
+        Array.isArray(t) ? (e) => p(e, `_tag`) && t.includes(e._tag) : m(t),
+        n,
+        r,
+      ),
+  ),
+  hi = dual(2, (e, t) => di(e, (e) => failSync(() => t(e)))),
+  gi = __name((e) => di(e, Cr), `orDie`),
+  _i = dual(2, (e, t) => di(e, (e) => L(t))),
+  vi = dual(
+    (e) => w(e[0]),
+    (e, t) => {
+      if (!t?.log) return xi(e, { onFailure: (e) => z, onSuccess: (e) => z });
+      let n = logWithLevel(t.log === !0 ? void 0 : t.log);
+      return yi(e, {
+        onFailure(e) {
+          let r = findFail(e);
+          return M(r)
+            ? I(r.failure)
+            : t.message === void 0
+              ? n(e)
+              : n(t.message, e);
+        },
+        onSuccess: (e) => z,
+      });
+    },
+  ),
+  result = (e) => Ci(e, { onFailure: j, onSuccess: A }),
+  yi = dual(2, (e, t) => {
+    let n = Object.create(bi);
+    return (
+      (n[x] = e),
+      (n[C] = t.onSuccess.length === 1 ? t.onSuccess : (e) => t.onSuccess(e)),
+      (n[De] = t.onFailure.length === 1 ? t.onFailure : (e) => t.onFailure(e)),
+      n
+    );
+  }),
+  bi = makePrimitiveProto({
+    op: `OnSuccessAndFailure`,
+    [S](e) {
+      return (e._stack.push(this), this[x]);
+    },
+  }),
+  xi = dual(2, (e, t) =>
+    yi(e, {
+      onFailure: (e) => {
+        let n = e.reasons.find(Re);
+        return n ? b(() => t.onFailure(n.error)) : I(e);
+      },
+      onSuccess: t.onSuccess,
+    }),
+  ),
+  Si = dual(2, (e, t) =>
+    xi(e, {
+      onFailure: (e) => L(() => t.onFailure(e)),
+      onSuccess: (e) => L(() => t.onSuccess(e)),
+    }),
+  ),
+  Ci = dual(2, (e, t) => {
+    if (effectIsExit(e)) {
+      if (e._tag === `Success`) return T(t.onSuccess(e.value));
+      let n = sr(e.cause);
+      return M(n) ? e : T(t.onFailure(n.success));
+    }
+    return Si(e, t);
+  }),
+  wi = __name((e) => (effectIsExit(e) ? T(e) : Ti(e)), `exit`),
+  Ti = makePrimitive({
+    op: `Exit`,
+    [S](e) {
+      return (e._stack.push(this), this[x]);
+    },
+    [C](e, t, n) {
+      return F(n ?? T(e));
+    },
+    [De](e, t, n) {
+      return F(n ?? E(e));
+    },
+  }),
+  Ei = dual(2, (e, t) => Br(e, V(Oa(t.duration), t.orElse))),
+  Di = `~effect/Scope`,
+  Oi = `~effect/Scope/Closeable`,
+  ki = Service(`effect/Scope`),
+  scopeClose = (e, t) => R(() => scopeCloseUnsafe(e, t) ?? z),
+  scopeCloseUnsafe = (e, t) => {
+    if (e.state._tag === `Closed`) return;
+    let n = { _tag: `Closed`, exit: t };
+    if (e.state._tag === `Empty`) {
+      e.state = n;
+      return;
+    }
+    let { finalizers: r } = e.state;
+    if (((e.state = n), r.size !== 0))
+      return r.size === 1 ? r.values().next().value(t) : Ai(e, r, t);
+  },
+  Ai = Ar(function* (e, t, n) {
+    let r = [],
+      i = [],
+      a = Array.from(t.values()),
+      o = getCurrentFiber();
+    for (let t = a.length - 1; t >= 0; t--) {
+      let s = a[t];
+      e.strategy === `sequential`
+        ? r.push(yield* wi(s(n)))
+        : i.push(aa(o, s(n), !0, !0, `inherit`));
+    }
+    return (
+      i.length > 0 && (r = yield* fiberAwaitAll(i)), yield* exitAsVoidAll(r)
+    );
+  }),
+  scopeFork = (e, t) => L(() => scopeForkUnsafe(e, t)),
+  scopeForkUnsafe = (e, t) => {
+    let n = scopeMakeUnsafe(t);
+    if (e.state._tag === `Closed`) return ((n.state = e.state), n);
+    let r = {};
+    return (
+      scopeAddFinalizerUnsafe(e, r, (e) => scopeClose(n, e)),
+      scopeAddFinalizerUnsafe(n, r, (t) =>
+        L(() => scopeRemoveFinalizerUnsafe(e, r)),
+      ),
+      n
+    );
+  },
+  scopeAddFinalizerExit = (e, t) =>
+    R(() =>
+      e.state._tag === `Closed`
+        ? t(e.state.exit)
+        : (scopeAddFinalizerUnsafe(e, {}, t), z),
+    ),
+  scopeAddFinalizer = (e, t) => scopeAddFinalizerExit(e, constant(t)),
+  scopeAddFinalizerUnsafe = (e, t, n) => {
+    e.state._tag === `Empty`
+      ? (e.state = { _tag: `Open`, finalizers: new Map([[t, n]]) })
+      : e.state._tag === `Open` && e.state.finalizers.set(t, n);
+  },
+  scopeRemoveFinalizerUnsafe = (e, t) => {
+    e.state._tag === `Open` && e.state.finalizers.delete(t);
+  },
+  scopeMakeUnsafe = (e = `sequential`) => ({
+    [Oi]: Oi,
+    [Di]: Di,
+    strategy: e,
+    state: ji,
+  }),
+  ji = { _tag: `Empty` },
+  Mi = ki,
+  Ni = ii(ki),
+  Pi = __name(
+    (e) =>
+      D((t) => {
+        let n = t.context,
+          r = scopeMakeUnsafe();
+        return (
+          t.setContext(un(t.context, ki, r)),
+          Ri(e, (e) => (t.setContext(n), scopeCloseUnsafe(r, e)))
+        );
+      }),
+    `scoped`,
+  ),
+  Fi = __name(
+    (e) =>
+      R(() => {
+        let t = scopeMakeUnsafe();
+        return zi(e(t), (e) => R(() => scopeCloseUnsafe(t, e) ?? z));
+      }),
+    `scopedWith`,
+  ),
+  Ii = __name(
+    (e, t, n) =>
+      ni((r) =>
+        $i((i) =>
+          V(Mi, (a) =>
+            Rr(n?.interruptible ? i(e) : e, (e) =>
+              scopeAddFinalizerExit(a, (n) => ri(t(e, n), r)),
+            ),
+          ),
+        ),
+      ),
+    `acquireRelease`,
+  ),
+  Li = __name(
+    (e) =>
+      V(Mi, (t) => ni((n) => scopeAddFinalizerExit(t, (t) => ri(e(t), n)))),
+    `addFinalizer`,
+  ),
+  Ri = makePrimitive({
+    op: `OnExit`,
+    single: !1,
+    [S](e) {
+      return (e._stack.push(this), this[x][0]);
+    },
+    [Oe](e) {
+      e.interruptible &&
+        this[x][2] !== !0 &&
+        (e._stack.push(Zi), (e.interruptible = !1));
+    },
+    [C](e, t, n) {
+      n ??= T(e);
+      let r = this[x][1](n);
+      return r ? V(r, (e) => n) : n;
+    },
+    [De](e, t, n) {
+      n ??= E(e);
+      let r = this[x][1](n);
+      return r ? V(r, (e) => n) : n;
+    },
+  }),
+  zi = dual(2, Ri),
+  Bi = dual(2, (e, t) => zi(e, (e) => t)),
+  Vi = dual(3, (e, t, n) =>
+    zi(e, (e) => {
+      let r = t(e);
+      return M(r) ? z : n(r.success, e);
+    }),
+  ),
+  Hi = dual(2, (e, t) => Vi(e, exitFilterCause, t)),
+  Ui = dual(3, (e, t, n) =>
+    zi(e, (e) => {
+      if (e._tag !== `Failure`) return z;
+      let r = t(e.cause);
+      return M(r) ? z : n(r.success, e.cause);
+    }),
+  ),
+  Wi = dual(2, (e, t) => Ui(causeFilterInterruptors, t)(e)),
+  Gi = dual(2, (e, t) =>
+    L(() => {
+      let n = toMillis(fromInputUnsafe(t)),
+        r = Number.isFinite(n),
+        i = makeLatchUnsafe(!1),
+        a = 0,
+        o = !1,
+        s,
+        c = V(i.await, () => s);
+      return [
+        D((t) => {
+          let l = t.getRef(Ca),
+            u = r ? l.currentTimeMillisUnsafe() : 0;
+          return o || u < a
+            ? (s ?? c)
+            : ((o = !0),
+              i.closeUnsafe(),
+              (s = void 0),
+              zi(e, (e) =>
+                L(() => {
+                  ((o = !1),
+                    (a = l.currentTimeMillisUnsafe() + n),
+                    (s = e),
+                    i.openUnsafe());
+                }),
+              ));
+        }),
+        L(() => {
+          ((a = 0), i.closeUnsafe(), (s = void 0));
+        }),
+      ];
+    }),
+  ),
+  Ki = dual(2, (e, t) => H(Gi(e, t), (e) => e[0])),
+  qi = __name((e) => Ki(e, On), `cached`),
+  Ji = D((e) => I(causeInterrupt(e.id))),
+  Yi = __name(
+    (e) =>
+      D((t) =>
+        t.interruptible ? ((t.interruptible = !1), t._stack.push(Zi), e) : e,
+      ),
+    `uninterruptible`,
+  ),
+  Xi = makePrimitive({
+    op: `SetInterruptible`,
+    [Oe](e) {
+      if (((e.interruptible = this[x]), e._interruptedCause && e.interruptible))
+        return () => I(e._interruptedCause);
+    },
+  }),
+  Zi = Xi(!0),
+  Qi = Xi(!1),
+  interruptible = (e) =>
+    D((t) =>
+      t.interruptible
+        ? e
+        : ((t.interruptible = !0),
+          t._stack.push(Qi),
+          t._interruptedCause ? I(t._interruptedCause) : e),
+    ),
+  $i = __name(
+    (e) =>
+      D((t) =>
+        t.interruptible
+          ? ((t.interruptible = !1), t._stack.push(Zi), e(interruptible))
+          : e(identity),
+      ),
+    `uninterruptibleMask`,
+  ),
+  ea = __name(
+    (e, t) =>
+      isIterable(e)
+        ? t?.mode === `result`
+          ? na(e, result, t)
+          : na(e, identity, t)
+        : t?.discard
+          ? t.mode === `result`
+            ? na(Object.values(e), result, t)
+            : na(Object.values(e), identity, t)
+          : R(() => {
+              let n = {};
+              return Fr(
+                na(
+                  Object.entries(e),
+                  ([e, r]) =>
+                    H(t?.mode === `result` ? result(r) : r, (t) => {
+                      n[e] = t;
+                    }),
+                  { discard: !0, concurrency: t?.concurrency },
+                ),
+                n,
+              );
+            }),
+    `all`,
+  ),
+  ta = makePrimitive({
+    op: `While`,
+    [C](e, t) {
+      return (
+        this[x].step(e),
+        this[x].while() ? (t._stack.push(this), this[x].body()) : U
+      );
+    },
+    [S](e) {
+      return this[x].while() ? (e._stack.push(this), this[x].body()) : U;
+    },
+  }),
+  na = dual(
+    (e) => typeof e[1] == `function`,
+    (e, t, n) =>
+      D((r) => {
+        let i =
+            n?.concurrency === `inherit` ? r.getRef(Xn) : (n?.concurrency ?? 1),
+          a = i === `unbounded` ? 1 / 0 : Math.max(1, i);
+        if (a === 1) return forEachSequential(e, t, n);
+        let o = fromIterable(e),
+          s = o.length;
+        if (s === 0) return n?.discard ? z : F([]);
+        let c = n?.discard ? void 0 : Array(s),
+          l = ra({ f: t, out: c }, o, { concurrency: a });
+        return l ? Fr(l, c) : F(c);
+      }),
+  ),
+  forEachSequential = (e, t, n) =>
+    R(() => {
+      let r = n?.discard ? void 0 : [],
+        i = e[Symbol.iterator](),
+        a = i.next(),
+        o = 0;
+      return Fr(
+        ta({
+          while: () => !a.done,
+          body: () => t(a.value, o++),
+          step: (e) => {
+            (r && r.push(e), (a = i.next()));
+          },
+        }),
+        r,
+      );
+    }),
+  iterateEagerImpl = (e) => {
+    let t = e.onItem,
+      n = e.step;
+    return (e, r, i) => {
+      let a = i?.start ?? 0,
+        o = i?.end ?? r.length,
+        s = i?.concurrency ?? 1,
+        c = !1,
+        l,
+        u,
+        d,
+        f = !1,
+        p,
+        m,
+        go = () => {
+          let i = !1;
+          for (; !p && a < o; a++) {
+            let o = r[a],
+              h = m ?? t(e, o, a);
+            if (effectIsExit(h)) {
+              if (((p = n(e, o, h, a)), p)) break;
+            } else if (s === 1)
+              return V(
+                wi(h),
+                (t) => ((p = n(e, o, t, a)), a++, p ?? go() ?? z),
+              );
+            else if (l) {
+              m = void 0;
+              let t = aa(l, h, !0, !0, `inherit`);
+              if (t._exit) {
+                if (((p = n(e, o, t._exit, a)), p)) break;
+                continue;
+              }
+              u ? u.add(t) : (u = new Set([t]));
+              let r = a;
+              if (
+                (t.addObserver((a) => {
+                  if ((u.delete(t), p)) {
+                    if (!f && a._tag === `Failure`)
+                      for (let e of a.cause.reasons)
+                        if (e._tag === `Interrupt`) continue;
+                        else
+                          p._tag === `Failure`
+                            ? p.cause.reasons.push(e)
+                            : (p = E(causeFromReasons([e])));
+                  } else {
+                    let t = n(e, o, a, r);
+                    t &&
+                      ((p =
+                        t._tag === `Failure`
+                          ? E(causeFromReasons(t.cause.reasons.slice()))
+                          : t),
+                      go());
+                  }
+                  if (i) {
+                    let e = go();
+                    e && d(e);
+                  } else c && u.size === 0 && d(p ?? z);
+                }),
+                u.size < s)
+              )
+                continue;
+              ((i = !0), a++);
+              return;
+            } else
+              return B((e) => {
+                ((l = getCurrentFiber()), (m = h), (d = e));
+                let t = go();
+                return t
+                  ? e(t)
+                  : R(() => ((p = U), (f = !0), u ? fiberInterruptAll(u) : z));
+              });
+          }
+          if (((c = !0), p)) {
+            if (u && u.size > 0) {
+              let e = fiberStackAnnotations(l);
+              u.forEach((t) => t.interruptUnsafe(l.id, e));
+              return;
+            }
+            if (d || p._tag === `Failure`) return p;
+          } else if (d)
+            if (u) u.size === 0 && d(z);
+            else return U;
+        };
+      return go();
+    };
+  },
+  iterateEager = () => iterateEagerImpl,
+  ra = iterateEagerImpl({
+    onItem(e, t, n) {
+      return e.f(t, n);
+    },
+    step(e, t, n, r) {
+      if (n._tag === `Failure`) return n;
+      e.out && (e.out[r] = n.value);
+    },
+  }),
+  ia = dual(
+    (e) => w(e[0]),
+    (e, t) =>
+      D(
+        (n) => (
+          interruptChildrenPatch(),
+          F(aa(n, e, t?.startImmediately, !1, t?.uninterruptible ?? !1))
+        ),
+      ),
+  ),
+  aa = __name((e, t, n = !1, r = !1, i = !1) => {
+    let a = i === `inherit` ? e.interruptible : !i,
+      o = new FiberImpl(e.context, a);
+    return (
+      n
+        ? o.evaluate(t)
+        : e.currentDispatcher.scheduleTask(() => o.evaluate(t), 0),
+      !r &&
+        !o._exit &&
+        (e.children().add(o), o.addObserver(() => e._children.delete(o))),
+      o
+    );
+  }, `forkUnsafe`),
+  oa = dual(
+    (e) => w(e[0]),
+    (e, t) =>
+      D((n) => F(aa(n, e, t?.startImmediately, !0, t?.uninterruptible))),
+  ),
+  sa = dual(
+    (e) => w(e[0]),
+    (e, t, n) =>
+      D((r) => {
+        let i = aa(r, e, n?.startImmediately, !0, n?.uninterruptible);
+        if (!i._exit)
+          if (t.state._tag !== `Closed`) {
+            let e = {},
+              finalizer = () =>
+                withFiberId((e) => (e === i.id ? z : fiberInterrupt(i)));
+            (scopeAddFinalizerUnsafe(t, e, finalizer),
+              i.addObserver(() => scopeRemoveFinalizerUnsafe(t, e)));
+          } else i.interruptUnsafe(r.id, fiberStackAnnotations(r));
+        return F(i);
+      }),
+  ),
+  ca = dual(
+    (e) => w(e[0]),
+    (e, t) => V(Mi, (n) => sa(e, n, t)),
+  ),
+  la = __name(
+    (e) => (t, n) => {
+      let r = new FiberImpl(
+        n?.scheduler ? un(e, Rn, n.scheduler) : e,
+        n?.uninterruptible !== !0,
+      );
+      if ((r.evaluate(t), r._exit)) return r;
+      if (n?.signal)
+        if (n.signal.aborted) r.interruptUnsafe();
+        else {
+          let abort = () => r.interruptUnsafe();
+          (n.signal.addEventListener(`abort`, abort, { once: !0 }),
+            r.addObserver(() => n.signal.removeEventListener(`abort`, abort)));
+        }
+      return (n?.onFiberStart && n.onFiberStart(r), r);
+    },
+    `runForkWith`,
+  ),
+  ua = dual(2, (e, t) => {
+    if (e._exit) return e;
+    if (t.state._tag === `Closed`) return (e.interruptUnsafe(e.id), e);
+    let n = {};
+    return (
+      scopeAddFinalizerUnsafe(t, n, () => fiberInterrupt(e)),
+      e.addObserver(() => scopeRemoveFinalizerUnsafe(t, n)),
+      e
+    );
+  }),
+  da = la(sn()),
+  runPromiseExitWith = (e) => {
+    let t = la(e);
+    return (e, n) => {
+      let r = t(e, n);
+      return new Promise((e) => {
+        r.addObserver((t) => e(t));
+      });
+    };
+  },
+  fa = runPromiseExitWith(sn()),
+  runPromiseWith = (e) => {
+    let t = runPromiseExitWith(e);
+    return (e, n) =>
+      t(e, n).then((e) => {
+        if (e._tag === `Failure`) throw causeSquash(e.cause);
+        return e.value;
+      });
+  },
+  pa = runPromiseWith(sn()),
+  runSyncExitWith = (e) => {
+    let t = la(e);
+    return (e) => {
+      if (effectIsExit(e)) return e;
+      let n = t(e, { scheduler: new MixedScheduler(`sync`) });
+      return (
+        n.currentDispatcher?.flush(), n._exit ?? exitDie(new AsyncFiberError(n))
+      );
+    };
+  },
+  ma = runSyncExitWith(sn()),
+  runSyncWith = (e) => {
+    let t = runSyncExitWith(e);
+    return (e) => {
+      let n = t(e);
+      if (n._tag === `Failure`) throw causeSquash(n.cause);
+      return n.value;
+    };
+  },
+  ha = runSyncWith(sn()),
+  ga = F(!0),
+  _a = F(!1);
+var Latch = class {
+  waiters = [];
+  scheduled = !1;
+  isOpen;
+  constructor(e) {
+    this.isOpen = e;
+  }
+  scheduleUnsafe(e) {
+    return this.scheduled || this.waiters.length === 0
+      ? ga
+      : ((this.scheduled = !0),
+        e.currentDispatcher.scheduleTask(this.flushWaiters, 0),
+        ga);
+  }
+  flushWaiters = () => {
+    this.scheduled = !1;
+    let e = this.waiters;
+    this.waiters = [];
+    for (let t = 0; t < e.length; t++) e[t](U);
+  };
+  open = D((e) =>
+    this.isOpen ? _a : ((this.isOpen = !0), this.scheduleUnsafe(e)),
+  );
+  release = D((e) => (this.isOpen ? _a : this.scheduleUnsafe(e)));
+  openUnsafe() {
+    return this.isOpen ? !1 : ((this.isOpen = !0), this.flushWaiters(), !0);
+  }
+  await = B((e) =>
+    this.isOpen
+      ? e(z)
+      : (this.waiters.push(e),
+        L(() => {
+          let t = this.waiters.indexOf(e);
+          t !== -1 && this.waiters.splice(t, 1);
+        })),
+  );
+  closeUnsafe() {
+    return this.isOpen ? ((this.isOpen = !1), !0) : !1;
+  }
+  close = L(() => this.closeUnsafe());
+  whenOpen = (e) => V(this.await, () => e);
+};
+const makeLatchUnsafe = (e) => new Latch(e ?? !1),
+  makeLatch = (e) => L(() => makeLatchUnsafe(e)),
+  va = BigInt(0),
+  ya = {
+    _tag: `Span`,
+    spanId: `noop`,
+    traceId: `noop`,
+    sampled: !1,
+    status: { _tag: `Ended`, startTime: va, endTime: va, exit: U },
+    attributes: new Map(),
+    links: [],
+    kind: `internal`,
+    attribute() {},
+    event() {},
+    end() {},
+    addLinks() {},
+  },
+  noopSpan = (e) => Object.assign(Object.create(ya), e),
+  filterDisablePropagation = (e) =>
+    e
+      ? pn(e.annotations, Wn)
+        ? e._tag === `Span`
+          ? filterDisablePropagation(xt(e.parent))
+          : none()
+        : O(e)
+      : none(),
+  makeSpanUnsafe = (e, t, n) => {
+    let r = !e.getRef(Qn) || (n?.annotations && pn(n.annotations, Wn)),
+      i =
+        n?.parent === void 0
+          ? n?.root
+            ? none()
+            : filterDisablePropagation(e.currentSpan)
+          : O(n.parent),
+      a;
+    if (r)
+      a = noopSpan({
+        name: t,
+        parent: i,
+        annotations: un(n?.annotations ?? sn(), Wn, !0),
+      });
+    else {
+      let r = e.getRef(Jn),
+        o = e.getRef(Ca),
+        s = e.getRef($n),
+        c = e.getRef(er),
+        l = e.getRef(tr),
+        u = n?.level ?? e.getRef(Gn),
+        d = n?.links === void 0 ? l.slice() : [...l, ...n.links];
+      a = r.span({
+        name: t,
+        parent: i,
+        annotations: n?.annotations ?? sn(),
+        links: d,
+        startTime: s ? o.currentTimeNanosUnsafe() : BigInt(0),
+        kind: n?.kind ?? `internal`,
+        root: n?.root ?? k(i),
+        sampled:
+          n?.sampled ??
+          (vt(i) && i.value.sampled === !1 ? !1 : !Na(e.getRef(Kn), u)),
+      });
+      for (let [e, t] of Object.entries(c)) a.attribute(e, t);
+      if (n?.attributes !== void 0)
+        for (let [e, t] of Object.entries(n.attributes)) a.attribute(e, t);
+    }
+    return a;
+  },
+  provideSpanStackFrame = (e, t) => (
+    (t = typeof t == `function` ? t : u),
+    $r(Zn, (n) => ({ name: e, stack: t, parent: n }))
+  ),
+  ba = __name((e, ...t) => {
+    let n = t.length === 1 ? void 0 : t[0],
+      r = t[t.length - 1];
+    return D((t) => {
+      let i = makeSpanUnsafe(t, e, n),
+        a = t.getRef(Ca);
+      return zi(
+        b(() => r(i)),
+        (e) =>
+          L(() => {
+            i.status._tag !== `Ended` && i.end(a.currentTimeNanosUnsafe(), e);
+          }),
+      );
+    });
+  }, `useSpan`),
+  xa = ii(ParentSpan),
+  Sa = __name(function () {
+    let e = w(arguments[0]),
+      t = e ? arguments[1] : arguments[0],
+      n = e ? arguments[2] : arguments[1],
+      r = identity;
+    return (
+      t._tag === `Span` &&
+        ((n = addSpanStackTrace(n)),
+        (r = provideSpanStackFrame(t.name, n?.captureStackTrace))),
+      e ? xa(r(arguments[0]), t) : (e) => xa(r(e), t)
+    );
+  }, `withParentSpan`),
+  Ca = N(`effect/Clock`, { defaultValue: () => new ClockImpl() }),
+  wa = 2 ** 31 - 1;
+var ClockImpl = class {
+  currentTimeMillisUnsafe() {
+    return Date.now();
+  }
+  currentTimeMillis = L(() => this.currentTimeMillisUnsafe());
+  currentTimeNanosUnsafe() {
+    return Ea();
+  }
+  currentTimeNanos = L(() => this.currentTimeNanosUnsafe());
+  sleep(e) {
+    let t = toMillis(e);
+    return t <= 0
+      ? br
+      : B((e) => {
+          if (t > wa) return;
+          let n = setTimeout(() => e(z), t);
+          return L(() => clearTimeout(n));
+        });
+  }
+};
+const Ta = (function () {
+    let e = BigInt(1e6);
+    if (typeof performance > `u` || performance.now === void 0)
+      return () => BigInt(Date.now()) * e;
+    if (
+      typeof performance.timeOrigin == `number` &&
+      performance.timeOrigin === 0
+    )
+      return () => BigInt(Math.round(performance.now() * 1e6));
+    let t =
+      BigInt(Date.now()) * e - BigInt(Math.round(performance.now() * 1e6));
+    return () => t + BigInt(Math.round(performance.now() * 1e6));
+  })(),
+  Ea = (function () {
+    let e =
+      typeof process == `object` &&
+      `hrtime` in process &&
+      typeof process.hrtime.bigint == `function`
+        ? process.hrtime
+        : void 0;
+    if (!e) return Ta;
+    let t = Ta() - e.bigint();
+    return () => t + e.bigint();
+  })(),
+  Da = __name((e) => D((t) => e(t.getRef(Ca))), `clockWith`),
+  Oa = __name((e) => Da((t) => t.sleep(fromInputUnsafe(e))), `sleep`);
+We(`TimeoutError`);
+const ka = `~effect/Cause/IllegalArgumentError`;
+((class extends We(`IllegalArgumentError`) {
+  static {
+    __name(this, `IllegalArgumentError`);
+  }
+  [ka] = ka;
+  constructor(e) {
+    super({ message: e });
+  }
+}),
+  We(`ExceededCapacityError`));
+const Aa = `~effect/Cause/AsyncFiberError`;
+var AsyncFiberError = class extends We(`AsyncFiberError`) {
+  [Aa] = Aa;
+  constructor(e) {
+    super({
+      message: `An asynchronous Effect was executed with Effect.runSync`,
+      fiber: e,
+    });
+  }
+};
+const ja = `~effect/Cause/UnknownError`;
+var UnknownError$1 = class extends We(`UnknownError`) {
+  static {
+    __name(this, `UnknownError`);
+  }
+  [ja] = ja;
+  constructor(e, t) {
+    super({ message: t, cause: e });
+  }
+};
+const Ma = N(`effect/Console/CurrentConsole`, {
+    defaultValue: () => globalThis.console,
+  }),
+  logLevelToOrder = (e) => {
+    switch (e) {
+      case `All`:
+        return -(2 ** 53 - 1);
+      case `Fatal`:
+        return 5e4;
+      case `Error`:
+        return 4e4;
+      case `Warn`:
+        return 3e4;
+      case `Info`:
+        return 2e4;
+      case `Debug`:
+        return 1e4;
+      case `Trace`:
+        return 0;
+      case `None`:
+        return 2 ** 53 - 1;
+    }
+  },
+  Na = gt(ht(mt, logLevelToOrder)),
+  Pa = N(`effect/Loggers/CurrentLoggers`, {
+    defaultValue: () => new Set([Ha, Ua]),
+  }),
+  Fa = N(`effect/Logger/LogToStderr`, { defaultValue: l }),
+  Ia = {
+    "~effect/Logger": { _Message: identity, _Output: identity },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  loggerMake = (e) => {
+    let t = Object.create(Ia);
+    return ((t.log = e), t);
+  },
+  formatLabel = (e) => e.replace(/[\s="]/g, `_`),
+  formatLogSpan = (e, t) => `${formatLabel(e[0])}=${t - e[1]}ms`,
+  structuredMessage = (e) => {
+    switch (typeof e) {
+      case `bigint`:
+      case `function`:
+      case `symbol`:
+        return String(e);
+      default:
+        return toJson(e);
+    }
+  },
+  logWithLevel =
+    (e) =>
+    (...t) => {
+      let n;
+      for (let e = 0, r = t.length; e < r; e++) {
+        let r = t[e];
+        isCause(r) &&
+          (n ? t.splice(e, 1) : (t = t.slice(0, e).concat(t.slice(e + 1))),
+          (n = n ? causeFromReasons(n.reasons.concat(r.reasons)) : r),
+          e--);
+      }
+      return (
+        n === void 0 && (n = Ie),
+        D((r) => {
+          let i = e ?? r.currentLogLevel;
+          if (Na(r.minimumLogLevel, i)) return z;
+          let a = r.getRef(Ca),
+            o = r.getRef(Pa);
+          if (o.size > 0) {
+            let e = new Date(a.currentTimeMillisUnsafe());
+            for (let a of o)
+              a.log({ cause: n, fiber: r, date: e, logLevel: i, message: t });
+          }
+          return z;
+        })
+      );
+    },
+  withColor = (e, ...t) => {
+    let n = ``;
+    for (let e = 0; e < t.length; e++) n += `\x1b[${t[e]}m`;
+    return n + e + `\x1B[0m`;
+  },
+  withColorNoop = (e, ...t) => e,
+  W = {
+    bold: `1`,
+    red: `31`,
+    green: `32`,
+    yellow: `33`,
+    blue: `34`,
+    cyan: `36`,
+    white: `37`,
+    gray: `90`,
+    black: `30`,
+    bgBrightRed: `101`,
+  },
+  La = {
+    None: [],
+    All: [],
+    Trace: [W.gray],
+    Debug: [W.blue],
+    Info: [W.green],
+    Warn: [W.yellow],
+    Error: [W.red],
+    Fatal: [W.bgBrightRed, W.black],
+  },
+  Ra = {
+    None: ``,
+    All: ``,
+    Trace: `color:gray`,
+    Debug: `color:blue`,
+    Info: `color:green`,
+    Warn: `color:orange`,
+    Error: `color:red`,
+    Fatal: `background-color:red;color:white`,
+  },
+  defaultDateFormat = (e) =>
+    `${e.getHours().toString().padStart(2, `0`)}:${e.getMinutes().toString().padStart(2, `0`)}:${e.getSeconds().toString().padStart(2, `0`)}.${e.getMilliseconds().toString().padStart(3, `0`)}`,
+  za =
+    typeof process == `object` &&
+    process !== null &&
+    typeof process.stdout == `object` &&
+    process.stdout !== null,
+  Ba = za && process.stdout.isTTY === !0,
+  Va = za || `Deno` in globalThis,
+  consolePretty = (e) => {
+    let t = e?.mode ?? `auto`,
+      n = (t === `auto` ? (Va ? `tty` : `browser`) : t) === `browser`,
+      r = typeof e?.colors == `boolean` ? e.colors : Ba || n,
+      i = e?.formatDate ?? defaultDateFormat;
+    return n
+      ? prettyLoggerBrowser({ colors: r, formatDate: i })
+      : prettyLoggerTty({ colors: r, formatDate: i });
+  },
+  prettyLoggerTty = (e) => {
+    let t =
+        typeof process == `object` &&
+        `isBun` in process &&
+        process.isBun === !0,
+      n = e.colors ? withColor : withColorNoop;
+    return loggerMake(
+      ({ cause: r, date: i, fiber: a, logLevel: o, message: s }) => {
+        let c = a.getRef(Ma),
+          l = a.getRef(Fa) ? c.error : c.log,
+          u = Array.isArray(s) ? s.slice() : [s],
+          d =
+            n(`[${e.formatDate(i)}]`, W.white) +
+            ` ${n(o.toUpperCase(), ...La[o])} (#${a.id})`,
+          f = i.getTime(),
+          p = a.getRef(ar);
+        for (let e of p) d += ` ` + formatLogSpan(e, f);
+        d += `:`;
+        let m = 0;
+        if (u.length > 0) {
+          let e = structuredMessage(u[0]);
+          typeof e == `string` && ((d += ` ` + n(e, W.bold, W.cyan)), m++);
+        }
+        if (
+          (l(d),
+          t || c.group(),
+          r.reasons.length > 0 && l(causePretty(r)),
+          m < u.length)
+        )
+          for (; m < u.length; m++) l(redact(u[m]));
+        let h = a.getRef(nr);
+        for (let [e, t] of Object.entries(h))
+          l(n(`${e}:`, W.bold, W.white), redact(t));
+        t || c.groupEnd();
+      },
+    );
+  },
+  prettyLoggerBrowser = (e) => {
+    let t = e.colors ? `%c` : ``;
+    return loggerMake(
+      ({ cause: n, date: r, fiber: i, logLevel: a, message: o }) => {
+        let s = i.getRef(Ma),
+          c = Array.isArray(o) ? o.slice() : [o],
+          l = `${t}[${e.formatDate(r)}]`,
+          u = [];
+        (e.colors && u.push(`color:gray`),
+          (l += ` ${t}${a.toUpperCase()}${t} (#${i.id})`),
+          e.colors && u.push(Ra[a], ``));
+        let d = r.getTime(),
+          f = i.getRef(ar);
+        for (let e of f) l += ` ` + formatLogSpan(e, d);
+        l += `:`;
+        let p = 0;
+        if (c.length > 0) {
+          let n = structuredMessage(c[0]);
+          typeof n == `string` &&
+            ((l += ` ${t}${n}`), e.colors && u.push(`color:deepskyblue`), p++);
+        }
+        if (
+          (s.groupCollapsed(l, ...u),
+          n.reasons.length > 0 && s.error(causePretty(n)),
+          p < c.length)
+        )
+          for (; p < c.length; p++) s.log(redact(c[p]));
+        let m = i.getRef(nr);
+        for (let [t, n] of Object.entries(m)) {
+          let r = redact(n);
+          e.colors ? s.log(`%c${t}:`, `color:gray`, r) : s.log(`${t}:`, r);
+        }
+        s.groupEnd();
+      },
+    );
+  },
+  Ha = loggerMake(
+    ({ cause: e, date: t, fiber: n, logLevel: r, message: i }) => {
+      let a = Array.isArray(i) ? i.slice() : [i];
+      e.reasons.length > 0 && a.push(causePretty(e));
+      let o = t.getTime(),
+        s = n.getRef(ar),
+        c = ``;
+      for (let e of s) c += ` ${formatLogSpan(e, o)}`;
+      let l = n.getRef(nr);
+      Object.keys(l).length > 0 && a.push(l);
+      let u = n.getRef(Ma);
+      (n.getRef(Fa) ? u.error : u.log)(
+        `[${defaultDateFormat(t)}] ${r.toUpperCase()} (#${n.id})${c}:`,
+        ...a,
+      );
+    },
+  ),
+  Ua = loggerMake(({ cause: e, fiber: t, logLevel: n, message: r }) => {
+    let i = t.getRef(Ca),
+      a = t.getRef(nr),
+      o = t.currentSpan;
+    if (o === void 0 || o._tag === `ExternalSpan`) return;
+    let s = {};
+    for (let [e, t] of Object.entries(a)) s[e] = t;
+    ((s[`effect.fiberId`] = t.id),
+      (s[`effect.logLevel`] = n.toUpperCase()),
+      e.reasons.length > 0 && (s[`effect.cause`] = causePretty(e)),
+      o.event(
+        toStringUnknown(Array.isArray(r) && r.length === 1 ? r[0] : r),
+        i.currentTimeNanosUnsafe(),
+        s,
+      ));
+  });
+function interruptChildrenPatch() {
+  gr.interruptChildren ??= fiberInterruptChildren;
+}
+const Wa = Re,
+  Ga = ze,
+  Ka = causeFail,
+  qa = ur,
+  Ja = causeSquash,
+  Ya = sr,
+  Xa = cr,
+  Za = lr,
+  Qa = causeFilterInterruptors,
+  $a = Ke,
+  eo = Je,
+  G = Xe,
+  to = UnknownError$1;
+var StackTrace = class extends Service()(`effect/Cause/StackTrace`) {};
+Service()(`effect/Cause/InterruptorStackTrace`);
+const no = Ue,
+  ro = We,
+  io = T,
+  ao = E,
+  oo = exitFail,
+  so = U,
+  co = exitIsSuccess,
+  lo = exitIsFailure,
+  uo = exitGetSuccess,
+  fo = {
+    "~effect/Deferred": { _A: identity, _E: identity },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  po = __name(() => {
+    let e = Object.create(fo);
+    return ((e.resumes = void 0), (e.effect = void 0), e);
+  }, `makeUnsafe`),
+  _await = (e) =>
+    B((t) =>
+      e.effect
+        ? t(e.effect)
+        : ((e.resumes ??= []),
+          e.resumes.push(t),
+          L(() => {
+            let n = e.resumes.indexOf(t);
+            e.resumes.splice(n, 1);
+          })),
+    ),
+  mo = dual(2, (e, t) => L(() => doneUnsafe(e, t))),
+  ho = dual(2, (e, t) => mo(e, exitFail(t))),
+  isDone = (e) => L(() => isDoneUnsafe(e)),
+  isDoneUnsafe = (e) => e.effect !== void 0,
+  doneUnsafe = (e, t) => {
+    if (e.effect) return !1;
+    if (((e.effect = t), e.resumes)) {
+      for (let n = 0; n < e.resumes.length; n++) e.resumes[n](t);
+      e.resumes = void 0;
+    }
+    return !0;
+  },
+  _o = dual(2, (e, t) => $i((n) => V(wi(n(e)), (e) => mo(t, e)))),
+  vo = nr,
+  yo = ar,
+  bo = ir,
+  xo = ki,
+  So = scopeMakeUnsafe,
+  Co = Ni,
+  wo = scopeAddFinalizerExit,
+  To = scopeAddFinalizer,
+  Eo = scopeFork,
+  K = scopeForkUnsafe,
+  Do = scopeClose,
+  Oo = `~effect/Layer/MemoMap`,
+  memoMapReuse = (e, t) => (
+    e.observers++,
+    Lr(
+      scopeAddFinalizerExit(t, (t) => e.finalizer(t)),
+      e.effect,
+    )
+  ),
+  ko = {
+    "~effect/Layer": { _ROut: identity, _E: identity, _RIn: identity },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  fromBuildUnsafe = (e) => {
+    let t = Object.create(ko);
+    return ((t.build = e), t);
+  },
+  fromBuild = (e) =>
+    fromBuildUnsafe((t, n) => {
+      let r = K(n);
+      return zi(e(t, r), (e) => (e._tag === `Failure` ? Do(r, e) : z));
+    }),
+  fromBuildMemo = (e) => {
+    let t = fromBuild((n, r) => n.getOrElseMemoize(t, r, e));
+    return t;
+  },
+  memoMapBuild = (e, t, n, r) => {
+    let i = So(),
+      a = po(),
+      o = {
+        observers: 1,
+        effect: _await(a),
+        finalizer: (n) =>
+          R(
+            () => (
+              o.observers--,
+              o.observers === 0 ? (e.map.delete(t), Do(i, n)) : z
+            ),
+          ),
+      };
+    return (
+      e.map.set(t, o),
+      scopeAddFinalizerExit(n, o.finalizer).pipe(
+        V(() => r(e, i)),
+        zi((e) => ((o.effect = e), mo(a, e))),
+      )
+    );
+  };
+var MemoMapImpl = class {
+  get [Oo]() {
+    return Oo;
+  }
+  parent;
+  constructor(e) {
+    this.parent = e;
+  }
+  map = new Map();
+  get(e, t) {
+    let n = this.map.get(e);
+    return n ? memoMapReuse(n, t) : this.parent?.get(e, t);
+  }
+  getOrElseMemoize(e, t, n) {
+    return this.get(e, t) || memoMapBuild(this, e, t, n);
+  }
+};
+const makeMemoMapUnsafe = () => new MemoMapImpl();
+var CurrentMemoMap = class extends Service()(`effect/Layer/CurrentMemoMap`) {
+  static getOrCreate = dn(this, makeMemoMapUnsafe);
+};
+const Ao = dual(3, (e, t, n) =>
+    ii(H(e.build(t, n), un(CurrentMemoMap, t)), CurrentMemoMap, t),
+  ),
+  jo = dual(2, (e, t) =>
+    D((n) => Ao(e, CurrentMemoMap.getOrCreate(n.context), t)),
+  ),
+  Mo = __name(function () {
+    return arguments.length === 1
+      ? (e) => succeedContext(ln(arguments[0], e))
+      : succeedContext(ln(arguments[0], arguments[1]));
+  }, `succeed`),
+  succeedContext = (e) => fromBuildUnsafe(constant(F(e))),
+  No = succeedContext(sn()),
+  Po = __name(function () {
+    return arguments.length === 1
+      ? (e) => syncContext(() => ln(arguments[0], e()))
+      : syncContext(() => ln(arguments[0], arguments[1]()));
+  }, `sync`),
+  syncContext = (e) => fromBuildMemo(constant(L(e))),
+  effect = function () {
+    return arguments.length === 1
+      ? (e) => effectImpl(arguments[0], e)
+      : effectImpl(arguments[0], arguments[1]);
+  },
+  effectImpl = (e, t) => effectContext(H(t, (t) => ln(e, t))),
+  effectContext = (e) => fromBuildMemo((t, n) => Co(e, n)),
+  Fo = __name((e) => {
+    let t = Service(`effect/Layer/unwrap`);
+    return Bo(effect(t)(e), pn(t));
+  }, `unwrap`),
+  mergeAllEffect = (e, t, n) => {
+    let r = K(n, `parallel`);
+    return na(e, (e) => e.build(t, K(r, `sequential`)), {
+      concurrency: e.length,
+    }).pipe(H((e) => _n(...e)));
+  },
+  Io = __name(
+    (...e) => fromBuild((t, n) => mergeAllEffect(e, t, n)),
+    `mergeAll`,
+  ),
+  Lo = dual(2, (e, t) => Io(e, ...(Array.isArray(t) ? t : [t]))),
+  provideWith = (e, t, n) =>
+    fromBuild((r, i) =>
+      V(Array.isArray(t) ? mergeAllEffect(t, r, i) : t.build(r, i), (t) =>
+        e.build(r, i).pipe(
+          ri(t),
+          H((e) => n(e, t)),
+        ),
+      ),
+    ),
+  Ro = dual(2, (e, t) => provideWith(e, t, identity)),
+  zo = dual(2, (e, t) => provideWith(e, t, (e, t) => gn(t, e))),
+  Bo = dual(2, (e, t) =>
+    fromBuild((n, r) => V(e.build(n, r), (e) => t(e).build(n, r))),
+  ),
+  Vo = `~effect/time/DateTime`,
+  Ho = `~effect/time/DateTime/TimeZone`,
+  Uo = {
+    [Vo]: Vo,
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+    [y]() {
+      return this.toString();
+    },
+    toJSON() {
+      return Go(this).toJSON();
+    },
+  };
+(({ ...Uo }), { ...Uo });
+const Wo = {
+  [Ho]: Ho,
+  [y]() {
+    return this.toString();
+  },
+};
+(({ ...Wo }), { ...Wo });
+const Go = __name((e) => new Date(e.epochMilliseconds), `toDateUtc`),
+  Ko = dual(2, (e, t) => ui(e, Yo, (e) => t(e))),
+  isDoneCause = (e) => e.reasons.some(isDoneFailure),
+  isDoneFailure = (e) => e._tag === `Fail` && $a(e.error),
+  qo = Ln(Ya, (e) => ($a(e) ? A(e) : j(e))),
+  Jo = fromPredicate((e) => e.reasons.every((e) => !isDoneFailure(e))),
+  Yo = Ln(Ya, (e) => ($a(e) ? A(e.value) : j(e))),
+  doneExitFromCause = (e) => {
+    let t = qo(e);
+    return M(t) ? ao(t.failure) : io(t.success.value);
+  },
+  Xo = dual(2, (e, t) =>
+    yi(e, {
+      onSuccess: t.onSuccess,
+      onFailure: (e) => {
+        let n = qo(e);
+        return M(n) ? t.onFailure(n.failure) : t.onDone(n.success.value);
+      },
+    }),
+  ),
+  Zo = {
+    "~effect/Schedule": { _Out: identity, _In: identity, _Env: identity },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  fromStep = (e) => {
+    let t = Object.create(Zo);
+    return ((t.step = e), t);
+  },
+  metadataFn = () => {
+    let e = 0,
+      t,
+      n;
+    return (r, i) => {
+      n === void 0 && (n = r);
+      let a = r - n,
+        o = t === void 0 ? 0 : r - t;
+      return (
+        (t = r),
+        {
+          input: i,
+          attempt: ++e,
+          start: n,
+          now: r,
+          elapsed: a,
+          elapsedSincePrevious: o,
+        }
+      );
+    };
+  },
+  fromStepWithMetadata = (e) =>
+    fromStep(
+      H(e, (e) => {
+        let t = metadataFn();
+        return (n, r) => e(t(n, r));
+      }),
+    ),
+  toStep = (e) => ci(e.step, (e) => F(() => I(e))),
+  Qo = dual(2, (e, t) => $o(e, t, (e, t) => [e, t])),
+  $o = dual(3, (e, t, n) =>
+    fromStep(
+      H(
+        ai(toStep(e), toStep(t)),
+        ([e, t]) =>
+          (r, i) =>
+            Xo(e(r, i), {
+              onSuccess: (e) =>
+                t(r, i).pipe(
+                  H((t) => [n(e[0], t[0]), Pn(e[1], t[1])]),
+                  Ko((t) => G(n(e[0], t))),
+                ),
+              onDone: (e) =>
+                t(r, i).pipe(
+                  V((t) => G(n(e, t[0]))),
+                  Ko((t) => G(n(e, t))),
+                ),
+              onFailure: I,
+            }),
+      ),
+    ),
+  ),
+  exponential = (e, t = 2) => {
+    let n = toMillis(fromInputUnsafe(e));
+    return fromStepWithMetadata(
+      F((e) => {
+        let r = millis(n * t ** (e.attempt - 1));
+        return F([r, r]);
+      }),
+    );
+  },
+  recurs = (e) => es(ts, ({ attempt: t }) => F(t <= e)),
+  spaced = (e) => {
+    let t = fromInputUnsafe(e);
+    return fromStepWithMetadata(F((e) => F([e.attempt - 1, t])));
+  },
+  es = dual(2, (e, t) =>
+    fromStep(
+      H(toStep(e), (e) => {
+        let n = metadataFn();
+        return (r, i) =>
+          V(e(r, i), (e) => {
+            let [a, o] = e,
+              s = t({ ...n(r, i), output: a, duration: o });
+            return V(w(s) ? s : F(s), (t) => (t ? F(e) : G(a)));
+          });
+      }),
+    ),
+  ),
+  ts = spaced(Dn),
+  provideLayer = (e, t, n) =>
+    Fi((r) =>
+      V(n?.local ? Ao(t, makeMemoMapUnsafe(), r) : jo(t, r), (t) => ri(e, t)),
+    ),
+  ns = dual(
+    (e) => w(e[0]),
+    (e, t, n) =>
+      isContext(t)
+        ? ri(e, t)
+        : provideLayer(e, Array.isArray(t) ? Io(...t) : t, n),
+  ),
+  rs = w,
+  is = ea,
+  as = na,
+  os = ta,
+  ss = Tr,
+  cs = Er,
+  q = F,
+  ls = Sr,
+  us = xr,
+  J = R,
+  ds = L,
+  fs = z,
+  ps = B,
+  ms = kr,
+  Y = vr,
+  hs = I,
+  gs = Cr,
+  _s = wr,
+  vs = br,
+  ys = D,
+  bs = yr,
+  X = V,
+  xs = Ur,
+  Ss = Lr,
+  Cs = Rr,
+  ws = wi,
+  Ts = H,
+  Es = Fr,
+  Ds = Ir,
+  Os = zr,
+  ks = ai,
+  As = di,
+  js = mi,
+  Ms = ci,
+  Ns = pi,
+  Ps = ui,
+  Fs = hi,
+  Is = gi,
+  Ls = vi,
+  Rs = _i,
+  zs = Ei,
+  Bs = Oa,
+  Vs = Br,
+  Hs = yi,
+  Us = xi,
+  Ws = ei,
+  Gs = ni,
+  Ks = ns,
+  qs = ri,
+  Js = Zr,
+  Ys = Qr,
+  Xs = ii,
+  Zs = Mi,
+  Qs = Pi,
+  $s = Fi,
+  ec = Ii,
+  tc = Li,
+  nc = Bi,
+  rc = Hi,
+  ic = zi,
+  ac = qi,
+  oc = Ji,
+  sc = Wi,
+  cc = Yi,
+  lc = $i,
+  uc = si,
+  dc = ba,
+  fc = Sa,
+  pc = ia,
+  mc = sa,
+  hc = ca,
+  gc = da,
+  _c = la,
+  vc = pa,
+  yc = fa,
+  bc = ha,
+  xc = ma,
+  Sc = Ar,
+  Cc = Mr,
+  wc = Da,
+  Tc = logWithLevel(`Error`);
+Service()(`effect/Effect/Transaction`);
+const effectify =
+    (e, t, n) =>
+    (...r) =>
+      ps((i) => {
+        try {
+          e(...r, (e, n) => {
+            i(e ? Y(t ? t(e, r) : e) : q(n));
+          });
+        } catch (e) {
+          i(n ? Y(n(e, r)) : gs(e));
+        }
+      }),
+  Ec = Wr,
+  Dc = Gr,
+  Oc = Hr,
+  kc = Kr,
+  Ac = Nr;
+(Service()(`effect/DateTime/CurrentTimeZone`), ro(`EncodingError`));
+function resolve(e) {
+  return e.checks ? e.checks[e.checks.length - 1].annotations : e.annotations;
+}
+function resolveAt(e) {
+  return (t) => resolve(t)?.[e];
+}
+const jc = resolveAt(`identifier`),
+  Mc = memoize((e) => {
+    let t = jc(e);
+    return typeof t == `string` ? t : e.getExpected(Mc);
+  });
+function set(e, t, n) {
+  return (
+    t === `__proto__`
+      ? Object.defineProperty(e, t, {
+          value: n,
+          writable: !0,
+          enumerable: !0,
+          configurable: !0,
+        })
+      : (e[t] = n),
+    e
+  );
+}
+globalThis.RegExp;
+const escape = (e) => e.replace(/[/\\^$*+?.()|[\]{}]/g, `\\$&`),
+  Nc = new WeakMap(),
+  Pc = __name((e) => {
+    if (Nc.has(e)) return Nc.get(e);
+    throw Error(
+      `Unable to get redacted value` +
+        (e.label ? ` with label: "${e.label}"` : ``),
+    );
+  }, `value`),
+  Fc = `~effect/data/Redacted`,
+  isRedacted = (e) => p(e, Fc),
+  Ic = __name((e, t) => {
+    let n = Object.create(Lc);
+    return (t?.label && (n.label = t.label), Nc.set(n, e), n);
+  }, `make`),
+  Lc = {
+    [Fc]: { _A: (e) => e },
+    label: void 0,
+    ...Ae,
+    toJSON() {
+      return this.toString();
+    },
+    toString() {
+      return `<redacted${isString(this.label) ? `:` + this.label : ``}>`;
+    },
+    [h]() {
+      return hash(Nc.get(this));
+    },
+    [v](e) {
+      return isRedacted(e) && equals$2(Nc.get(this), Nc.get(e));
+    },
+  },
+  Rc = Pc,
+  zc = `~effect/SchemaIssue/Issue`;
+function isIssue(e) {
+  return p(e, zc);
+}
+var Base$1 = class {
+    static {
+      __name(this, `Base`);
+    }
+    [zc] = zc;
+    toString() {
+      return Bc(this);
+    }
+  },
+  Filter$1 = class extends Base$1 {
+    static {
+      __name(this, `Filter`);
+    }
+    _tag = `Filter`;
+    actual;
+    filter;
+    issue;
+    constructor(e, t, n) {
+      (super(), (this.actual = e), (this.filter = t), (this.issue = n));
+    }
+  },
+  Encoding = class extends Base$1 {
+    _tag = `Encoding`;
+    ast;
+    actual;
+    issue;
+    constructor(e, t, n) {
+      (super(), (this.ast = e), (this.actual = t), (this.issue = n));
+    }
+  },
+  Pointer = class extends Base$1 {
+    _tag = `Pointer`;
+    path;
+    issue;
+    constructor(e, t) {
+      (super(), (this.path = e), (this.issue = t));
+    }
+  },
+  MissingKey = class extends Base$1 {
+    _tag = `MissingKey`;
+    annotations;
+    constructor(e) {
+      (super(), (this.annotations = e));
+    }
+  },
+  UnexpectedKey = class extends Base$1 {
+    _tag = `UnexpectedKey`;
+    ast;
+    actual;
+    constructor(e, t) {
+      (super(), (this.ast = e), (this.actual = t));
+    }
+  },
+  Composite = class extends Base$1 {
+    _tag = `Composite`;
+    ast;
+    actual;
+    issues;
+    constructor(e, t, n) {
+      (super(), (this.ast = e), (this.actual = t), (this.issues = n));
+    }
+  },
+  InvalidType = class extends Base$1 {
+    _tag = `InvalidType`;
+    ast;
+    actual;
+    constructor(e, t) {
+      (super(), (this.ast = e), (this.actual = t));
+    }
+  },
+  InvalidValue = class extends Base$1 {
+    _tag = `InvalidValue`;
+    actual;
+    annotations;
+    constructor(e, t) {
+      (super(), (this.actual = e), (this.annotations = t));
+    }
+  },
+  AnyOf = class extends Base$1 {
+    _tag = `AnyOf`;
+    ast;
+    actual;
+    issues;
+    constructor(e, t, n) {
+      (super(), (this.ast = e), (this.actual = t), (this.issues = n));
+    }
+  },
+  OneOf = class extends Base$1 {
+    _tag = `OneOf`;
+    ast;
+    actual;
+    successes;
+    constructor(e, t, n) {
+      (super(), (this.ast = e), (this.actual = t), (this.successes = n));
+    }
+  };
+function makeFilterIssue(e, t) {
+  if (isIssue(t)) return t;
+  if (typeof t == `string`) return new InvalidValue(O(e), { message: t });
+  let n =
+    typeof t.issue == `string`
+      ? new InvalidValue(O(e), { message: t.issue })
+      : t.issue;
+  return new Pointer(t.path, n);
+}
+function makeSingle(e, t) {
+  if (t !== void 0)
+    return typeof t == `boolean`
+      ? t
+        ? void 0
+        : new InvalidValue(O(e))
+      : makeFilterIssue(e, t);
+}
+function make$7(e, t, n) {
+  return Array.isArray(n)
+    ? It(n)
+      ? n.length === 1
+        ? makeFilterIssue(e, n[0])
+        : new Composite(
+            t,
+            O(e),
+            Ht(n, (t) => makeFilterIssue(e, t)),
+          )
+      : void 0
+    : makeSingle(e, n);
+}
+__name(make$7, `make`);
+const defaultLeafHook = (e) => {
+    let t = findMessage(e);
+    if (t !== void 0) return t;
+    switch (e._tag) {
+      case `InvalidType`:
+        return getExpectedMessage(Mc(e.ast), formatOption(e.actual));
+      case `InvalidValue`:
+        return `Invalid data ${formatOption(e.actual)}`;
+      case `MissingKey`:
+        return `Missing key`;
+      case `UnexpectedKey`:
+        return `Unexpected key with value ${format$1(e.actual)}`;
+      case `Forbidden`:
+        return `Forbidden operation`;
+      case `OneOf`:
+        return `Expected exactly one member to match the input ${format$1(e.actual)}`;
+    }
+  },
+  defaultCheckHook = (e) => findMessage(e.issue) ?? findMessage(e);
+function getExpectedMessage(e, t) {
+  return `Expected ${e}, got ${t}`;
+}
+function toDefaultIssues(e, t, n, r) {
+  switch (e._tag) {
+    case `Filter`: {
+      let i = r(e);
+      if (i !== void 0) return [{ path: t, message: i }];
+      switch (e.issue._tag) {
+        case `InvalidValue`:
+          return [
+            {
+              path: t,
+              message: getExpectedMessage(
+                formatCheck(e.filter),
+                format$1(e.actual),
+              ),
+            },
+          ];
+        default:
+          return toDefaultIssues(e.issue, t, n, r);
+      }
+    }
+    case `Encoding`:
+      return toDefaultIssues(e.issue, t, n, r);
+    case `Pointer`:
+      return toDefaultIssues(e.issue, [...t, ...e.path], n, r);
+    case `Composite`:
+      return e.issues.flatMap((e) => toDefaultIssues(e, t, n, r));
+    case `AnyOf`: {
+      let i = findMessage(e);
+      return e.issues.length === 0
+        ? i === void 0
+          ? [
+              {
+                path: t,
+                message: getExpectedMessage(Mc(e.ast), format$1(e.actual)),
+              },
+            ]
+          : [{ path: t, message: i }]
+        : e.issues.flatMap((e) => toDefaultIssues(e, t, n, r));
+    }
+    default:
+      return [{ path: t, message: n(e) }];
+  }
+}
+function formatCheck(e) {
+  let t = e.annotations?.expected;
+  if (typeof t == `string`) return t;
+  switch (e._tag) {
+    case `Filter`:
+      return `<filter>`;
+    case `FilterGroup`:
+      return e.checks.map((e) => formatCheck(e)).join(` & `);
+  }
+}
+function makeFormatterDefault() {
+  return (e) =>
+    toDefaultIssues(e, [], defaultLeafHook, defaultCheckHook).map(
+      formatDefaultIssue,
+    ).join(`
+`);
+}
+const Bc = makeFormatterDefault();
+function formatDefaultIssue(e) {
+  let t = e.message;
+  if (e.path && e.path.length > 0) {
+    let n = formatPath(e.path);
+    t += `\n  at ${n}`;
+  }
+  return t;
+}
+function findMessage(e) {
+  switch (e._tag) {
+    case `InvalidType`:
+    case `OneOf`:
+    case `Composite`:
+    case `AnyOf`:
+      return getMessageAnnotation(e.ast.annotations);
+    case `InvalidValue`:
+    case `Forbidden`:
+      return getMessageAnnotation(e.annotations);
+    case `MissingKey`:
+      return getMessageAnnotation(e.annotations, `messageMissingKey`);
+    case `UnexpectedKey`:
+      return getMessageAnnotation(e.ast.annotations, `messageUnexpectedKey`);
+    case `Filter`:
+      return getMessageAnnotation(e.filter.annotations);
+    case `Encoding`:
+      return findMessage(e.issue);
+  }
+}
+function getMessageAnnotation(e, t = `message`) {
+  let n = e?.[t];
+  if (typeof n == `string`) return n;
+}
+function formatOption(e) {
+  return k(e) ? `no value provided` : format$1(e.value);
+}
+var Vc = class Getter extends s {
+  run;
+  constructor(e) {
+    (super(), (this.run = e));
+  }
+  map(e) {
+    return new Getter((t, n) => this.run(t, n).pipe(Ec(St(e))));
+  }
+  compose(e) {
+    return isPassthrough(this)
+      ? e
+      : isPassthrough(e)
+        ? this
+        : new Getter((t, n) => this.run(t, n).pipe(Oc((t) => e.run(t, n))));
+  }
+};
+const Hc = new Vc(q);
+function isPassthrough(e) {
+  return e.run === Hc.run;
+}
+function passthrough$1() {
+  return Hc;
+}
+__name(passthrough$1, `passthrough`);
+function onSome(e) {
+  return new Vc((t, n) => (k(t) ? ls : e(t.value, n)));
+}
+function transform$1(e) {
+  return transformOptional(St(e));
+}
+__name(transform$1, `transform`);
+function transformOrFail$1(e) {
+  return onSome((t, n) => e(t, n).pipe(Ec(O)));
+}
+__name(transformOrFail$1, `transformOrFail`);
+function transformOptional(e) {
+  return new Vc((t) => q(e(t)));
+}
+function withDefault(e) {
+  return new Vc((t) => {
+    let n = wt(t, isNotUndefined);
+    return vt(n) ? q(n) : Ec(e, O);
+  });
+}
+function String$3() {
+  return transform$1(globalThis.String);
+}
+__name(String$3, `String`);
+function Number$3() {
+  return transform$1(globalThis.Number);
+}
+__name(Number$3, `Number`);
+function BigInt$1() {
+  return transform$1(globalThis.BigInt);
+}
+__name(BigInt$1, `BigInt`);
+function Date$2() {
+  return transform$1((e) => new globalThis.Date(e));
+}
+__name(Date$2, `Date`);
+function split(e) {
+  let t = e?.separator ?? `,`;
+  return transform$1((e) => (e === `` ? [] : e.split(t)));
+}
+const Uc = `~effect/SchemaTransformation/Transformation`;
+var Z = class Transformation {
+  [Uc] = Uc;
+  _tag = `Transformation`;
+  decode;
+  encode;
+  constructor(e, t) {
+    ((this.decode = e), (this.encode = t));
+  }
+  flip() {
+    return new Transformation(this.encode, this.decode);
+  }
+  compose(e) {
+    return new Transformation(
+      this.decode.compose(e.decode),
+      e.encode.compose(this.encode),
+    );
+  }
+};
+function isTransformation(e) {
+  return p(e, Uc);
+}
+const Wc = __name(
+  (e) => (isTransformation(e) ? e : new Z(e.decode, e.encode)),
+  `make`,
+);
+function transform(e) {
+  return new Z(transform$1(e.decode), transform$1(e.encode));
+}
+const Gc = new Z(passthrough$1(), passthrough$1());
+function passthrough() {
+  return Gc;
+}
+const Kc = new Z(Number$3(), String$3()),
+  errorFromErrorJsonEncoded = (e) =>
+    transform({
+      decode: (e) => {
+        let t = Error(e.message);
+        return (
+          typeof e.name == `string` && e.name !== `Error` && (t.name = e.name),
+          typeof e.stack == `string` && (t.stack = e.stack),
+          t
+        );
+      },
+      encode: (t) => {
+        let n = { name: t.name, message: t.message };
+        return (
+          e?.includeStack && typeof t.stack == `string` && (n.stack = t.stack),
+          n
+        );
+      },
+    });
+function makeGuard(e) {
+  return (t) => t._tag === e;
+}
+const qc = makeGuard(`Declaration`),
+  Jc = makeGuard(`Never`),
+  Yc = makeGuard(`Literal`),
+  Xc = makeGuard(`UniqueSymbol`),
+  Zc = makeGuard(`Arrays`),
+  Qc = makeGuard(`Objects`),
+  $c = makeGuard(`Union`);
+var Link = class {
+  to;
+  transformation;
+  constructor(e, t) {
+    ((this.to = e), (this.transformation = t));
+  }
+};
+const el = {};
+var Context = class {
+  isOptional;
+  isMutable;
+  defaultValue;
+  annotations;
+  constructor(e, t, n = void 0, r = void 0) {
+    ((this.isOptional = e),
+      (this.isMutable = t),
+      (this.defaultValue = n),
+      (this.annotations = r));
+  }
+};
+const tl = `~effect/Schema`;
+var Base = class {
+    [tl] = tl;
+    annotations;
+    checks;
+    encoding;
+    context;
+    constructor(e = void 0, t = void 0, n = void 0, r = void 0) {
+      ((this.annotations = e),
+        (this.checks = t),
+        (this.encoding = n),
+        (this.context = r));
+    }
+    toString() {
+      return `<${this._tag}>`;
+    }
+  },
+  nl = class Declaration extends Base {
+    _tag = `Declaration`;
+    typeParameters;
+    run;
+    constructor(e, t, n, r, i, a) {
+      (super(n, r, i, a), (this.typeParameters = e), (this.run = t));
+    }
+    getParser() {
+      let e = this.run(this.typeParameters);
+      return (t, n) => (k(t) ? ls : Ec(e(t.value, this, n), O));
+    }
+    recur(e) {
+      let t = mapOrSame(this.typeParameters, e);
+      return t === this.typeParameters
+        ? this
+        : new Declaration(
+            t,
+            this.run,
+            this.annotations,
+            this.checks,
+            void 0,
+            this.context,
+          );
+    }
+    getExpected() {
+      let e = this.annotations?.expected;
+      return typeof e == `string` ? e : `<Declaration>`;
+    }
+  },
+  Null = class extends Base {
+    _tag = `Null`;
+    getParser() {
+      return fromConst(this, null);
+    }
+    getExpected() {
+      return `null`;
+    }
+  };
+const rl = new Null();
+var Undefined$1 = class extends Base {
+  static {
+    __name(this, `Undefined`);
+  }
+  _tag = `Undefined`;
+  getParser() {
+    return fromConst(this, void 0);
+  }
+  toCodecJson() {
+    return replaceEncoding(this, [il]);
+  }
+  getExpected() {
+    return `undefined`;
+  }
+};
+const il = new Link(
+    rl,
+    new Z(
+      transform$1(() => void 0),
+      transform$1(() => null),
+    ),
+  ),
+  al = new Undefined$1();
+var Any$1 = class extends Base {
+  static {
+    __name(this, `Any`);
+  }
+  _tag = `Any`;
+  getParser() {
+    return fromRefinement(this, isUnknown);
+  }
+  getExpected() {
+    return `any`;
+  }
+};
+const ol = new Any$1();
+var Unknown$1 = class extends Base {
+  static {
+    __name(this, `Unknown`);
+  }
+  _tag = `Unknown`;
+  getParser() {
+    return fromRefinement(this, isUnknown);
+  }
+  getExpected() {
+    return `unknown`;
+  }
+};
+const sl = new Unknown$1();
+var Literal$1 = class extends Base {
+  static {
+    __name(this, `Literal`);
+  }
+  _tag = `Literal`;
+  literal;
+  constructor(e, t, n, r, i) {
+    if (
+      (super(t, n, r, i),
+      typeof e == `number` && !globalThis.Number.isFinite(e))
+    )
+      throw Error(`A numeric literal must be finite, got ${format$1(e)}`);
+    this.literal = e;
+  }
+  getParser() {
+    return fromConst(this, this.literal);
+  }
+  toCodecJson() {
+    return typeof this.literal == `bigint` ? literalToString(this) : this;
+  }
+  toCodecStringTree() {
+    return typeof this.literal == `string` ? this : literalToString(this);
+  }
+  getExpected() {
+    return typeof this.literal == `string`
+      ? JSON.stringify(this.literal)
+      : globalThis.String(this.literal);
+  }
+};
+function literalToString(e) {
+  let t = globalThis.String(e.literal);
+  return replaceEncoding(e, [
+    new Link(
+      new Literal$1(t),
+      new Z(
+        transform$1(() => e.literal),
+        transform$1(() => t),
+      ),
+    ),
+  ]);
+}
+var String$2 = class extends Base {
+  static {
+    __name(this, `String`);
+  }
+  _tag = `String`;
+  getParser() {
+    return fromRefinement(this, isString);
+  }
+  getExpected() {
+    return `string`;
+  }
+};
+const cl = new String$2();
+var Number$2 = class extends Base {
+  static {
+    __name(this, `Number`);
+  }
+  _tag = `Number`;
+  getParser() {
+    return fromRefinement(this, isNumber);
+  }
+  toCodecJson() {
+    return this.checks &&
+      (hasCheck(this.checks, `isFinite`) || hasCheck(this.checks, `isInt`))
+      ? this
+      : replaceEncoding(this, [xl]);
+  }
+  toCodecStringTree() {
+    return this.checks &&
+      (hasCheck(this.checks, `isFinite`) || hasCheck(this.checks, `isInt`))
+      ? replaceEncoding(this, [Nl])
+      : replaceEncoding(this, [Pl]);
+  }
+  getExpected() {
+    return `number`;
+  }
+};
+function hasCheck(e, t) {
+  return e.some((e) => {
+    switch (e._tag) {
+      case `Filter`:
+        return e.annotations?.meta?._tag === t;
+      case `FilterGroup`:
+        return hasCheck(e.checks, t);
+    }
+  });
+}
+const ll = new Number$2();
+var ul = class Arrays extends Base {
+  _tag = `Arrays`;
+  isMutable;
+  elements;
+  rest;
+  constructor(e, t, n, r, i, a, o) {
+    (super(r, i, a, o),
+      (this.isMutable = e),
+      (this.elements = t),
+      (this.rest = n));
+    let s = t.findIndex(isOptional);
+    if (
+      s !== -1 &&
+      (t.slice(s + 1).some((e) => !isOptional(e)) || n.length > 1)
+    )
+      throw Error(
+        `A required element cannot follow an optional element. ts(1257)`,
+      );
+    if (n.length > 1 && n.slice(1).some(isOptional))
+      throw Error(`An optional element cannot follow a rest element. ts(1266)`);
+  }
+  getParser(e) {
+    let t = this,
+      n = t.elements.map((t) => ({ ast: t, parser: e(t) })),
+      r = t.rest.map((t) => ({ ast: t, parser: e(t) })),
+      i = n.length,
+      [a, ...o] = r,
+      s = o.length;
+    function getParser(e, t) {
+      return t < i ? n[t] : t >= e ? o[t - e] : a;
+    }
+    return Ac(function* (e, n) {
+      if (e._tag === `None`) return e;
+      let r = e.value;
+      if (!Array.isArray(r)) return yield* Y(new InvalidType(t, e));
+      let a = r.length,
+        o = {
+          ast: t,
+          getParser,
+          oinput: e,
+          len: a,
+          tailThreshold: resolveTailThreshold(a, i, s),
+          output: new globalThis.Array(a),
+          issues: void 0,
+          options: n,
+        },
+        c = dl(o, r, {
+          concurrency: resolveConcurrency(n?.concurrency)?.concurrency,
+          end: t.rest.length === 0 ? i : Math.max(a, i + s),
+        });
+      if ((c && (yield* c), t.rest.length === 0 && a > i))
+        for (let s = i; s <= a - 1; s++) {
+          let i = new Pointer([s], new UnexpectedKey(t, r[s]));
+          if (n.errors === `all`)
+            o.issues ? o.issues.push(i) : (o.issues = [i]);
+          else return yield* Y(new Composite(t, e, [i]));
+        }
+      return o.issues ? yield* Y(new Composite(t, e, o.issues)) : O(o.output);
+    });
+  }
+  recur(e) {
+    let t = mapOrSame(this.elements, e),
+      n = mapOrSame(this.rest, e);
+    return t === this.elements && n === this.rest
+      ? this
+      : new Arrays(
+          this.isMutable,
+          t,
+          n,
+          this.annotations,
+          this.checks,
+          void 0,
+          this.context,
+        );
+  }
+  getExpected() {
+    return `array`;
+  }
+};
+const dl = iterateEager()({
+  onItem(e, t, n) {
+    let r = n < e.len ? O(t) : none();
+    return e.getParser(e.tailThreshold, n).parser(r, e.options);
+  },
+  step(e, t, n, r) {
+    if (n._tag === `Failure`) return wrapPropertyKeyIssue(e, e.ast, r, n);
+    if (n.value._tag === `Some`) e.output[r] = n.value.value;
+    else {
+      let t = e.getParser(e.tailThreshold, r);
+      if (isOptional(t.ast)) return;
+      let n = new Pointer([r], new MissingKey(t.ast.context?.annotations));
+      if (e.options.errors === `all`)
+        e.issues ? e.issues.push(n) : (e.issues = [n]);
+      else return oo(new Composite(e.ast, e.oinput, [n]));
+    }
+  },
+});
+function resolveTailThreshold(e, t, n) {
+  return Math.max(t, e - n);
+}
+const resolveConcurrency = (e) => (
+    (e = e === `unbounded` ? 1 / 0 : (e ?? 1)),
+    e > 1 ? { concurrency: e } : void 0
+  ),
+  wrapPropertyKeyIssue = (e, t, n, r) => {
+    let i = Ya(r.cause);
+    if (M(i)) return r;
+    let a = new Pointer([n], i.success);
+    if (e.options.errors === `all`)
+      e.issues ? e.issues.push(a) : (e.issues = [a]);
+    else return oo(new Composite(t, e.oinput, [a]));
+  },
+  fl = `[+-]?\\d*\\.?\\d+(?:[Ee][+-]?\\d+)?`,
+  pl = new globalThis.RegExp(`(?:${fl}|Infinity|-Infinity|NaN)`);
+function getIndexSignatureKeys(e, t) {
+  let n = El(t);
+  switch (n._tag) {
+    case `String`:
+      return Object.keys(e);
+    case `TemplateLiteral`: {
+      let t = Ol(n);
+      return Object.keys(e).filter((e) => t.test(e));
+    }
+    case `Symbol`:
+      return Object.getOwnPropertySymbols(e);
+    case `Number`:
+      return Object.keys(e).filter((e) => pl.test(e));
+    case `Union`:
+      return [...new Set(n.types.flatMap((t) => getIndexSignatureKeys(e, t)))];
+    default:
+      return [];
+  }
+}
+var PropertySignature = class {
+    name;
+    type;
+    constructor(e, t) {
+      ((this.name = e), (this.type = t));
+    }
+  },
+  ml = class KeyValueCombiner {
+    decode;
+    encode;
+    constructor(e, t) {
+      ((this.decode = e), (this.encode = t));
+    }
+    flip() {
+      return new KeyValueCombiner(this.encode, this.decode);
+    }
+  },
+  IndexSignature = class {
+    parameter;
+    type;
+    merge;
+    constructor(e, t, n) {
+      if (
+        ((this.parameter = e),
+        (this.type = t),
+        (this.merge = n),
+        isOptional(t) && !containsUndefined(t))
+      )
+        throw Error(
+          "Cannot use `Schema.optionalKey` with index signatures, use `Schema.optional` instead.",
+        );
+    }
+  },
+  hl = class Objects extends Base {
+    _tag = `Objects`;
+    propertySignatures;
+    indexSignatures;
+    constructor(e, t, n, r, i, a) {
+      (super(n, r, i, a),
+        (this.propertySignatures = e),
+        (this.indexSignatures = t));
+      let o = e.map((e) => e.name).filter((e, t, n) => n.indexOf(e) !== t);
+      if (o.length > 0)
+        throw Error(`Duplicate identifiers: ${JSON.stringify(o)}. ts(2300)`);
+    }
+    getParser(e) {
+      let t = this,
+        n = [],
+        r = new Set(),
+        i = [];
+      for (let a of t.propertySignatures)
+        (n.push(a.name),
+          r.add(a.name),
+          i.push({ ps: a, parser: e(a.type), name: a.name, type: a.type }));
+      let a = t.indexSignatures.length;
+      if (t.propertySignatures.length === 0 && t.indexSignatures.length === 0)
+        return fromRefinement(t, isNotNullish);
+      let o =
+        a > 0
+          ? iterateEager()({
+              onItem: Ac(function* (n, [r, i]) {
+                let a = e(kl(i.parameter))(O(r), n.options),
+                  o = effectIsExit(a) ? a : yield* ws(a);
+                if (o._tag === `Failure`) {
+                  let e = wrapPropertyKeyIssue(n, t, r, o);
+                  e && (yield* e);
+                  return;
+                }
+                let s = O(n.input[r]),
+                  c = e(i.type)(s, n.options),
+                  l = effectIsExit(c) ? c : yield* ws(c);
+                if (l._tag === `Failure`) {
+                  let e = wrapPropertyKeyIssue(n, t, r, l);
+                  e && (yield* e);
+                  return;
+                } else if (o.value._tag === `Some` && l.value._tag === `Some`) {
+                  let e = o.value.value,
+                    t = l.value.value;
+                  if (i.merge && i.merge.decode && Object.hasOwn(n.out, e)) {
+                    let [r, a] = i.merge.decode.combine([e, n.out[e]], [e, t]);
+                    set(n.out, r, a);
+                  } else set(n.out, e, t);
+                }
+              }),
+              step: (e, t, n) => (n._tag === `Failure` ? n : void 0),
+            })
+          : void 0;
+      return Ac(function* (e, s) {
+        if (e._tag === `None`) return e;
+        let c = e.value;
+        if (!(typeof c == `object` && c && !Array.isArray(c)))
+          return yield* Y(new InvalidType(t, e));
+        let l = {},
+          u = {
+            ast: t,
+            oinput: e,
+            input: c,
+            out: l,
+            issues: void 0,
+            options: s,
+          },
+          d = s.errors === `all`,
+          f = s.onExcessProperty === `error`,
+          p = s.onExcessProperty === `preserve`,
+          m;
+        if (t.indexSignatures.length === 0 && (f || p)) {
+          m = Reflect.ownKeys(c);
+          for (let n = 0; n < m.length; n++) {
+            let i = m[n];
+            if (!r.has(i))
+              if (f) {
+                let n = new Pointer([i], new UnexpectedKey(t, c[i]));
+                if (d) {
+                  u.issues ? u.issues.push(n) : (u.issues = [n]);
+                  continue;
+                } else return yield* Y(new Composite(t, e, [n]));
+              } else set(l, i, c[i]);
+          }
+        }
+        let h = resolveConcurrency(s?.concurrency),
+          g = gl(u, i, h);
+        if ((g && (yield* g), o)) {
+          let e = Vt();
+          for (let n = 0; n < a; n++) {
+            let r = t.indexSignatures[n],
+              i = getIndexSignatureKeys(c, r.parameter);
+            for (let t = 0; t < i.length; t++) {
+              let n = i[t];
+              e.push([n, r]);
+            }
+          }
+          let n = o(u, e, h);
+          n && (yield* n);
+        }
+        if (u.issues) return yield* Y(new Composite(t, e, u.issues));
+        if (s.propertyOrder === `original`) {
+          let e = (m ?? Reflect.ownKeys(c)).concat(n),
+            t = {};
+          for (let n of e) Object.hasOwn(l, n) && set(t, n, l[n]);
+          return O(t);
+        }
+        return O(l);
+      });
+    }
+    rebuild(e, t) {
+      let n = mapOrSame(this.propertySignatures, (t) => {
+          let n = e(t.type);
+          return n === t.type ? t : new PropertySignature(t.name, n);
+        }),
+        r = mapOrSame(this.indexSignatures, (n) => {
+          let r = e(n.parameter),
+            i = e(n.type),
+            a = t ? n.merge?.flip() : n.merge;
+          return r === n.parameter && i === n.type && a === n.merge
+            ? n
+            : new IndexSignature(r, i, a);
+        });
+      return n === this.propertySignatures && r === this.indexSignatures
+        ? this
+        : new Objects(
+            n,
+            r,
+            this.annotations,
+            this.checks,
+            void 0,
+            this.context,
+          );
+    }
+    flip(e) {
+      return this.rebuild(e, !0);
+    }
+    recur(e) {
+      return this.rebuild(e, !1);
+    }
+    getExpected() {
+      return this.propertySignatures.length === 0 &&
+        this.indexSignatures.length === 0
+        ? `object | array`
+        : `object`;
+    }
+  };
+const gl = iterateEager()({
+  onItem(e, t) {
+    let n = Object.hasOwn(e.input, t.name) ? O(e.input[t.name]) : none();
+    return t.parser(n, e.options);
+  },
+  step(e, t, n) {
+    if (n._tag === `Failure`) return wrapPropertyKeyIssue(e, e.ast, t.name, n);
+    if (n.value._tag === `Some`) set(e.out, t.name, n.value.value);
+    else if (!isOptional(t.type)) {
+      let n = new Pointer(
+        [t.name],
+        new MissingKey(t.type.context?.annotations),
+      );
+      if (e.options.errors === `all`) {
+        e.issues ? e.issues.push(n) : (e.issues = [n]);
+        return;
+      } else return oo(new Composite(e.ast, e.oinput, [n]));
+    }
+  },
+});
+function struct(e, t, n) {
+  return new hl(
+    Reflect.ownKeys(e).map((t) => new PropertySignature(t, e[t].ast)),
+    [],
+    n,
+    t,
+  );
+}
+function getAST(e) {
+  return e.ast;
+}
+function tuple(e, t = void 0) {
+  return new ul(
+    !1,
+    e.map((e) => e.ast),
+    [],
+    void 0,
+    t,
+  );
+}
+function union(e, t, n) {
+  return new vl(e.map(getAST), t, void 0, n);
+}
+function getCandidateTypes(e) {
+  switch (e._tag) {
+    case `Null`:
+      return [`null`];
+    case `Undefined`:
+    case `Void`:
+      return [`undefined`];
+    case `String`:
+    case `TemplateLiteral`:
+      return [`string`];
+    case `Number`:
+      return [`number`];
+    case `Boolean`:
+      return [`boolean`];
+    case `Symbol`:
+    case `UniqueSymbol`:
+      return [`symbol`];
+    case `BigInt`:
+      return [`bigint`];
+    case `Arrays`:
+      return [`array`];
+    case `ObjectKeyword`:
+      return [`object`, `array`, `function`];
+    case `Objects`:
+      return e.propertySignatures.length || e.indexSignatures.length
+        ? [`object`]
+        : [`object`, `array`];
+    case `Enum`:
+      return Array.from(new Set(e.enums.map(([, e]) => typeof e)));
+    case `Literal`:
+      return [typeof e.literal];
+    case `Union`:
+      return Array.from(new Set(e.types.flatMap(getCandidateTypes)));
+    default:
+      return [
+        `null`,
+        `undefined`,
+        `string`,
+        `number`,
+        `boolean`,
+        `symbol`,
+        `bigint`,
+        `object`,
+        `array`,
+        `function`,
+      ];
+  }
+}
+function collectSentinels(e) {
+  switch (e._tag) {
+    default:
+      return [];
+    case `Declaration`: {
+      let t = e.annotations?.[`~sentinels`];
+      return Array.isArray(t) ? t : [];
+    }
+    case `Objects`:
+      return e.propertySignatures.flatMap((e) => {
+        let t = e.type;
+        if (!isOptional(t)) {
+          if (Yc(t)) return [{ key: e.name, literal: t.literal }];
+          if (Xc(t)) return [{ key: e.name, literal: t.symbol }];
+        }
+        return [];
+      });
+    case `Arrays`:
+      return e.elements.flatMap((e, t) =>
+        Yc(e) && !isOptional(e) ? [{ key: t, literal: e.literal }] : [],
+      );
+    case `Suspend`:
+      return collectSentinels(e.thunk());
+  }
+}
+const _l = new WeakMap();
+function getIndex(e) {
+  let t = _l.get(e);
+  if (t) return t;
+  t = {};
+  for (let n of e) {
+    let e = El(n);
+    if (Jc(e)) continue;
+    let r = getCandidateTypes(e),
+      i = collectSentinels(e);
+    t.byType ??= {};
+    for (let e of r) (t.byType[e] ??= []).push(n);
+    if (i.length > 0) {
+      t.bySentinel ??= new Map();
+      for (let { key: e, literal: r } of i) {
+        let i = t.bySentinel.get(e);
+        i || t.bySentinel.set(e, (i = new Map()));
+        let a = i.get(r);
+        (a || i.set(r, (a = [])), a.push(n));
+      }
+    } else {
+      t.otherwise ??= {};
+      for (let e of r) (t.otherwise[e] ??= []).push(n);
+    }
+  }
+  return (_l.set(e, t), t);
+}
+function filterLiterals(e) {
+  return (t) => {
+    let n = El(t);
+    return n._tag === `Literal`
+      ? n.literal === e
+      : n._tag === `UniqueSymbol`
+        ? n.symbol === e
+        : !0;
+  };
+}
+function getCandidates(e, t) {
+  let n = getIndex(t),
+    r = e === null ? `null` : Array.isArray(e) ? `array` : typeof e;
+  if (n.bySentinel) {
+    let t = n.otherwise?.[r] ?? [];
+    if (r === `object` || r === `array`) {
+      for (let [r, i] of n.bySentinel)
+        if (Object.hasOwn(e, r)) {
+          let n = i.get(e[r]);
+          if (n) return [...n, ...t].filter(filterLiterals(e));
+        }
+    }
+    return t;
+  }
+  return (n.byType?.[r] ?? []).filter(filterLiterals(e));
+}
+var vl = class Union$1 extends Base {
+  static {
+    __name(this, `Union`);
+  }
+  _tag = `Union`;
+  types;
+  mode;
+  constructor(e, t, n, r, i, a) {
+    (super(n, r, i, a), (this.types = e), (this.mode = t));
+  }
+  getParser(e) {
+    let t = this;
+    return (n, r) => {
+      if (n._tag === `None`) return q(n);
+      let i = n.value,
+        a = getCandidates(i, t.types),
+        o = {
+          ast: t,
+          recur: e,
+          oinput: n,
+          input: i,
+          out: void 0,
+          successes: [],
+          issues: void 0,
+          options: r,
+        },
+        s = yl(o, a, resolveConcurrency(r?.concurrency));
+      return s
+        ? X(s, (e) => (o.out ? q(o.out) : Y(new AnyOf(t, i, o.issues ?? []))))
+        : o.out
+          ? q(o.out)
+          : Y(new AnyOf(t, i, o.issues ?? []));
+    };
+  }
+  recur(e) {
+    let t = mapOrSame(this.types, e);
+    return t === this.types
+      ? this
+      : new Union$1(
+          t,
+          this.mode,
+          this.annotations,
+          this.checks,
+          void 0,
+          this.context,
+        );
+  }
+  getExpected(e) {
+    let t = this.annotations?.expected;
+    if (typeof t == `string`) return t;
+    if (this.types.length === 0) return `never`;
+    let n = this.types.map((t) => {
+      let n = El(t);
+      switch (n._tag) {
+        case `Arrays`: {
+          let t = n.elements.filter(Yc);
+          if (t.length > 0)
+            return `${formatIsMutable(n.isMutable)}[ ${t.map((t) => e(t) + formatIsOptional(t.context?.isOptional)).join(`, `)}, ... ]`;
+          break;
+        }
+        case `Objects`: {
+          let t = n.propertySignatures.filter((e) => Yc(e.type));
+          if (t.length > 0)
+            return `{ ${t.map((t) => `${formatIsMutable(t.type.context?.isMutable)}${formatPropertyKey(t.name)}${formatIsOptional(t.type.context?.isOptional)}: ${e(t.type)}`).join(`, `)}, ... }`;
+          break;
+        }
+      }
+      return e(n);
+    });
+    return Array.from(new Set(n)).join(` | `);
+  }
+};
+const yl = iterateEager()({
+    onItem(e, t) {
+      return e.recur(t)(e.oinput, e.options);
+    },
+    step(e, t, n) {
+      if (n._tag === `Failure`) {
+        let t = Ya(n.cause);
+        if (M(t)) return n;
+        e.issues ? e.issues.push(t.success) : (e.issues = [t.success]);
+      } else {
+        if (e.out && e.ast.mode === `oneOf`)
+          return (
+            e.successes.push(t), oo(new OneOf(e.ast, e.input, e.successes))
+          );
+        if (((e.out = n.value), e.successes.push(t), e.ast.mode === `anyOf`))
+          return so;
+      }
+    },
+  }),
+  bl = new vl(
+    [
+      new Literal$1(`Infinity`),
+      new Literal$1(`-Infinity`),
+      new Literal$1(`NaN`),
+    ],
+    `anyOf`,
+  ),
+  xl = new Link(
+    new vl([ll, bl], `anyOf`),
+    new Z(
+      Number$3(),
+      transform$1((e) =>
+        globalThis.Number.isFinite(e) ? e : globalThis.String(e),
+      ),
+    ),
+  );
+function formatIsMutable(e) {
+  return e ? `` : `readonly `;
+}
+function formatIsOptional(e) {
+  return e ? `?` : ``;
+}
+var Sl = class Filter extends s {
+    _tag = `Filter`;
+    run;
+    annotations;
+    aborted;
+    constructor(e, t = void 0, n = !1) {
+      (super(), (this.run = e), (this.annotations = t), (this.aborted = n));
+    }
+    annotate(e) {
+      return new Filter(this.run, { ...this.annotations, ...e }, this.aborted);
+    }
+    abort() {
+      return new Filter(this.run, this.annotations, !0);
+    }
+    and(e, t) {
+      return new Cl([this, e], t);
+    }
+  },
+  Cl = class FilterGroup extends s {
+    _tag = `FilterGroup`;
+    checks;
+    annotations;
+    constructor(e, t = void 0) {
+      (super(), (this.checks = e), (this.annotations = t));
+    }
+    annotate(e) {
+      return new FilterGroup(this.checks, { ...this.annotations, ...e });
+    }
+    and(e, t) {
+      return new FilterGroup([this, e], t);
+    }
+  };
+function makeFilter$1(e, t, n = !1) {
+  return new Sl((t, n, r) => make$7(t, n, e(t, n, r)), t, n);
+}
+__name(makeFilter$1, `makeFilter`);
+function isPattern$1(e, t) {
+  let n = e.source;
+  return makeFilter$1((t) => e.test(t), {
+    expected: `a string matching the RegExp ${n}`,
+    meta: { _tag: `isPattern`, regExp: e },
+    toArbitraryConstraint: { string: { patterns: [e.source] } },
+    ...t,
+  });
+}
+__name(isPattern$1, `isPattern`);
+function modifyOwnPropertyDescriptors(e, t) {
+  let n = Object.getOwnPropertyDescriptors(e);
+  return (t(n), Object.create(Object.getPrototypeOf(e), n));
+}
+function replaceEncoding(e, t) {
+  return e.encoding === t
+    ? e
+    : modifyOwnPropertyDescriptors(e, (e) => {
+        e.encoding.value = t;
+      });
+}
+function replaceContext(e, t) {
+  return e.context === t
+    ? e
+    : modifyOwnPropertyDescriptors(e, (e) => {
+        e.context.value = t;
+      });
+}
+function annotate(e, t) {
+  if (e.checks) {
+    let n = e.checks[e.checks.length - 1];
+    return replaceChecks(e, Nt(e.checks.slice(0, -1), n.annotate(t)));
+  }
+  return modifyOwnPropertyDescriptors(e, (e) => {
+    e.annotations.value = { ...e.annotations.value, ...t };
+  });
+}
+function replaceChecks(e, t) {
+  return e.checks === t
+    ? e
+    : modifyOwnPropertyDescriptors(e, (e) => {
+        e.checks.value = t;
+      });
+}
+function appendChecks(e, t) {
+  return replaceChecks(e, e.checks ? [...e.checks, ...t] : t);
+}
+function updateLastLink(e, t) {
+  let n = e,
+    r = n[n.length - 1],
+    i = t(r.to);
+  return i === r.to
+    ? e
+    : Nt(e.slice(0, e.length - 1), new Link(i, r.transformation));
+}
+function applyToLastLink(e) {
+  return (t) =>
+    t.encoding ? replaceEncoding(t, updateLastLink(t.encoding, e)) : t;
+}
+function appendTransformation(e, t, n) {
+  let r = new Link(e, t);
+  return replaceEncoding(n, n.encoding ? [...n.encoding, r] : [r]);
+}
+function mapOrSame(e, t) {
+  let n = !1,
+    r = Array(e.length);
+  for (let i = 0; i < e.length; i++) {
+    let a = e[i],
+      o = t(a);
+    (o !== a && (n = !0), (r[i] = o));
+  }
+  return n ? r : e;
+}
+function annotateKey(e, t) {
+  return replaceContext(
+    e,
+    e.context
+      ? new Context(
+          e.context.isOptional,
+          e.context.isMutable,
+          e.context.defaultValue,
+          { ...e.context.annotations, ...t },
+        )
+      : new Context(!1, !1, void 0, t),
+  );
+}
+const wl = applyToLastLink(optionalKey$1);
+function optionalKey$1(e) {
+  return wl(
+    replaceContext(
+      e,
+      e.context
+        ? e.context.isOptional === !1
+          ? new Context(
+              !0,
+              e.context.isMutable,
+              e.context.defaultValue,
+              e.context.annotations,
+            )
+          : e.context
+        : new Context(!0, !1),
+    ),
+  );
+}
+__name(optionalKey$1, `optionalKey`);
+function withConstructorDefault$1(e, t) {
+  let n = [new Link(sl, new Z(withDefault(t), passthrough$1()))];
+  return replaceContext(
+    e,
+    e.context
+      ? new Context(
+          e.context.isOptional,
+          e.context.isMutable,
+          n,
+          e.context.annotations,
+        )
+      : new Context(!1, !1, n),
+  );
+}
+__name(withConstructorDefault$1, `withConstructorDefault`);
+function decodeTo$1(e, t, n) {
+  return appendTransformation(e, n, t);
+}
+__name(decodeTo$1, `decodeTo`);
+function parseParameter(e) {
+  switch (e._tag) {
+    case `Literal`:
+      return {
+        literals: isPropertyKey(e.literal) ? [e.literal] : [],
+        parameters: [],
+      };
+    case `UniqueSymbol`:
+      return { literals: [e.symbol], parameters: [] };
+    case `String`:
+    case `Number`:
+    case `Symbol`:
+    case `TemplateLiteral`:
+      return { literals: [], parameters: [e] };
+    case `Union`: {
+      let t = { literals: [], parameters: [] };
+      for (let n = 0; n < e.types.length; n++) {
+        let r = parseParameter(e.types[n]);
+        ((t.literals = t.literals.concat(r.literals)),
+          (t.parameters = t.parameters.concat(r.parameters)));
+      }
+      return t;
+    }
+  }
+  return { literals: [], parameters: [] };
+}
+function record(e, t, n) {
+  let { literals: r, parameters: i } = parseParameter(e);
+  return new hl(
+    r.map((e) => new PropertySignature(e, t)),
+    i.map((e) => new IndexSignature(e, t, n)),
+  );
+}
+function isOptional(e) {
+  return e.context?.isOptional ?? !1;
+}
+const Tl = memoize((e) => {
+    if (e.encoding) return Tl(replaceEncoding(e, void 0));
+    let t = e;
+    return t.recur?.(Tl) ?? t;
+  }),
+  El = memoize((e) => Tl(Dl(e)));
+function flipEncoding(e, t) {
+  let n = t,
+    r = n.length,
+    i = n[r - 1],
+    a = [new Link(Dl(replaceEncoding(e, void 0)), n[0].transformation.flip())];
+  for (let e = 1; e < r; e++)
+    a.unshift(new Link(Dl(n[e - 1].to), n[e].transformation.flip()));
+  let o = Dl(i.to);
+  return o.encoding
+    ? replaceEncoding(o, [...o.encoding, ...a])
+    : replaceEncoding(o, a);
+}
+const Dl = memoize((e) => {
+  if (e.encoding) return flipEncoding(e, e.encoding);
+  let t = e;
+  return t.flip?.(Dl) ?? t.recur?.(Dl) ?? t;
+});
+function containsUndefined(e) {
+  switch (e._tag) {
+    case `Undefined`:
+      return !0;
+    case `Union`:
+      return e.types.some(containsUndefined);
+    default:
+      return !1;
+  }
+}
+function getTemplateLiteralSource(e, t) {
+  return e.encodedParts
+    .map((e) =>
+      handleTemplateLiteralASTPartParens(
+        e,
+        getTemplateLiteralASTPartPattern(e),
+        t,
+      ),
+    )
+    .join(``);
+}
+const Ol = memoize(
+  (e) => new globalThis.RegExp(`^${getTemplateLiteralSource(e, !0)}$`),
+);
+function getTemplateLiteralASTPartPattern(e) {
+  switch (e._tag) {
+    case `Literal`:
+      return escape(globalThis.String(e.literal));
+    case `String`:
+      return Al;
+    case `Number`:
+      return fl;
+    case `BigInt`:
+      return Fl;
+    case `TemplateLiteral`:
+      return getTemplateLiteralSource(e, !1);
+    case `Union`:
+      return e.types.map(getTemplateLiteralASTPartPattern).join(`|`);
+  }
+}
+function handleTemplateLiteralASTPartParens(e, t, n) {
+  if ($c(e)) {
+    if (!n) return `(?:${t})`;
+  } else if (!n) return t;
+  return `(${t})`;
+}
+function fromConst(e, t) {
+  let n = us(t);
+  return (r) =>
+    r._tag === `None` ? ls : r.value === t ? n : Y(new InvalidType(e, r));
+}
+function fromRefinement(e, t) {
+  return (n) =>
+    n._tag === `None` ? ls : t(n.value) ? q(n) : Y(new InvalidType(e, n));
+}
+function toCodec(e) {
+  function out(t) {
+    return t.encoding
+      ? replaceEncoding(t, updateLastLink(t.encoding, out))
+      : e(t);
+  }
+  return memoize(out);
+}
+const kl = toCodec((e) => {
+    switch (e._tag) {
+      default:
+        return e;
+      case `Number`:
+        return e.toCodecStringTree();
+      case `Union`:
+        return e.recur(kl);
+    }
+  }),
+  Al = `[\\s\\S]*?`,
+  jl = new globalThis.RegExp(`^${fl}$`);
+function isStringFinite(e) {
+  return isPattern$1(jl, {
+    expected: `a string representing a finite number`,
+    meta: { _tag: `isStringFinite`, regExp: jl },
+    ...e,
+  });
+}
+const Ml = appendChecks(cl, [isStringFinite()]),
+  Nl = new Link(Ml, Kc),
+  Pl = new Link(new vl([Ml, bl], `anyOf`), Kc),
+  Fl = `-?\\d+`;
+`${Fl}`;
+function collectIssues(e, t, n, r, i) {
+  for (let a = 0; a < e.length; a++) {
+    let o = e[a];
+    if (o._tag === `FilterGroup`) collectIssues(o.checks, t, n, r, i);
+    else {
+      let e = o.run(t, r, i);
+      if (
+        e &&
+        (n.push(new Filter$1(t, o, e)), o.aborted || i?.errors !== `all`)
+      )
+        return;
+    }
+  }
+}
+const Il = `~effect/Schema/Class`;
+function isStringTree(e) {
+  let t = new Set();
+  return recur(e);
+  function recur(e) {
+    return e === void 0 || typeof e == `string`
+      ? !0
+      : typeof e != `object` || !e || t.has(e)
+        ? !1
+        : (t.add(e),
+          Array.isArray(e)
+            ? e.every(recur)
+            : Object.keys(e).every((t) => recur(e[t])));
+  }
+}
+const Ll = new Link(
+    new nl(
+      [],
+      () => (e, t) => (isStringTree(e) ? q(e) : Y(new InvalidType(t, O(e)))),
+      {
+        expected: `StringTree`,
+        toCodecStringTree: () => new Link(sl, passthrough()),
+      },
+    ),
+    passthrough(),
+  ),
+  lambda = (e) => e,
+  Rl = memoize((e) => {
+    switch (e._tag) {
+      case `Declaration`: {
+        let t = e.annotations?.[Il];
+        if (isFunction(t)) {
+          let n = t(e.typeParameters),
+            r = Rl(n.to);
+          return replaceEncoding(
+            e,
+            r === n.to ? [n] : [new Link(r, n.transformation)],
+          );
+        }
+        return e;
+      }
+      case `Objects`:
+      case `Arrays`:
+        return e.recur((e) => {
+          let t = e.context?.defaultValue;
+          return t ? replaceEncoding(Rl(e), t) : Rl(e);
+        });
+      case `Suspend`:
+        return e.recur(Rl);
+      default:
+        return e;
+    }
+  });
+function makeEffect(e) {
+  let t = run(Rl(Tl(e.ast)));
+  return (e, n) =>
+    t(
+      e,
+      n?.disableChecks
+        ? n?.parseOptions
+          ? { ...n.parseOptions, disableChecks: !0 }
+          : { disableChecks: !0 }
+        : n?.parseOptions,
+    );
+}
+function makeOption(e) {
+  let t = makeEffect(e);
+  return (e, n) => uo(xc(t(e, n)));
+}
+function make$5(e) {
+  let t = makeEffect(e);
+  return (e, n) => bc(Dc(t(e, n), (e) => Error(e.toString(), { cause: e })));
+}
+__name(make$5, `make`);
+function _is(e) {
+  let t = asExit(run(Tl(e)));
+  return (e) => co(t(e, el));
+}
+function decodeUnknownEffect(e, t) {
+  let n = run(e.ast);
+  return t === void 0 ? n : (e, r) => n(e, mergeParseOptions(t, r));
+}
+const mergeParseOptions = (e, t) => (t === void 0 ? e : { ...e, ...t });
+function run(e) {
+  let t = zl(e);
+  return (e, n) =>
+    Oc(t(O(e), n ?? el), (e) =>
+      e._tag === `None` ? Y(new InvalidValue(e)) : q(e.value),
+    );
+}
+function asExit(e) {
+  return (t, n) => xc(e(t, n));
+}
+const zl = memoize((e) => {
+    let t,
+      n = resolve(e)?.parseOptions;
+    if (!e.context && !e.encoding && !e.checks)
+      return (r, i) => (
+        (t ??= e.getParser(zl)),
+        n && (i = { ...i, ...n }),
+        t(r, i)
+      );
+    let r = Zc(e) || Qc(e) || (qc(e) && e.typeParameters.length > 0);
+    return (i, a) => {
+      n && (a = { ...a, ...n });
+      let o = e.encoding,
+        s;
+      if (o) {
+        let t = o,
+          n = t.length;
+        for (let e = n - 1; e >= 0; e--) {
+          let n = t[e],
+            r = n.to,
+            o = zl(r);
+          if (
+            ((s = s ? Oc(s, (e) => o(e, a)) : o(i, a)),
+            n.transformation._tag === `Transformation`)
+          ) {
+            let e = n.transformation.decode;
+            s = Oc(s, (t) => e.run(t, a));
+          } else s = n.transformation.decode(s, a);
+        }
+        s = Dc(s, (t) => new Encoding(e, i, t));
+      }
+      t ??= e.getParser(zl);
+      let c = s ? Oc(s, (e) => t(e, a)) : t(i, a);
+      if (e.checks && !a?.disableChecks) {
+        let t = e.checks;
+        (a?.errors === `all` &&
+          r &&
+          vt(i) &&
+          (c = kc(c, (n) => {
+            let r = [];
+            return (
+              collectIssues(
+                t.filter((e) => e.annotations?.[`~structural`]),
+                i.value,
+                r,
+                e,
+                a,
+              ),
+              Y(
+                Ft(r)
+                  ? n._tag === `Composite` && n.ast === e
+                    ? new Composite(e, n.actual, [...n.issues, ...r])
+                    : new Composite(e, i, [n, ...r])
+                  : n,
+              )
+            );
+          })),
+          (c = Oc(c, (n) => {
+            if (vt(n)) {
+              let r = n.value,
+                i = [];
+              if ((collectIssues(t, r, i, e, a), Ft(i)))
+                return Y(new Composite(e, n, i));
+            }
+            return q(n);
+          })));
+      }
+      return c;
+    };
+  }),
+  Bl = `~effect/Schema/Schema`,
+  Vl = {
+    [Bl]: Bl,
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+    annotate(e) {
+      return this.rebuild(annotate(this.ast, e));
+    },
+    annotateKey(e) {
+      return this.rebuild(annotateKey(this.ast, e));
+    },
+    check(...e) {
+      return this.rebuild(appendChecks(this.ast, e));
+    },
+  };
+function make$4(e, t) {
+  let n = Object.create(Vl);
+  return (
+    t && Object.assign(n, t),
+    (n.ast = e),
+    (n.rebuild = (e) => make$4(e, t)),
+    (n.makeEffect = flow(
+      makeEffect(n),
+      Dc((e) => new SchemaError(e)),
+    )),
+    (n.make = make$5(n)),
+    (n.makeOption = makeOption(n)),
+    n
+  );
+}
+__name(make$4, `make`);
+const Hl = `~effect/Schema/SchemaError`;
+var SchemaError = class {
+  [Hl] = Hl;
+  _tag = `SchemaError`;
+  name = `SchemaError`;
+  issue;
+  constructor(e) {
+    this.issue = e;
+  }
+  get message() {
+    return this.issue.toString();
+  }
+  toString() {
+    return `SchemaError(${this.message})`;
+  }
+};
+function makeReorder(e) {
+  return (t) => {
+    let n = new Map();
+    for (let e = 0; e < t.length; e++) n.set(El(t[e]), e);
+    let r = [...t].sort((t, r) => {
+      ((t = El(t)), (r = El(r)));
+      let i = e(t),
+        a = e(r);
+      return i === a ? n.get(t) - n.get(r) : i - a;
+    });
+    return r.some((e, n) => e !== t[n]) ? r : t;
+  };
+}
+const Ul = Bl;
+function declareConstructor() {
+  return (e, t, n) => Q(new nl(e.map(getAST), (e) => t(e.map((e) => Q(e))), n));
+}
+function declare(e, t) {
+  return declareConstructor()(
+    [],
+    () => (t, n) => (e(t) ? q(t) : Y(new InvalidType(n, O(t)))),
+    t,
+  );
+}
+function isSchemaError(e) {
+  return p(e, Hl);
+}
+const Q = make$4;
+function isSchema(e) {
+  return p(e, Ul) && e[Ul] === Ul;
+}
+const Wl = lambda((e) => Q(optionalKey$1(e.ast), { schema: e })),
+  Gl = lambda((e) => Wl($l(e)));
+function Literal(e) {
+  let t = Q(new Literal$1(e), {
+    literal: e,
+    transform(n) {
+      return t.pipe(
+        decodeTo(Literal(n), {
+          decode: transform$1(() => n),
+          encode: transform$1(() => e),
+        }),
+      );
+    },
+  });
+  return t;
+}
+const Kl = Q(ol),
+  ql = Q(sl),
+  Jl = Q(al),
+  Yl = Q(cl),
+  Xl = Q(ll);
+function makeStruct(e, t) {
+  return Q(e, {
+    fields: t,
+    mapFields(e, t) {
+      let n = e(this.fields);
+      return makeStruct(
+        struct(n, t?.unsafePreserveChecks ? this.ast.checks : void 0),
+        n,
+      );
+    },
+  });
+}
+function Struct(e) {
+  return makeStruct(struct(e, void 0), e);
+}
+function Record(e, t, n) {
+  let r =
+    n?.keyValueCombiner?.decode || n?.keyValueCombiner?.encode
+      ? new ml(n.keyValueCombiner.decode, n.keyValueCombiner.encode)
+      : void 0;
+  return Q(record(e.ast, t.ast, r), { key: e, value: t });
+}
+function makeTuple(e, t) {
+  return Q(e, {
+    elements: t,
+    mapElements(e, t) {
+      let n = e(this.elements);
+      return makeTuple(
+        tuple(n, t?.unsafePreserveChecks ? this.ast.checks : void 0),
+        n,
+      );
+    },
+  });
+}
+function Tuple(e) {
+  return makeTuple(tuple(e), e);
+}
+const Zl = lambda((e) => Q(new ul(!1, [], [e.ast]), { value: e })),
+  Ql = lambda((e) => Q(new ul(!1, [e.ast], [e.ast]), { value: e }));
+function makeUnion(e, t) {
+  return Q(e, {
+    members: t,
+    mapMembers(e, t) {
+      let n = e(this.members);
+      return makeUnion(
+        union(
+          n,
+          this.ast.mode,
+          t?.unsafePreserveChecks ? this.ast.checks : void 0,
+        ),
+        n,
+      );
+    },
+  });
+}
+function Union(e, t) {
+  return makeUnion(union(e, t?.mode ?? `anyOf`, void 0), e);
+}
+function Literals(e) {
+  let t = e.map(Literal);
+  return Q(union(t, `anyOf`, void 0), {
+    literals: e,
+    members: t,
+    mapMembers(e) {
+      return Union(e(this.members));
+    },
+    pick(e) {
+      return Literals(e);
+    },
+    transform(e) {
+      return Union(t.map((t, n) => t.transform(e[n])));
+    },
+  });
+}
+const $l = lambda((e) => Union([e, Jl]));
+function decodeTo(e, t) {
+  return (n) =>
+    Q(decodeTo$1(n.ast, e.ast, t ? Wc(t) : passthrough()), { from: n, to: e });
+}
+function withConstructorDefault(e) {
+  return (t) =>
+    Q(
+      withConstructorDefault$1(
+        t.ast,
+        Dc(e, (e) => e.issue),
+      ),
+      { schema: t },
+    );
+}
+function tag(e) {
+  return Literal(e).pipe(withConstructorDefault(q(e)));
+}
+function TaggedStruct(e, t) {
+  return Struct({ _tag: tag(e), ...t });
+}
+function instanceOf(e, t) {
+  return declare((t) => t instanceof e, t);
+}
+function link() {
+  return (e, t) => new Link(e.ast, Wc(t));
+}
+const eu = Struct({ message: Yl, name: Wl(Yl), stack: Wl(Yl) }),
+  tu = instanceOf(globalThis.Error, {
+    typeConstructor: { _tag: `Error` },
+    generation: { runtime: `Schema.Error`, Type: `globalThis.Error` },
+    expected: `Error`,
+    toCodecJson: () => link()(eu, errorFromErrorJsonEncoded()),
+    toArbitrary: () => (e) => e.string().map((e) => new globalThis.Error(e)),
+  });
+globalThis.Error;
+const nu = new Z(
+    passthrough$1(),
+    transform$1((e) => {
+      try {
+        return JSON.parse(JSON.stringify(e));
+      } catch {
+        return format$1(e);
+      }
+    }),
+  ),
+  ru = Union([
+    eu.pipe(decodeTo(tu, errorFromErrorJsonEncoded())),
+    Kl.pipe(
+      decodeTo(
+        ql.annotate({
+          toCodecJson: () => link()(Kl, nu),
+          toArbitrary: () => (e) => e.json(),
+        }),
+        nu,
+      ),
+    ),
+  ]);
+(globalThis.RegExp,
+  globalThis.URL,
+  globalThis.File,
+  globalThis.FormData,
+  globalThis.URLSearchParams,
+  globalThis.Uint8Array);
+const iu = globalThis.Symbol.for(`immer-draftable`);
+function makeClass(e, t, n, r, i) {
+  let a = getClassSchemaFactory(n, t, r),
+    o = getClassTypeId(t),
+    out = class extends e {
+      constructor(...[e, t]) {
+        e ??= {};
+        let r = n.make(e, t);
+        super({ ...e, ...r }, { ...t, disableChecks: !0 });
+      }
+      static [Ul] = Ul;
+      get [o]() {
+        return o;
+      }
+      static [iu] = !0;
+      static identifier = t;
+      static fields = n.fields;
+      static get ast() {
+        return a(this).ast;
+      }
+      static pipe() {
+        return pipeArguments(this, arguments);
+      }
+      static rebuild(e) {
+        return a(this).rebuild(e);
+      }
+      static make(e, t) {
+        return new this(e, t);
+      }
+      static makeOption(e, t) {
+        return makeOption(a(this))(e ?? {}, t);
+      }
+      static makeEffect(e, t) {
+        return a(this).makeEffect(e ?? {}, t);
+      }
+      static annotate(e) {
+        return this.rebuild(annotate(this.ast, e));
+      }
+      static annotateKey(e) {
+        return this.rebuild(annotateKey(this.ast, e));
+      }
+      static check(...e) {
+        return this.rebuild(appendChecks(this.ast, e));
+      }
+      static extend(e) {
+        return (t, r) => {
+          let a = { ...n.fields, ...t };
+          return makeClass(
+            this,
+            e,
+            makeStruct(struct(a, n.ast.checks, { identifier: e }), a),
+            r,
+            i,
+          );
+        };
+      }
+      static mapFields(e, t) {
+        return n.mapFields(e, t);
+      }
+    };
+  return (i !== void 0 && Object.assign(out.prototype, i(t)), out);
+}
+function getClassTransformation(e) {
+  return new Z(
+    transform$1((t) => new e(t)),
+    passthrough$1(),
+  );
+}
+function getClassTypeId(e) {
+  return `~effect/Schema/Class/${e}`;
+}
+function getClassSchemaFactory(e, t, n) {
+  let r;
+  return (i) => {
+    if (r === void 0) {
+      let a = getClassTransformation(i),
+        o = Q(
+          new nl(
+            [e.ast],
+            () => (e, n) =>
+              e instanceof i || p(e, getClassTypeId(t))
+                ? q(e)
+                : Y(new InvalidType(n, O(e))),
+            {
+              identifier: t,
+              [Il]: ([e]) => new Link(e, a),
+              toCodec: ([e]) => new Link(e.ast, a),
+              toArbitrary:
+                ([e]) =>
+                () =>
+                  e.map((e) => new i(e)),
+              toFormatter:
+                ([e]) =>
+                (t) =>
+                  `${i.identifier}(${e(t)})`,
+              "~sentinels": collectSentinels(e.ast),
+              ...n,
+            },
+          ),
+        );
+      r = e.pipe(decodeTo(o, a));
+    }
+    return r;
+  };
+}
+function isStruct(e) {
+  return isSchema(e);
+}
+const ErrorClass = (e) => (t, n) =>
+    makeClass(Ue, e, isStruct(t) ? t : Struct(t), n, (e) => ({ name: e })),
+  TaggedErrorClass = (e) => (t, n, r) => {
+    let i = isStruct(n)
+      ? n.mapFields((e) => ({ _tag: tag(t), ...e }), {
+          unsafePreserveChecks: !0,
+        })
+      : TaggedStruct(t, n);
+    return ErrorClass(e ?? t)(i, r);
+  };
+function toCodecStringTree(e, t) {
+  return Q(fu(t?.keepDeclarations === !0 ? uu(e.ast) : cu(e.ast)));
+}
+function getStringTreePriority(e) {
+  switch (e._tag) {
+    case `Null`:
+    case `Boolean`:
+    case `Number`:
+    case `BigInt`:
+    case `Symbol`:
+    case `UniqueSymbol`:
+      return 0;
+    default:
+      return 1;
+  }
+}
+const au = makeReorder(getStringTreePriority);
+function serializerTree(e, t, n) {
+  switch (e._tag) {
+    case `Declaration`: {
+      let r = e.annotations?.toCodecJson ?? e.annotations?.toCodec;
+      if (isFunction(r)) {
+        let n = r(qc(e) ? e.typeParameters.map((e) => Q(t(El(e)))) : []),
+          i = t(n.to);
+        return replaceEncoding(
+          e,
+          i === n.to ? [n] : [new Link(i, n.transformation)],
+        );
+      }
+      return n(e);
+    }
+    case `Null`:
+      return replaceEncoding(e, [ou]);
+    case `Boolean`:
+      return replaceEncoding(e, [su]);
+    case `Unknown`:
+    case `ObjectKeyword`:
+      return replaceEncoding(e, [Ll]);
+    case `Enum`:
+    case `Number`:
+    case `Literal`:
+    case `UniqueSymbol`:
+    case `Symbol`:
+    case `BigInt`:
+      return e.toCodecStringTree();
+    case `Objects`:
+      if (e.propertySignatures.some((e) => typeof e.name != `string`))
+        throw new globalThis.Error(`Objects property names must be strings`, {
+          cause: e,
+        });
+      return e.recur(t);
+    case `Union`: {
+      let n = au(e.types);
+      return n === e.types
+        ? e.recur(t)
+        : new vl(
+            n,
+            e.mode,
+            e.annotations,
+            e.checks,
+            e.encoding,
+            e.context,
+          ).recur(t);
+    }
+    case `Arrays`:
+    case `Suspend`:
+      return e.recur(t);
+  }
+  return e;
+}
+const ou = new Link(
+    new Literal$1(`null`),
+    new Z(
+      transform$1(() => null),
+      transform$1(() => `null`),
+    ),
+  ),
+  su = new Link(
+    new vl([new Literal$1(`true`), new Literal$1(`false`)], `anyOf`),
+    new Z(
+      transform$1((e) => e === `true`),
+      String$3(),
+    ),
+  ),
+  cu = toCodec((e) => {
+    let t = serializerTree(e, cu, (e) => replaceEncoding(e, [lu]));
+    return t !== e && isOptional(e) ? wl(t) : t;
+  }),
+  lu = new Link(
+    al,
+    new Z(
+      passthrough$1(),
+      transform$1(() => void 0),
+    ),
+  ),
+  uu = toCodec((e) => {
+    let t = serializerTree(e, uu, identity);
+    return t !== e && isOptional(e) ? wl(t) : t;
+  }),
+  du = `~effect/Schema/SERIALIZER_ENSURE_ARRAY`,
+  fu = toCodec((e) => {
+    if ($c(e) && e.annotations?.[du]) return e;
+    let t = onSerializerEnsureArray(e);
+    if (Zc(t)) {
+      let n = new vl(
+        [t, decodeTo$1(cl, t, new Z(split(), passthrough$1()))],
+        `anyOf`,
+        { [du]: !0 },
+      );
+      return isOptional(e) ? optionalKey$1(n) : n;
+    }
+    return t;
+  });
+function onSerializerEnsureArray(e) {
+  switch (e._tag) {
+    default:
+      return e;
+    case `Declaration`:
+    case `Arrays`:
+    case `Objects`:
+    case `Union`:
+    case `Suspend`:
+      return e.recur(fu);
+  }
+}
+const pu = fiberJoin,
+  mu = fiberInterrupt,
+  hu = fiberInterruptAll,
+  gu = ua,
+  _u = makeLatchUnsafe,
+  vu = makeLatch,
+  yu = Symbol.for(`effect/MutableList/Empty`),
+  bu = __name(() => ({ head: void 0, tail: void 0, length: 0 }), `make`),
+  emptyBucket = () => ({ array: [], mutable: !0, offset: 0, next: void 0 }),
+  append = (e, t) => {
+    (e.tail
+      ? e.tail.mutable ||
+        ((e.tail.next = emptyBucket()), (e.tail = e.tail.next))
+      : (e.head = e.tail = emptyBucket()),
+      e.tail.array.push(t),
+      e.length++);
+  },
+  clear = (e) => {
+    ((e.head = e.tail = void 0), (e.length = 0));
+  },
+  takeN = (e, t) => {
+    if (t <= 0 || !e.head) return [];
+    if (
+      ((t = Math.min(t, e.length)),
+      t === e.length && e.head?.offset === 0 && !e.head.next)
+    ) {
+      let t = e.head.array;
+      return (clear(e), t);
+    }
+    let n = Array(t),
+      r = 0,
+      i = e.head;
+    for (; i; ) {
+      for (; i.offset < i.array.length; )
+        if (
+          ((n[r++] = i.array[i.offset]),
+          i.mutable && (i.array[i.offset] = void 0),
+          i.offset++,
+          r === t)
+        )
+          return ((e.head = i), (e.length -= t), e.length === 0 && clear(e), n);
+      i = i.next;
+    }
+    return (clear(e), n);
+  },
+  xu = __name((e) => {
+    if (!e.head) return yu;
+    let t = e.head.array[e.head.offset];
+    return (
+      e.head.mutable && (e.head.array[e.head.offset] = void 0),
+      e.head.offset++,
+      e.length--,
+      e.head.offset === e.head.array.length &&
+        (e.head.next ? (e.head = e.head.next) : clear(e)),
+      t
+    );
+  }, `take`),
+  Su = { _A: identity, _E: identity },
+  Cu = {
+    "~effect/Queue": Su,
+    "~effect/Queue/Enqueue": Su,
+    "~effect/Queue/Dequeue": Su,
+    ...Ae,
+    toJSON() {
+      return {
+        _id: `effect/Queue`,
+        state: this.state._tag,
+        size: sizeUnsafe(this),
+      };
+    },
+  },
+  make = (e) =>
+    D((t) => {
+      let n = Object.create(Cu);
+      return (
+        (n.dispatcher = t.currentDispatcher),
+        (n.capacity = e?.capacity ?? 1 / 0),
+        (n.strategy = e?.strategy ?? `suspend`),
+        (n.messages = bu()),
+        (n.scheduleRunning = !1),
+        (n.state = {
+          _tag: `Open`,
+          takers: new Set(),
+          offers: new Set(),
+          awaiters: new Set(),
+        }),
+        F(n)
+      );
+    }),
+  bounded = (e) => make({ capacity: e }),
+  offer = (e, t) =>
+    R(() => {
+      if (e.state._tag !== `Open`) return Tu;
+      if (e.messages.length >= e.capacity)
+        switch (e.strategy) {
+          case `dropping`:
+            return Tu;
+          case `suspend`:
+            return e.capacity <= 0 && e.state.takers.size > 0
+              ? (append(e.messages, t), releaseTakers(e), Eu)
+              : offerRemainingSingle(e, t);
+          case `sliding`:
+            return (xu(e.messages), append(e.messages, t), Eu);
+        }
+      return (append(e.messages, t), scheduleReleaseTaker(e), Eu);
+    }),
+  offerUnsafe = (e, t) =>
+    e.state._tag === `Open`
+      ? e.messages.length >= e.capacity
+        ? e.strategy === `sliding`
+          ? (xu(e.messages), append(e.messages, t), !0)
+          : e.capacity <= 0 && e.state.takers.size > 0
+            ? (append(e.messages, t), releaseTakers(e), !0)
+            : !1
+        : (append(e.messages, t), scheduleReleaseTaker(e), !0)
+      : !1,
+  $ = dual(2, (e, t) => L(() => failCauseUnsafe(e, t))),
+  failCauseUnsafe = (e, t) => {
+    if (e.state._tag !== `Open`) return !1;
+    let n = Xr(E(t), Du);
+    return e.state.offers.size === 0 && e.messages.length === 0
+      ? (finalize(e, n), !0)
+      : ((e.state = { ...e.state, _tag: `Closing`, exit: n }), !0);
+  },
+  end = (e) => $(e, causeFail(Je())),
+  endUnsafe = (e) => failCauseUnsafe(e, causeFail(Je())),
+  shutdown = (e) =>
+    L(() => {
+      if (e.state._tag === `Done`) return !0;
+      clear(e.messages);
+      let t = e.state.offers;
+      if (
+        (finalize(e, e.state._tag === `Open` ? Ou : e.state.exit), t.size > 0)
+      ) {
+        for (let e of t)
+          e._tag === `Single`
+            ? e.resume(Tu)
+            : e.resume(T(e.remaining.slice(e.offset)));
+        t.clear();
+      }
+      return !0;
+    }),
+  takeAll = (e) => takeBetween(e, 1, 1 / 0),
+  takeBetween = (e, t, n) =>
+    R(
+      () =>
+        takeBetweenUnsafe(e, t, n) ?? Lr(awaitTake(e), takeBetween(e, 1, n)),
+    ),
+  take = (e) => R(() => takeUnsafe(e) ?? Lr(awaitTake(e), take(e))),
+  takeUnsafe = (e) => {
+    if (e.state._tag === `Done`) return e.state.exit;
+    if (e.messages.length > 0) {
+      let t = xu(e.messages);
+      return (releaseCapacity(e), T(t));
+    } else if (e.capacity <= 0 && e.state.offers.size > 0) {
+      ((e.capacity = 1), releaseCapacity(e), (e.capacity = 0));
+      let t = xu(e.messages);
+      return (releaseCapacity(e), T(t));
+    }
+  },
+  sizeUnsafe = (e) => (e.state._tag === `Done` ? 0 : e.messages.length),
+  wu = dual(2, (e, t) =>
+    $i((n) =>
+      yi(n(e), { onFailure: (e) => $(t, e), onSuccess: (e) => end(t) }),
+    ),
+  ),
+  Tu = T(!1),
+  Eu = T(!0),
+  Du = exitFail(Je()),
+  Ou = qr(),
+  releaseTakers = (e) => {
+    if (
+      ((e.scheduleRunning = !1),
+      !(e.state._tag === `Done` || e.state.takers.size === 0))
+    ) {
+      for (let t of e.state.takers)
+        if ((e.state.takers.delete(t), t(U), e.messages.length === 0)) break;
+    }
+  },
+  scheduleReleaseTaker = (e) => {
+    e.scheduleRunning ||
+      e.state._tag === `Done` ||
+      e.state.takers.size === 0 ||
+      ((e.scheduleRunning = !0),
+      e.dispatcher.scheduleTask(() => releaseTakers(e), 0));
+  },
+  takeBetweenUnsafe = (e, t, n) => {
+    if (e.state._tag === `Done`) return e.state.exit;
+    if (n <= 0 || t <= 0) return T([]);
+    if (e.capacity <= 0 && e.state.offers.size > 0) {
+      ((e.capacity = 1), releaseCapacity(e), (e.capacity = 0));
+      let t = [xu(e.messages)];
+      return (releaseCapacity(e), T(t));
+    }
+    if (((t = Math.min(t, e.capacity || 1)), t <= e.messages.length)) {
+      let t = takeN(e.messages, n);
+      return (releaseCapacity(e), T(t));
+    }
+  },
+  offerRemainingSingle = (e, t) =>
+    B((n) => {
+      if (e.state._tag !== `Open`) return n(Tu);
+      let r = { _tag: `Single`, message: t, resume: n };
+      return (
+        e.state.offers.add(r),
+        L(() => {
+          e.state._tag === `Open` && e.state.offers.delete(r);
+        })
+      );
+    }),
+  releaseCapacity = (e) => {
+    if (e.state._tag === `Done`) return isDoneCause(e.state.exit.cause);
+    if (e.state.offers.size === 0)
+      return e.state._tag === `Closing` && e.messages.length === 0
+        ? (finalize(e, e.state.exit), isDoneCause(e.state.exit.cause))
+        : !1;
+    let t = e.capacity - e.messages.length;
+    for (let n of e.state.offers)
+      if (t === 0) break;
+      else if (n._tag === `Single`)
+        (append(e.messages, n.message),
+          t--,
+          n.resume(Eu),
+          e.state.offers.delete(n));
+      else {
+        for (; n.offset < n.remaining.length; n.offset++) {
+          if (t === 0) return !1;
+          (append(e.messages, n.remaining[n.offset]), t--);
+        }
+        (n.resume(T([])), e.state.offers.delete(n));
+      }
+    return !1;
+  },
+  awaitTake = (e) =>
+    B((t) =>
+      e.state._tag === `Done`
+        ? t(e.state.exit)
+        : (e.state.takers.add(t),
+          L(() => {
+            e.state._tag !== `Done` && e.state.takers.delete(t);
+          })),
+    ),
+  finalize = (e, t) => {
+    if (e.state._tag === `Done`) return;
+    let n = e.state;
+    e.state = { _tag: `Done`, exit: t };
+    for (let e of n.takers) e(t);
+    n.takers.clear();
+    for (let e of n.awaiters) e(t);
+    n.awaiters.clear();
+  },
+  makeUnsafe = (e) => new SemaphoreImpl(e);
+var SemaphoreImpl = class {
+  waiters = new Set();
+  taken = 0;
+  permits;
+  constructor(e) {
+    this.permits = e;
+  }
+  get free() {
+    return this.permits - this.taken;
+  }
+  take(e) {
+    let t = R(() =>
+      this.free < e
+        ? B((n) => {
+            if (this.free >= e) return n(t);
+            let observer = () => {
+              this.free < e || (this.waiters.delete(observer), n(t));
+            };
+            return (
+              this.waiters.add(observer),
+              L(() => {
+                this.waiters.delete(observer);
+              })
+            );
+          })
+        : ((this.taken += e), F(e)),
+    );
+    return t;
+  }
+  updateTakenUnsafe(e, t) {
+    return (
+      (this.taken = t(this.taken)),
+      this.waiters.size > 0 &&
+        e.currentDispatcher.scheduleTask(() => {
+          let e = this.waiters.values(),
+            t = e.next();
+          for (; t.done === !1 && this.free > 0; ) (t.value(), (t = e.next()));
+        }, 0),
+      this.free
+    );
+  }
+  updateTaken(e) {
+    return D((t) => F(this.updateTakenUnsafe(t, e)));
+  }
+  resize(e) {
+    return D(
+      (t) => (
+        (this.permits = e),
+        this.free < 0 || this.updateTakenUnsafe(t, (e) => e),
+        z
+      ),
+    );
+  }
+  release(e) {
+    return this.updateTaken((t) => t - e);
+  }
+  get releaseAll() {
+    return this.updateTaken((e) => 0);
+  }
+  withPermits(e) {
+    return (t) =>
+      $i((n) =>
+        V(n(this.take(e)), (e) =>
+          Ri(
+            n(t),
+            () => {
+              this.updateTakenUnsafe(getCurrentFiber(), (t) => t - e);
+            },
+            !0,
+          ),
+        ),
+      );
+  }
+  withPermit = this.withPermits(1);
+  withPermitsIfAvailable(e) {
+    return (t) =>
+      $i((n) =>
+        this.free < e
+          ? Sr
+          : ((this.taken += e),
+            Ri(
+              n(Ir(t)),
+              () => {
+                this.updateTakenUnsafe(getCurrentFiber(), (t) => t - e);
+              },
+              !0,
+            )),
+      );
+  }
+};
+const ku = `~effect/Channel`,
+  isChannel = (e) => p(e, ku),
+  Au = {
+    [ku]: {
+      _Env: identity,
+      _InErr: identity,
+      _InElem: identity,
+      _OutErr: identity,
+      _OutElem: identity,
+    },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  fromTransform = (e) => {
+    let t = Object.create(Au);
+    return ((t.transform = (t, n) => Ms(e(t, n), (e) => q(hs(e)))), t);
+  },
+  transformPull = (e, t) =>
+    fromTransform((n, r) => X(toTransform(e)(n, r), (e) => t(e, r))),
+  fromPull = (e) => fromTransform((t, n) => e),
+  fromTransformBracket = (e) =>
+    fromTransform(
+      Sc(function* (t, n) {
+        let r = K(n),
+          onCause = (e) => Do(r, doneExitFromCause(e));
+        return rc(yield* rc(e(t, n, r), onCause), onCause);
+      }),
+    ),
+  toTransform = (e) => e.transform,
+  ju = 4096,
+  asyncQueue = (e, t, n) =>
+    make({ capacity: n?.bufferSize, strategy: n?.strategy }).pipe(
+      Cs((t) => To(e, shutdown(t))),
+      Cs((n) => mc(Co(t(n), e), e)),
+    ),
+  callbackArray = (e, t) =>
+    fromTransform((n, r) => Ts(asyncQueue(r, e, t), takeAll)),
+  suspend = (e) => fromTransform((t, n) => J(() => toTransform(e())(t, n))),
+  fromIteratorArray = (e, t = ju) =>
+    fromPull(
+      ds(() => {
+        let n = e(),
+          r = none();
+        return J(() => {
+          if (r._tag === `Some`) return G(r.value);
+          let e = [];
+          for (; e.length < t; ) {
+            let t = n.next();
+            if (t.done) {
+              if (e.length === 0) return G(t.value);
+              r = O(t.value);
+              break;
+            }
+            e.push(t.value);
+          }
+          return q(e);
+        });
+      }),
+    ),
+  fromIterableArray = (e, t = ju) =>
+    fromIteratorArray(() => e[Symbol.iterator](), t),
+  succeed = (e) => fromEffect(q(e)),
+  Mu = fromPull(q(G())),
+  fail = (e) => fromPull(q(Y(e))),
+  failCause = (e) => fromPull(hs(e)),
+  fromEffect = (e) =>
+    fromPull(
+      ds(() => {
+        let t = !1;
+        return J(() => (t ? G() : ((t = !0), e)));
+      }),
+    ),
+  Nu = dual(2, (e, t) =>
+    transformPull(e, (e) =>
+      ds(() => {
+        let n = 0;
+        return Ts(e, (e) => t(e, n++));
+      }),
+    ),
+  ),
+  Pu = dual(2, (e, t) => Fu(e, (e) => q(t(e)))),
+  Fu = dual(2, (e, t) => transformPull(e, (e) => q(Ko(e, (e) => X(t(e), G))))),
+  concurrencyIsSequential = (e) =>
+    e === void 0 || (e !== `unbounded` && e <= 1),
+  Iu = dual(
+    (e) => isChannel(e[0]),
+    (e, t, n) =>
+      concurrencyIsSequential(n?.concurrency)
+        ? mapEffectSequential(e, t)
+        : mapEffectConcurrent(e, t, n),
+  ),
+  mapEffectSequential = (e, t) =>
+    fromTransform((n, r) => {
+      let i = 0;
+      return Ts(
+        toTransform(e)(n, r),
+        X((e) => t(e, i++)),
+      );
+    }),
+  mapEffectConcurrent = (e, t, n) =>
+    fromTransformBracket(
+      Sc(function* (r, i, a) {
+        let o = 0,
+          s = yield* toTransform(e)(r, i),
+          c = n.concurrency === `unbounded` ? 2 ** 53 - 1 : n.concurrency,
+          l = yield* bounded(0);
+        yield* To(a, shutdown(l));
+        let u = _c(yield* Ws()),
+          d = gu(a);
+        if (n.unordered) {
+          let e = makeUnsafe(c),
+            n = constant(e.release(1)),
+            r = Hs({
+              onFailure: (e) => X($(l, e), n),
+              onSuccess: (e) => X(offer(l, e), n),
+            });
+          yield* e.take(1).pipe(
+            X(() => s),
+            X((e) => (d(u(r(t(e, o++)))), fs)),
+            uc({ disableYield: !0 }),
+            Ms((t) => e.withPermits(c - 1)($(l, t))),
+            mc(a),
+          );
+        } else {
+          let e = yield* bounded(c - 2);
+          (yield* To(a, shutdown(l)),
+            yield* take(e).pipe(
+              xs,
+              X((e) => offer(l, e)),
+              uc({ disableYield: !0 }),
+              Ms((e) => $(l, e)),
+              mc(a),
+            ));
+          let n,
+            onExit = (e) => {
+              e._tag !== `Success` &&
+                ((n = e.cause), failCauseUnsafe(l, e.cause));
+            };
+          yield* s.pipe(
+            X((r) => {
+              if (n) return hs(n);
+              let i = u(t(r, o++));
+              return (d(i), i.addObserver(onExit), offer(e, pu(i)));
+            }),
+            uc({ disableYield: !0 }),
+            Ms((t) => offer(e, ao(t)).pipe(Ss($(e, t)))),
+            mc(a),
+          );
+        }
+        return take(l);
+      }),
+    ),
+  Lu = dual(
+    (e) => isChannel(e[0]),
+    (e, t, n) =>
+      concurrencyIsSequential(n?.concurrency)
+        ? flatMapSequential(e, t)
+        : flatMapConcurrent(e, t, n),
+  ),
+  flatMapSequential = (e, t) =>
+    fromTransform((n, r) =>
+      Ts(toTransform(e)(n, r), (e) => {
+        let i,
+          a,
+          o = X(
+            e,
+            (e) => (
+              (a ??= K(r)),
+              Oc(toTransform(t(e))(n, a), (e) => ((i = s(e)), i))
+            ),
+          ),
+          s = Ko((e) => {
+            if (
+              ((i = void 0),
+              a.state._tag === `Open` && a.state.finalizers.size === 1)
+            )
+              return o;
+            let t = Do(a, so);
+            return ((a = void 0), X(t, () => o));
+          });
+        return J(() => i ?? o);
+      }),
+    ),
+  flatMapConcurrent = (e, t, n) => e.pipe(Nu(t), Uu(n)),
+  flattenArray = (e) =>
+    transformPull(e, (e) => {
+      let t,
+        n = 0;
+      return q(
+        J(function loop() {
+          if (t === void 0)
+            return X(e, (e) => {
+              switch (e.length) {
+                case 0:
+                  return loop();
+                case 1:
+                  return q(e[0]);
+                default:
+                  return ((t = e), q(e[n++]));
+              }
+            });
+          let r = t[n++];
+          return (n >= t.length && ((t = void 0), (n = 0)), q(r));
+        }),
+      );
+    }),
+  Ru = dual(2, (e, t) =>
+    transformPull(e, (e) =>
+      q(
+        X(e, function loop(n) {
+          let r = [];
+          for (let e = 0; e < n.length; e++) t(n[e]) && r.push(n[e]);
+          return It(r) ? q(r) : X(e, loop);
+        }),
+      ),
+    ),
+  ),
+  zu = dual(2, (e, t) =>
+    fromTransform((n, r) => {
+      let i = K(r);
+      return Ts(toTransform(e)(n, i), (e) => {
+        let a = e.pipe(
+          Ms((e) => {
+            if (isDoneCause(e)) return hs(e);
+            let o = i;
+            return (
+              (i = K(r)),
+              Do(o, ao(e)).pipe(
+                Ss(toTransform(t(e))(n, i)),
+                X((e) => ((a = e), e)),
+              )
+            );
+          }),
+        );
+        return J(() => a);
+      });
+    }),
+  ),
+  Bu = dual(3, (e, t, n) =>
+    zu(e, (e) => {
+      let r = t(e);
+      return M(r) ? failCause(r.failure) : n(r.success, e);
+    }),
+  ),
+  Vu = dual(2, (e, t) => Bu(e, Ya, (e) => t(e))),
+  Hu = dual(2, (e, t) => Vu(e, (e) => fail(t(e)))),
+  Uu = dual(2, (e, { bufferSize: t = 16, concurrency: n, switch: r = !1 }) =>
+    fromTransformBracket(
+      Sc(function* (i, a, o) {
+        let s = n === `unbounded` ? 2 ** 53 - 1 : Math.max(1, n),
+          c = r ? void 0 : makeUnsafe(s),
+          l = yield* vu(!0),
+          u = new Set(),
+          d = yield* bounded(t);
+        yield* To(o, shutdown(d));
+        let f = yield* toTransform(e)(i, a);
+        return (
+          yield* ms(function* () {
+            for (;;) {
+              c && (yield* c.take(1));
+              let e = yield* f,
+                t = K(o),
+                n = yield* toTransform(e)(i, t);
+              for (; u.size >= s; ) {
+                let e = headUnsafe(u);
+                (u.delete(e), u.size === 0 && (yield* l.open), yield* mu(e));
+              }
+              let r = yield* n.pipe(
+                Cs(() => vs),
+                X((e) => offer(d, e)),
+                uc({ disableYield: !0 }),
+                rc(
+                  Sc(function* (e) {
+                    let n = qo(e);
+                    if (
+                      (yield* ws(
+                        Do(t, M(n) ? ao(n.failure) : io(n.success.value)),
+                      ),
+                      u.has(r) &&
+                        (u.delete(r),
+                        c && (yield* c.release(1)),
+                        u.size === 0 && (yield* l.open),
+                        !Tt(n)))
+                    )
+                      return yield* $(d, e);
+                  }),
+                ),
+                pc,
+              );
+              (l.closeUnsafe(), u.add(r));
+            }
+          }).pipe(
+            Ms((e) => l.whenOpen($(d, e))),
+            mc(o),
+          ),
+          take(d)
+        );
+      }),
+    ),
+  ),
+  Wu = dual(
+    (e) => isChannel(e[0]) && isChannel(e[1]),
+    (e, t, n) =>
+      fromTransformBracket(
+        Sc(function* (r, i, a) {
+          let o = n?.haltStrategy ?? `both`,
+            s = yield* bounded(0);
+          yield* To(a, shutdown(s));
+          let c = 0;
+          function onExit(e, t) {
+            if ((c++, !isDoneCause(t))) return $(s, t);
+            switch (o) {
+              case `both`:
+                return c === 2 ? $(s, t) : fs;
+              case `left`:
+              case `right`:
+                return e === o ? $(s, t) : fs;
+              case `either`:
+                return $(s, t);
+            }
+          }
+          let runSide = (e, t, n) =>
+            toTransform(t)(r, n).pipe(
+              X((e) =>
+                e.pipe(
+                  X((e) => offer(s, e)),
+                  uc,
+                ),
+              ),
+              rc((t) => Ss(Do(n, doneExitFromCause(t)), onExit(e, t))),
+              mc(a),
+            );
+          return (
+            yield* runSide(`left`, e, K(a)),
+            yield* runSide(`right`, t, K(a)),
+            take(s)
+          );
+        }),
+      ),
+  ),
+  splitLines = () =>
+    fromTransform((e, t) =>
+      ds(() => {
+        let t = ``,
+          n = !1,
+          r = none();
+        function splitLinesArray(e) {
+          let r = [];
+          function pushLine(e) {
+            t.length === 0 ? r.push(e) : (r.push(t + e), (t = ``));
+          }
+          for (let r = 0; r < e.length; r++) {
+            let i = e[r];
+            if (i.length !== 0) {
+              let e = 0,
+                r = i.indexOf(`\r`),
+                a = i.indexOf(`
+`);
+              for (
+                n &&=
+                  (a === 0
+                    ? (pushLine(``),
+                      (e = 1),
+                      (a = i.indexOf(
+                        `
+`,
+                        e,
+                      )))
+                    : pushLine(``),
+                  !1);
+                r !== -1 || a !== -1;
+              )
+                r === -1 || (a !== -1 && a < r)
+                  ? (pushLine(i.substring(e, a)),
+                    (e = a + 1),
+                    (a = i.indexOf(
+                      `
+`,
+                      e,
+                    )))
+                  : i.length === r + 1
+                    ? ((n = !0), (r = -1))
+                    : (pushLine(i.substring(e, r)),
+                      (e = r + (a === r + 1 ? 2 : 1)),
+                      (r = i.indexOf(`\r`, e)),
+                      (a = i.indexOf(
+                        `
+`,
+                        e,
+                      )));
+              t += i.substring(e, i.length - +!!n);
+            }
+          }
+          return It(r) ? r : null;
+        }
+        let i = J(() =>
+          r._tag === `Some`
+            ? G(r.value)
+            : Xo(e, {
+                onSuccess: loop,
+                onFailure: hs,
+                onDone: (e) => {
+                  if (((r = O(e)), t.length > 0 || n)) {
+                    let e = t;
+                    return ((t = ``), (n = !1), q([e]));
+                  }
+                  return G(e);
+                },
+              }),
+        );
+        function loop(e) {
+          let t = splitLinesArray(e);
+          return t === null ? i : q(t);
+        }
+        return i;
+      }),
+    ),
+  Gu = dual(2, (e, t) =>
+    fromTransform((n, r) =>
+      X(toTransform(e)(n, r), (e) => toTransform(t)(e, r)),
+    ),
+  ),
+  unwrap = (e) =>
+    fromTransform((t, n) => {
+      let r;
+      return q(
+        J(
+          () =>
+            r ||
+            e.pipe(
+              Co(n),
+              X((e) => toTransform(e)(t, n)),
+              X((e) => (r = e)),
+            ),
+        ),
+      );
+    }),
+  Ku = dual(2, (e, t) =>
+    fromTransformBracket((n, r, i) => wo(i, t).pipe(Ss(toTransform(e)(n, r)))),
+  ),
+  qu = dual(2, (e, t) => Ku(e, (e) => t)),
+  runWith = (e, t, n) =>
+    J(() => {
+      let r = So();
+      return Ko(X(toTransform(e)(G(), r), t), n || q).pipe(ic((e) => Do(r, e)));
+    }),
+  Ju = dual(2, (e, t) => runWith(e, (e) => uc(X(e, t), { disableYield: !0 }))),
+  runHead = (e) =>
+    J(() => {
+      let t = none();
+      return runWith(
+        e,
+        (e) =>
+          e.pipe(
+            Ds,
+            X((e) => ((t = e), G())),
+          ),
+        () => q(t),
+      );
+    }),
+  Yu = dual(3, (e, t, n) =>
+    J(() => {
+      let r = t();
+      return runWith(
+        e,
+        (e) =>
+          os({
+            while: c,
+            body: () => e,
+            step: (e) => {
+              r = n(r, e);
+            },
+          }),
+        () => q(r),
+      );
+    }),
+  ),
+  Xu = Sc(
+    function* (e) {
+      let t = makeUnsafe(1),
+        n = yield* Ws(),
+        r = pn(n, xo);
+      return (yield* toTransform(e)(G(), r)).pipe(qs(n), t.withPermits(1));
+    },
+    Ms((e) => q(hs(e))),
+  ),
+  toPullScoped = (e, t) => toTransform(e)(G(), t);
+export {
+  decodeTo as $,
+  me as $i,
+  To as $n,
+  $i as $r,
+  Us as $t,
+  $ as A,
+  Tt as Ai,
+  fs as An,
+  Ga as Ar,
+  gs as At,
+  gu as B,
+  yt as Bi,
+  isDoneCause as Bn,
+  V as Br,
+  uc as Bt,
+  suspend as C,
+  __name as Ca,
+  of as Ci,
+  zs as Cn,
+  to as Cr,
+  Ps as Ct,
+  unwrap as D,
+  Dt as Di,
+  lc as Dn,
+  Xa as Dr,
+  wc as Dt,
+  toTransform as E,
+  At as Ei,
+  cc as En,
+  Qa as Er,
+  As as Et,
+  offerUnsafe as F,
+  bt as Fi,
+  Qo as Fn,
+  Lr as Fr,
+  X as Ft,
+  Ql as G,
+  D as Gi,
+  Io as Gn,
+  formatLogSpan as Gr,
+  Ls as Gt,
+  ru as H,
+  O as Hi,
+  effect as Hn,
+  si as Hr,
+  hc as Ht,
+  takeAll as I,
+  xt as Ii,
+  exponential as In,
+  Fr as Ir,
+  Oc as It,
+  Yl as J,
+  Class$1 as Ji,
+  Mo as Jn,
+  loggerMake as Jr,
+  Tc as Jt,
+  Xl as K,
+  ye as Ki,
+  Ro as Kn,
+  kr as Kr,
+  oc as Kt,
+  _u as L,
+  k as Li,
+  recurs as Ln,
+  causePretty as Lr,
+  Cc as Lt,
+  wu as M,
+  Ct as Mi,
+  ys as Mn,
+  Ja as Mr,
+  nc as Mt,
+  make as N,
+  fromNullishOr as Ni,
+  fc as Nn,
+  Pa as Nr,
+  Y as Nt,
+  makeUnsafe as O,
+  j as Oi,
+  Ys as On,
+  Za as Or,
+  Ws as Ot,
+  offer as P,
+  fromUndefinedOr as Pi,
+  ks as Pn,
+  Li as Pr,
+  hs as Pt,
+  declare as Q,
+  redact as Qi,
+  xo as Qn,
+  R as Qr,
+  Hs as Qt,
+  mu as R,
+  vt as Ri,
+  Ko as Rn,
+  consolePretty as Rr,
+  Sc as Rt,
+  succeed as S,
+  __exportAll as Sa,
+  Ht as Si,
+  Cs as Sn,
+  StackTrace as Sr,
+  Ms as St,
+  toPullScoped as T,
+  jt as Ti,
+  _s as Tn,
+  Ka as Tr,
+  js as Tt,
+  ErrorClass as U,
+  Ae as Ui,
+  No as Un,
+  oa as Ur,
+  bs as Ut,
+  Zl as V,
+  none as Vi,
+  jo as Vn,
+  Ar as Vr,
+  mc as Vt,
+  Literals as W,
+  w as Wi,
+  Lo as Wn,
+  formatLabel as Wr,
+  ms as Wt,
+  Tuple as X,
+  toJson as Xi,
+  Po as Xn,
+  scopeAddFinalizerExit as Xr,
+  Fs as Xt,
+  TaggedErrorClass as Y,
+  y as Yi,
+  succeedContext as Yn,
+  Mi as Yr,
+  Ts as Yt,
+  Union as Z,
+  format$1 as Zi,
+  Fo as Zn,
+  Oa as Zr,
+  Dc as Zt,
+  Gu as _,
+  flow as _a,
+  ensure as _i,
+  Js as _n,
+  io as _r,
+  Ss as _t,
+  fail as a,
+  p as aa,
+  fromInputUnsafe as ai,
+  Ks as an,
+  vo as ar,
+  SchemaError as at,
+  runHead as b,
+  pipeArguments as ba,
+  It as bi,
+  J as bn,
+  ro as br,
+  ac as bt,
+  flattenArray as c,
+  isNullish as ca,
+  toSeconds as ci,
+  Vs as cn,
+  _await as cr,
+  El as ct,
+  fromTransform as d,
+  l as da,
+  un as di,
+  vc as dn,
+  _o as dr,
+  isRedacted as dt,
+  fe as ea,
+  z as ei,
+  ic as en,
+  wo as er,
+  isSchemaError as et,
+  Nu as f,
+  c as fa,
+  sn as fi,
+  yc as fn,
+  isDone as fr,
+  Ic as ft,
+  Wu as g,
+  dual as ga,
+  Prototype as gi,
+  $s as gn,
+  lo as gr,
+  is as gt,
+  Hu as h,
+  constant as ha,
+  gn as hi,
+  Qs as hn,
+  ao as hr,
+  tc as ht,
+  qu as i,
+  h as ia,
+  toPredicate as ii,
+  ss as in,
+  Co as ir,
+  toCodecStringTree as it,
+  failCauseUnsafe as j,
+  A as ji,
+  os as jn,
+  Wa as jr,
+  effectify as jt,
+  endUnsafe as k,
+  M as ki,
+  dc as kn,
+  qa as kr,
+  Gs as kt,
+  fromIterableArray as l,
+  isObject as la,
+  N as li,
+  gc as ln,
+  doneUnsafe as lr,
+  transform as lt,
+  Iu as m,
+  d as ma,
+  fn as mi,
+  Zs as mn,
+  oo as mr,
+  ec as mt,
+  zu as n,
+  v as na,
+  In as ni,
+  Is as nn,
+  Eo as nr,
+  Gl as nt,
+  Ru as o,
+  isNotNull as oa,
+  isFinite as oi,
+  qs as on,
+  yo as or,
+  _is as ot,
+  Pu as p,
+  u as pa,
+  pn as pi,
+  bc as pn,
+  po as pr,
+  Rc as pt,
+  Record as q,
+  ve as qi,
+  zo as qn,
+  vi as qr,
+  rs as qt,
+  Mu as r,
+  te as ra,
+  has as ri,
+  Rs as rn,
+  So as rr,
+  tag as rt,
+  Lu as s,
+  isNotUndefined as sa,
+  seconds as si,
+  Xs as sn,
+  bo as sr,
+  decodeUnknownEffect as st,
+  callbackArray as t,
+  strictEqual as ta,
+  Wn as ti,
+  sc as tn,
+  Do as tr,
+  link as tt,
+  fromPull as u,
+  isUndefined as ua,
+  Service as ui,
+  _c as un,
+  ho as ur,
+  Pointer as ut,
+  Yu as v,
+  identity as va,
+  fromIterable as vi,
+  Bs as vn,
+  so as vr,
+  Es as vt,
+  Xu as w,
+  __toESM as wa,
+  isEmptyRecord as wi,
+  cs as wn,
+  G as wr,
+  Ns as wt,
+  splitLines as x,
+  __commonJSMin as xa,
+  Ut as xi,
+  ds as xn,
+  eo as xr,
+  ps as xt,
+  Ju as y,
+  pipe as ya,
+  Lt as yi,
+  q as yn,
+  no as yr,
+  Os as yt,
+  hu as z,
+  St as zi,
+  Jo as zn,
+  fiberInterrupt as zr,
+  as as zt,
+};

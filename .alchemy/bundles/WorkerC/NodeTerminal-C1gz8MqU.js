@@ -1,189 +1,187 @@
 import {
-  $n as e,
-  $t as t,
-  Ai as n,
-  An as r,
-  B as i,
-  Bi as a,
-  Bt as o,
-  C as s,
-  Cn as c,
-  Cr as l,
-  D as u,
-  Dn as d,
+  $i as e,
+  Ai as t,
+  An as n,
+  Ar as r,
+  At as i,
+  Bt as a,
+  C as o,
+  Ca as s,
+  Ci as c,
+  Cn as l,
+  Cr as u,
+  Ct as d,
+  D as f,
+  Di as p,
   Dt as ee,
   E as te,
-  En as ne,
-  Et as re,
-  F as ie,
-  Ft as f,
-  Gt as ae,
-  Hi as oe,
-  Ht as p,
-  Ii as se,
-  Ki as ce,
-  Kt as le,
-  L as ue,
-  Ln as m,
-  Mi as h,
-  Mn as de,
-  Mt as fe,
-  N as pe,
-  Ni as me,
-  Nt as g,
-  O as he,
-  Ot as ge,
-  P as _e,
-  Pi as ve,
-  Pt as ye,
-  Qn as be,
-  R as xe,
-  Ri as Se,
-  Rt as _,
-  S as Ce,
-  Sa as v,
-  Si as y,
-  Sr as we,
-  St as Te,
-  T as Ee,
-  Tn as b,
-  Tt as De,
-  U as Oe,
-  Vi as x,
-  Vn as S,
-  Wt as ke,
-  Yi as Ae,
-  Yt as C,
-  Zn as je,
-  _ as Me,
-  _a as w,
-  _n as Ne,
-  _r as T,
-  _t as Pe,
-  a as Fe,
-  aa as E,
-  ai as Ie,
-  b as Le,
-  bn as D,
-  br as Re,
-  c as ze,
-  cn as Be,
-  cr as Ve,
-  d as O,
-  di as He,
-  dn as Ue,
-  dr as We,
-  er as k,
-  f as Ge,
-  fi as Ke,
-  fr as qe,
-  g as Je,
-  gn as Ye,
-  gr as Xe,
-  h as Ze,
-  ha as A,
-  hi as Qe,
-  hn as $e,
-  ht as et,
+  En as m,
+  F as ne,
+  Fa as h,
+  Fn as g,
+  Fr as _,
+  Ft as v,
+  Gr as re,
+  Ht as y,
+  Ii as ie,
+  In as ae,
+  Ir as oe,
+  It as se,
+  Ji as ce,
+  Jt as le,
+  Kt as ue,
+  L as de,
+  Ln as fe,
+  Lt as b,
+  Mn as pe,
+  Mr as me,
+  N as he,
+  Na as x,
+  Ni as ge,
+  Nt as S,
+  O as _e,
+  Oi as ve,
+  On as ye,
+  Or as be,
+  Ot as xe,
+  P as Se,
+  Pa as C,
+  Pr as Ce,
+  Pt as we,
+  Ra as w,
+  Ri as Te,
+  S as Ee,
+  Sa as De,
+  Si as Oe,
+  Sn as ke,
+  T as Ae,
+  Ta as T,
+  Tn as E,
+  Tr as je,
+  V as Me,
+  Vt as Ne,
+  W as Pe,
+  Wn as D,
+  Wt as Fe,
+  Xi as Ie,
+  Yi as O,
+  Yn as k,
+  Zi as Le,
+  Zt as A,
+  _ as Re,
+  _r as j,
+  _t as ze,
+  a as Be,
+  ar as Ve,
+  b as He,
+  ba as Ue,
+  bn as We,
+  bt as M,
+  c as Ge,
+  ca as Ke,
+  cr as N,
+  d as P,
+  da as qe,
+  dn as Je,
+  dr as Ye,
+  f as Xe,
+  g as Ze,
+  gn as Qe,
+  h as $e,
+  hn as et,
+  ht as F,
   i as tt,
   ia as nt,
-  ii as rt,
-  in as it,
-  j as at,
-  ji as ot,
-  jn as st,
-  jr as ct,
-  jt as j,
-  k as lt,
-  l as ut,
-  la as M,
-  li as N,
-  ln as dt,
-  m as ft,
-  mn as pt,
-  mt as P,
-  n as mt,
-  nn as F,
-  nr as ht,
-  o as gt,
-  oa as I,
-  on as _t,
-  p as vt,
-  pa as yt,
-  pi as bt,
-  pr as L,
-  qn as R,
-  r as xt,
-  rt as St,
-  s as Ct,
-  sa as wt,
-  sr as z,
-  t as Tt,
-  u as Et,
-  ui as Dt,
-  un as Ot,
-  v as B,
-  va as V,
-  vi as kt,
-  vn as At,
-  vr as jt,
-  vt as H,
-  w as Mt,
-  wn as Nt,
-  wr as Pt,
+  it as rt,
+  j as it,
+  ja as I,
+  ji as at,
+  jn as ot,
+  jr as st,
+  k as ct,
+  ka as lt,
+  ki as ut,
+  kn as dt,
+  kr as L,
+  kt as ft,
+  l as pt,
+  ln as mt,
+  m as ht,
+  mn as gt,
+  n as _t,
+  na as R,
+  o as vt,
+  or as yt,
+  p as bt,
+  pn as xt,
+  qi as St,
+  qt as Ct,
+  r as wt,
+  ra as z,
+  rn as Tt,
+  s as Et,
+  sn as B,
+  sr as Dt,
+  t as Ot,
+  ta as kt,
+  tr as V,
+  u as At,
+  v as jt,
+  vr as Mt,
+  w as Nt,
+  wn as H,
+  wt as Pt,
   x as Ft,
-  xi as It,
-  xn as U,
-  xt as W,
-  y as Lt,
-  ya as Rt,
-  yi as zt,
-  yn as G,
-  yr as Bt,
-  yt as Vt,
-  zi as Ht,
-  zt as Ut,
-} from "./Channel-CNB8PN6D.js";
+  xa as U,
+  xn as It,
+  xr as Lt,
+  xt as Rt,
+  y as W,
+  yn as zt,
+  yt as Bt,
+  z as Vt,
+  zi as G,
+} from "./Channel-BjrpyLFT.js";
 import * as K from "node:fs";
 import * as q from "node:path";
-import * as Wt from "node:os";
-import * as Gt from "node:readline";
+import * as Ht from "node:os";
+import * as Ut from "node:readline";
 import "node:stream";
-import * as Kt from "node:crypto";
-import * as qt from "node:url";
-import * as Jt from "node:child_process";
-const Yt = `~effect/MutableRef`,
-  Xt = {
-    [Yt]: Yt,
-    ...oe,
+import * as Wt from "node:crypto";
+import * as Gt from "node:url";
+import * as Kt from "node:child_process";
+const qt = `~effect/MutableRef`,
+  Jt = {
+    [qt]: qt,
+    ...nt,
     toJSON() {
-      return { _id: `MutableRef`, current: Ae(this.current) };
+      return { _id: `MutableRef`, current: qe(this.current) };
     },
   },
-  Zt = v((e) => {
-    let t = Object.create(Xt);
+  Yt = w((e) => {
+    let t = Object.create(Jt);
     return ((t.current = e), t);
   }, `make`),
-  Qt = {
-    "~effect/Stream": { _R: w, _E: w, _A: w },
+  Xt = {
+    "~effect/Stream": { _R: x, _E: x, _A: x },
     pipe() {
-      return Rt(this, arguments);
+      return h(this, arguments);
     },
   },
-  $t = v((e) => {
-    let t = Object.create(Qt);
+  Zt = w((e) => {
+    let t = Object.create(Xt);
     return ((t.channel = e), t);
   }, `fromChannel`),
-  en = { _tag: `Empty` },
-  tn = { _tag: `Closed` },
-  nn = { _A: w, _E: w };
+  Qt = { _tag: `Empty` },
+  $t = { _tag: `Closed` },
+  en = { _A: x, _E: x };
 var RcRefImpl = class {
-  "~effect/RcRef" = nn;
+  "~effect/RcRef" = en;
   pipe() {
-    return Rt(this, arguments);
+    return h(this, arguments);
   }
-  state = en;
-  semaphore = he(1);
+  state = Qt;
+  semaphore = _e(1);
   acquire;
   context;
   scope;
@@ -195,42 +193,42 @@ var RcRefImpl = class {
       (this.idleTimeToLive = r));
   }
 };
-const rn = v(
-    (t) =>
-      de((n) => {
-        let i = n.context,
-          a = Ke(i, je),
-          o = new RcRefImpl(
-            t.acquire,
+const tn = w(
+    (e) =>
+      fe((n) => {
+        let r = n.context,
+          i = t(r, Ve),
+          a = new RcRefImpl(
+            e.acquire,
+            r,
             i,
-            a,
-            t.idleTimeToLive ? rt(t.idleTimeToLive) : void 0,
+            e.idleTimeToLive ? Oe(e.idleTimeToLive) : void 0,
           );
-        return H(
-          e(a, () => {
-            let e = o.state._tag === `Acquired` ? k(o.state.scope, T) : r;
-            return ((o.state = tn), e);
+        return M(
+          Dt(i, () => {
+            let e = a.state._tag === `Acquired` ? N(a.state.scope, L) : g;
+            return ((a.state = $t), e);
           }),
-          o,
+          a,
         );
       }),
     `make`,
   ),
   getState = (e) =>
-    d((t) => {
+    pe((t) => {
       switch (e.state._tag) {
         case `Closed`:
           return le;
         case `Acquired`:
           return (
             e.state.refCount++,
-            e.state.fiber ? H(xe(e.state.fiber), e.state) : G(e.state)
+            e.state.fiber ? M(Vt(e.state.fiber), e.state) : H(e.state)
           );
         case `Empty`: {
-          let n = ht();
+          let n = Ye();
           return e.semaphore.withPermits(1)(
-            t(_t(e.acquire, Dt(e.context, je, n))).pipe(
-              C((t) => {
+            t(Je(e.acquire, ve(e.context, Ve, n))).pipe(
+              A((t) => {
                 let r = {
                   _tag: `Acquired`,
                   value: t,
@@ -246,255 +244,233 @@ const rn = v(
         }
       }
     }),
-  an = _(function* (t) {
-    let n = t,
-      a = yield* getState(n),
-      o = yield* pt,
-      s = n.idleTimeToLive !== void 0 && Ie(n.idleTimeToLive);
+  nn = a(function* (e) {
+    let t = e,
+      n = yield* getState(t),
+      r = yield* zt,
+      i = t.idleTimeToLive !== void 0 && c(t.idleTimeToLive);
     return (
-      yield* e(
-        o,
+      yield* Dt(
+        r,
         () => (
-          a.refCount--,
-          a.refCount > 0
-            ? r
-            : n.idleTimeToLive === void 0
-              ? ((n.state = en), k(a.scope, T))
-              : a.invalidated
-                ? k(a.scope, T)
-                : (s &&
-                    (a.fiber = At(n.idleTimeToLive).pipe(
-                      f(() =>
-                        n.state._tag === `Acquired` && n.state.refCount === 0
-                          ? ((n.state = en), k(a.scope, T))
-                          : r,
+          n.refCount--,
+          n.refCount > 0
+            ? g
+            : t.idleTimeToLive === void 0
+              ? ((t.state = Qt), N(n.scope, L))
+              : n.invalidated
+                ? N(n.scope, L)
+                : (i &&
+                    (n.fiber = l(t.idleTimeToLive).pipe(
+                      b(() =>
+                        t.state._tag === `Acquired` && t.state.refCount === 0
+                          ? ((t.state = Qt), N(n.scope, L))
+                          : g,
                       ),
-                      fe(
-                        U(() => {
-                          a.fiber = void 0;
+                      we(
+                        m(() => {
+                          n.fiber = void 0;
                         }),
                       ),
-                      Ot(n.context),
-                      i(n.scope),
+                      et(t.context),
+                      Me(t.scope),
                     )),
-                  r)
+                  g)
         ),
       ),
-      a.value
+      n.value
     );
   }),
-  on = rn,
-  sn = an,
-  cn = `~effect/Sink`,
-  ln = G([void 0]),
-  un = { _A: w, _In: w, _L: w, _E: w, _R: w },
-  dn = {
-    [cn]: un,
+  rn = tn,
+  an = nn,
+  on = `~effect/Sink`,
+  sn = H([void 0]),
+  cn = { _A: x, _In: x, _L: x, _E: x, _R: x },
+  ln = {
+    [on]: cn,
     pipe() {
-      return Rt(this, arguments);
+      return h(this, arguments);
     },
   },
-  isSink = (e) => nt(e, cn),
-  fn = v(
+  isSink = (e) => Ue(e, on),
+  un = w(
     (e) =>
       fromTransform((t, n) =>
-        te(e)(t, n).pipe(f(o({ disableYield: !0 })), m(G)),
+        te(e)(t, n).pipe(b(y({ disableYield: !0 })), D(H)),
       ),
     `fromChannel`,
   ),
   fromTransform = (e) => {
-    let t = Object.create(dn);
+    let t = Object.create(ln);
     return ((t.transform = e), t);
   },
-  pn = v((e) => O((t, n) => G(f(e.transform(t, n), l))), `toChannel`),
-  J = fromTransform((e) => m(o(e, { disableYield: !0 }), () => ln)),
+  dn = w((e) => P((t, n) => H(b(e.transform(t, n), _))), `toChannel`),
+  J = fromTransform((e) => D(y(e, { disableYield: !0 }), () => sn)),
   reduceWhile = (e, t, n) =>
-    fromTransform((i) => {
-      let a = e(),
-        s;
-      return t(a)
-        ? i.pipe(
-            f((e) => {
+    fromTransform((r) => {
+      let i = e(),
+        a;
+      return t(i)
+        ? r.pipe(
+            b((e) => {
               for (let r = 0; r < e.length; r++)
-                if (((a = n(a, e[r])), !t(a)))
-                  return (r + 1 < e.length && (s = e.slice(r + 1)), l());
-              return r;
+                if (((i = n(i, e[r])), !t(i)))
+                  return (r + 1 < e.length && (a = e.slice(r + 1)), _());
+              return g;
             }),
-            o({ disableYield: !0 }),
-            m(() => G([a, s])),
+            y({ disableYield: !0 }),
+            D(() => H([i, a])),
           )
-        : G([a]);
+        : H([i]);
     }),
-  mn = reduceWhile(a, se, (e, t) => x(t)),
-  head = () => mn,
-  forEach = (e) => forEachArray(Ut((t) => e(t), { discard: !0 })),
+  fn = reduceWhile(R, e, (e, t) => z(t)),
+  head = () => fn,
+  forEach = (e) => forEachArray(Ne((t) => e(t), { discard: !0 })),
   forEachArray = (e) =>
     fromTransform((t) =>
       t.pipe(
-        f(e),
-        o({ disableYield: !0 }),
-        m(() => ln),
+        b(e),
+        y({ disableYield: !0 }),
+        D(() => sn),
       ),
     ),
-  hn = v((e) => fn(u(C(e, pn))), `unwrap`),
-  isStream = (e) => nt(e, `~effect/Stream`),
-  Y = $t,
-  fromPull = (e) => Y(Et(e)),
-  transformPull = (e, t) => Y(O((n, r) => f(Ee(e.channel, r), (e) => t(e, r)))),
+  pn = w((e) => un(f(A(e, dn))), `unwrap`),
+  isStream = (e) => Ue(e, `~effect/Stream`),
+  Y = Zt,
+  fromPull = (e) => Y(At(e)),
+  transformPull = (e, t) => Y(P((n, r) => b(Ae(e.channel, r), (e) => t(e, r)))),
   toChannel = (e) => e.channel,
-  callback = (e, t) => Y(Tt(e, t)),
-  X = Y(xt),
-  succeed = (e) => Y(Ce(y(e))),
-  suspend = (e) => Y(s(() => e().channel)),
-  fail = (e) => Y(Fe(e)),
+  callback = (e, t) => Y(Ot(e, t)),
+  X = Y(wt),
+  succeed = (e) => Y(Ee(G(e))),
+  suspend = (e) => Y(o(() => e().channel)),
+  fail = (e) => Y(Be(e)),
   fromIterable = (e, t) =>
     Array.isArray(e) && t?.chunkSize === void 0
       ? fromArray(e)
-      : Y(ut(e, t?.chunkSize)),
-  fromIterableEffect = (e) => unwrap(C(e, fromIterable)),
-  fromArray = (e) => (zt(e) ? Y(Ce(e)) : X),
+      : Y(pt(e, t?.chunkSize)),
+  fromIterableEffect = (e) => unwrap(A(e, fromIterable)),
+  fromArray = (e) => (ie(e) ? Y(Ee(e)) : X),
   fromReadableStream = (e) =>
     Y(
-      O(
-        _(function* (t, n) {
+      P(
+        a(function* (t, n) {
           let r = e.evaluate().getReader();
           return (
-            yield* be(
+            yield* yt(
               n,
               e.releaseLockOnEnd
-                ? U(() => r.releaseLock())
-                : it(() => r.cancel()),
+                ? m(() => r.releaseLock())
+                : mt(() => r.cancel()),
             ),
-            f(
-              Nt({ try: () => r.read(), catch: (t) => e.onError(t) }),
-              ({ done: e, value: t }) => (e ? l() : G(y(t))),
+            b(
+              dt({ try: () => r.read(), catch: (t) => e.onError(t) }),
+              ({ done: e, value: t }) => (e ? _() : H(G(t))),
             )
           );
         }),
       ),
     ),
-  unwrap = (e) => Y(u(C(e, toChannel))),
-  gn = A(2, (e, t) =>
+  unwrap = (e) => Y(f(A(e, toChannel))),
+  mn = I(2, (e, t) =>
     suspend(() => {
       let n = 0;
       return Y(
-        Ge(
+        Xe(
           e.channel,
-          It((e) => t(e, n++)),
+          Te((e) => t(e, n++)),
         ),
       );
     }),
   ),
-  _n = A(
+  hn = I(
     (e) => isStream(e[0]),
-    (e, t, n) => e.channel.pipe(ze, ft(t, n), Ge(y), Y),
+    (e, t, n) => e.channel.pipe(Ge, ht(t, n), Xe(G), Y),
   ),
-  vn = A(
+  gn = I(
     (e) => isStream(e[0]),
     (e, t, n) =>
       e.channel.pipe(
-        ze,
-        Ct((e) => t(e).channel, n),
+        Ge,
+        Et((e) => t(e).channel, n),
         Y,
       ),
   ),
-  yn = A(
+  _n = I(
     (e) => isStream(e[0]),
-    (e, t) => vn(e, w, t),
+    (e, t) => gn(e, x, t),
   ),
-  bn = A(2, (e, t) => yn(fromArray([e, t]))),
-  xn = A(2, (e, t) => bn(fromIterable(t), e)),
-  Sn = A(
+  vn = I(2, (e, t) => _n(fromArray([e, t]))),
+  yn = I(2, (e, t) => vn(fromIterable(t), e)),
+  bn = I(
     (e) => isStream(e[0]) && isStream(e[1]),
-    (e, t, n) => Y(Je(toChannel(e), toChannel(t), n)),
+    (e, t, n) => Y(Ze(toChannel(e), toChannel(t), n)),
   ),
-  Cn = A(2, (e, t) => Y(gt(toChannel(e), t))),
-  wn = A(
+  xn = I(2, (e, t) => Y(vt(toChannel(e), t))),
+  Sn = I(
     2,
-    _(function* (e, t) {
+    a(function* (e, t) {
       let n,
-        r = yield* Mt(e.channel),
-        i = fromPull(G(Te(r, (e) => ((n = e), ye(e))))),
+        r = yield* Nt(e.channel),
+        i = fromPull(H(Pt(r, (e) => ((n = e), se(e))))),
         a = yield* Z(i, t);
-      return n ? [a, X] : ((i = fromPull(G(r))), [a, i]);
+      return n ? [a, X] : ((i = fromPull(H(r))), [a, i]);
     }),
   ),
-  Tn = A(2, (e, t) =>
+  Cn = I(2, (e, t) =>
     e.channel.pipe(
-      mt((e) => t(e).channel),
+      _t((e) => t(e).channel),
       Y,
     ),
   ),
-  En = A(2, (e, t) => Y(Ze(e.channel, t))),
-  Dn = A(2, (e, t) => (t < 1 ? X : On(e, (e, n) => n === t - 1))),
-  On = A(
-    (e) => isStream(e[0]),
-    (e, t, n) =>
-      transformPull(e, (e, r) =>
-        U(() => {
-          let r = 0,
-            i = !1;
-          return f(
-            D(() => (i ? l() : e)),
-            (e) => {
-              let a = e.findIndex((e) => t(e, r++));
-              if (a >= 0) {
-                i = !0;
-                let t = e.slice(0, n?.excludeLast ? a : a + 1);
-                return zt(t) ? G(t) : l();
-              }
-              return G(e);
-            },
-          );
-        }),
-      ),
-  ),
-  kn = A(2, (e, t) =>
+  wn = I(2, (e, t) => Y($e(e.channel, t))),
+  Tn = I(2, (e, t) =>
     transformPull(e, (e, n) =>
-      U(() => {
+      m(() => {
         let r,
           i,
-          a = D(() => {
+          a = E(() => {
             if (i !== void 0) {
               let e = i;
-              return ((i = void 0), G(e));
+              return ((i = void 0), H(e));
             }
             return e;
-          }).pipe(re((e) => ((r = L(e)), l()))),
-          o = C(
-            D(() => t.transform(a, n)),
-            ([e, t]) => ((i = t), y(e)),
+          }).pipe(xe((e) => ((r = je(e)), _()))),
+          o = A(
+            E(() => t.transform(a, n)),
+            ([e, t]) => ((i = t), G(e)),
           );
-        return D(() => r || o);
+        return E(() => r || o);
       }),
     ),
   ),
-  An = A(2, (e, t) => Y(Me(e.channel, t))),
-  jn = A(
+  En = I(2, (e, t) => Y(jt(e.channel, t))),
+  Dn = I(
     (e) => isStream(e[0]),
     (e, t) =>
       suspend(() => {
         let n = new TextDecoder(t?.encoding);
-        return gn(e, (e) => n.decode(e, { stream: !0 }));
+        return mn(e, (e) => n.decode(e, { stream: !0 }));
       }),
   ),
   encodeText = (e) =>
     suspend(() => {
       let t = new TextEncoder();
-      return gn(e, (e) => t.encode(e));
+      return mn(e, (e) => t.encode(e));
     }),
-  splitLines = (e) => e.channel.pipe(Me(Ft()), Y),
-  Mn = A(2, (e, t) => Y(tt(e.channel, t))),
-  Z = A(2, (e, t) =>
-    Ye((n) =>
-      Ee(e.channel, n).pipe(
-        f((e) => t.transform(e, n)),
-        C(([e]) => e),
+  splitLines = (e) => e.channel.pipe(jt(Ft()), Y),
+  On = I(2, (e, t) => Y(Re(e.channel, t))),
+  kn = I(2, (e, t) => Y(tt(e.channel, t))),
+  Z = I(2, (e, t) =>
+    It((n) =>
+      Ae(e.channel, n).pipe(
+        b((e) => t.transform(e, n)),
+        A(([e]) => e),
       ),
     ),
   ),
   runCollect = (e) =>
-    B(
+    W(
       e.channel,
       () => [],
       (e, t) => {
@@ -502,23 +478,22 @@ const rn = v(
         return e;
       },
     ),
-  runHead = (e) => C(Le(e.channel), Se(kt(0))),
-  Nn = A(2, (e, t) =>
-    Lt(e.channel, (e) => {
+  An = I(2, (e, t) =>
+    He(e.channel, (e) => {
       let n = 0;
-      return st({ while: () => n < e.length, body: () => t(e[n++]), step: yt });
+      return ae({ while: () => n < e.length, body: () => t(e[n++]), step: lt });
     }),
   ),
-  Pn = A(2, (e, t) => Lt(e.channel, t)),
+  jn = I(2, (e, t) => He(e.channel, t)),
   mkString = (e) =>
-    B(
+    W(
       e.channel,
       () => ``,
       (e, t) => e + t.join(``),
     ),
   mkUint8Array = (e) =>
-    C(
-      B(
+    A(
+      W(
         e.channel,
         () => ({ bytes: 0, arrays: [] }),
         (e, t) => {
@@ -537,20 +512,20 @@ const rn = v(
         return n;
       },
     ),
-  Fn = A(
+  Mn = I(
     (e) => isStream(e[0]),
     (e, t, n) => {
       let r,
         i,
-        a = ue(!1);
+        a = de(!1);
       return new ReadableStream(
         {
           start(n) {
-            ((i = dt(
-              _t(
-                Pn(e, (e) =>
+            ((i = gt(
+              Je(
+                jn(e, (e) =>
                   a.whenOpen(
-                    U(() => {
+                    m(() => {
                       a.closeUnsafe();
                       for (let t = 0; t < e.length; t++) n.enqueue(e[t]);
                       (r(), (r = void 0));
@@ -561,7 +536,7 @@ const rn = v(
               ),
             )),
               i.addObserver((e) => {
-                e._tag === `Failure` ? n.error(ct(e.cause)) : n.close();
+                e._tag === `Failure` ? n.error(re(e.cause)) : n.close();
               }));
           },
           pull() {
@@ -570,74 +545,74 @@ const rn = v(
             });
           },
           cancel() {
-            if (i) return Ue(Vt(xe(i)));
+            if (i) return Qe(Rt(Vt(i)));
           },
         },
         n?.strategy,
       );
     },
   ),
-  In = A(
+  Nn = I(
     (e) => isStream(e[0]),
-    (e, t) => Fn(e, He(), t),
+    (e, t) => Mn(e, ut(), t),
   ),
-  Ln = A(
+  Pn = I(
     (e) => isStream(e[0]),
-    (e, t) => C(ge(), (n) => Fn(e, n, t)),
+    (e, t) => A(i(), (n) => Mn(e, n, t)),
   );
 function nominal() {
   return Object.assign((e) => e, {
-    option: (e) => x(e),
-    result: (e) => n(e),
+    option: (e) => z(e),
+    result: (e) => St(e),
     is: (e) => !0,
   });
 }
-const Rn = `~effect/platform/PlatformError`;
-var BadArgument = class extends Bt(`BadArgument`) {
+const Fn = `~effect/platform/PlatformError`;
+var BadArgument = class extends st(`BadArgument`) {
     get message() {
       return `${this.module}.${this.method}${this.description ? `: ${this.description}` : ``}`;
     }
   },
-  SystemError = class extends jt {
+  SystemError = class extends r {
     get message() {
       return `${this._tag}: ${this.module}.${this.method}${this.pathOrDescriptor === void 0 ? `` : ` (${this.pathOrDescriptor})`}${this.description ? `: ${this.description}` : ``}`;
     }
   },
-  PlatformError = class extends Bt(`PlatformError`) {
+  PlatformError = class extends st(`PlatformError`) {
     constructor(e) {
       `cause` in e
         ? super({ reason: e, cause: e.cause })
         : super({ reason: e });
     }
-    [Rn] = Rn;
+    [Fn] = Fn;
     get message() {
       return this.reason.message;
     }
   };
 const systemError = (e) => new PlatformError(new SystemError(e)),
   badArgument = (e) => new PlatformError(new BadArgument(e)),
-  zn = `~effect/platform/FileSystem`,
+  In = `~effect/platform/FileSystem`,
   Size = (e) => (typeof e == `bigint` ? e : BigInt(e)),
   Q = BigInt(1024);
 Q * Q * Q * Q * Q;
-const $ = N(`effect/platform/FileSystem`),
-  Bn = v(
+const $ = p(`effect/platform/FileSystem`),
+  Ln = w(
     (e) =>
       $.of({
         ...e,
-        [zn]: zn,
+        [In]: In,
         exists: (t) =>
-          V(
+          C(
             e.access(t),
-            H(!0),
-            De(`PlatformError`, (e) =>
-              e.reason._tag === `NotFound` ? G(!1) : g(e),
+            M(!0),
+            ee(`PlatformError`, (e) =>
+              e.reason._tag === `NotFound` ? H(!1) : v(e),
             ),
           ),
-        readFileString: (t, n) =>
-          f(e.readFile(t), (e) =>
-            b({
-              try: () => new TextDecoder(n).decode(e),
+        readFileString: (t, r) =>
+          b(e.readFile(t), (e) =>
+            n({
+              try: () => new TextDecoder(r).decode(e),
               catch: (e) =>
                 badArgument({
                   module: `FileSystem`,
@@ -647,7 +622,7 @@ const $ = N(`effect/platform/FileSystem`),
                 }),
             }),
           ),
-        stream: _(function* (t, n) {
+        stream: a(function* (t, n) {
           let r = yield* e.open(t, { flag: `r` });
           n?.offset && (yield* r.seek(n.offset, `start`));
           let i = n?.bytesToRead === void 0 ? void 0 : Size(n.bytesToRead),
@@ -655,33 +630,33 @@ const $ = N(`effect/platform/FileSystem`),
             o = Size(n?.chunkSize ?? 64 * 1024),
             s = r.readAlloc(o);
           return fromPull(
-            G(
-              f(
-                D(() =>
+            H(
+              b(
+                E(() =>
                   i !== void 0 && i <= a
-                    ? l()
+                    ? _()
                     : i !== void 0 && i - a < o
                       ? r.readAlloc(i - a)
                       : s,
                 ),
-                Ht({
-                  onNone: () => l(),
-                  onSome: (e) => ((a += BigInt(e.length)), G(y(e))),
+                kt({
+                  onNone: () => _(),
+                  onSome: (e) => ((a += BigInt(e.length)), H(G(e))),
                 }),
               ),
             ),
           );
         }, unwrap),
         sink: (t, n) =>
-          V(
+          C(
             e.open(t, { flag: `w`, ...n }),
-            C((e) => forEach((t) => e.writeAll(t))),
-            hn,
+            A((e) => forEach((t) => e.writeAll(t))),
+            pn,
           ),
-        writeFileString: (t, n, r) =>
-          f(
-            b({
-              try: () => new TextEncoder().encode(n),
+        writeFileString: (t, r, i) =>
+          b(
+            n({
+              try: () => new TextEncoder().encode(r),
               catch: (e) =>
                 badArgument({
                   module: `FileSystem`,
@@ -690,66 +665,66 @@ const $ = N(`effect/platform/FileSystem`),
                   cause: e,
                 }),
             }),
-            (n) => e.writeFile(t, n, r),
+            (n) => e.writeFile(t, n, i),
           ),
       }),
     `make`,
   ),
-  Vn = `~effect/platform/FileSystem/File`,
-  Hn = nominal();
-var WatchBackend = class extends N()(
+  Rn = `~effect/platform/FileSystem/File`,
+  zn = nominal();
+var WatchBackend = class extends p()(
   `effect/platform/FileSystem/WatchBackend`,
 ) {};
-const Un = `~effect/platform/Path`,
-  Wn = N(`effect/Path`),
-  Gn = nominal(),
-  Kn = nominal(),
-  qn = `~effect/ChildProcessSpawner/ChildProcessHandle`,
-  Jn = {
-    [qn]: qn,
-    ...ce,
+const Bn = `~effect/platform/Path`,
+  Vn = p(`effect/Path`),
+  Hn = nominal(),
+  Un = nominal(),
+  Wn = `~effect/ChildProcessSpawner/ChildProcessHandle`,
+  Gn = {
+    [Wn]: Wn,
+    ...Ke,
     toJSON() {
       return { _id: `ChildProcessHandle`, pid: this.pid };
     },
   },
-  makeHandle = (e) => Object.assign(Object.create(Jn), e),
-  Yn = v((e) => {
+  makeHandle = (e) => Object.assign(Object.create(Gn), e),
+  Kn = w((e) => {
     let streamString = (t, n) =>
         e(t).pipe(
-          C((e) => jn(n?.includeStderr === !0 ? e.all : e.stdout)),
+          A((e) => Dn(n?.includeStderr === !0 ? e.all : e.stdout)),
           unwrap,
         ),
       streamLines = (e, t) => splitLines(streamString(e, t));
     return ChildProcessSpawner.of({
       spawn: e,
-      exitCode: (t) => $e(f(e(t), (e) => e.exitCode)),
+      exitCode: (t) => We(b(e(t), (e) => e.exitCode)),
       streamString,
       streamLines,
       lines: (e, t) => runCollect(streamLines(e, t)),
       string: (e, t) => mkString(streamString(e, t)),
     });
   }, `make`);
-var ChildProcessSpawner = class extends N()(
+var ChildProcessSpawner = class extends p()(
   `effect/process/ChildProcessSpawner`,
 ) {};
-const Xn = `~effect/unstable/process/ChildProcess`,
-  Zn = {
-    ...Qe({
+const qn = `~effect/unstable/process/ChildProcess`,
+  Jn = {
+    ...ge({
       label: `Command`,
       evaluate(e) {
-        return bt(e.context, ChildProcessSpawner).spawn(this);
+        return at(e.context, ChildProcessSpawner).spawn(this);
       },
     }),
-    [Xn]: Xn,
+    [qn]: qn,
   },
   makeStandardCommand = (e, t, n) =>
-    Object.assign(Object.create(Zn), {
+    Object.assign(Object.create(Jn), {
       _tag: `StandardCommand`,
       command: e,
       args: t,
       options: n,
     }),
-  Qn = function make(...e) {
+  Yn = function make(...e) {
     if (isTemplateString(e[0])) {
       let [t, ...n] = e,
         r = parseTemplates(t, n);
@@ -807,14 +782,14 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     );
   },
   parseExpression = (e) => (typeof e == `string` ? e : String(e)),
-  $n = new Set([
+  Xn = new Set([
     ` `,
     `	`,
     `\r`,
     `
 `,
   ]),
-  er = { x: 3, u: 5 },
+  Zn = { x: 3, u: 5 },
   splitByWhitespaces = (e, t) => {
     if (t.length === 0)
       return {
@@ -822,12 +797,12 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         hasLeadingWhitespace: !1,
         hasTrailingWhitespace: !1,
       };
-    let n = $n.has(t[0]),
+    let n = Xn.has(t[0]),
       r = [],
       i = 0;
     for (let n = 0, a = 0; n < e.length; n += 1, a += 1) {
       let o = t[a];
-      if ($n.has(o)) (i !== n && r.push(e.slice(i, n)), (i = n + 1));
+      if (Xn.has(o)) (i !== n && r.push(e.slice(i, n)), (i = n + 1));
       else if (o === `\\`) {
         let e = t[a + 1];
         e ===
@@ -836,7 +811,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           ? (--n, (a += 1))
           : e === `u` && t[a + 2] === `{`
             ? (a = t.indexOf(`}`, a + 3))
-            : (a += er[e] ?? 1);
+            : (a += Zn[e] ?? 1);
       }
     }
     let a = i === e.length;
@@ -849,6 +824,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     n || e.length === 0 || t.length === 0
       ? [...e, ...t]
       : [...e.slice(0, -1), `${e.at(-1)}${t.at(0)}`, ...t.slice(1)],
+  Qn = `~effect/Stdio`,
+  $n = p(Qn),
+  er = w((e) => ({ [Qn]: Qn, ...e }), `make`),
   handleErrnoException =
     (e, t) =>
     (n, [r]) => {
@@ -885,50 +863,50 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         cause: n,
       });
     },
-  fromWritable = (e) => fn(vt(fromWritableChannel(e), (e) => [e])),
+  fromWritable = (e) => un(bt(fromWritableChannel(e), (e) => [e])),
   fromWritableChannel = (e) =>
-    O((t) => {
+    P((t) => {
       let n = e.evaluate();
-      return G(pullIntoWritable({ ...e, writable: n, pull: t }));
+      return H(pullIntoWritable({ ...e, writable: n, pull: t }));
     }),
   pullIntoWritable = (e) =>
     e.pull.pipe(
-      f((t) => {
+      b((t) => {
         let n = 0;
-        return W(function loop(i) {
+        return d(function loop(r) {
           for (; n < t.length; )
             if (!e.writable.write(t[n++], e.encoding)) {
-              e.writable.once(`drain`, () => loop(i));
+              e.writable.once(`drain`, () => loop(r));
               return;
             }
-          i(r);
+          r(g);
         });
       }),
-      o({ disableYield: !0 }),
-      Be(
-        W((t) => {
-          let onError = (n) => t(g(e.onError(n)));
+      y({ disableYield: !0 }),
+      xt(
+        d((t) => {
+          let onError = (n) => t(v(e.onError(n)));
           return (
             e.writable.once(`error`, onError),
-            U(() => {
+            m(() => {
               e.writable.off(`error`, onError);
             })
           );
         }),
       ),
       e.endOnDone === !1
-        ? w
-        : m((t) =>
+        ? x
+        : D((t) =>
             `closed` in e.writable && e.writable.closed
-              ? l(t)
-              : W((n) => {
-                  (e.writable.once(`finish`, () => n(l(t))), e.writable.end());
+              ? _(t)
+              : d((n) => {
+                  (e.writable.once(`finish`, () => n(_(t))), e.writable.end());
                 }),
           ),
     ),
   fromReadable = (e) => Y(fromReadableChannel(e)),
   fromReadableChannel = (e) =>
-    O((t, n) =>
+    P((t, n) =>
       readableToPullUnsafe({
         scope: n,
         readable: e.evaluate(),
@@ -939,34 +917,34 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     ),
   readableToPullUnsafe = (e) => {
     let t = e.readable;
-    if (t.readableEnded) return G(l());
+    if (t.readableEnded) return H(_());
     let n = e.closeOnDone ?? !0,
-      r = e.exit ?? Zt(void 0),
-      i = ue(!1);
+      r = e.exit ?? Yt(void 0),
+      i = de(!1);
     function onReadable() {
       i.openUnsafe();
     }
     function onError(t) {
-      ((r.current = L(e.onError(t))), i.openUnsafe());
+      ((r.current = je(e.onError(t))), i.openUnsafe());
     }
     function onEnd() {
-      ((r.current = L(Re())), i.openUnsafe());
+      ((r.current = je(me())), i.openUnsafe());
     }
     (t.on(`readable`, onReadable),
       t.once(`error`, onError),
       t.once(`end`, onEnd));
-    let a = D(function loop() {
+    let a = E(function loop() {
       let t = e.readable.read(e.chunkSize);
       if (t === null)
-        return r.current ? r.current : (i.closeUnsafe(), f(i.await, loop));
-      let n = y(t);
+        return r.current ? r.current : (i.closeUnsafe(), b(i.await, loop));
+      let n = G(t);
       for (; (t = e.readable.read(e.chunkSize)), t !== null; ) n.push(t);
-      return G(n);
+      return H(n);
     });
-    return H(
-      be(
+    return M(
+      yt(
         e.scope,
-        U(() => {
+        m(() => {
           (t.off(`readable`, onReadable),
             t.off(`error`, onError),
             t.off(`end`, onEnd),
@@ -979,7 +957,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       a,
     );
   },
-  defaultOnError = (e) => new we(e),
+  defaultOnError = (e) => new Ce(e),
   toError = (e) =>
     e instanceof globalThis.Error ? e : new globalThis.Error(String(e)),
   toPlatformError = (e, t, n) => {
@@ -990,13 +968,13 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       }, ``);
     return handleErrnoException(`ChildProcess`, e)(t, [i]);
   },
-  tr = S(
+  tr = k(
     ChildProcessSpawner,
-    ke(function* () {
+    ue(function* () {
       let e = yield* $,
-        t = yield* Wn,
-        n = _(function* (n) {
-          if (!M(n.cwd)) return (yield* e.access(n.cwd), t.resolve(n.cwd));
+        t = yield* Vn,
+        r = a(function* (n) {
+          if (!T(n.cwd)) return (yield* e.access(n.cwd), t.resolve(n.cwd));
         }),
         resolveEnvironment = (e) =>
           e.extendEnv ? { ...globalThis.process.env, ...e.env } : e.env,
@@ -1004,7 +982,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         outputToStdioOption = (e) => (isSink(e) ? `pipe` : e),
         resolveStdinOption = (e) => {
           let t = { stream: `pipe`, encoding: `utf-8`, endOnDone: !0 };
-          return M(e.stdin)
+          return T(e.stdin)
             ? t
             : typeof e.stdin == `string` || isStream(e.stdin)
               ? { ...t, stream: e.stdin }
@@ -1016,18 +994,18 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         },
         resolveOutputOption = (e, t) => {
           let n = e[t];
-          return M(n)
+          return T(n)
             ? { stream: `pipe` }
             : typeof n == `string` || isSink(n)
               ? { stream: n }
               : { stream: n.stream };
         },
         resolveAdditionalFds = (e) => {
-          if (M(e.additionalFds)) return [];
+          if (T(e.additionalFds)) return [];
           let t = [];
           for (let [n, r] of Object.entries(e.additionalFds)) {
             let e = parseFdName(n);
-            I(e) && t.push({ fd: e, config: r });
+            De(e) && t.push({ fd: e, config: r });
           }
           return t.sort((e, t) => e.fd - t.fd);
         },
@@ -1043,7 +1021,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           for (let { fd: e } of r) i[e] = `pipe`;
           return i;
         },
-        i = _(function* (e, t, n) {
+        i = a(function* (e, t, n) {
           if (n.length === 0)
             return { getInputFd: () => J, getOutputFd: () => X };
           let r = new Map(),
@@ -1060,7 +1038,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     onError: (t) =>
                       toPlatformError(`fromWritable(fd${o})`, toError(t), e),
                   })),
-                  a.stream && (yield* p(Z(a.stream, t))),
+                  a.stream && (yield* Fe(Z(a.stream, t))),
                   r.set(o, t));
                 break;
               }
@@ -1073,7 +1051,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     onError: (t) =>
                       toPlatformError(`fromReadable(fd${o})`, toError(t), e),
                   })),
-                  a.sink && (t = kn(t, a.sink)),
+                  a.sink && (t = Tn(t, a.sink)),
                   i.set(o, t));
                 break;
               }
@@ -1085,10 +1063,10 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           };
         }),
         setupChildStdin = (e, t, n) =>
-          D(() => {
+          E(() => {
             let r = J;
             return (
-              E(t.stdin) &&
+              U(t.stdin) &&
                 (r = fromWritable({
                   evaluate: () => t.stdin,
                   onError: (t) =>
@@ -1096,7 +1074,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                   endOnDone: n.endOnDone,
                   encoding: n.encoding,
                 })),
-              isStream(n.stream) ? H(p(Z(n.stream, r)), r) : G(r)
+              isStream(n.stream) ? M(Fe(Z(n.stream, r)), r) : H(r)
             );
           }),
         setupChildOutputStreams = (e, t, n, r) => {
@@ -1114,46 +1092,46 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     toPlatformError(`fromReadable(stderr)`, toError(t), e),
                 })
               : X;
-          (isSink(n.stream) && (i = kn(i, n.stream)),
-            isSink(r.stream) && (a = kn(a, r.stream)));
-          let o = Sn(i, a);
+          (isSink(n.stream) && (i = Tn(i, n.stream)),
+            isSink(r.stream) && (a = Tn(a, r.stream)));
+          let o = bn(i, a);
           return { stdout: i, stderr: a, all: o };
         },
         spawn = (e, t) =>
-          W((n) => {
-            let r = qe(),
-              i = Jt.spawn(e.command, e.args, t);
+          d((n) => {
+            let r = u(),
+              i = Kt.spawn(e.command, e.args, t);
             return (
               i.on(`error`, (t) => {
-                n(g(toPlatformError(`spawn`, t, e)));
+                n(v(toPlatformError(`spawn`, t, e)));
               }),
               i.on(`exit`, (...e) => {
-                Ve(r, Xe(e));
+                Mt(r, be(e));
               }),
               i.on(`spawn`, () => {
-                n(G([i, r]));
+                n(H([i, r]));
               }),
-              U(() => {
+              m(() => {
                 i.kill(`SIGTERM`);
               })
             );
           }),
-        killProcessGroup = (e, t, n) =>
+        killProcessGroup = (e, t, r) =>
           globalThis.process.platform === `win32`
-            ? W((n) => {
-                Jt.exec(`taskkill /pid ${t.pid} /T /F`, (t) => {
-                  n(t ? g(toPlatformError(`kill`, toError(t), e)) : r);
+            ? d((n) => {
+                Kt.exec(`taskkill /pid ${t.pid} /T /F`, (t) => {
+                  n(t ? v(toPlatformError(`kill`, toError(t), e)) : g);
                 });
               })
-            : b({
+            : n({
                 try: () => {
-                  globalThis.process.kill(-t.pid, n);
+                  globalThis.process.kill(-t.pid, r);
                 },
                 catch: (t) => toPlatformError(`kill`, toError(t), e),
               }),
         killProcessGroupOnExit = (e, t) => {
           if (globalThis.process.platform === `win32`) {
-            Jt.exec(`taskkill /pid ${e.pid} /T /F`, () => {});
+            Kt.exec(`taskkill /pid ${e.pid} /T /F`, () => {});
             return;
           }
           try {
@@ -1161,10 +1139,10 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           } catch {}
         },
         killProcess = (e, t, n) =>
-          D(() =>
+          E(() =>
             t.kill(n)
-              ? r
-              : g(
+              ? g
+              : v(
                   toPlatformError(
                     `kill`,
                     new globalThis.Error(`Failed to kill child process`),
@@ -1174,9 +1152,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           ),
         withTimeout = (e, t, n) => (r) => {
           let i = n?.killSignal ?? `SIGTERM`;
-          return M(n?.forceKillAfter)
+          return T(n?.forceKillAfter)
             ? r(t, e, i)
-            : c(r(t, e, i), {
+            : ye(r(t, e, i), {
                 duration: n.forceKillAfter,
                 orElse: () => r(t, e, `SIGKILL`),
               });
@@ -1192,69 +1170,69 @@ const Xn = `~effect/unstable/process/ChildProcess`,
               return e.all;
             default: {
               let t = parseFdName(n);
-              return I(t) ? e.getOutputFd(t) : e.stdout;
+              return De(t) ? e.getOutputFd(t) : e.stdout;
             }
           }
         },
-        a = _(function* (e) {
+        o = a(function* (e) {
           switch (e._tag) {
             case `StandardCommand`: {
               let t = resolveStdinOption(e.options),
-                a = resolveOutputOption(e.options, `stdout`),
+                n = resolveOutputOption(e.options, `stdout`),
                 o = resolveOutputOption(e.options, `stderr`),
                 s = resolveAdditionalFds(e.options),
                 c = !0,
                 l = !1,
-                [u, d] = yield* P(
+                [u, d] = yield* F(
                   spawn(e, {
-                    cwd: yield* n(e.options),
+                    cwd: yield* r(e.options),
                     env: resolveEnvironment(e.options),
-                    stdio: buildStdioArray(t, a, o, s),
+                    stdio: buildStdioArray(t, n, o, s),
                     detached:
                       e.options.detached ?? process.platform !== `win32`,
                     shell: e.options.shell,
                   }),
-                  _(function* ([t, n]) {
-                    let i = yield* We(n),
-                      a = withTimeout(t, e, e.options);
-                    if (i) {
-                      let [e] = yield* z(n);
-                      return e !== 0 && E(e)
-                        ? yield* ae(a(killProcessGroup))
-                        : yield* r;
+                  a(function* ([t, n]) {
+                    let r = yield* Lt(n),
+                      i = withTimeout(t, e, e.options);
+                    if (r) {
+                      let [e] = yield* j(n);
+                      return e !== 0 && U(e)
+                        ? yield* Ct(i(killProcessGroup))
+                        : yield* g;
                     }
                     return c
-                      ? yield* a((e, t, n) =>
-                          re(killProcessGroup(e, t, n), () =>
+                      ? yield* i((e, t, n) =>
+                          xe(killProcessGroup(e, t, n), () =>
                             killProcess(e, t, n),
                           ),
-                        ).pipe(Pe(z(n)), ae)
-                      : yield* r;
+                        ).pipe(Bt(j(n)), Ct)
+                      : yield* g;
                   }),
                 ),
-                ee = Kn(u.pid);
+                f = Un(u.pid);
               u.on(`exit`, (t) => {
                 l &&
                   t !== 0 &&
-                  E(t) &&
+                  U(t) &&
                   killProcessGroupOnExit(u, e.options.killSignal ?? `SIGTERM`);
               });
-              let te = U(() => {
+              let p = m(() => {
                   c || (u.ref(), (c = !0), (l = !1));
                 }),
-                ne = U(() => (c && (u.unref(), (c = !1), (l = !0)), te)),
-                ie = yield* setupChildStdin(e, u, t),
+                ee = m(() => (c && (u.unref(), (c = !1), (l = !0)), p)),
+                te = yield* setupChildStdin(e, u, t),
                 {
-                  all: oe,
-                  stderr: p,
-                  stdout: se,
-                } = setupChildOutputStreams(e, u, a, o),
-                { getInputFd: ce, getOutputFd: le } = yield* i(e, u, s),
-                ue = C(We(d), (e) => !e),
-                m = f(z(d), ([t, n]) =>
-                  E(t)
-                    ? G(Gn(t))
-                    : g(
+                  all: ne,
+                  stderr: h,
+                  stdout: _,
+                } = setupChildOutputStreams(e, u, n, o),
+                { getInputFd: re, getOutputFd: y } = yield* i(e, u, s),
+                ie = A(Lt(d), (e) => !e),
+                ae = b(j(d), ([t, n]) =>
+                  U(t)
+                    ? H(Hn(t))
+                    : v(
                         toPlatformError(
                           `exitCode`,
                           new globalThis.Error(
@@ -1270,36 +1248,36 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     e,
                     t,
                   )((e, t, n) =>
-                    re(killProcessGroup(e, t, n), () => killProcess(e, t, n)),
-                  ).pipe(Pe(z(d)), Vt);
+                    xe(killProcessGroup(e, t, n), () => killProcess(e, t, n)),
+                  ).pipe(Bt(j(d)), Rt);
               return makeHandle({
-                pid: ee,
-                exitCode: m,
-                isRunning: ue,
+                pid: f,
+                exitCode: ae,
+                isRunning: ie,
                 kill,
-                stdin: ie,
-                stdout: se,
-                stderr: p,
-                all: oe,
-                getInputFd: ce,
-                getOutputFd: le,
-                unref: ne,
+                stdin: te,
+                stdout: _,
+                stderr: h,
+                all: ne,
+                getInputFd: re,
+                getOutputFd: y,
+                unref: ee,
               });
             }
             case `PipedCommand`: {
               let { commands: t, pipeOptions: n } = flattenCommand(e),
                 [r, ...i] = t,
-                o = [yield* a(r)];
+                a = [yield* o(r)];
               for (let e = 0; e < i.length; e++) {
                 let t = i[e],
                   r = n[e] ?? {},
                   s = resolveStdinOption(t.options),
-                  c = unwrap(G(getSourceStream(o[o.length - 1], r.from))),
+                  c = unwrap(H(getSourceStream(a[a.length - 1], r.from))),
                   l = r.to ?? `stdin`;
                 if (l === `stdin`)
-                  o.push(
-                    yield* a(
-                      Qn(t.command, t.args, {
+                  a.push(
+                    yield* o(
+                      Yn(t.command, t.args, {
                         ...t.options,
                         stdin: { ...s, stream: c },
                       }),
@@ -1307,12 +1285,12 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                   );
                 else {
                   let e = parseFdName(l);
-                  if (I(e)) {
+                  if (De(e)) {
                     let n = fdName(e),
                       r = t.options.additionalFds ?? {};
-                    o.push(
-                      yield* a(
-                        Qn(t.command, t.args, {
+                    a.push(
+                      yield* o(
+                        Yn(t.command, t.args, {
                           ...t.options,
                           additionalFds: {
                             ...r,
@@ -1322,9 +1300,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                       ),
                     );
                   } else
-                    o.push(
-                      yield* a(
-                        Qn(t.command, t.args, {
+                    a.push(
+                      yield* o(
+                        Yn(t.command, t.args, {
                           ...t.options,
                           stdin: { ...s, stream: c },
                         }),
@@ -1332,11 +1310,11 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     );
                 }
               }
-              let s = o[o.length - 1],
-                c = ke(function* () {
+              let s = a[a.length - 1],
+                c = ue(function* () {
                   let e = [];
-                  for (let t of o) e.push(yield* t.unref);
-                  return Ut([...e].reverse(), (e) => e, { discard: !0 });
+                  for (let t of a) e.push(yield* t.unref);
+                  return Ne([...e].reverse(), (e) => e, { discard: !0 });
                 });
               return makeHandle({
                 pid: s.pid,
@@ -1354,7 +1332,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
             }
           }
         });
-      return Yn(a);
+      return Kn(o);
     }),
   ),
   flattenCommand = (e) => {
@@ -1376,10 +1354,10 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return { commands: [r, ...i], pipeOptions: n };
   },
   nr = `~effect/platform/Crypto`,
-  rr = N(`effect/Crypto`),
-  ir = v((e) => {
+  rr = p(`effect/Crypto`),
+  ir = w((e) => {
     let t = e.randomBytes,
-      randomBytes = (e) => C(validateSize(`randomBytes`, e), t),
+      randomBytes = (e) => A(validateSize(`randomBytes`, e), t),
       nextDoubleUnsafe = () => {
         let e = t(7);
         return (
@@ -1402,20 +1380,20 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       nextDoubleUnsafe,
       nextIntUnsafe,
       digest: e.digest,
-      random: U(() => nextDoubleUnsafe()),
-      randomBoolean: U(() => nextDoubleUnsafe() > 0.5),
-      randomInt: U(() => nextIntUnsafe()),
-      randomBetween: (e, t) => U(() => nextDoubleUnsafe() * (t - e) + e),
+      random: m(() => nextDoubleUnsafe()),
+      randomBoolean: m(() => nextDoubleUnsafe() > 0.5),
+      randomInt: m(() => nextIntUnsafe()),
+      randomBetween: (e, t) => m(() => nextDoubleUnsafe() * (t - e) + e),
       randomIntBetween(e, t, n) {
         let r = n?.halfOpen === !0 ? 0 : 1;
-        return U(() => {
+        return m(() => {
           let n = Math.ceil(e),
             i = Math.floor(t);
           return Math.floor(nextDoubleUnsafe() * (i - n + r)) + n;
         });
       },
       randomShuffle: (e) =>
-        U(() => {
+        m(() => {
           let t = Array.from(e);
           for (let e = t.length - 1; e >= 1; --e) {
             let n = Math.min(e, Math.floor(nextDoubleUnsafe() * (e + 1))),
@@ -1424,16 +1402,16 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           }
           return t;
         }),
-      randomUUIDv4: U(() => formatUUIDv4(t(16))),
-      randomUUIDv7: ee((e) =>
-        G(formatUUIDv7(e.currentTimeMillisUnsafe(), t(16))),
+      randomUUIDv4: m(() => formatUUIDv4(t(16))),
+      randomUUIDv7: ft((e) =>
+        H(formatUUIDv7(e.currentTimeMillisUnsafe(), t(16))),
       ),
     });
   }, `make`),
   validateSize = (e, t) =>
     Number.isSafeInteger(t) && t >= 0
-      ? G(t)
-      : g(
+      ? H(t)
+      : v(
           badArgument({
             module: `Crypto`,
             method: e,
@@ -1484,9 +1462,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     }
   },
   digest = (e, t) =>
-    b({
+    n({
       try: () =>
-        Uint8Array.from(Kt.createHash(toHashAlgorithm(e)).update(t).digest()),
+        Uint8Array.from(Wt.createHash(toHashAlgorithm(e)).update(t).digest()),
       catch: (e) =>
         systemError({
           module: `Crypto`,
@@ -1496,7 +1474,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
           cause: e,
         }),
     }),
-  or = R(rr, ir({ randomBytes: Kt.randomBytes, digest })),
+  or = V(rr, ir({ randomBytes: Wt.randomBytes, digest })),
   handleBadArgument = (e) => (t) =>
     badArgument({
       module: `FileSystem`,
@@ -1504,7 +1482,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       description: t.message ?? String(t),
     }),
   sr = (() => {
-    let e = j(
+    let e = S(
       K.access,
       handleErrnoException(`FileSystem`, `access`),
       handleBadArgument(`access`),
@@ -1519,7 +1497,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     };
   })(),
   cr = (() => {
-    let e = j(
+    let e = S(
       K.cp,
       handleErrnoException(`FileSystem`, `copy`),
       handleBadArgument(`copy`),
@@ -1532,7 +1510,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       });
   })(),
   lr = (() => {
-    let e = j(
+    let e = S(
       K.copyFile,
       handleErrnoException(`FileSystem`, `copyFile`),
       handleBadArgument(`copyFile`),
@@ -1540,7 +1518,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, n);
   })(),
   ur = (() => {
-    let e = j(
+    let e = S(
       K.chmod,
       handleErrnoException(`FileSystem`, `chmod`),
       handleBadArgument(`chmod`),
@@ -1548,7 +1526,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, n);
   })(),
   dr = (() => {
-    let e = j(
+    let e = S(
       K.chown,
       handleErrnoException(`FileSystem`, `chown`),
       handleBadArgument(`chown`),
@@ -1556,7 +1534,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n, r) => e(t, n, r);
   })(),
   fr = (() => {
-    let e = j(
+    let e = S(
       K.link,
       handleErrnoException(`FileSystem`, `link`),
       handleBadArgument(`link`),
@@ -1564,7 +1542,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, n);
   })(),
   pr = (() => {
-    let e = j(
+    let e = S(
       K.mkdir,
       handleErrnoException(`FileSystem`, `makeDirectory`),
       handleBadArgument(`makeDirectory`),
@@ -1572,24 +1550,24 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, { recursive: n?.recursive ?? !1, mode: n?.mode });
   })(),
   makeTempDirectoryFactory = (e) => {
-    let t = j(
+    let t = S(
       K.mkdtemp,
       handleErrnoException(`FileSystem`, e),
       handleBadArgument(e),
     );
     return (e) =>
-      D(() => {
+      E(() => {
         let n = e?.prefix ?? ``,
           r =
             typeof e?.directory == `string`
               ? q.join(e.directory, `.`)
-              : Wt.tmpdir();
+              : Ht.tmpdir();
         return t(n ? q.join(r, n) : r + `/`);
       });
   },
   mr = makeTempDirectoryFactory(`makeTempDirectory`),
   removeFactory = (e) => {
-    let t = j(
+    let t = S(
       K.rm,
       handleErrnoException(`FileSystem`, e),
       handleBadArgument(e),
@@ -1601,67 +1579,67 @@ const Xn = `~effect/unstable/process/ChildProcess`,
   gr = (() => {
     let e = makeTempDirectoryFactory(`makeTempDirectoryScoped`),
       t = removeFactory(`makeTempDirectoryScoped`);
-    return (n) => P(e(n), (e) => F(t(e, { recursive: !0 })));
+    return (n) => F(e(n), (e) => B(t(e, { recursive: !0 })));
   })(),
   openFactory = (e) => {
-    let t = j(
+    let t = S(
         K.open,
         handleErrnoException(`FileSystem`, e),
         handleBadArgument(e),
       ),
-      n = j(
+      n = S(
         K.close,
         handleErrnoException(`FileSystem`, e),
         handleBadArgument(e),
       );
     return (e, r) =>
-      V(
-        P(t(e, r?.flag ?? `r`, r?.mode), (e) => F(n(e))),
-        C((e) => vr(Hn(e), r?.flag?.startsWith(`a`) ?? !1)),
+      C(
+        F(t(e, r?.flag ?? `r`, r?.mode), (e) => B(n(e))),
+        A((e) => vr(zn(e), r?.flag?.startsWith(`a`) ?? !1)),
       );
   },
   _r = openFactory(`open`),
   vr = (() => {
     let nodeReadFactory = (e) =>
-        j(K.read, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
+        S(K.read, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
       e = nodeReadFactory(`read`),
       t = nodeReadFactory(`readAlloc`),
-      n = j(
+      n = S(
         K.fstat,
         handleErrnoException(`FileSystem`, `stat`),
         handleBadArgument(`stat`),
       ),
-      i = j(
+      r = S(
         K.ftruncate,
         handleErrnoException(`FileSystem`, `truncate`),
         handleBadArgument(`truncate`),
       ),
-      o = j(
+      i = S(
         K.fsync,
         handleErrnoException(`FileSystem`, `sync`),
         handleBadArgument(`sync`),
       ),
       nodeWriteFactory = (e) =>
-        j(K.write, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
-      s = nodeWriteFactory(`write`),
-      c = nodeWriteFactory(`writeAll`);
+        S(K.write, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
+      a = nodeWriteFactory(`write`),
+      o = nodeWriteFactory(`writeAll`);
     class FileImpl {
-      [Vn];
+      [Rn];
       fd;
       append;
       position = BigInt(0);
       constructor(e, t) {
-        ((this[Vn] = Vn), (this.fd = e), (this.append = t));
+        ((this[Rn] = Rn), (this.fd = e), (this.append = t));
       }
       get stat() {
-        return C(n(this.fd), makeFileInfo);
+        return A(n(this.fd), makeFileInfo);
       }
       get sync() {
-        return o(this.fd);
+        return i(this.fd);
       }
       seek(e, t) {
         let n = Size(e);
-        return U(
+        return m(
           () => (
             t === `start`
               ? (this.position = n)
@@ -1671,9 +1649,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         );
       }
       read(t) {
-        return D(() => {
+        return E(() => {
           let n = this.position;
-          return C(e(this.fd, { buffer: t, position: n }), (e) => {
+          return A(e(this.fd, { buffer: t, position: n }), (e) => {
             let t = Size(e);
             return ((this.position = n + t), t);
           });
@@ -1681,19 +1659,19 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       }
       readAlloc(e) {
         let n = Number(e);
-        return D(() => {
+        return E(() => {
           let e = Buffer.allocUnsafeSlow(n),
             r = this.position;
-          return C(t(this.fd, { buffer: e, position: r }), (t) => {
-            if (t === 0) return a();
-            if (((this.position = r + BigInt(t)), t === n)) return x(e);
+          return A(t(this.fd, { buffer: e, position: r }), (t) => {
+            if (t === 0) return R();
+            if (((this.position = r + BigInt(t)), t === n)) return z(e);
             let i = Buffer.allocUnsafeSlow(t);
-            return (e.copy(i, 0, 0, t), x(i));
+            return (e.copy(i, 0, 0, t), z(i));
           });
         });
       }
       truncate(e) {
-        return C(i(this.fd, e ? Number(e) : void 0), () => {
+        return A(r(this.fd, e ? Number(e) : void 0), () => {
           if (!this.append) {
             let t = BigInt(e ?? 0);
             this.position > t && (this.position = t);
@@ -1701,10 +1679,10 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         });
       }
       write(e) {
-        return D(() => {
+        return E(() => {
           let t = this.position;
-          return C(
-            s(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
+          return A(
+            a(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
             (e) => {
               let n = Size(e);
               return (this.append || (this.position = t + n), n);
@@ -1713,13 +1691,13 @@ const Xn = `~effect/unstable/process/ChildProcess`,
         });
       }
       writeAllChunk(e) {
-        return D(() => {
+        return E(() => {
           let t = this.position;
-          return f(
-            c(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
+          return b(
+            o(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
             (n) =>
               n === 0
-                ? g(
+                ? v(
                     systemError({
                       module: `FileSystem`,
                       method: `writeAll`,
@@ -1729,7 +1707,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                     }),
                   )
                 : (this.append || (this.position = t + BigInt(n)),
-                  n < e.length ? this.writeAllChunk(e.subarray(n)) : r),
+                  n < e.length ? this.writeAllChunk(e.subarray(n)) : g),
           );
         });
       }
@@ -1741,9 +1719,9 @@ const Xn = `~effect/unstable/process/ChildProcess`,
   })(),
   makeTempFileFactory = (e) => {
     let t = makeTempDirectoryFactory(e);
-    return _(function* (e) {
+    return a(function* (e) {
       let n = yield* t(e),
-        r = Kt.randomBytes(6).toString(`hex`),
+        r = Wt.randomBytes(6).toString(`hex`),
         i = q.join(n, e?.suffix ? `${r}${e.suffix}` : r);
       return (yield* writeFile(i, new Uint8Array()), i);
     });
@@ -1752,29 +1730,29 @@ const Xn = `~effect/unstable/process/ChildProcess`,
   br = (() => {
     let e = makeTempFileFactory(`makeTempFileScoped`),
       t = removeFactory(`makeTempFileScoped`);
-    return (n) => P(e(n), (e) => F(t(q.dirname(e), { recursive: !0 })));
+    return (n) => F(e(n), (e) => B(t(q.dirname(e), { recursive: !0 })));
   })(),
   readDirectory = (e, t) =>
-    Nt({
+    dt({
       try: () => K.promises.readdir(e, t),
       catch: (t) => handleErrnoException(`FileSystem`, `readDirectory`)(t, [e]),
     }),
   readFile = (e) =>
-    W((t, n) => {
+    d((t, n) => {
       try {
         K.readFile(e, { signal: n }, (n, r) => {
           t(
             n
-              ? g(handleErrnoException(`FileSystem`, `readFile`)(n, [e]))
-              : G(r),
+              ? v(handleErrnoException(`FileSystem`, `readFile`)(n, [e]))
+              : H(r),
           );
         });
       } catch (e) {
-        t(g(handleBadArgument(`readFile`)(e)));
+        t(v(handleBadArgument(`readFile`)(e)));
       }
     }),
   xr = (() => {
-    let e = j(
+    let e = S(
       K.readlink,
       handleErrnoException(`FileSystem`, `readLink`),
       handleBadArgument(`readLink`),
@@ -1782,7 +1760,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t) => e(t);
   })(),
   Sr = (() => {
-    let e = j(
+    let e = S(
       K.realpath,
       handleErrnoException(`FileSystem`, `realPath`),
       handleBadArgument(`realPath`),
@@ -1790,7 +1768,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t) => e(t);
   })(),
   Cr = (() => {
-    let e = j(
+    let e = S(
       K.rename,
       handleErrnoException(`FileSystem`, `rename`),
       handleBadArgument(`rename`),
@@ -1813,30 +1791,30 @@ const Xn = `~effect/unstable/process/ChildProcess`,
                 : e.isSocket()
                   ? `Socket`
                   : `Unknown`,
-    mtime: h(e.mtime),
-    atime: h(e.atime),
-    birthtime: h(e.birthtime),
+    mtime: O(e.mtime),
+    atime: O(e.atime),
+    birthtime: O(e.birthtime),
     dev: e.dev,
-    rdev: h(e.rdev),
-    ino: h(e.ino),
+    rdev: O(e.rdev),
+    ino: O(e.ino),
     mode: e.mode,
-    nlink: h(e.nlink),
-    uid: h(e.uid),
-    gid: h(e.gid),
+    nlink: O(e.nlink),
+    uid: O(e.uid),
+    gid: O(e.gid),
     size: Size(e.size),
-    blksize: e.blksize === void 0 ? a() : x(Size(e.blksize)),
-    blocks: h(e.blocks),
+    blksize: e.blksize === void 0 ? R() : z(Size(e.blksize)),
+    blocks: O(e.blocks),
   }),
   wr = (() => {
-    let e = j(
+    let e = S(
       K.stat,
       handleErrnoException(`FileSystem`, `stat`),
       handleBadArgument(`stat`),
     );
-    return (t) => C(e(t), makeFileInfo);
+    return (t) => A(e(t), makeFileInfo);
   })(),
   Tr = (() => {
-    let e = j(
+    let e = S(
       K.symlink,
       handleErrnoException(`FileSystem`, `symlink`),
       handleBadArgument(`symlink`),
@@ -1844,7 +1822,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, n);
   })(),
   Er = (() => {
-    let e = j(
+    let e = S(
       K.truncate,
       handleErrnoException(`FileSystem`, `truncate`),
       handleBadArgument(`truncate`),
@@ -1852,7 +1830,7 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n) => e(t, n === void 0 ? void 0 : Number(n));
   })(),
   Dr = (() => {
-    let e = j(
+    let e = S(
       K.utimes,
       handleErrnoException(`FileSystem`, `utime`),
       handleBadArgument(`utime`),
@@ -1860,71 +1838,71 @@ const Xn = `~effect/unstable/process/ChildProcess`,
     return (t, n, r) => e(t, n, r);
   })(),
   watchNode = (e) =>
-    callback((n) =>
-      P(
-        U(() => {
-          let r = K.watch(e, { recursive: !0 }, (e, r) => {
-            if (r)
+    callback((t) =>
+      F(
+        m(() => {
+          let n = K.watch(e, { recursive: !0 }, (e, n) => {
+            if (n)
               switch (e) {
                 case `rename`:
-                  dt(
-                    t(wr(r), {
-                      onSuccess: (e) => _e(n, { _tag: `Create`, path: r }),
-                      onFailure: (e) => _e(n, { _tag: `Remove`, path: r }),
+                  gt(
+                    Tt(wr(n), {
+                      onSuccess: (e) => Se(t, { _tag: `Create`, path: n }),
+                      onFailure: (e) => Se(t, { _tag: `Remove`, path: n }),
                     }),
                   );
                   return;
                 case `change`:
-                  ie(n, { _tag: `Update`, path: r });
+                  ne(t, { _tag: `Update`, path: n });
                   return;
               }
           });
           return (
-            r.on(`error`, (t) => {
-              at(
-                n,
-                Pt(
+            n.on(`error`, (n) => {
+              it(
+                t,
+                oe(
                   systemError({
                     module: `FileSystem`,
                     _tag: `Unknown`,
                     method: `watch`,
                     pathOrDescriptor: e,
-                    cause: t,
+                    cause: n,
                   }),
                 ),
               );
             }),
-            r.on(`close`, () => {
-              lt(n);
+            n.on(`close`, () => {
+              ct(t);
             }),
-            r
+            n
           );
         }),
-        (e) => U(() => e.close()),
+        (e) => m(() => e.close()),
       ),
     ),
   watch = (e, t) =>
     wr(t).pipe(
-      C((n) =>
+      A((n) =>
         e.pipe(
-          ot((e) => e.register(t, n)),
-          ve(() => watchNode(t)),
+          ce((e) => e.register(t, n)),
+          Le(() => watchNode(t)),
         ),
       ),
       unwrap,
     ),
   writeFile = (e, t, n) =>
-    W((i, a) => {
+    d((r, i) => {
       try {
-        K.writeFile(e, t, { signal: a, flag: n?.flag, mode: n?.mode }, (t) => {
-          i(t ? g(handleErrnoException(`FileSystem`, `writeFile`)(t, [e])) : r);
+        K.writeFile(e, t, { signal: i, flag: n?.flag, mode: n?.mode }, (t) => {
+          r(t ? v(handleErrnoException(`FileSystem`, `writeFile`)(t, [e])) : g);
         });
       } catch (e) {
-        i(g(handleBadArgument(`writeFile`)(e)));
+        r(v(handleBadArgument(`writeFile`)(e)));
       }
     }),
-  Or = C(Ne(WatchBackend), (e) =>
-    Bn({
+  Or = A(ke(WatchBackend), (e) =>
+    Ln({
       access: sr,
       chmod: ur,
       chown: dr,
@@ -1953,29 +1931,25 @@ const Xn = `~effect/unstable/process/ChildProcess`,
       writeFile,
     }),
   ),
-  kr = S($)(Or),
+  kr = k($)(Or),
   fromFileUrl = (e) =>
-    b({
-      try: () => qt.fileURLToPath(e),
+    n({
+      try: () => Gt.fileURLToPath(e),
       catch: (e) =>
         new BadArgument({ module: `Path`, method: `fromFileUrl`, cause: e }),
     }),
   toFileUrl = (e) =>
-    b({
-      try: () => qt.pathToFileURL(e),
+    n({
+      try: () => Gt.pathToFileURL(e),
       catch: (e) =>
         new BadArgument({ module: `Path`, method: `toFileUrl`, cause: e }),
     });
 (({ ...q.posix }), { ...q.win32 });
-const Ar = R(Wn)({ [Un]: Un, ...q, fromFileUrl, toFileUrl }),
-  jr = `~effect/Stdio`,
-  Mr = R(
-    N(jr),
-    v(
-      (e) => ({ [jr]: jr, ...e }),
-      `make`,
-    )({
-      args: U(() => process.argv.slice(2)),
+const Ar = V(Vn)({ [Bn]: Bn, ...q, fromFileUrl, toFileUrl }),
+  jr = V(
+    $n,
+    er({
+      args: m(() => process.argv.slice(2)),
       stdout: (e) =>
         fromWritable({
           evaluate: () => process.stdout,
@@ -2013,37 +1987,37 @@ const Ar = R(Wn)({ [Un]: Un, ...q, fromFileUrl, toFileUrl }),
       }),
     }),
   ),
-  Nr = `~effect/platform/Terminal`;
-Oe(`QuitError`)({ _tag: St(`QuitError`) });
-const Pr = N(`effect/platform/Terminal`),
-  Fr = v((e) => Pr.of({ ...e, [Nr]: Nr }), `make`),
-  Ir = S(
-    Pr,
-    _(function* (e = defaultShouldQuit) {
+  Mr = `~effect/platform/Terminal`;
+Pe(`QuitError`)({ _tag: rt(`QuitError`) });
+const Nr = p(`effect/platform/Terminal`),
+  Pr = w((e) => Nr.of({ ...e, [Mr]: Mr }), `make`),
+  Fr = k(
+    Nr,
+    a(function* (e = defaultShouldQuit) {
       let t = process.stdin,
         n = process.stdout,
-        i = yield* on({
-          acquire: P(
-            U(() => {
-              let e = Gt.createInterface({ input: t, escapeCodeTimeout: 50 });
+        r = yield* rn({
+          acquire: F(
+            m(() => {
+              let e = Ut.createInterface({ input: t, escapeCodeTimeout: 50 });
               return (
-                Gt.emitKeypressEvents(t, e), t.isTTY && t.setRawMode(!0), e
+                Ut.emitKeypressEvents(t, e), t.isTTY && t.setRawMode(!0), e
               );
             }),
             (e) =>
-              U(() => {
+              m(() => {
                 (t.isTTY && t.setRawMode(!1), e.close());
               }),
           ),
         }),
-        a = U(() => n.columns ?? 0),
-        o = U(() => n.rows ?? 0),
-        s = ke(function* () {
-          yield* sn(i);
-          let n = yield* pe(),
+        i = m(() => n.columns ?? 0),
+        a = m(() => n.rows ?? 0),
+        o = ue(function* () {
+          yield* an(r);
+          let n = yield* he(),
             handleKeypress = (t, r) => {
               let i = {
-                input: me(t),
+                input: Ie(t),
                 key: {
                   name: r.name ?? ``,
                   ctrl: !!r.ctrl,
@@ -2051,30 +2025,30 @@ const Pr = N(`effect/platform/Terminal`),
                   shift: !!r.shift,
                 },
               };
-              (ie(n, i), e(i) && lt(n));
+              (ne(n, i), e(i) && ct(n));
             };
           return (
-            yield* et(() => U(() => t.off(`keypress`, handleKeypress))),
+            yield* ze(() => m(() => t.off(`keypress`, handleKeypress))),
             t.on(`keypress`, handleKeypress),
             n
           );
         }),
-        c = $e(
-          f(sn(i), (e) =>
-            W((t) => {
-              let onLine = (e) => t(G(e));
-              return (e.once(`line`, onLine), U(() => e.off(`line`, onLine)));
+        c = We(
+          b(an(r), (e) =>
+            d((t) => {
+              let onLine = (e) => t(H(e));
+              return (e.once(`line`, onLine), m(() => e.off(`line`, onLine)));
             }),
           ),
         ),
         display = (e) =>
-          ne(
-            W((t) => {
+          ot(
+            d((t) => {
               n.write(e, (e) =>
-                wt(e)
-                  ? t(r)
+                s(e)
+                  ? t(g)
                   : t(
-                      g(
+                      v(
                         badArgument({
                           module: `Terminal`,
                           method: `display`,
@@ -2086,53 +2060,51 @@ const Pr = N(`effect/platform/Terminal`),
               );
             }),
           );
-      return Fr({ columns: a, rows: o, readInput: s, readLine: c, display });
+      return Pr({ columns: i, rows: a, readInput: o, readLine: c, display });
     })(defaultShouldQuit),
   );
 function defaultShouldQuit(e) {
   return e.key.ctrl && (e.key.name === `c` || e.key.name === `d`);
 }
 export {
-  Z as A,
-  Fn as B,
-  gn as C,
-  wn as D,
+  yn as A,
+  head as B,
+  mn as C,
+  On as D,
   mkUint8Array as E,
-  succeed as F,
-  head as H,
-  suspend as I,
-  Dn as L,
-  Nn as M,
-  runHead as N,
-  An as O,
-  splitLines as P,
-  In as R,
+  suspend as F,
+  Nn as I,
+  Pn as L,
+  An as M,
+  splitLines as N,
+  Sn as O,
+  succeed as P,
+  Mn as R,
   isStream as S,
-  En as T,
-  unwrap as V,
-  vn as _,
+  wn as T,
+  gn as _,
   or as a,
   fromIterableEffect as b,
   $ as c,
-  jn as d,
+  Dn as d,
   X as f,
-  Cn as g,
+  xn as g,
   fail as h,
   kr as i,
-  runCollect as j,
-  xn as k,
+  Z as j,
+  En as k,
   Size as l,
-  Mn as m,
-  Mr as n,
+  kn as m,
+  jr as n,
   tr as o,
   encodeText as p,
   Ar as r,
-  Wn as s,
-  Ir as t,
-  Tn as u,
+  Vn as s,
+  Fr as t,
+  Cn as u,
   Y as v,
-  _n as w,
+  hn as w,
   fromReadableStream as x,
   fromIterable as y,
-  Ln as z,
+  unwrap as z,
 };

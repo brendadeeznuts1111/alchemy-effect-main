@@ -15,7 +15,8 @@ export default class Room extends Cloudflare.DurableObjectNamespace<Room>()(
 
       const broadcast = (text: string) =>
         Effect.gen(function* () {
-          for (const [, peer] of sessions) yield* Effect.sync(() => peer.send(text));
+          for (const [, peer] of sessions)
+            yield* Effect.sync(() => peer.send(text));
         });
 
       return {
@@ -30,7 +31,9 @@ export default class Room extends Cloudflare.DurableObjectNamespace<Room>()(
         alarm: () =>
           Effect.gen(function* () {
             for (const event of yield* Cloudflare.processScheduledEvents)
-              yield* Effect.sync(() => broadcast(`[reminder] ${(event.payload as any).message}`));
+              yield* Effect.sync(() =>
+                broadcast(`[reminder] ${(event.payload as any).message}`),
+              );
           }),
         webSocketMessage: Effect.fnUntraced(function* (
           socket: Cloudflare.DurableWebSocket,
@@ -38,19 +41,30 @@ export default class Room extends Cloudflare.DurableObjectNamespace<Room>()(
         ) {
           const a = socket.deserializeAttachment<{ id: string }>();
           if (!a) return;
-          const text = typeof message === "string" ? message : new TextDecoder().decode(message);
+          const text =
+            typeof message === "string"
+              ? message
+              : new TextDecoder().decode(message);
 
           const remind = text.match(/^\/remind\s+(\d+)\s+(.+)$/);
           if (remind) {
             const sec = parseInt(remind[1], 10);
             const msg = remind[2];
-            yield* Cloudflare.scheduleEvent(crypto.randomUUID(), new Date(Date.now() + sec * 1000), { message: msg });
-            yield* Effect.sync(() => socket.send(`[system] Reminder in ${sec}s: "${msg}"`));
+            yield* Cloudflare.scheduleEvent(
+              crypto.randomUUID(),
+              new Date(Date.now() + sec * 1000),
+              { message: msg },
+            );
+            yield* Effect.sync(() =>
+              socket.send(`[system] Reminder in ${sec}s: "${msg}"`),
+            );
             return;
           }
 
           for (const [, peer] of sessions)
-            yield* Effect.sync(() => peer.send(`[${a.id.slice(0, 8)}] ${text}`));
+            yield* Effect.sync(() =>
+              peer.send(`[${a.id.slice(0, 8)}] ${text}`),
+            );
         }),
         webSocketClose: Effect.fnUntraced(function* (
           ws: Cloudflare.DurableWebSocket,

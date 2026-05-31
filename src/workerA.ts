@@ -78,7 +78,9 @@ export default Cloudflare.Worker(
   const ws=new WebSocket(\`wss://\${location.host}/room/${name}\`);
   ws.onmessage=e => {const d=document.createElement("div");d.textContent=e.data;log.appendChild(d);log.scrollTop=log.scrollHeight};
   function send(){ws.send(msg.value);msg.value=""}
-</script>`, { status: 200, headers: { "content-type": "text/html" } });
+</script>`,
+            { status: 200, headers: { "content-type": "text/html" } },
+          );
         }
 
         if (parts[0] === "ai" && request.method === "POST") {
@@ -95,22 +97,39 @@ export default Cloudflare.Worker(
 
         if (parts[0] === "room") {
           const name = parts[1];
-          if (!name) return HttpServerResponse.text("Usage: GET /room/:name (WebSocket upgrade)", { status: 400 });
+          if (!name)
+            return HttpServerResponse.text(
+              "Usage: GET /room/:name (WebSocket upgrade)",
+              { status: 400 },
+            );
           return yield* rooms.getByName(name).fetch(request);
         }
 
         if (parts[0] === "counter") {
           const name = parts[1];
-          if (!name) return HttpServerResponse.json({ usage: "POST/GET/DELETE /counter/:name" });
+          if (!name)
+            return HttpServerResponse.json({
+              usage: "POST/GET/DELETE /counter/:name",
+            });
           const c = counters.getByName(name);
-          if (request.method === "POST") return HttpServerResponse.json({ name, count: yield* c.increment() });
-          if (request.method === "GET") return HttpServerResponse.json({ name, count: yield* c.get() });
-          if (request.method === "DELETE") { yield* c.reset(); return HttpServerResponse.json({ name, count: 0 }); }
+          if (request.method === "POST")
+            return HttpServerResponse.json({
+              name,
+              count: yield* c.increment(),
+            });
+          if (request.method === "GET")
+            return HttpServerResponse.json({ name, count: yield* c.get() });
+          if (request.method === "DELETE") {
+            yield* c.reset();
+            return HttpServerResponse.json({ name, count: 0 });
+          }
           return HttpServerResponse.text("Method Not Allowed", { status: 405 });
         }
 
         if (parts[0] === "tick") {
-          return HttpServerResponse.json(yield* counters.getByName("tick").tick(Number(parts[1]) || 5));
+          return HttpServerResponse.json(
+            yield* counters.getByName("tick").tick(Number(parts[1]) || 5),
+          );
         }
 
         if (parts[0] === "list") {
@@ -119,7 +138,11 @@ export default Cloudflare.Worker(
             : undefined;
           const result = yield* bucket.list(prefix ? { prefix } : undefined);
           return HttpServerResponse.json({
-            objects: result.objects.map((o: any) => ({ key: o.key, size: o.size, uploaded: o.uploaded })),
+            objects: result.objects.map((o: any) => ({
+              key: o.key,
+              size: o.size,
+              uploaded: o.uploaded,
+            })),
             truncated: (result as any).truncated,
           });
         }
@@ -143,7 +166,8 @@ export default Cloudflare.Worker(
 
         if (request.method === "GET") {
           const obj = yield* bucket.get(key);
-          if (!obj) return HttpServerResponse.text("Not Found", { status: 404 });
+          if (!obj)
+            return HttpServerResponse.text("Not Found", { status: 404 });
           return HttpServerResponse.text(yield* obj.text());
         }
         if (request.method === "PUT") {
@@ -157,5 +181,12 @@ export default Cloudflare.Worker(
         return HttpServerResponse.text("Method Not Allowed", { status: 405 });
       }),
     };
-  }).pipe(Effect.provide(Layer.mergeAll(Cloudflare.R2BucketBindingLive, Cloudflare.AiGatewayBindingLive))),
+  }).pipe(
+    Effect.provide(
+      Layer.mergeAll(
+        Cloudflare.R2BucketBindingLive,
+        Cloudflare.AiGatewayBindingLive,
+      ),
+    ),
+  ),
 );

@@ -1,11 +1,11 @@
 import {
-  Gn as e,
-  Vn as t,
+  $n as e,
+  Ma as t,
   Yn as n,
-  ga as r,
-  qn as i,
-} from "./Channel-CNB8PN6D.js";
-import { c as a, f as o, t as s } from "./Socket-CLf5YXIx.js";
+  rr as r,
+  tr as i,
+} from "./Channel-BjrpyLFT.js";
+import { c as a, f as o, t as s } from "./Socket-B5eNQsB_.js";
 import {
   a as c,
   i as l,
@@ -13,14 +13,14 @@ import {
   o as d,
   r as f,
   t as p,
-} from "./NodeSocket-BLfqFn3S.js";
-const m = n(a)(() =>
+} from "./NodeSocket-CeWg7iSU.js";
+const m = r(a)(() =>
     `WebSocket` in globalThis
       ? (e, t) => new globalThis.WebSocket(e, t)
       : (e, t) => new f.WebSocket(e, t),
   ),
   h = i(a)((e, t) => new f.WebSocket(e, t)),
-  g = r(o, t(s), e(m));
+  g = t(o, n(s), e(m));
 export {
   p as NetSocket,
   f as NodeWS,

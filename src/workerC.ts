@@ -34,10 +34,23 @@ export default Cloudflare.Worker(
 
         if (parts[0] === "counter") {
           const name = parts[1];
-          if (!name) return HttpServerResponse.json({ usage: "POST/GET /counter/:name" });
+          if (!name)
+            return HttpServerResponse.json({
+              usage: "POST/GET /counter/:name",
+            });
           const c = counters.getByName(name);
-          if (request.method === "POST") return HttpServerResponse.json({ worker: "C", name, count: yield* c.increment() });
-          if (request.method === "GET") return HttpServerResponse.json({ worker: "C", name, count: yield* c.get() });
+          if (request.method === "POST")
+            return HttpServerResponse.json({
+              worker: "C",
+              name,
+              count: yield* c.increment(),
+            });
+          if (request.method === "GET")
+            return HttpServerResponse.json({
+              worker: "C",
+              name,
+              count: yield* c.get(),
+            });
           return HttpServerResponse.text("Method Not Allowed", { status: 405 });
         }
 

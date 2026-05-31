@@ -1,5 +1,5 @@
-import { Gn as e, Vn as t, ga as n, qn as r } from "./Channel-CNB8PN6D.js";
-import { c as i, f as a, t as o } from "./Socket-CLf5YXIx.js";
+import { Fa as e, Xn as t, er as n, nr as r } from "./Channel-DhiT8qYC.js";
+import { c as i, f as a, t as o } from "./Socket-Bdlo5aJp.js";
 import {
   a as s,
   i as c,
@@ -7,9 +7,9 @@ import {
   o as u,
   r as d,
   t as f,
-} from "./NodeSocket-BLfqFn3S.js";
+} from "./NodeSocket-Dg8AQsEU.js";
 const p = r(i)((e, t) => new globalThis.WebSocket(e, t)),
-  m = n(a, t(o), e(p));
+  m = e(a, t(o), n(p));
 export {
   f as NetSocket,
   d as NodeWS,

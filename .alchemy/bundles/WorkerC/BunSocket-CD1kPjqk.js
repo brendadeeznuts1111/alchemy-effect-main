@@ -1,1 +1,22 @@
-import{Ln as e,Un as t,Vn as n,ua as r}from"./Channel-C7bUVWpS.js";import{c as i,f as a,t as o}from"./Socket-CIOlbnxL.js";import{a as s,i as c,n as l,o as u,r as d,t as f}from"./NodeSocket-DtUtZQMm.js";const p=t(i)((e,t)=>new globalThis.WebSocket(e,t)),m=r(a,e(o),n(p));export{f as NetSocket,d as NodeWS,l as fromDuplex,c as layerNet,m as layerWebSocket,p as layerWebSocketConstructor,s as makeNet,u as makeNetChannel};
+import { Ln as e, Un as t, Vn as n, ua as r } from "./Channel-C7bUVWpS.js";
+import { c as i, f as a, t as o } from "./Socket-CIOlbnxL.js";
+import {
+  a as s,
+  i as c,
+  n as l,
+  o as u,
+  r as d,
+  t as f,
+} from "./NodeSocket-DtUtZQMm.js";
+const p = t(i)((e, t) => new globalThis.WebSocket(e, t)),
+  m = r(a, e(o), n(p));
+export {
+  f as NetSocket,
+  d as NodeWS,
+  l as fromDuplex,
+  c as layerNet,
+  m as layerWebSocket,
+  p as layerWebSocketConstructor,
+  s as makeNet,
+  u as makeNetChannel,
+};

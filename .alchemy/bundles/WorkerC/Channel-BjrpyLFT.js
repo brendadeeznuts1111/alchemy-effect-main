@@ -184,7 +184,7 @@ const getAllObjectKeys = (e) => {
       t
     );
   },
-  f = new WeakSet();
+  ee = new WeakSet();
 function isString(e) {
   return typeof e == `string`;
 }
@@ -224,48 +224,48 @@ function isObject(e) {
 function isObjectKeyword(e) {
   return (typeof e == `object` && !!e) || isFunction(e);
 }
-const p = dual(2, (e, t) => isObjectKeyword(e) && t in e),
-  m = dual(2, (e, t) => p(e, `_tag`) && e._tag === t);
+const f = dual(2, (e, t) => isObjectKeyword(e) && t in e),
+  p = dual(2, (e, t) => f(e, `_tag`) && e._tag === t);
 function isIterable(e) {
-  return p(e, Symbol.iterator) || isString(e);
+  return f(e, Symbol.iterator) || isString(e);
 }
-const h = `~effect/interfaces/Hash`,
+const m = `~effect/interfaces/Hash`,
   hash = (e) => {
     switch (typeof e) {
       case `number`:
-        return ee(e);
+        return te(e);
       case `bigint`:
-        return _(e.toString(10));
+        return g(e.toString(10));
       case `boolean`:
-        return _(String(e));
+        return g(String(e));
       case `symbol`:
-        return _(String(e));
+        return g(String(e));
       case `string`:
-        return _(e);
+        return g(e);
       case `undefined`:
-        return _(`undefined`);
+        return g(`undefined`);
       case `function`:
       case `object`:
-        if (e === null) return _(`null`);
-        if (e instanceof Date) return _(e.toISOString());
-        if (e instanceof RegExp) return _(e.toString());
+        if (e === null) return g(`null`);
+        if (e instanceof Date) return g(e.toISOString());
+        if (e instanceof RegExp) return g(e.toString());
         {
-          if (f.has(e)) return random(e);
-          if (ae.has(e)) return ae.get(e);
+          if (ee.has(e)) return random(e);
+          if (oe.has(e)) return oe.get(e);
           let t = withVisitedTracking$1(e, () =>
             isHash(e)
-              ? e[h]()
+              ? e[m]()
               : typeof e == `function`
                 ? random(e)
                 : Array.isArray(e) || ArrayBuffer.isView(e)
-                  ? te(e)
+                  ? ne(e)
                   : e instanceof Map
-                    ? ne(e)
+                    ? re(e)
                     : e instanceof Set
-                      ? re(e)
+                      ? ie(e)
                       : structure(e),
           );
-          return (ae.set(e, t), t);
+          return (oe.set(e, t), t);
         }
       default:
         throw Error(
@@ -274,22 +274,22 @@ const h = `~effect/interfaces/Hash`,
     }
   },
   random = (e) => (
-    ie.has(e) || ie.set(e, ee(Math.floor(Math.random() * (2 ** 53 - 1)))),
-    ie.get(e)
+    ae.has(e) || ae.set(e, te(Math.floor(Math.random() * (2 ** 53 - 1)))),
+    ae.get(e)
   ),
-  g = dual(2, (e, t) => (e * 53) ^ t),
+  h = dual(2, (e, t) => (e * 53) ^ t),
   optimize = (e) => (e & 3221225471) | ((e >>> 1) & 1073741824),
-  isHash = (e) => p(e, h),
-  ee = __name((e) => {
-    if (e !== e) return _(`NaN`);
-    if (e === 1 / 0) return _(`Infinity`);
-    if (e === -1 / 0) return _(`-Infinity`);
+  isHash = (e) => f(e, m),
+  te = __name((e) => {
+    if (e !== e) return g(`NaN`);
+    if (e === 1 / 0) return g(`Infinity`);
+    if (e === -1 / 0) return g(`-Infinity`);
     let t = e | 0;
     for (t !== e && (t ^= e * 4294967295); e > 4294967295; )
       t ^= e /= 4294967295;
     return optimize(t);
   }, `number`),
-  _ = __name((e) => {
+  g = __name((e) => {
     let t = 5381,
       n = e.length;
     for (; n; ) t = (t * 33) ^ e.charCodeAt(--n);
@@ -297,7 +297,7 @@ const h = `~effect/interfaces/Hash`,
   }, `string`),
   structureKeys = (e, t) => {
     let n = 12289;
-    for (let r of t) n ^= g(hash(r), hash(e[r]));
+    for (let r of t) n ^= h(hash(r), hash(e[r]));
     return optimize(n);
   },
   structure = (e) => structureKeys(e, getAllObjectKeys(e)),
@@ -306,20 +306,20 @@ const h = `~effect/interfaces/Hash`,
     for (let e of n) r ^= t(e);
     return optimize(r);
   },
-  te = iterableWith(6151, hash),
-  ne = iterableWith(_(`Map`), ([e, t]) => g(hash(e), hash(t))),
-  re = iterableWith(_(`Set`), hash),
-  ie = new WeakMap(),
+  ne = iterableWith(6151, hash),
+  re = iterableWith(g(`Map`), ([e, t]) => h(hash(e), hash(t))),
+  ie = iterableWith(g(`Set`), hash),
   ae = new WeakMap(),
-  oe = new WeakSet();
+  oe = new WeakMap(),
+  se = new WeakSet();
 function withVisitedTracking$1(e, t) {
-  if (oe.has(e)) return _(`[Circular]`);
-  oe.add(e);
+  if (se.has(e)) return g(`[Circular]`);
+  se.add(e);
   let n = t();
-  return (oe.delete(e), n);
+  return (se.delete(e), n);
 }
 __name(withVisitedTracking$1, `withVisitedTracking`);
-const v = `~effect/interfaces/Equal`;
+const _ = `~effect/interfaces/Equal`;
 function equals$2() {
   return arguments.length === 1
     ? (e) => compareBoth(e, arguments[0])
@@ -333,22 +333,22 @@ function compareBoth(e, t) {
   return n === typeof t
     ? n === `number` && e !== e && t !== t
       ? !0
-      : (n !== `object` && n !== `function`) || f.has(e) || f.has(t)
+      : (n !== `object` && n !== `function`) || ee.has(e) || ee.has(t)
         ? !1
         : withCache(e, t, compareObjects)
     : !1;
 }
 function withVisitedTracking(e, t, n) {
-  let r = se.has(e),
-    i = ce.has(t);
+  let r = ce.has(e),
+    i = le.has(t);
   if (r && i) return !0;
   if (r || i) return !1;
-  (se.add(e), ce.add(t));
+  (ce.add(e), le.add(t));
   let a = n();
-  return (se.delete(e), ce.delete(t), a);
+  return (ce.delete(e), le.delete(t), a);
 }
-const se = new WeakSet(),
-  ce = new WeakSet();
+const ce = new WeakSet(),
+  le = new WeakSet();
 function compareObjects(e, t) {
   if (hash(e) !== hash(t)) return !1;
   if (e instanceof Date)
@@ -363,7 +363,7 @@ function compareObjects(e, t) {
     ? !1
     : withVisitedTracking(e, t, () =>
         i
-          ? e[v](t)
+          ? e[_](t)
           : Array.isArray(e)
             ? !Array.isArray(t) || e.length !== t.length
               ? !1
@@ -375,24 +375,24 @@ function compareObjects(e, t) {
               : e instanceof Map
                 ? !(t instanceof Map) || e.size !== t.size
                   ? !1
-                  : ue(e, t)
+                  : de(e, t)
                 : e instanceof Set
                   ? !(t instanceof Set) || e.size !== t.size
                     ? !1
-                    : de(e, t)
+                    : fe(e, t)
                   : compareRecords(e, t),
       );
 }
 function withCache(e, t, n) {
-  let r = le.get(e);
-  if (!r) ((r = new WeakMap()), le.set(e, r));
+  let r = ue.get(e);
+  if (!r) ((r = new WeakMap()), ue.set(e, r));
   else if (r.has(t)) return r.get(t);
   let i = n(e, t);
   r.set(t, i);
-  let a = le.get(t);
-  return (a || ((a = new WeakMap()), le.set(t, a)), a.set(e, i), i);
+  let a = ue.get(t);
+  return (a || ((a = new WeakMap()), ue.set(t, a)), a.set(e, i), i);
 }
-const le = new WeakMap();
+const ue = new WeakMap();
 function compareArrays(e, t) {
   for (let n = 0; n < e.length; n++) if (!compareBoth(e[n], t[n])) return !1;
   return !0;
@@ -423,7 +423,7 @@ function makeCompareMap(e, t) {
     return !0;
   };
 }
-const ue = makeCompareMap(compareBoth, compareBoth);
+const de = makeCompareMap(compareBoth, compareBoth);
 function makeCompareSet(e) {
   return function compareSets(t, n) {
     for (let r of t) {
@@ -438,14 +438,14 @@ function makeCompareSet(e) {
     return !0;
   };
 }
-const de = makeCompareSet(compareBoth),
-  isEqual = (e) => p(e, v),
+const fe = makeCompareSet(compareBoth),
+  isEqual = (e) => f(e, _),
   asEquivalence = () => equals$2,
-  fe = __name((e) => (t, n) => t === n || e(t, n), `make`),
+  pe = __name((e) => (t, n) => t === n || e(t, n), `make`),
   isStrictEquivalent = (e, t) => e === t,
   strictEqual = () => isStrictEquivalent;
 function Tuple$1(e) {
-  return fe((t, n) => {
+  return pe((t, n) => {
     if (t.length !== n.length) return !1;
     for (let r = 0; r < t.length; r++) if (!e[r](t[r], n[r])) return !1;
     return !0;
@@ -453,23 +453,23 @@ function Tuple$1(e) {
 }
 __name(Tuple$1, `Tuple`);
 function Array_(e) {
-  return fe((t, n) => {
+  return pe((t, n) => {
     if (t.length !== n.length) return !1;
     for (let r = 0; r < t.length; r++) if (!e(t[r], n[r])) return !1;
     return !0;
   });
 }
-const pe = __name((e) => e.length > 0, `isArrayNonEmpty`),
-  me = Symbol.for(`~effect/Redactable`),
-  isRedactable = (e) => p(e, me);
+const me = __name((e) => e.length > 0, `isArrayNonEmpty`),
+  he = Symbol.for(`~effect/Redactable`),
+  isRedactable = (e) => f(e, he);
 function redact(e) {
   return isRedactable(e) ? getRedacted(e) : e;
 }
 function getRedacted(e) {
-  return e[me](globalThis[`~effect/Fiber/currentFiber`]?.context ?? ge);
+  return e[he](globalThis[`~effect/Fiber/currentFiber`]?.context ?? _e);
 }
-const he = `~effect/Fiber/currentFiber`,
-  ge = {
+const ge = `~effect/Fiber/currentFiber`,
+  _e = {
     "~effect/Context": {},
     mapUnsafe: new Map(),
     pipe() {
@@ -496,7 +496,7 @@ function format$1(e, t) {
     };
   function recur(e, n = 0) {
     if (Array.isArray(e)) {
-      if (r.has(e)) return _e;
+      if (r.has(e)) return ve;
       if ((r.add(e), !i || e.length <= 1))
         return `[${e.map((e) => recur(e, n)).join(`,`)}]`;
       let t = e
@@ -510,7 +510,7 @@ function format$1(e, t) {
     if (e instanceof Date) return formatDate(e);
     if (
       !t?.ignoreToString &&
-      p(e, `toString`) &&
+      f(e, `toString`) &&
       typeof e.toString == `function` &&
       e.toString !== Object.prototype.toString &&
       e.toString !== Array.prototype.toString
@@ -530,8 +530,8 @@ function format$1(e, t) {
       return String(e);
     if (typeof e == `bigint`) return String(e) + `n`;
     if (typeof e == `object` || typeof e == `function`) {
-      if (r.has(e)) return _e;
-      if ((r.add(e), me in e)) return format$1(getRedacted(e));
+      if (r.has(e)) return ve;
+      if ((r.add(e), he in e)) return format$1(getRedacted(e));
       if (Symbol.iterator in e)
         return `${e.constructor.name}(${recur(Array.from(e), n)})`;
       let t = ownKeys(e);
@@ -554,7 +554,7 @@ function format$1(e, t) {
   return recur(e, 0);
 }
 __name(format$1, `format`);
-const _e = `[Circular]`;
+const ve = `[Circular]`;
 function formatPropertyKey(e) {
   return typeof e == `string` ? JSON.stringify(e) : String(e);
 }
@@ -589,10 +589,10 @@ function formatJson(e, t) {
     t?.space,
   );
 }
-const y = Symbol.for(`nodejs.util.inspect.custom`),
+const v = Symbol.for(`nodejs.util.inspect.custom`),
   toJson = (e) => {
     try {
-      if (p(e, `toJSON`) && isFunction(e.toJSON) && e.toJSON.length === 0)
+      if (f(e, `toJSON`) && isFunction(e.toJSON) && e.toJSON.length === 0)
         return e.toJSON();
       if (Array.isArray(e)) return e.map(toJson);
     } catch {
@@ -608,11 +608,11 @@ const y = Symbol.for(`nodejs.util.inspect.custom`),
       return String(e);
     }
   },
-  ve = {
+  ye = {
     toJSON() {
       return toJson(this);
     },
-    [y]() {
+    [v]() {
       return this.toJSON();
     },
     toString() {
@@ -623,14 +623,14 @@ var Class$1 = class {
     static {
       __name(this, `Class`);
     }
-    [y]() {
+    [v]() {
       return this.toJSON();
     }
     toString() {
       return format$1(this.toJSON());
     }
   },
-  ye = class SingleShotGen {
+  be = class SingleShotGen {
     called = !1;
     self;
     constructor(e) {
@@ -645,28 +645,28 @@ var Class$1 = class {
       return new SingleShotGen(this.self);
     }
   };
-const be = `~effect/Utils/internal`,
-  xe = { [be]: (e) => e() },
-  Se = {
-    [be]: (e) => {
+const xe = `~effect/Utils/internal`,
+  Se = { [xe]: (e) => e() },
+  Ce = {
+    [xe]: (e) => {
       try {
         return e();
       } finally {
       }
     },
   },
-  b = xe[be](() => Error().stack)?.includes(be) === !0 ? xe[be] : Se[be],
-  Ce = `~effect/Effect`,
-  we = `~effect/Exit`,
-  Te = { _A: identity, _E: identity, _R: identity },
-  Ee = `${Ce}/identifier`,
-  x = `${Ce}/args`,
-  S = `${Ce}/evaluate`,
-  C = `${Ce}/successCont`,
-  w = `${Ce}/failureCont`,
-  De = `${Ce}/ensureCont`,
-  Oe = Symbol.for(`effect/Effect/Yield`),
-  ke = {
+  y = Se[xe](() => Error().stack)?.includes(xe) === !0 ? Se[xe] : Ce[xe],
+  we = `~effect/Effect`,
+  Te = `~effect/Exit`,
+  Ee = { _A: identity, _E: identity, _R: identity },
+  De = `${we}/identifier`,
+  b = `${we}/args`,
+  x = `${we}/evaluate`,
+  S = `${we}/successCont`,
+  Oe = `${we}/failureCont`,
+  ke = `${we}/ensureCont`,
+  Ae = Symbol.for(`effect/Effect/Yield`),
+  je = {
     pipe() {
       return pipeArguments(this, arguments);
     },
@@ -676,34 +676,34 @@ const be = `~effect/Utils/internal`,
     toString() {
       return format$1(this.toJSON(), { ignoreToString: !0, space: 2 });
     },
-    [y]() {
+    [v]() {
       return this.toJSON();
     },
   },
-  Ae = {
-    [Ce]: Te,
-    ...ke,
+  Me = {
+    [we]: Ee,
+    ...je,
     [Symbol.iterator]() {
-      return new ye(this);
+      return new be(this);
     },
     toJSON() {
       return {
         _id: `Effect`,
-        op: this[Ee],
-        ...(x in this ? { args: this[x] } : void 0),
+        op: this[De],
+        ...(b in this ? { args: this[b] } : void 0),
       };
     },
   },
-  T = __name((e) => p(e, Ce), `isEffect`),
-  isExit = (e) => p(e, we),
-  je = `~effect/Cause`,
-  Me = `~effect/Cause/Reason`,
-  isCause = (e) => p(e, je);
+  C = __name((e) => f(e, we), `isEffect`),
+  isExit = (e) => f(e, Te),
+  Ne = `~effect/Cause`,
+  Pe = `~effect/Cause/Reason`,
+  isCause = (e) => f(e, Ne);
 var CauseImpl = class {
-  [je];
+  [Ne];
   reasons;
   constructor(e) {
-    ((this[je] = je), (this.reasons = e));
+    ((this[Ne] = Ne), (this.reasons = e));
   }
   pipe() {
     return pipeArguments(this, arguments);
@@ -714,33 +714,33 @@ var CauseImpl = class {
   toString() {
     return `Cause(${format$1(this.reasons)})`;
   }
-  [y]() {
+  [v]() {
     return this.toJSON();
   }
-  [v](e) {
+  [_](e) {
     return (
       isCause(e) &&
       this.reasons.length === e.reasons.length &&
       this.reasons.every((t, n) => equals$2(t, e.reasons[n]))
     );
   }
-  [h]() {
-    return te(this.reasons);
+  [m]() {
+    return ne(this.reasons);
   }
 };
-const Ne = new WeakMap();
+const Fe = new WeakMap();
 var ReasonBase = class {
-  [Me];
+  [Pe];
   annotations;
   _tag;
   constructor(e, t, n) {
     if (
-      ((this[Me] = Me),
+      ((this[Pe] = Pe),
       (this._tag = e),
-      t !== Pe && typeof n == `object` && n && t.size > 0)
+      t !== Ie && typeof n == `object` && n && t.size > 0)
     ) {
-      let e = Ne.get(n);
-      (e && (t = new Map([...e, ...t])), Ne.set(n, t));
+      let e = Fe.get(n);
+      (e && (t = new Map([...e, ...t])), Fe.set(n, t));
     }
     this.annotations = t;
   }
@@ -759,14 +759,14 @@ var ReasonBase = class {
   toString() {
     return format$1(this);
   }
-  [y]() {
+  [v]() {
     return this.toString();
   }
 };
-const Pe = new Map();
+const Ie = new Map();
 var Fail = class extends ReasonBase {
   error;
-  constructor(e, t = Pe) {
+  constructor(e, t = Ie) {
     (super(`Fail`, t, e), (this.error = e));
   }
   toString() {
@@ -775,23 +775,23 @@ var Fail = class extends ReasonBase {
   toJSON() {
     return { _tag: `Fail`, error: this.error };
   }
-  [v](e) {
+  [_](e) {
     return (
-      Le(e) &&
+      ze(e) &&
       equals$2(this.error, e.error) &&
       equals$2(this.annotations, e.annotations)
     );
   }
-  [h]() {
-    return g(_(this._tag))(g(hash(this.error))(hash(this.annotations)));
+  [m]() {
+    return h(g(this._tag))(h(hash(this.error))(hash(this.annotations)));
   }
 };
 const causeFromReasons = (e) => new CauseImpl(e),
-  Fe = new CauseImpl([]),
+  Le = new CauseImpl([]),
   causeFail = (e) => new CauseImpl([new Fail(e)]);
 var Die = class extends ReasonBase {
   defect;
-  constructor(e, t = Pe) {
+  constructor(e, t = Ie) {
     (super(`Die`, t, e), (this.defect = e));
   }
   toString() {
@@ -800,109 +800,109 @@ var Die = class extends ReasonBase {
   toJSON() {
     return { _tag: `Die`, defect: this.defect };
   }
-  [v](e) {
+  [_](e) {
     return (
-      Re(e) &&
+      Be(e) &&
       equals$2(this.defect, e.defect) &&
       equals$2(this.annotations, e.annotations)
     );
   }
-  [h]() {
-    return g(_(this._tag))(g(hash(this.defect))(hash(this.annotations)));
+  [m]() {
+    return h(g(this._tag))(h(hash(this.defect))(hash(this.annotations)));
   }
 };
 const causeDie = (e) => new CauseImpl([new Die(e)]),
-  Ie = dual(
+  Re = dual(
     (e) => isCause(e[0]),
     (e, t, n) =>
       t.mapUnsafe.size === 0
         ? e
         : new CauseImpl(e.reasons.map((e) => e.annotate(t, n))),
   ),
-  Le = __name((e) => e._tag === `Fail`, `isFailReason`),
-  Re = __name((e) => e._tag === `Die`, `isDieReason`),
+  ze = __name((e) => e._tag === `Fail`, `isFailReason`),
+  Be = __name((e) => e._tag === `Die`, `isDieReason`),
   isInterruptReason = (e) => e._tag === `Interrupt`;
 function defaultEvaluate(e) {
   return exitDie(`Effect.evaluate: Not implemented`);
 }
 const makePrimitiveProto = (e) => ({
-    ...Ae,
-    [Ee]: e.op,
-    [S]: e[S] ?? defaultEvaluate,
-    [C]: e[C],
-    [w]: e[w],
-    [De]: e[De],
+    ...Me,
+    [De]: e.op,
+    [x]: e[x] ?? defaultEvaluate,
+    [S]: e[S],
+    [Oe]: e[Oe],
+    [ke]: e[ke],
   }),
   makePrimitive = (e) => {
     let t = makePrimitiveProto(e);
     return function () {
       let n = Object.create(t);
-      return ((n[x] = e.single === !1 ? arguments : arguments[0]), n);
+      return ((n[b] = e.single === !1 ? arguments : arguments[0]), n);
     };
   },
   makeExit = (e) => {
     let t = {
       ...makePrimitiveProto(e),
-      [we]: we,
+      [Te]: Te,
       _tag: e.op,
       get [e.prop]() {
-        return this[x];
+        return this[b];
       },
       toString() {
-        return `${e.op}(${format$1(this[x])})`;
+        return `${e.op}(${format$1(this[b])})`;
       },
       toJSON() {
-        return { _id: `Exit`, _tag: e.op, [e.prop]: this[x] };
+        return { _id: `Exit`, _tag: e.op, [e.prop]: this[b] };
       },
-      [v](e) {
-        return isExit(e) && e._tag === this._tag && equals$2(this[x], e[x]);
+      [_](e) {
+        return isExit(e) && e._tag === this._tag && equals$2(this[b], e[b]);
       },
-      [h]() {
-        return g(_(e.op), hash(this[x]));
+      [m]() {
+        return h(g(e.op), hash(this[b]));
       },
     };
     return function (e) {
       let n = Object.create(t);
-      return ((n[x] = e), n);
+      return ((n[b] = e), n);
     };
   },
-  E = makeExit({
+  w = makeExit({
     op: `Success`,
     prop: `value`,
-    [S](e) {
-      let t = e.getCont(C);
-      return t ? t[C](this[x], e, this) : e.yieldWith(this);
+    [x](e) {
+      let t = e.getCont(S);
+      return t ? t[S](this[b], e, this) : e.yieldWith(this);
     },
   }),
-  ze = { key: `effect/Cause/StackTrace` },
-  Be = { key: `effect/Cause/InterruptorStackTrace` },
-  D = makeExit({
+  Ve = { key: `effect/Cause/StackTrace` },
+  He = { key: `effect/Cause/InterruptorStackTrace` },
+  T = makeExit({
     op: `Failure`,
     prop: `cause`,
-    [S](e) {
-      let t = this[x],
+    [x](e) {
+      let t = this[b],
         n = !1;
       e.currentStackFrame &&
-        ((t = Ie(t, { mapUnsafe: new Map([[ze.key, e.currentStackFrame]]) })),
+        ((t = Re(t, { mapUnsafe: new Map([[Ve.key, e.currentStackFrame]]) })),
         (n = !0));
-      let r = e.getCont(w);
-      for (; e.interruptible && e._interruptedCause && r; ) r = e.getCont(w);
-      return r ? r[w](t, e, n ? void 0 : this) : e.yieldWith(n ? this : D(t));
+      let r = e.getCont(Oe);
+      for (; e.interruptible && e._interruptedCause && r; ) r = e.getCont(Oe);
+      return r ? r[Oe](t, e, n ? void 0 : this) : e.yieldWith(n ? this : T(t));
     },
   }),
-  exitFail = (e) => D(causeFail(e)),
-  exitDie = (e) => D(causeDie(e)),
-  O = makePrimitive({
+  exitFail = (e) => T(causeFail(e)),
+  exitDie = (e) => T(causeDie(e)),
+  E = makePrimitive({
     op: `WithFiber`,
-    [S](e) {
-      return this[x](e);
+    [x](e) {
+      return this[b](e);
     },
   }),
-  Ve = (function () {
+  Ue = (function () {
     class YieldableError extends globalThis.Error {}
     let e = makePrimitiveProto({
       op: `YieldableError`,
-      [S]() {
+      [x]() {
         return exitFail(this);
       },
     });
@@ -912,9 +912,9 @@ const makePrimitiveProto = (e) => ({
       YieldableError
     );
   })(),
-  He = (function () {
+  We = (function () {
     let e = Symbol.for(`effect/Data/Error/plainArgs`);
-    return class Base extends Ve {
+    return class Base extends Ue {
       constructor(t) {
         (super(t?.message, t?.cause ? { cause: t.cause } : void 0),
           t &&
@@ -926,38 +926,42 @@ const makePrimitiveProto = (e) => ({
       }
     };
   })(),
-  Ue = __name((e) => {
-    class Base extends He {
+  Ge = __name((e) => {
+    class Base extends We {
       _tag = e;
     }
     return ((Base.prototype.name = e), Base);
-  }, `TaggedError`);
-Ue(`NoSuchElementError`);
-const We = `~effect/Cause/Done`,
-  Ge = __name((e) => p(e, We), `isDone`),
-  Ke = { [We]: We, _tag: `Done`, value: void 0 },
-  qe = __name(
-    (e) => (e === void 0 ? Ke : { [We]: We, _tag: `Done`, value: e }),
+  }, `TaggedError`),
+  Ke = __name(
+    (e) => f(e, `~effect/Cause/NoSuchElementError`),
+    `isNoSuchElementError`,
+  );
+Ge(`NoSuchElementError`);
+const qe = `~effect/Cause/Done`,
+  Je = __name((e) => f(e, qe), `isDone`),
+  Ye = { [qe]: qe, _tag: `Done`, value: void 0 },
+  Xe = __name(
+    (e) => (e === void 0 ? Ye : { [qe]: qe, _tag: `Done`, value: e }),
     `Done`,
   ),
-  Je = exitFail(Ke),
-  Ye = __name((e) => (e === void 0 ? Je : exitFail(qe(e))), `done`),
-  Xe = `~effect/data/Option`,
-  Ze = {
-    [Xe]: { _A: (e) => e },
-    ...ke,
+  Ze = exitFail(Ye),
+  Qe = __name((e) => (e === void 0 ? Ze : exitFail(Xe(e))), `done`),
+  $e = `~effect/data/Option`,
+  et = {
+    [$e]: { _A: (e) => e },
+    ...je,
     [Symbol.iterator]() {
-      return new ye(this);
+      return new be(this);
     },
   },
-  Qe = Object.assign(Object.create(Ze), {
+  tt = Object.assign(Object.create(et), {
     _tag: `Some`,
     _op: `Some`,
-    [v](e) {
-      return isOption(e) && nt(e) && equals$2(this.value, e.value);
+    [_](e) {
+      return isOption(e) && at(e) && equals$2(this.value, e.value);
     },
-    [h]() {
-      return g(hash(this._tag))(hash(this.value));
+    [m]() {
+      return h(hash(this._tag))(hash(this.value));
     },
     toString() {
       return `some(${format$1(this.value)})`;
@@ -966,16 +970,16 @@ const We = `~effect/Cause/Done`,
       return { _id: `Option`, _tag: this._tag, value: toJson(this.value) };
     },
   }),
-  $e = hash(`None`),
-  et = Object.assign(Object.create(Ze), {
+  nt = hash(`None`),
+  rt = Object.assign(Object.create(et), {
     _tag: `None`,
     _op: `None`,
     valueOrUndefined: void 0,
-    [v](e) {
-      return isOption(e) && tt(e);
+    [_](e) {
+      return isOption(e) && it(e);
     },
-    [h]() {
-      return $e;
+    [m]() {
+      return nt;
     },
     toString() {
       return `none()`;
@@ -984,30 +988,30 @@ const We = `~effect/Cause/Done`,
       return { _id: `Option`, _tag: this._tag };
     },
   }),
-  isOption = (e) => p(e, Xe),
-  tt = __name((e) => e._tag === `None`, `isNone`),
-  nt = __name((e) => e._tag === `Some`, `isSome`),
-  rt = Object.create(et),
-  it = __name((e) => {
-    let t = Object.create(Qe);
+  isOption = (e) => f(e, $e),
+  it = __name((e) => e._tag === `None`, `isNone`),
+  at = __name((e) => e._tag === `Some`, `isSome`),
+  ot = Object.create(rt),
+  st = __name((e) => {
+    let t = Object.create(tt);
     return ((t.value = e), t);
   }, `some`),
-  at = `~effect/data/Result`,
-  ot = {
-    [at]: { _A: (e) => e, _E: (e) => e },
-    ...ke,
+  ct = `~effect/data/Result`,
+  lt = {
+    [ct]: { _A: (e) => e, _E: (e) => e },
+    ...je,
     [Symbol.iterator]() {
-      return new ye(this);
+      return new be(this);
     },
   },
-  st = Object.assign(Object.create(ot), {
+  ut = Object.assign(Object.create(lt), {
     _tag: `Success`,
     _op: `Success`,
-    [v](e) {
-      return isResult(e) && ut(e) && equals$2(this.success, e.success);
+    [_](e) {
+      return isResult(e) && pt(e) && equals$2(this.success, e.success);
     },
-    [h]() {
-      return g(hash(this._tag))(hash(this.success));
+    [m]() {
+      return h(hash(this._tag))(hash(this.success));
     },
     toString() {
       return `success(${format$1(this.success)})`;
@@ -1016,14 +1020,14 @@ const We = `~effect/Cause/Done`,
       return { _id: `Result`, _tag: this._tag, value: toJson(this.success) };
     },
   }),
-  ct = Object.assign(Object.create(ot), {
+  dt = Object.assign(Object.create(lt), {
     _tag: `Failure`,
     _op: `Failure`,
-    [v](e) {
-      return isResult(e) && lt(e) && equals$2(this.failure, e.failure);
+    [_](e) {
+      return isResult(e) && ft(e) && equals$2(this.failure, e.failure);
     },
-    [h]() {
-      return g(hash(this._tag))(hash(this.failure));
+    [m]() {
+      return h(hash(this._tag))(hash(this.failure));
     },
     toString() {
       return `failure(${format$1(this.failure)})`;
@@ -1032,22 +1036,22 @@ const We = `~effect/Cause/Done`,
       return { _id: `Result`, _tag: this._tag, failure: toJson(this.failure) };
     },
   }),
-  isResult = (e) => p(e, at),
-  lt = __name((e) => e._tag === `Failure`, `isFailure`),
-  ut = __name((e) => e._tag === `Success`, `isSuccess`),
-  dt = __name((e) => {
-    let t = Object.create(ct);
+  isResult = (e) => f(e, ct),
+  ft = __name((e) => e._tag === `Failure`, `isFailure`),
+  pt = __name((e) => e._tag === `Success`, `isSuccess`),
+  mt = __name((e) => {
+    let t = Object.create(dt);
     return ((t.failure = e), t);
   }, `fail`),
-  ft = __name((e) => {
-    let t = Object.create(st);
+  ht = __name((e) => {
+    let t = Object.create(ut);
     return ((t.success = e), t);
   }, `succeed`);
-function make$15(e) {
+function make$16(e) {
   return (t, n) => (t === n ? 0 : e(t, n));
 }
-__name(make$15, `make`);
-const pt = make$15((e, t) =>
+__name(make$16, `make`);
+const gt = make$16((e, t) =>
     globalThis.Number.isNaN(e) && globalThis.Number.isNaN(t)
       ? 0
       : globalThis.Number.isNaN(e)
@@ -1058,97 +1062,101 @@ const pt = make$15((e, t) =>
             ? -1
             : 1,
   ),
-  mt = dual(2, (e, t) => make$15((n, r) => e(t(n), t(r)))),
-  ht = __name((e) => dual(2, (t, n) => e(t, n) === 1), `isGreaterThan`),
-  none = () => rt,
-  k = it,
-  A = tt,
-  gt = nt,
-  _t = dual(2, (e, { onNone: t, onSome: n }) => (A(e) ? t() : n(e.value))),
-  vt = dual(2, (e, t) => (A(e) ? t() : e.value)),
-  fromNullishOr = (e) => (e == null ? none() : k(e)),
-  fromUndefinedOr = (e) => (e === void 0 ? none() : k(e)),
-  yt = vt(u),
-  bt = dual(2, (e, t) => (A(e) ? none() : k(t(e.value)))),
-  xt = dual(2, (e, t) => (A(e) ? none() : t(e.value))),
-  St = dual(2, (e, t) => (A(e) ? none() : t(e.value) ? k(e.value) : none())),
-  j = ft,
-  M = dt,
-  N = lt,
-  Ct = ut,
-  wt = dual(2, (e, { onFailure: t, onSuccess: n }) =>
-    N(e) ? t(e.failure) : n(e.success),
+  _t = dual(2, (e, t) => make$16((n, r) => e(t(n), t(r)))),
+  vt = __name((e) => dual(2, (t, n) => e(t, n) === 1), `isGreaterThan`),
+  yt = __name(
+    (e) => dual(2, (t, n) => (t === n || e(t, n) > -1 ? t : n)),
+    `max`,
   ),
-  Tt = Tuple$1,
+  none = () => ot,
+  D = st,
+  O = it,
+  bt = at,
+  xt = dual(2, (e, { onNone: t, onSome: n }) => (O(e) ? t() : n(e.value))),
+  St = dual(2, (e, t) => (O(e) ? t() : e.value)),
+  fromNullishOr = (e) => (e == null ? none() : D(e)),
+  fromUndefinedOr = (e) => (e === void 0 ? none() : D(e)),
+  Ct = St(u),
+  wt = dual(2, (e, t) => (O(e) ? none() : D(t(e.value)))),
+  Tt = dual(2, (e, t) => (O(e) ? none() : t(e.value))),
+  Et = dual(2, (e, t) => (O(e) ? none() : t(e.value) ? D(e.value) : none())),
+  k = ht,
+  A = mt,
+  j = ft,
+  Dt = pt,
+  Ot = dual(2, (e, { onFailure: t, onSuccess: n }) =>
+    j(e) ? t(e.failure) : n(e.success),
+  ),
+  kt = Tuple$1,
   headUnsafe = (e) => {
     let t = e[Symbol.iterator]().next();
     if (t.done) throw Error(`headUnsafe: empty iterable`);
     return t.value;
   },
-  Et = {
+  At = {
     [Symbol.iterator]() {
-      return Dt;
+      return jt;
     },
   },
-  Dt = {
+  jt = {
     next() {
       return { done: !0, value: void 0 };
     },
   },
-  Ot = __name(() => Et, `empty`),
+  Mt = __name(() => At, `empty`),
   isEmptyRecord = (e) => Object.keys(e).length === 0,
-  kt = dual(2, (e, t) => {
+  Nt = dual(2, (e, t) => {
     let n = { ...e };
     for (let r of keys(e)) n[r] = t(e[r], r);
     return n;
   }),
   keys = (e) => Object.keys(e),
-  At = globalThis.Array,
-  fromIterable = (e) => (At.isArray(e) ? e : At.from(e)),
-  ensure = (e) => (At.isArray(e) ? e : [e]),
-  jt = dual(2, (e, t) => [...e, t]),
-  Mt = dual(2, (e, t) => fromIterable(e).concat(fromIterable(t)));
-At.isArray;
-const Nt = pe,
-  Pt = pe;
+  Pt = globalThis.Array,
+  fromIterable = (e) => (Pt.isArray(e) ? e : Pt.from(e)),
+  ensure = (e) => (Pt.isArray(e) ? e : [e]),
+  Ft = dual(2, (e, t) => [...e, t]),
+  It = dual(2, (e, t) => fromIterable(e).concat(fromIterable(t)));
+Pt.isArray;
+const Lt = me,
+  Rt = me;
 function isOutOfBounds(e, t) {
   return e < 0 || e >= t.length;
 }
-const Ft = dual(2, (e, t) => {
+const zt = dual(2, (e, t) => {
     let n = Math.floor(t);
     if (isOutOfBounds(n, e)) throw Error(`Index out of bounds: ${n}`);
     return e[n];
   })(0),
   tailNonEmpty = (e) => e.slice(1),
-  It = dual(3, (e, t, n) => {
+  Bt = dual(3, (e, t, n) => {
     let r = fromIterable(e),
       i = fromIterable(t);
-    return Pt(r) ? (Pt(i) ? Vt(n)(Mt(r, i)) : r) : i;
+    return Rt(r) ? (Rt(i) ? Gt(n)(It(r, i)) : r) : i;
   }),
-  Lt = dual(2, (e, t) => It(e, t, asEquivalence())),
-  Rt = __name(() => [], `empty`),
+  Vt = dual(2, (e, t) => Bt(e, t, asEquivalence())),
+  Ht = __name(() => [], `empty`),
   of = (e) => [e],
-  zt = dual(2, (e, t) => e.map(t)),
-  Bt = Array_,
-  Vt = dual(2, (e, t) => {
+  Ut = dual(2, (e, t) => e.map(t)),
+  Wt = Array_,
+  Gt = dual(2, (e, t) => {
     let n = fromIterable(e);
-    if (Pt(n)) {
-      let e = [Ft(n)],
+    if (Rt(n)) {
+      let e = [zt(n)],
         r = tailNonEmpty(n);
       for (let n of r) e.every((e) => !t(n, e)) && e.push(n);
       return e;
     }
     return [];
   }),
-  Ht = `~effect/BigDecimal`,
-  Ut = {
-    [Ht]: Ht,
-    [h]() {
+  Kt = `~effect/BigDecimal`,
+  qt = {
+    [Kt]: Kt,
+    [m]() {
       let e = normalize(this);
-      return g(hash(e.value), ee(e.scale));
+      return h(hash(e.value), te(e.scale));
     },
-    [v](e) {
-      return isBigDecimal(e) && Xt(this, e);
+    [_](e) {
+      return isBigDecimal(e) && en(this, e);
     },
     toString() {
       return `BigDecimal(${format(this)})`;
@@ -1160,29 +1168,29 @@ const Ft = dual(2, (e, t) => {
         scale: this.scale,
       };
     },
-    [y]() {
+    [v]() {
       return this.toJSON();
     },
     pipe() {
       return pipeArguments(this, arguments);
     },
   },
-  isBigDecimal = (e) => p(e, Ht),
-  Wt = __name((e, t) => {
-    let n = Object.create(Ut);
+  isBigDecimal = (e) => f(e, Kt),
+  Jt = __name((e, t) => {
+    let n = Object.create(qt);
     return ((n.value = e), (n.scale = t), n);
   }, `make`),
   makeNormalizedUnsafe = (e, t) => {
-    if (e !== Gt && e % Kt === Gt) throw RangeError(`Value must be normalized`);
-    let n = Wt(e, t);
+    if (e !== Yt && e % Xt === Yt) throw RangeError(`Value must be normalized`);
+    let n = Jt(e, t);
     return ((n.normalized = n), n);
   },
-  Gt = BigInt(0),
-  Kt = BigInt(10),
-  qt = makeNormalizedUnsafe(Gt, 0),
+  Yt = BigInt(0),
+  Xt = BigInt(10),
+  Zt = makeNormalizedUnsafe(Yt, 0),
   normalize = (e) => {
     if (e.normalized === void 0)
-      if (e.value === Gt) e.normalized = qt;
+      if (e.value === Yt) e.normalized = Zt;
       else {
         let t = `${e.value}`,
           n = 0;
@@ -1195,26 +1203,26 @@ const Ft = dual(2, (e, t) => {
       }
     return e.normalized;
   },
-  Jt = dual(2, (e, t) =>
+  Qt = dual(2, (e, t) =>
     t > e.scale
-      ? Wt(e.value * Kt ** BigInt(t - e.scale), t)
+      ? Jt(e.value * Xt ** BigInt(t - e.scale), t)
       : t < e.scale
-        ? Wt(e.value / Kt ** BigInt(e.scale - t), t)
+        ? Jt(e.value / Xt ** BigInt(e.scale - t), t)
         : e,
   ),
-  abs = (e) => (e.value < Gt ? Wt(-e.value, e.scale) : e),
-  Yt = fe((e, t) =>
+  abs = (e) => (e.value < Yt ? Jt(-e.value, e.scale) : e),
+  $t = pe((e, t) =>
     e.scale > t.scale
-      ? Jt(t, e.scale).value === e.value
+      ? Qt(t, e.scale).value === e.value
       : e.scale < t.scale
-        ? Jt(e, t.scale).value === t.value
+        ? Qt(e, t.scale).value === t.value
         : e.value === t.value,
   ),
-  Xt = dual(2, (e, t) => Yt(e, t)),
+  en = dual(2, (e, t) => $t(e, t)),
   format = (e) => {
     let t = normalize(e);
     if (Math.abs(t.scale) >= 16) return toExponential(t);
-    let n = t.value < Gt,
+    let n = t.value < Yt,
       r = n ? `${t.value}`.substring(1) : `${t.value}`,
       i,
       a;
@@ -1241,10 +1249,10 @@ const Ft = dual(2, (e, t) => {
     let o = i.length - t.scale;
     return `${a}e${o >= 0 ? `+` : ``}${o}`;
   },
-  isZero = (e) => e.value === Gt,
-  isNegative = (e) => e.value < Gt,
-  Prototype = (e) => makePrimitiveProto({ op: e.label, [S]: e.evaluate }),
-  Zt = `~effect/Context/Service`,
+  isZero = (e) => e.value === Yt,
+  isNegative = (e) => e.value < Yt,
+  Prototype = (e) => makePrimitiveProto({ op: e.label, [x]: e.evaluate }),
+  tn = `~effect/Context/Service`,
   Service = function () {
     let e = Error.stackTraceLimit;
     Error.stackTraceLimit = 2;
@@ -1253,7 +1261,7 @@ const Ft = dual(2, (e, t) => {
     function KeyClass() {}
     let n = KeyClass;
     return (
-      Object.setPrototypeOf(n, Qt),
+      Object.setPrototypeOf(n, nn),
       Object.defineProperty(n, `stack`, {
         get() {
           return t.stack;
@@ -1262,19 +1270,19 @@ const Ft = dual(2, (e, t) => {
       arguments.length > 0
         ? ((n.key = arguments[0]),
           arguments[1]?.defaultValue &&
-            ((n[$t] = $t), (n.defaultValue = arguments[1].defaultValue)),
+            ((n[rn] = rn), (n.defaultValue = arguments[1].defaultValue)),
           n)
         : function (e, t) {
             return ((n.key = e), t?.make && (n.make = t.make), n);
           }
     );
   },
-  Qt = {
-    [Zt]: Zt,
+  nn = {
+    [tn]: tn,
     ...Prototype({
       label: `Service`,
       evaluate(e) {
-        return E(un(e.context, this));
+        return w(pn(e.context, this));
       },
     }),
     toJSON() {
@@ -1284,24 +1292,24 @@ const Ft = dual(2, (e, t) => {
       return e;
     },
     context(e) {
-      return on(this, e);
+      return ln(this, e);
     },
     use(e) {
-      return O((t) => e(un(t.context, this)));
+      return E((t) => e(pn(t.context, this)));
     },
     useSync(e) {
-      return O((t) => E(e(un(t.context, this))));
+      return E((t) => w(e(pn(t.context, this))));
     },
   },
-  $t = `~effect/Context/Reference`,
-  en = `~effect/Context`,
-  tn = __name((e) => {
-    let t = Object.create(nn);
+  rn = `~effect/Context/Reference`,
+  an = `~effect/Context`,
+  on = __name((e) => {
+    let t = Object.create(sn);
     return ((t.mapUnsafe = e), (t.mutable = !1), t);
   }, `makeUnsafe`),
-  nn = {
-    ...ke,
-    [en]: { _Services: (e) => e },
+  sn = {
+    ...je,
+    [an]: { _Services: (e) => e },
     toJSON() {
       return {
         _id: `Context`,
@@ -1311,7 +1319,7 @@ const Ft = dual(2, (e, t) => {
         })),
       };
     },
-    [v](e) {
+    [_](e) {
       if (!isContext(e) || this.mapUnsafe.size !== e.mapUnsafe.size) return !1;
       for (let t of this.mapUnsafe.keys())
         if (
@@ -1321,39 +1329,39 @@ const Ft = dual(2, (e, t) => {
           return !1;
       return !0;
     },
-    [h]() {
-      return ee(this.mapUnsafe.size);
+    [m]() {
+      return te(this.mapUnsafe.size);
     },
   },
-  isContext = (e) => p(e, en),
-  isReference = (e) => p(e, $t),
-  rn = __name(() => an, `empty`),
-  an = tn(new Map()),
-  on = __name((e, t) => tn(new Map([[e.key, t]])), `make`),
-  sn = dual(3, (e, t, n) =>
+  isContext = (e) => f(e, an),
+  isReference = (e) => f(e, rn),
+  M = __name(() => cn, `empty`),
+  cn = on(new Map()),
+  ln = __name((e, t) => on(new Map([[e.key, t]])), `make`),
+  un = dual(3, (e, t, n) =>
     withMapUnsafe(e, (e) => {
       e.set(t.key, n);
     }),
   ),
-  cn = dual(3, (e, t, n) =>
+  dn = dual(3, (e, t, n) =>
     e.mapUnsafe.has(t.key)
       ? e.mapUnsafe.get(t.key)
       : isReference(t)
         ? getDefaultValue(t)
         : n(),
   ),
-  ln = dual(2, (e, t) => {
+  fn = dual(2, (e, t) => {
     if (!e.mapUnsafe.has(t.key)) {
-      if ($t in t) return getDefaultValue(t);
+      if (rn in t) return getDefaultValue(t);
       throw serviceNotFoundError(t);
     }
     return e.mapUnsafe.get(t.key);
   }),
-  un = ln,
+  pn = fn,
   getReferenceUnsafe = (e, t) =>
     e.mapUnsafe.has(t.key) ? e.mapUnsafe.get(t.key) : getDefaultValue(t),
-  dn = `~effect/Context/defaultValue`,
-  getDefaultValue = (e) => (dn in e ? e[dn] : (e[dn] = e.defaultValue())),
+  mn = `~effect/Context/defaultValue`,
+  getDefaultValue = (e) => (mn in e ? e[mn] : (e[mn] = e.defaultValue())),
   serviceNotFoundError = (e) => {
     let t = Error(`Service not found${e.key ? `: ${String(e.key)}` : ``}`);
     if (e.stack) {
@@ -1373,14 +1381,14 @@ const Ft = dual(2, (e, t) => {
     }
     return t;
   },
-  fn = dual(2, (e, t) =>
+  hn = dual(2, (e, t) =>
     e.mapUnsafe.has(t.key)
-      ? k(e.mapUnsafe.get(t.key))
+      ? D(e.mapUnsafe.get(t.key))
       : isReference(t)
-        ? k(getDefaultValue(t))
+        ? D(getDefaultValue(t))
         : none(),
   ),
-  pn = dual(2, (e, t) =>
+  gn = dual(2, (e, t) =>
     e.mapUnsafe.size === 0
       ? t
       : t.mapUnsafe.size === 0
@@ -1389,25 +1397,25 @@ const Ft = dual(2, (e, t) => {
             t.mapUnsafe.forEach((t, n) => e.set(n, t));
           }),
   ),
-  mn = __name((...e) => {
+  _n = __name((...e) => {
     let t = new Map();
     for (let n = 0; n < e.length; n++)
       e[n].mapUnsafe.forEach((e, n) => {
         t.set(n, e);
       });
-    return tn(t);
+    return on(t);
   }, `mergeAll`),
   withMapUnsafe = (e, t) => {
     if (e.mutable) return (t(e.mapUnsafe), e);
     let n = new Map(e.mapUnsafe);
-    return (t(n), tn(n));
+    return (t(n), on(n));
   },
-  P = Service,
-  hn = `~effect/time/Duration`,
-  gn = BigInt(0),
-  _n = BigInt(1e3),
-  vn = BigInt(1e6),
-  yn =
+  N = Service,
+  vn = `~effect/time/Duration`,
+  yn = BigInt(0),
+  bn = BigInt(1e3),
+  xn = BigInt(1e6),
+  Sn =
     /^(-?\d+(?:\.\d+)?)\s+(nanos?|micros?|millis?|seconds?|minutes?|hours?|days?|weeks?)$/,
   fromInputUnsafe = (e) => {
     switch (typeof e) {
@@ -1416,9 +1424,9 @@ const Ft = dual(2, (e, t) => {
       case `bigint`:
         return nanos(e);
       case `string`: {
-        if (e === `Infinity`) return Tn;
-        if (e === `-Infinity`) return En;
-        let t = yn.exec(e);
+        if (e === `Infinity`) return On;
+        if (e === `-Infinity`) return kn;
+        let t = Sn.exec(e);
         if (!t) break;
         let [n, r, i] = t,
           a = Number(r);
@@ -1452,17 +1460,17 @@ const Ft = dual(2, (e, t) => {
       }
       case `object`: {
         if (e === null) break;
-        if (hn in e) return e;
+        if (vn in e) return e;
         if (Array.isArray(e))
           return e.length !== 2 || !e.every(isNumber)
             ? invalid(e)
             : Number.isNaN(e[0]) || Number.isNaN(e[1])
-              ? wn
+              ? Dn
               : e[0] === -1 / 0 || e[1] === -1 / 0
-                ? En
+                ? kn
                 : e[0] === 1 / 0 || e[1] === 1 / 0
-                  ? Tn
-                  : F(
+                  ? On
+                  : P(
                       BigInt(Math.round(e[0] * 1e9)) + BigInt(Math.round(e[1])),
                     );
         let t = e,
@@ -1476,12 +1484,12 @@ const Ft = dual(2, (e, t) => {
           t.milliseconds && (n += t.milliseconds),
           !t.microseconds && !t.nanoseconds)
         )
-          return F(n);
-        let r = BigInt(n) * vn;
+          return P(n);
+        let r = BigInt(n) * xn;
         return (
-          t.microseconds && (r += BigInt(t.microseconds) * _n),
+          t.microseconds && (r += BigInt(t.microseconds) * bn),
           t.nanoseconds && (r += BigInt(t.nanoseconds)),
-          F(r)
+          P(r)
         );
       }
     }
@@ -1490,16 +1498,16 @@ const Ft = dual(2, (e, t) => {
   invalid = (e) => {
     throw Error(`Invalid Input: ${e}`);
   },
-  bn = { _tag: `Millis`, millis: 0 },
-  xn = { _tag: `Infinity` },
-  Sn = { _tag: `NegativeInfinity` },
-  Cn = {
-    [hn]: hn,
-    [h]() {
+  Cn = { _tag: `Millis`, millis: 0 },
+  wn = { _tag: `Infinity` },
+  Tn = { _tag: `NegativeInfinity` },
+  En = {
+    [vn]: vn,
+    [m]() {
       return structure(this.value);
     },
-    [v](e) {
-      return isDuration(e) && An(this, e);
+    [_](e) {
+      return isDuration(e) && Fn(this, e);
     },
     toString() {
       switch (this.value._tag) {
@@ -1529,19 +1537,19 @@ const Ft = dual(2, (e, t) => {
           return { _id: `Duration`, _tag: `NegativeInfinity` };
       }
     },
-    [y]() {
+    [v]() {
       return this.toJSON();
     },
     pipe() {
       return pipeArguments(this, arguments);
     },
   },
-  F = __name((e) => {
-    let t = Object.create(Cn);
+  P = __name((e) => {
+    let t = Object.create(En);
     return (
       typeof e == `number`
         ? isNaN(e) || e === 0 || Object.is(e, -0)
-          ? (t.value = bn)
+          ? (t.value = Cn)
           : Number.isFinite(e)
             ? Number.isInteger(e)
               ? (t.value = { _tag: `Millis`, millis: e })
@@ -1549,36 +1557,36 @@ const Ft = dual(2, (e, t) => {
                   _tag: `Nanos`,
                   nanos: BigInt(Math.round(e * 1e6)),
                 })
-            : (t.value = e > 0 ? xn : Sn)
-        : e === gn
-          ? (t.value = bn)
+            : (t.value = e > 0 ? wn : Tn)
+        : e === yn
+          ? (t.value = Cn)
           : (t.value = { _tag: `Nanos`, nanos: e }),
       t
     );
   }, `make`),
-  isDuration = (e) => p(e, hn),
+  isDuration = (e) => f(e, vn),
   isFinite = (e) =>
     e.value._tag !== `Infinity` && e.value._tag !== `NegativeInfinity`,
-  wn = F(0),
-  Tn = F(1 / 0),
-  En = F(-1 / 0),
-  nanos = (e) => F(e),
-  micros = (e) => F(e * _n),
-  millis = (e) => F(e),
-  seconds = (e) => F(e * 1e3),
-  minutes = (e) => F(e * 6e4),
-  hours = (e) => F(e * 36e5),
-  days = (e) => F(e * 864e5),
-  weeks = (e) => F(e * 6048e5),
+  Dn = P(0),
+  On = P(1 / 0),
+  kn = P(-1 / 0),
+  nanos = (e) => P(e),
+  micros = (e) => P(e * bn),
+  millis = (e) => P(e),
+  seconds = (e) => P(e * 1e3),
+  minutes = (e) => P(e * 6e4),
+  hours = (e) => P(e * 36e5),
+  days = (e) => P(e * 864e5),
+  weeks = (e) => P(e * 6048e5),
   toMillis = (e) =>
-    Dn(fromInputUnsafe(e), {
+    An(fromInputUnsafe(e), {
       onMillis: identity,
       onNanos: (e) => Number(e) / 1e6,
       onInfinity: () => 1 / 0,
       onNegativeInfinity: () => -1 / 0,
     }),
   toSeconds = (e) =>
-    Dn(fromInputUnsafe(e), {
+    An(fromInputUnsafe(e), {
       onMillis: (e) => e / 1e3,
       onNanos: (e) => Number(e) / 1e9,
       onInfinity: () => 1 / 0,
@@ -1596,7 +1604,7 @@ const Ft = dual(2, (e, t) => {
         return BigInt(Math.round(t.value.millis * 1e6));
     }
   },
-  Dn = dual(2, (e, t) => {
+  An = dual(2, (e, t) => {
     switch (e.value._tag) {
       case `Millis`:
         return t.onMillis(e.value.millis);
@@ -1608,7 +1616,7 @@ const Ft = dual(2, (e, t) => {
         return (t.onNegativeInfinity ?? t.onInfinity)();
     }
   }),
-  On = dual(3, (e, t, n) =>
+  jn = dual(3, (e, t, n) =>
     e.value._tag === `Infinity` ||
     e.value._tag === `NegativeInfinity` ||
     t.value._tag === `Infinity` ||
@@ -1620,35 +1628,46 @@ const Ft = dual(2, (e, t) => {
           : n.onNanos(toNanosUnsafe(e), t.value.nanos)
         : n.onNanos(e.value.nanos, toNanosUnsafe(t)),
   ),
-  kn = __name(
+  Mn = make$16((e, t) =>
+    jn(e, t, {
+      onMillis: (e, t) => (e < t ? -1 : +(e > t)),
+      onNanos: (e, t) => (e < t ? -1 : +(e > t)),
+      onInfinity: (e, t) =>
+        e.value._tag === t.value._tag
+          ? 0
+          : e.value._tag === `Infinity`
+            ? 1
+            : e.value._tag === `NegativeInfinity` || t.value._tag === `Infinity`
+              ? -1
+              : 1,
+    }),
+  ),
+  Nn = __name(
     (e, t) =>
-      On(e, t, {
+      jn(e, t, {
         onMillis: (e, t) => e === t,
         onNanos: (e, t) => e === t,
         onInfinity: (e, t) => e.value._tag === t.value._tag,
       }),
     `Equivalence`,
   ),
-  An = dual(2, (e, t) => kn(e, t)),
-  fromPredicate = (e) => (t) => (e(t) ? j(t) : M(t)),
-  toPredicate = (e) => (t) => !N(e(t)),
-  has = (e) => (t) => (t.has(e) ? j(t) : M(t)),
-  jn = dual(2, (e, t) => (n) => {
+  Pn = yt(Mn),
+  Fn = dual(2, (e, t) => Nn(e, t)),
+  fromPredicate = (e) => (t) => (e(t) ? k(t) : A(t)),
+  toPredicate = (e) => (t) => !j(e(t)),
+  has = (e) => (t) => (t.has(e) ? k(t) : A(t)),
+  In = dual(2, (e, t) => (n) => {
     let r = e(n);
-    return N(r) ? r : t(r.success);
+    return j(r) ? r : t(r.success);
   }),
-  Mn = dual(2, (e, t) => (n) => {
+  Ln = dual(2, (e, t) => (n) => {
     let r = e(n);
-    if (N(r)) return M(n);
+    if (j(r)) return A(n);
     let i = t(r.success);
-    return N(i) ? M(n) : i;
+    return j(i) ? A(n) : i;
   }),
-  toOption = (e) => (t) => {
-    let n = e(t);
-    return N(n) ? none() : k(n.success);
-  },
-  Nn = P(`effect/Scheduler`, { defaultValue: () => new MixedScheduler() }),
-  Pn =
+  Rn = N(`effect/Scheduler`, { defaultValue: () => new MixedScheduler() }),
+  zn =
     `setImmediate` in globalThis
       ? (e) => {
           let t = globalThis.setImmediate(e);
@@ -1680,7 +1699,7 @@ var PriorityBuckets = class {
   MixedScheduler = class {
     executionMode;
     setImmediate;
-    constructor(e = `async`, t = Pn) {
+    constructor(e = `async`, t = zn) {
       ((this.executionMode = e), (this.setImmediate = t));
     }
     shouldYield(e) {
@@ -1694,7 +1713,7 @@ var PriorityBuckets = class {
     tasks = new PriorityBuckets();
     running = void 0;
     setImmediate;
-    constructor(e = Pn) {
+    constructor(e = zn) {
       this.setImmediate = e;
     }
     scheduleTask(e, t) {
@@ -1718,18 +1737,25 @@ var PriorityBuckets = class {
           this.runTasks());
     }
   };
-const Fn = P(`effect/Scheduler/MaxOpsBeforeYield`, {
+const Bn = N(`effect/Scheduler/MaxOpsBeforeYield`, {
     defaultValue: () => 2048,
   }),
-  In = P(`effect/Scheduler/PreventSchedulerYield`, { defaultValue: () => !1 }),
-  Ln = `effect/Tracer/ParentSpan`;
-var ParentSpan = class extends Service()(Ln) {};
-const Rn = __name((e) => e, `make`),
-  zn = P(`effect/Tracer/DisablePropagation`, { defaultValue: l }),
-  Bn = P(`effect/Tracer/CurrentTraceLevel`, { defaultValue: () => `Info` }),
-  Vn = P(`effect/Tracer/MinimumTraceLevel`, { defaultValue: () => `All` }),
-  Hn = `effect/Tracer`,
-  Un = P(Hn, { defaultValue: () => Rn({ span: (e) => new NativeSpan(e) }) });
+  Vn = N(`effect/Scheduler/PreventSchedulerYield`, { defaultValue: () => !1 }),
+  Hn = `effect/Tracer/ParentSpan`;
+var ParentSpan = class extends Service()(Hn) {};
+const Un = __name((e) => e, `make`),
+  externalSpan = (e) => ({
+    _tag: `ExternalSpan`,
+    spanId: e.spanId,
+    traceId: e.traceId,
+    sampled: e.sampled ?? !0,
+    annotations: e.annotations ?? M(),
+  }),
+  Wn = N(`effect/Tracer/DisablePropagation`, { defaultValue: l }),
+  Gn = N(`effect/Tracer/CurrentTraceLevel`, { defaultValue: () => `Info` }),
+  Kn = N(`effect/Tracer/MinimumTraceLevel`, { defaultValue: () => `All` }),
+  qn = `effect/Tracer`,
+  Jn = N(qn, { defaultValue: () => Un({ span: (e) => new NativeSpan(e) }) });
 var NativeSpan = class {
   _tag = `Span`;
   spanId;
@@ -1754,8 +1780,8 @@ var NativeSpan = class {
       (this.sampled = e.sampled),
       (this.status = { _tag: `Started`, startTime: e.startTime }),
       (this.attributes = new Map()),
-      (this.traceId = yt(e.parent)?.traceId ?? Wn(32)),
-      (this.spanId = Wn(16)));
+      (this.traceId = Ct(e.parent)?.traceId ?? Yn(32)),
+      (this.spanId = Yn(16)));
   }
   end(e, t) {
     this.status = {
@@ -1775,7 +1801,7 @@ var NativeSpan = class {
     this.links.push(...e);
   }
 };
-const Wn = (function () {
+const Yn = (function () {
     return function (e) {
       let t = ``;
       for (let n = 0; n < e; n++)
@@ -1783,22 +1809,25 @@ const Wn = (function () {
       return t;
     };
   })(),
-  Gn = P(`effect/References/CurrentConcurrency`, {
+  Xn = N(`effect/References/CurrentConcurrency`, {
     defaultValue: () => `unbounded`,
   }),
-  Kn = P(`effect/References/CurrentStackFrame`, { defaultValue: u }),
-  qn = P(`effect/References/TracerEnabled`, { defaultValue: c }),
-  Jn = P(`effect/References/TracerTimingEnabled`, { defaultValue: c }),
-  Yn = P(`effect/References/TracerSpanAnnotations`, {
+  Zn = N(`effect/ErrorReporter/CurrentErrorReporters`, {
+    defaultValue: () => new Set(),
+  }),
+  Qn = N(`effect/References/CurrentStackFrame`, { defaultValue: u }),
+  $n = N(`effect/References/TracerEnabled`, { defaultValue: c }),
+  er = N(`effect/References/TracerTimingEnabled`, { defaultValue: c }),
+  tr = N(`effect/References/TracerSpanAnnotations`, {
     defaultValue: () => ({}),
   }),
-  Xn = P(`effect/References/TracerSpanLinks`, { defaultValue: () => [] }),
-  Zn = P(`effect/References/CurrentLogAnnotations`, {
+  nr = N(`effect/References/TracerSpanLinks`, { defaultValue: () => [] }),
+  rr = N(`effect/References/CurrentLogAnnotations`, {
     defaultValue: () => ({}),
   }),
-  Qn = P(`effect/References/CurrentLogLevel`, { defaultValue: () => `Info` }),
-  $n = P(`effect/References/MinimumLogLevel`, { defaultValue: () => `Info` }),
-  er = P(`effect/References/CurrentLogSpans`, { defaultValue: () => [] }),
+  ir = N(`effect/References/CurrentLogLevel`, { defaultValue: () => `Info` }),
+  ar = N(`effect/References/MinimumLogLevel`, { defaultValue: () => `Info` }),
+  or = N(`effect/References/CurrentLogSpans`, { defaultValue: () => [] }),
   addSpanStackTrace = (e) => {
     if (
       e?.captureStackTrace === !1 ||
@@ -1811,7 +1840,7 @@ const Wn = (function () {
     let n = Error();
     return (
       (Error.stackTraceLimit = t),
-      { ...e, captureStackTrace: tr(() => n.stack) }
+      { ...e, captureStackTrace: sr(() => n.stack) }
     );
   },
   makeStackCleaner = (e) => (t) => {
@@ -1825,10 +1854,10 @@ const Wn = (function () {
       if (i[e] !== void 0) return ((n = i[e].trim()), n);
     };
   },
-  tr = makeStackCleaner(3);
+  sr = makeStackCleaner(3);
 var Interrupt = class extends ReasonBase {
   fiberId;
-  constructor(e, t = Pe) {
+  constructor(e, t = Ie) {
     (super(`Interrupt`, t, `Interrupted`), (this.fiberId = e));
   }
   toString() {
@@ -1837,31 +1866,31 @@ var Interrupt = class extends ReasonBase {
   toJSON() {
     return { _tag: `Interrupt`, fiberId: this.fiberId };
   }
-  [v](e) {
+  [_](e) {
     return (
       isInterruptReason(e) &&
       this.fiberId === e.fiberId &&
       this.annotations === e.annotations
     );
   }
-  [h]() {
-    return g(_(`${this._tag}:${this.fiberId}`))(random(this.annotations));
+  [m]() {
+    return h(g(`${this._tag}:${this.fiberId}`))(random(this.annotations));
   }
 };
 const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
   findFail = (e) => {
-    let t = e.reasons.find(Le);
-    return t ? j(t) : M(e);
+    let t = e.reasons.find(ze);
+    return t ? k(t) : A(e);
   },
-  nr = __name((e) => {
+  cr = __name((e) => {
     for (let t = 0; t < e.reasons.length; t++) {
       let n = e.reasons[t];
-      if (n._tag === `Fail`) return j(n.error);
+      if (n._tag === `Fail`) return k(n.error);
     }
-    return M(e);
+    return A(e);
   }, `findError`),
-  rr = toOption(nr),
-  ir = __name((e) => e.reasons.some(isInterruptReason), `hasInterrupts`),
+  hasDies = (e) => e.reasons.some(Be),
+  lr = __name((e) => e.reasons.some(isInterruptReason), `hasInterrupts`),
   causeFilterInterruptors = (e) => {
     let t;
     for (let n = 0; n < e.reasons.length; n++) {
@@ -1869,16 +1898,16 @@ const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
       r._tag === `Interrupt` &&
         ((t ??= new Set()), r.fiberId !== void 0 && t.add(r.fiberId));
     }
-    return t ? j(t) : M(e);
+    return t ? k(t) : A(e);
   },
-  ar = __name(
+  ur = __name(
     (e) => e.reasons.length > 0 && e.reasons.every(isInterruptReason),
     `hasInterruptsOnly`,
   ),
-  or = dual(2, (e, t) => {
+  dr = dual(2, (e, t) => {
     if (e.reasons.length === 0) return t;
     if (t.reasons.length === 0) return e;
-    let n = new CauseImpl(Lt(e.reasons, t.reasons));
+    let n = new CauseImpl(Vt(e.reasons, t.reasons));
     return equals$2(e, n) ? e : n;
   }),
   causePartition = (e) => {
@@ -1959,7 +1988,7 @@ const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
       } catch {}
     return formatJson(e);
   },
-  sr = /\((.*)\)/g,
+  fr = /\((.*)\)/g,
   cleanErrorStack = (e, t, n) => {
     let r = `${t.name}: ${t.message}`,
       i = (e.startsWith(r) ? e.slice(r.length) : e).split(`
@@ -1981,14 +2010,14 @@ const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
 `);
   },
   addStackAnnotations = (e, t) => {
-    let n = t?.get(ze.key);
+    let n = t?.get(Ve.key);
     return (n && (e = `${e}\n${currentStackTrace(n)}`), e);
   },
   interruptCauseStack = (e, t) => {
     let n = [`${e.name}: ${e.message}`];
     for (let e of t) {
       let t = e.fiberId === void 0 ? `unknown` : `#${e.fiberId}`,
-        r = e.annotations.get(Be.key);
+        r = e.annotations.get(He.key);
       (n.push(`    at fiber (${t})`), r && n.push(currentStackTrace(r)));
     }
     return n.join(`
@@ -2001,7 +2030,7 @@ const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
     for (; n && r < 10; ) {
       let e = n.stack();
       if (e) {
-        let r = e.matchAll(sr),
+        let r = e.matchAll(fr),
           i = !1;
         for (let [, e] of r) ((i = !0), t.push(`    at ${n.name} (${e})`));
         i || t.push(`    at ${n.name} (${e.replace(/^at /, ``)})`);
@@ -2025,15 +2054,15 @@ const causeInterrupt = (e) => new CauseImpl([new Interrupt(e)]),
       e.cause && (r += ` {\n${renderErrorCause(e.cause, `${t}  `)}\n${t}}`), r
     );
   },
-  cr = `~effect/Fiber/dev`,
-  lr = { _A: identity, _E: identity },
-  ur = { id: 0 },
-  getCurrentFiber = () => globalThis[he];
+  pr = `~effect/Fiber/dev`,
+  mr = { _A: identity, _E: identity },
+  hr = { id: 0 },
+  getCurrentFiber = () => globalThis[ge];
 var FiberImpl = class {
   constructor(e, t = !0) {
-    ((this[cr] = lr),
+    ((this[pr] = mr),
       this.setContext(e),
-      (this.id = ++ur.id),
+      (this.id = ++hr.id),
       (this.currentOpCount = 0),
       (this.currentLoopCount = 0),
       (this.interruptible = t),
@@ -2045,7 +2074,7 @@ var FiberImpl = class {
       (this._yielded = void 0),
       this.runtimeMetrics?.recordFiberStart(this.context));
   }
-  [cr];
+  [pr];
   id;
   interruptible;
   currentOpCount;
@@ -2086,12 +2115,12 @@ var FiberImpl = class {
   interruptUnsafe(e, t) {
     if (this._exit) return;
     let n = causeInterrupt(e);
-    (this.currentStackFrame && (n = Ie(n, on(ze, this.currentStackFrame))),
-      t && (n = Ie(n, t)),
+    (this.currentStackFrame && (n = Re(n, ln(Ve, this.currentStackFrame))),
+      t && (n = Re(n, t)),
       (this._interruptedCause = this._interruptedCause
-        ? or(this._interruptedCause, n)
+        ? dr(this._interruptedCause, n)
         : n),
-      this.interruptible && this.evaluate(L(this._interruptedCause)));
+      this.interruptible && this.evaluate(I(this._interruptedCause)));
   }
   pollUnsafe() {
     return this._exit;
@@ -2103,17 +2132,17 @@ var FiberImpl = class {
       ((this._yielded = void 0), e());
     }
     let t = this.runLoop(e);
-    if (t === Oe) return;
-    let n = dr.interruptChildren && dr.interruptChildren(this);
-    if (n !== void 0) return this.evaluate(H(n, () => t));
+    if (t === Ae) return;
+    let n = gr.interruptChildren && gr.interruptChildren(this);
+    if (n !== void 0) return this.evaluate(V(n, () => t));
     ((this._exit = t),
       this.runtimeMetrics?.recordFiberEnd(this.context, this._exit));
     for (let e = 0; e < this._observers.length; e++) this._observers[e](t);
     this._observers.length = 0;
   }
   runLoop(e) {
-    let t = globalThis[he];
-    globalThis[he] = this;
+    let t = globalThis[ge];
+    globalThis[ge] = this;
     let n = !1,
       r = e;
     this.currentOpCount = 0;
@@ -2128,39 +2157,39 @@ var FiberImpl = class {
         ) {
           n = !0;
           let e = r;
-          r = H(hr, () => e);
+          r = V(br, () => e);
         }
         if (
           ((r = this.currentTracerContext
             ? this.currentTracerContext(r, this)
-            : r[S](this)),
+            : r[x](this)),
           i !== this.currentLoopCount)
         )
-          return Oe;
-        if (r === Oe) {
+          return Ae;
+        if (r === Ae) {
           let e = this._yielded;
-          return we in e ? ((this._yielded = void 0), e) : Oe;
+          return Te in e ? ((this._yielded = void 0), e) : Ae;
         }
       }
     } catch (e) {
-      return p(r, S)
+      return f(r, x)
         ? this.runLoop(exitDie(e))
         : exitDie(`Fiber.runLoop: Not a valid effect: ${String(r)}`);
     } finally {
-      globalThis[he] = t;
+      globalThis[ge] = t;
     }
   }
   getCont(e) {
     for (;;) {
       let t = this._stack.pop();
       if (!t) return;
-      let n = t[De] && t[De](this);
+      let n = t[ke] && t[ke](this);
       if (n) return ((n[e] = n), n);
       if (t[e]) return t;
     }
   }
   yieldWith(e) {
-    return ((this._yielded = e), Oe);
+    return ((this._yielded = e), Ae);
   }
   children() {
     return (this._children ??= new Set());
@@ -2170,30 +2199,30 @@ var FiberImpl = class {
   }
   setContext(e) {
     this.context = e;
-    let t = this.getRef(Nn);
+    let t = this.getRef(Rn);
     (t !== this.currentScheduler &&
       ((this.currentScheduler = t), (this._dispatcher = void 0)),
-      (this.currentSpan = e.mapUnsafe.get(Ln)),
-      (this.currentLogLevel = this.getRef(Qn)),
-      (this.minimumLogLevel = this.getRef($n)),
-      (this.currentStackFrame = e.mapUnsafe.get(Kn.key)),
-      (this.maxOpsBeforeYield = this.getRef(Fn)),
-      (this.currentPreventYield = this.getRef(In)),
+      (this.currentSpan = e.mapUnsafe.get(Hn)),
+      (this.currentLogLevel = this.getRef(ir)),
+      (this.minimumLogLevel = this.getRef(ar)),
+      (this.currentStackFrame = e.mapUnsafe.get(Qn.key)),
+      (this.maxOpsBeforeYield = this.getRef(Bn)),
+      (this.currentPreventYield = this.getRef(Vn)),
       (this.runtimeMetrics = e.mapUnsafe.get(
         `effect/observability/Metric/FiberRuntimeMetricsKey`,
       )));
-    let n = e.mapUnsafe.get(Hn);
+    let n = e.mapUnsafe.get(qn);
     this.currentTracerContext = n ? n.context : void 0;
   }
   get currentSpanLocal() {
     return this.currentSpan?._tag === `Span` ? this.currentSpan : void 0;
   }
 };
-const dr = { interruptChildren: void 0 },
+const gr = { interruptChildren: void 0 },
   fiberStackAnnotations = (e) => {
     if (!e.currentStackFrame) return;
     let t = new Map();
-    return (t.set(ze.key, e.currentStackFrame), tn(t));
+    return (t.set(Ve.key, e.currentStackFrame), on(t));
   },
   fiberInterruptChildren = (e) => {
     if (!(e._children === void 0 || e._children.size === 0))
@@ -2202,11 +2231,11 @@ const dr = { interruptChildren: void 0 },
   fiberAwait = (e) => {
     let t = e;
     return t._exit
-      ? I(t._exit)
-      : V((n) => (t._exit ? n(I(t._exit)) : R(e.addObserver((e) => n(I(e))))));
+      ? F(t._exit)
+      : B((n) => (t._exit ? n(F(t._exit)) : L(e.addObserver((e) => n(F(e))))));
   },
   fiberAwaitAll = (e) =>
-    V((t) => {
+    B((t) => {
       let n = e[Symbol.iterator](),
         r = [],
         i;
@@ -2222,120 +2251,120 @@ const dr = { interruptChildren: void 0 },
           });
           return;
         }
-        t(I(r));
+        t(F(r));
       }
-      return (loop(), R(() => i?.()));
+      return (loop(), L(() => i?.()));
     }),
   fiberJoin = (e) => {
     let t = e;
     return t._exit
       ? t._exit
-      : V((n) => (t._exit ? n(t._exit) : R(e.addObserver(n))));
+      : B((n) => (t._exit ? n(t._exit) : L(e.addObserver(n))));
   },
-  fiberInterrupt = (e) => O((t) => fr(e, t.id)),
-  fr = dual(
-    (e) => p(e[0], cr),
+  fiberInterrupt = (e) => E((t) => _r(e, t.id)),
+  _r = dual(
+    (e) => f(e[0], pr),
     (e, t, n) =>
-      O((r) => {
+      E((r) => {
         let i = fiberStackAnnotations(r);
         return (
-          (i = i && n ? pn(i, n) : (i ?? n)),
+          (i = i && n ? gn(i, n) : (i ?? n)),
           e.interruptUnsafe(t, i),
-          Nr(fiberAwait(e))
+          Rr(fiberAwait(e))
         );
       }),
   ),
   fiberInterruptAll = (e) =>
-    O((t) => {
+    E((t) => {
       let n = fiberStackAnnotations(t);
       for (let r of e) r.interruptUnsafe(t.id, n);
-      return Nr(fiberAwaitAll(e));
+      return Rr(fiberAwaitAll(e));
     }),
-  I = E,
-  L = D,
-  pr = exitFail,
-  R = makePrimitive({
+  F = w,
+  I = T,
+  vr = exitFail,
+  L = makePrimitive({
     op: `Sync`,
-    [S](e) {
-      let t = this[x](),
-        n = e.getCont(C);
-      return n ? n[C](t, e) : e.yieldWith(E(t));
+    [x](e) {
+      let t = this[b](),
+        n = e.getCont(S);
+      return n ? n[S](t, e) : e.yieldWith(w(t));
     },
   }),
-  z = makePrimitive({
+  R = makePrimitive({
     op: `Suspend`,
-    [S](e) {
-      return this[x]();
+    [x](e) {
+      return this[b]();
     },
   }),
-  mr = wt({ onFailure: pr, onSuccess: I }),
-  hr = makePrimitive({
+  yr = Ot({ onFailure: vr, onSuccess: F }),
+  br = makePrimitive({
     op: `Yield`,
-    [S](e) {
+    [x](e) {
       let t = !1;
       return (
         e.currentDispatcher.scheduleTask(() => {
           t || e.evaluate(U);
-        }, this[x] ?? 0),
+        }, this[b] ?? 0),
         e.yieldWith(() => {
           t = !0;
         })
       );
     },
   })(0),
-  gr = __name((e) => I(k(e)), `succeedSome`),
-  _r = I(none()),
-  vr = __name((e) => exitDie(e), `die`),
-  failSync = (e) => z(() => pr(b(e))),
-  B = I(void 0),
-  yr = __name(
+  xr = __name((e) => F(D(e)), `succeedSome`),
+  Sr = F(none()),
+  Cr = __name((e) => exitDie(e), `die`),
+  failSync = (e) => R(() => vr(y(e))),
+  z = F(void 0),
+  wr = __name(
     (e) =>
-      z(() => {
+      R(() => {
         try {
-          return I(b(e.try));
+          return F(y(e.try));
         } catch (t) {
-          return pr(b(() => e.catch(t)));
+          return vr(y(() => e.catch(t)));
         }
       }),
     `try_`,
   ),
-  br = __name(
+  Tr = __name(
     (e) =>
-      Sr(function (t, n) {
-        b(() => e(n)).then(
-          (e) => t(I(e)),
-          (e) => t(vr(e)),
+      Dr(function (t, n) {
+        y(() => e(n)).then(
+          (e) => t(F(e)),
+          (e) => t(Cr(e)),
         );
       }, e.length !== 0),
     `promise`,
   ),
-  xr = __name((e) => {
+  Er = __name((e) => {
     let t = typeof e == `function` ? e : e.try,
       n =
         typeof e == `function`
           ? (e) =>
               new UnknownError$1(e, `An error occurred in Effect.tryPromise`)
           : e.catch;
-    return Sr(function (e, r) {
+    return Dr(function (e, r) {
       try {
-        b(() => t(r)).then(
-          (t) => e(I(t)),
-          (t) => e(pr(b(() => n(t)))),
+        y(() => t(r)).then(
+          (t) => e(F(t)),
+          (t) => e(vr(y(() => n(t)))),
         );
       } catch (t) {
-        e(pr(b(() => n(t))));
+        e(vr(y(() => n(t))));
       }
     }, eval.length !== 0);
   }, `tryPromise`),
-  withFiberId = (e) => O((t) => e(t.id)),
-  Sr = makePrimitive({
+  withFiberId = (e) => E((t) => e(t.id)),
+  Dr = makePrimitive({
     op: `Async`,
     single: !1,
-    [S](e) {
-      let t = b(() => this[x][0].bind(e.currentScheduler)),
+    [x](e) {
+      let t = y(() => this[b][0].bind(e.currentScheduler)),
         n = !1,
         r = !1,
-        i = this[x][1] ? new AbortController() : void 0,
+        i = this[b][1] ? new AbortController() : void 0,
         a = t((t) => {
           n || ((n = !0), r ? e.evaluate(t) : (r = t));
         }, i?.signal);
@@ -2345,33 +2374,33 @@ const dr = { interruptChildren: void 0 },
             n = !0;
           }),
           (i === void 0 && a === void 0) ||
-            e._stack.push(Cr(() => ((n = !0), i?.abort(), a ?? U))),
-          Oe)
+            e._stack.push(Or(() => ((n = !0), i?.abort(), a ?? U))),
+          Ae)
         : r;
     },
   }),
-  Cr = makePrimitive({
+  Or = makePrimitive({
     op: `AsyncFinalizer`,
-    [De](e) {
-      e.interruptible && ((e.interruptible = !1), e._stack.push(Wi));
+    [ke](e) {
+      e.interruptible && ((e.interruptible = !1), e._stack.push(Qi));
     },
-    [w](e, t) {
-      return ir(e) ? H(this[x](), () => L(e)) : L(e);
+    [Oe](e, t) {
+      return lr(e) ? V(this[b](), () => I(e)) : I(e);
     },
   }),
-  V = __name((e) => Sr(e, e.length >= 2), `callback`),
-  wr = __name(
-    (...e) => z(() => kr(e.length === 1 ? e[0]() : e[1].call(e[0].self))),
+  B = __name((e) => Dr(e, e.length >= 2), `callback`),
+  kr = __name(
+    (...e) => R(() => Pr(e.length === 1 ? e[0]() : e[1].call(e[0].self))),
     `gen`,
   ),
-  Tr = __name((e, ...t) => {
+  Ar = __name((e, ...t) => {
     let n =
       t.length === 0
         ? function () {
-            return z(() => kr(e.apply(this, arguments)));
+            return R(() => Pr(e.apply(this, arguments)));
           }
         : function () {
-            let n = z(() => kr(e.apply(this, arguments)));
+            let n = R(() => Pr(e.apply(this, arguments)));
             for (let e = 0; e < t.length; e++) n = t[e](n, ...arguments);
             return n;
           };
@@ -2379,8 +2408,8 @@ const dr = { interruptChildren: void 0 },
   }, `fnUntraced`),
   defineFunctionLength = (e, t) =>
     Object.defineProperty(t, `length`, { value: e, configurable: !0 }),
-  Er = makeStackCleaner(2),
-  Dr = __name(function () {
+  jr = makeStackCleaner(2),
+  Mr = __name(function () {
     let e = typeof arguments[0] == `string`,
       t = e ? arguments[0] : `Effect.fn`,
       n = e ? arguments[1] : void 0,
@@ -2404,30 +2433,30 @@ const dr = { interruptChildren: void 0 },
   makeFn = (e, t, n, r, i, a) => {
     let o = typeof t == `function` ? t : r.pop().bind(t.self);
     return defineFunctionLength(o.length, function (...t) {
-      let s = z(() => {
+      let s = R(() => {
         let e = o.apply(this, arguments);
-        return T(e) ? e : kr(e);
+        return C(e) ? e : Pr(e);
       });
       for (let e = 0; e < r.length; e++) s = r[e](s, ...t);
-      if (!T(s)) return s;
+      if (!C(s)) return s;
       let c = globalThis.Error.stackTraceLimit;
       globalThis.Error.stackTraceLimit = 2;
       let l = new globalThis.Error();
       return (
         (globalThis.Error.stackTraceLimit = c),
-        Jr(i ? pa(e, a, (e) => ma(s, e)) : s, Kn, (t) => ({
+        $r(i ? xa(e, a, (e) => Sa(s, e)) : s, Qn, (t) => ({
           name: e,
-          stack: Er(() => l.stack),
+          stack: jr(() => l.stack),
           parent: {
             name: `${e} (definition)`,
-            stack: Er(() => n.stack),
+            stack: jr(() => n.stack),
             parent: t,
           },
         }))
       );
     });
   },
-  Or = __name(
+  Nr = __name(
     (e, ...t) =>
       defineFunctionLength(
         e.length,
@@ -2449,7 +2478,7 @@ const dr = { interruptChildren: void 0 },
         n;
       for (;;) {
         let r = t.next(n);
-        if (r.done) return I(r.value);
+        if (r.done) return F(r.value);
         let i = r.value;
         if (i && i._tag === `Success`) {
           n = i.value;
@@ -2457,54 +2486,54 @@ const dr = { interruptChildren: void 0 },
         } else if (i && i._tag === `Failure`) return r.value;
         else {
           let n = !0;
-          return z(() =>
-            n ? ((n = !1), H(r.value, (e) => kr(t, e))) : z(() => kr(e())),
+          return R(() =>
+            n ? ((n = !1), V(r.value, (e) => Pr(t, e))) : R(() => Pr(e())),
           );
         }
       }
     } catch (e) {
-      return vr(e);
+      return Cr(e);
     }
   },
-  kr = makePrimitive({
+  Pr = makePrimitive({
     op: `Iterator`,
     single: !1,
-    [C](e, t) {
-      let n = this[x][0];
+    [S](e, t) {
+      let n = this[b][0];
       for (;;) {
         let r = n.next(e);
-        if (r.done) return I(r.value);
+        if (r.done) return F(r.value);
         if (!effectIsExit(r.value)) return (t._stack.push(this), r.value);
         if (r.value._tag === `Failure`) return r.value;
         e = r.value.value;
       }
     },
-    [S](e) {
-      return this[C](this[x][1], e);
+    [x](e) {
+      return this[S](this[b][1], e);
     },
   }),
-  Ar = dual(2, (e, t) => {
-    let n = I(t);
-    return H(e, (e) => n);
+  Fr = dual(2, (e, t) => {
+    let n = F(t);
+    return V(e, (e) => n);
   }),
-  asSome = (e) => Rr(e, k),
-  jr = dual(2, (e, t) => H(e, (e) => (T(t) ? t : b(() => t(e))))),
-  Mr = dual(2, (e, t) => H(e, (e) => Ar(T(t) ? t : b(() => t(e)), e))),
-  Nr = __name((e) => H(e, (e) => U), `asVoid`),
+  asSome = (e) => H(e, D),
+  Ir = dual(2, (e, t) => V(e, (e) => (C(t) ? t : y(() => t(e))))),
+  Lr = dual(2, (e, t) => V(e, (e) => Fr(C(t) ? t : y(() => t(e)), e))),
+  Rr = __name((e) => V(e, (e) => U), `asVoid`),
   raceAllFirst = (e, t) =>
-    O((n) =>
-      V((r) => {
+    E((n) =>
+      B((r) => {
         let i = !1,
           a = new Set(),
           onExit = (e) => {
             ((i = !0),
-              r(a.size === 0 ? e : H(Hi(fiberInterruptAll(a)), () => e)));
+              r(a.size === 0 ? e : V(Xi(fiberInterruptAll(a)), () => e)));
           },
           o = 0;
         for (let r of e) {
           if (i) break;
           let e = o++,
-            s = Qi(n, r, !0, !0, !1);
+            s = oa(n, r, !0, !0, !1);
           (a.add(s),
             s.addObserver((r) => {
               a.delete(s);
@@ -2518,79 +2547,86 @@ const dr = { interruptChildren: void 0 },
         return fiberInterruptAll(a);
       }),
     ),
-  Pr = dual(
-    (e) => T(e[1]),
+  zr = dual(
+    (e) => C(e[1]),
     (e, t, n) => raceAllFirst([e, t], n),
   ),
-  H = dual(2, (e, t) => {
-    let n = Object.create(Fr);
-    return ((n[x] = e), (n[C] = t.length === 1 ? t : (e) => t(e)), n);
+  V = dual(2, (e, t) => {
+    let n = Object.create(Br);
+    return ((n[b] = e), (n[S] = t.length === 1 ? t : (e) => t(e)), n);
   }),
-  Fr = makePrimitiveProto({
+  Br = makePrimitiveProto({
     op: `OnSuccess`,
-    [S](e) {
-      return (e._stack.push(this), this[x]);
+    [x](e) {
+      return (e._stack.push(this), this[b]);
     },
   }),
-  effectIsExit = (e) => we in e,
-  Ir = dual(2, (e, t) =>
-    effectIsExit(e) ? (e._tag === `Success` ? t(e.value) : e) : H(e, t),
+  Vr = dual(2, (e, t) =>
+    effectIsExit(e)
+      ? e._tag === `Success`
+        ? t.onSuccess(e.value)
+        : t.onFailure(e.cause)
+      : yi(e, t),
   ),
-  Lr = __name((e) => H(e, identity), `flatten`),
-  Rr = dual(2, (e, t) => H(e, (e) => I(b(() => t(e))))),
-  zr = dual(2, (e, t) => (effectIsExit(e) ? Ur(e, t) : Rr(e, t))),
-  Br = dual(2, (e, t) => (effectIsExit(e) ? Wr(e, t) : ci(e, t))),
-  Vr = dual(2, (e, t) => {
+  effectIsExit = (e) => Te in e,
+  Hr = dual(2, (e, t) =>
+    effectIsExit(e) ? (e._tag === `Success` ? t(e.value) : e) : V(e, t),
+  ),
+  Ur = __name((e) => V(e, identity), `flatten`),
+  H = dual(2, (e, t) => V(e, (e) => F(y(() => t(e))))),
+  Wr = dual(2, (e, t) => (effectIsExit(e) ? Jr(e, t) : H(e, t))),
+  Gr = dual(2, (e, t) => (effectIsExit(e) ? Yr(e, t) : hi(e, t))),
+  Kr = dual(2, (e, t) => {
     if (effectIsExit(e)) {
       if (e._tag === `Success`) return e;
-      let n = nr(e.cause);
-      return N(n) ? e : t(n.success);
+      let n = cr(e.cause);
+      return j(n) ? e : t(n.success);
     }
-    return ii(e, t);
+    return di(e, t);
   }),
-  Hr = __name((e) => D(causeInterrupt(e)), `exitInterrupt`),
+  qr = __name((e) => T(causeInterrupt(e)), `exitInterrupt`),
   exitIsSuccess = (e) => e._tag === `Success`,
   exitIsFailure = (e) => e._tag === `Failure`,
-  exitFilterCause = (e) => (e._tag === `Failure` ? j(e.cause) : M(e)),
-  U = E(void 0),
-  Ur = dual(2, (e, t) => (e._tag === `Success` ? E(t(e.value)) : e)),
-  Wr = dual(2, (e, t) => {
+  exitFilterCause = (e) => (e._tag === `Failure` ? k(e.cause) : A(e)),
+  U = w(void 0),
+  Jr = dual(2, (e, t) => (e._tag === `Success` ? w(t(e.value)) : e)),
+  Yr = dual(2, (e, t) => {
     if (e._tag === `Success`) return e;
-    let n = nr(e.cause);
-    return N(n) ? e : exitFail(t(n.success));
+    let n = cr(e.cause);
+    return j(n) ? e : exitFail(t(n.success));
   }),
-  Gr = dual(2, (e, t) => (exitIsSuccess(e) ? t : e)),
+  Xr = dual(2, (e, t) => (exitIsSuccess(e) ? t : e)),
   exitAsVoidAll = (e) => {
     let t = [];
     for (let n of e) n._tag === `Failure` && t.push(...n.cause.reasons);
-    return t.length === 0 ? U : D(causeFromReasons(t));
+    return t.length === 0 ? U : T(causeFromReasons(t));
   },
-  exitGetSuccess = (e) => (exitIsSuccess(e) ? k(e.value) : none()),
-  Kr = __name((e) => O((t) => I(fn(t.context, e))), `serviceOption`),
-  qr = dual(2, (e, t) =>
-    O((n) => {
+  exitGetSuccess = (e) => (exitIsSuccess(e) ? D(e.value) : none()),
+  Zr = __name((e) => E((t) => F(hn(t.context, e))), `serviceOption`),
+  Qr = dual(2, (e, t) =>
+    E((n) => {
       let r = n.context,
         i = t(r);
       return r === i
         ? e
         : (n.setContext(i),
-          ji(e, () => {
+          Ri(e, () => {
             n.setContext(r);
           }));
     }),
   ),
-  Jr = dual(3, (e, t, n) =>
-    qr(e, (e) => {
-      let r = ln(e, t),
+  $r = dual(3, (e, t, n) =>
+    Qr(e, (e) => {
+      let r = fn(e, t),
         i = n(r);
-      return r === i ? e : sn(e, t, i);
+      return r === i ? e : un(e, t, i);
     }),
   ),
-  Yr = __name(() => Xr, `context`),
-  Xr = O((e) => I(e.context)),
-  Zr = __name((e) => O((t) => e(t.context)), `contextWith`),
-  Qr = dual(2, (e, t) => (effectIsExit(e) ? e : qr(e, pn(t)))),
-  $r = __name(function () {
+  ei = __name(() => ti, `context`),
+  ti = E((e) => F(e.context)),
+  ni = __name((e) => E((t) => e(t.context)), `contextWith`),
+  ri = dual(2, (e, t) => (effectIsExit(e) ? e : Qr(e, gn(t)))),
+  ii = __name(function () {
     return arguments.length === 1
       ? dual(2, (e, t) => provideServiceImpl(e, arguments[0], t))
       : dual(3, (e, t, n) => provideServiceImpl(e, t, n)).apply(
@@ -2599,149 +2635,160 @@ const dr = { interruptChildren: void 0 },
         );
   }, `provideService`),
   provideServiceImpl = (e, t, n) =>
-    qr(e, (e) => (e.mapUnsafe.get(t.key) === n ? e : sn(e, t, n))),
-  ei = dual(
-    (e) => T(e[0]),
+    Qr(e, (e) => (e.mapUnsafe.get(t.key) === n ? e : un(e, t, n))),
+  ai = dual(
+    (e) => C(e[1]),
+    (e, t, n) => oi(e, t, (e, t) => [e, t], n),
+  ),
+  oi = dual(
+    (e) => C(e[1]),
+    (e, t, n, r) =>
+      r?.concurrent
+        ? H(ta([e, t], { concurrency: 2 }), ([e, t]) => y(() => n(e, t)))
+        : V(e, (e) => H(t, (t) => y(() => n(e, t)))),
+  ),
+  si = dual(
+    (e) => C(e[0]),
     (e, t) =>
-      Ji({
+      na({
         while: c,
-        body: constant(t?.disableYield ? e : H(e, (e) => hr)),
+        body: constant(t?.disableYield ? e : V(e, (e) => br)),
         step: d,
       }),
   ),
-  ti = dual(2, (e, t) => {
-    let n = Object.create(ni);
-    return ((n[x] = e), (n[w] = t.length === 1 ? t : (e) => t(e)), n);
+  ci = dual(2, (e, t) => {
+    let n = Object.create(li);
+    return ((n[b] = e), (n[Oe] = t.length === 1 ? t : (e) => t(e)), n);
   }),
-  ni = makePrimitiveProto({
+  li = makePrimitiveProto({
     op: `OnFailure`,
-    [S](e) {
-      return (e._stack.push(this), this[x]);
+    [x](e) {
+      return (e._stack.push(this), this[b]);
     },
   }),
-  ri = dual(3, (e, t, n) =>
-    ti(e, (e) => {
+  ui = dual(3, (e, t, n) =>
+    ci(e, (e) => {
       let r = t(e);
-      return N(r) ? L(r.failure) : b(() => n(r.success, e));
+      return j(r) ? I(r.failure) : y(() => n(r.success, e));
     }),
   ),
-  ii = dual(2, (e, t) => ri(e, nr, (e) => t(e))),
-  ai = dual(
-    (e) => T(e[0]),
+  di = dual(2, (e, t) => ui(e, cr, (e) => t(e))),
+  fi = dual(
+    (e) => C(e[0]),
     (e, t, n, r) =>
-      ti(e, (e) => {
-        let i = nr(e);
-        return N(i)
-          ? L(i.failure)
+      ci(e, (e) => {
+        let i = cr(e);
+        return j(i)
+          ? I(i.failure)
           : t(i.success)
-            ? b(() => n(i.success))
+            ? y(() => n(i.success))
             : r
-              ? b(() => r(i.success))
-              : L(e);
+              ? y(() => r(i.success))
+              : I(e);
       }),
   ),
-  oi = dual(
-    (e) => T(e[0]),
+  pi = dual(
+    (e) => C(e[0]),
     (e, t, n, r) =>
-      ti(e, (e) => {
-        let i = nr(e);
-        if (N(i)) return L(i.failure);
+      ci(e, (e) => {
+        let i = cr(e);
+        if (j(i)) return I(i.failure);
         let a = t(i.success);
-        return N(a)
+        return j(a)
           ? r
-            ? b(() => r(a.failure))
-            : L(e)
-          : b(() => n(a.success));
+            ? y(() => r(a.failure))
+            : I(e)
+          : y(() => n(a.success));
       }),
   ),
-  si = dual(
-    (e) => T(e[0]),
+  mi = dual(
+    (e) => C(e[0]),
     (e, t, n, r) =>
-      ai(
+      fi(
         e,
-        Array.isArray(t) ? (e) => p(e, `_tag`) && t.includes(e._tag) : m(t),
+        Array.isArray(t) ? (e) => f(e, `_tag`) && t.includes(e._tag) : p(t),
         n,
         r,
       ),
   ),
-  ci = dual(2, (e, t) => ii(e, (e) => failSync(() => t(e)))),
-  li = __name((e) => ii(e, vr), `orDie`),
-  ui = dual(2, (e, t) => ii(e, (e) => R(t))),
-  di = dual(
-    (e) => T(e[0]),
+  hi = dual(2, (e, t) => di(e, (e) => failSync(() => t(e)))),
+  gi = __name((e) => di(e, Cr), `orDie`),
+  _i = dual(2, (e, t) => di(e, (e) => L(t))),
+  vi = dual(
+    (e) => C(e[0]),
     (e, t) => {
-      if (!t?.log) return mi(e, { onFailure: (e) => B, onSuccess: (e) => B });
+      if (!t?.log) return xi(e, { onFailure: (e) => z, onSuccess: (e) => z });
       let n = logWithLevel(t.log === !0 ? void 0 : t.log);
-      return fi(e, {
+      return yi(e, {
         onFailure(e) {
           let r = findFail(e);
-          return N(r)
-            ? L(r.failure)
+          return j(r)
+            ? I(r.failure)
             : t.message === void 0
               ? n(e)
               : n(t.message, e);
         },
-        onSuccess: (e) => B,
+        onSuccess: (e) => z,
       });
     },
   ),
-  result = (e) => gi(e, { onFailure: M, onSuccess: j }),
-  fi = dual(2, (e, t) => {
-    let n = Object.create(pi);
+  result = (e) => Ci(e, { onFailure: A, onSuccess: k }),
+  yi = dual(2, (e, t) => {
+    let n = Object.create(bi);
     return (
-      (n[x] = e),
-      (n[C] = t.onSuccess.length === 1 ? t.onSuccess : (e) => t.onSuccess(e)),
-      (n[w] = t.onFailure.length === 1 ? t.onFailure : (e) => t.onFailure(e)),
+      (n[b] = e),
+      (n[S] = t.onSuccess.length === 1 ? t.onSuccess : (e) => t.onSuccess(e)),
+      (n[Oe] = t.onFailure.length === 1 ? t.onFailure : (e) => t.onFailure(e)),
       n
     );
   }),
-  pi = makePrimitiveProto({
+  bi = makePrimitiveProto({
     op: `OnSuccessAndFailure`,
-    [S](e) {
-      return (e._stack.push(this), this[x]);
+    [x](e) {
+      return (e._stack.push(this), this[b]);
     },
   }),
-  mi = dual(2, (e, t) =>
-    fi(e, {
+  xi = dual(2, (e, t) =>
+    yi(e, {
       onFailure: (e) => {
-        let n = e.reasons.find(Le);
-        return n ? b(() => t.onFailure(n.error)) : L(e);
+        let n = e.reasons.find(ze);
+        return n ? y(() => t.onFailure(n.error)) : I(e);
       },
       onSuccess: t.onSuccess,
     }),
   ),
-  hi = dual(2, (e, t) =>
-    mi(e, {
-      onFailure: (e) => R(() => t.onFailure(e)),
-      onSuccess: (e) => R(() => t.onSuccess(e)),
+  Si = dual(2, (e, t) =>
+    xi(e, {
+      onFailure: (e) => L(() => t.onFailure(e)),
+      onSuccess: (e) => L(() => t.onSuccess(e)),
     }),
   ),
-  gi = dual(2, (e, t) => {
+  Ci = dual(2, (e, t) => {
     if (effectIsExit(e)) {
-      if (e._tag === `Success`) return E(t.onSuccess(e.value));
-      let n = nr(e.cause);
-      return N(n) ? e : E(t.onFailure(n.success));
+      if (e._tag === `Success`) return w(t.onSuccess(e.value));
+      let n = cr(e.cause);
+      return j(n) ? e : w(t.onFailure(n.success));
     }
-    return hi(e, t);
+    return Si(e, t);
   }),
-  _i = __name((e) => (effectIsExit(e) ? E(e) : vi(e)), `exit`),
-  vi = makePrimitive({
+  wi = __name((e) => (effectIsExit(e) ? w(e) : Ti(e)), `exit`),
+  Ti = makePrimitive({
     op: `Exit`,
-    [S](e) {
-      return (e._stack.push(this), this[x]);
+    [x](e) {
+      return (e._stack.push(this), this[b]);
     },
-    [C](e, t, n) {
-      return I(n ?? E(e));
+    [S](e, t, n) {
+      return F(n ?? w(e));
     },
-    [w](e, t, n) {
-      return I(n ?? D(e));
+    [Oe](e, t, n) {
+      return F(n ?? T(e));
     },
   }),
-  yi = dual(2, (e, t) => Pr(e, H(xa(t.duration), t.orElse))),
-  bi = `~effect/Scope`,
-  xi = `~effect/Scope/Closeable`,
-  Si = Service(`effect/Scope`),
-  scopeClose = (e, t) => z(() => scopeCloseUnsafe(e, t) ?? B),
+  Ei = dual(2, (e, t) => zr(e, V(ka(t.duration), t.orElse))),
+  Di = `~effect/Scope`,
+  Oi = `~effect/Scope/Closeable`,
+  ki = Service(`effect/Scope`),
+  scopeClose = (e, t) => R(() => scopeCloseUnsafe(e, t) ?? z),
   scopeCloseUnsafe = (e, t) => {
     if (e.state._tag === `Closed`) return;
     let n = { _tag: `Closed`, exit: t };
@@ -2751,9 +2798,9 @@ const dr = { interruptChildren: void 0 },
     }
     let { finalizers: r } = e.state;
     if (((e.state = n), r.size !== 0))
-      return r.size === 1 ? r.values().next().value(t) : Ci(e, r, t);
+      return r.size === 1 ? r.values().next().value(t) : Ai(e, r, t);
   },
-  Ci = Tr(function* (e, t, n) {
+  Ai = Ar(function* (e, t, n) {
     let r = [],
       i = [],
       a = Array.from(t.values()),
@@ -2761,14 +2808,14 @@ const dr = { interruptChildren: void 0 },
     for (let t = a.length - 1; t >= 0; t--) {
       let s = a[t];
       e.strategy === `sequential`
-        ? r.push(yield* _i(s(n)))
-        : i.push(Qi(o, s(n), !0, !0, `inherit`));
+        ? r.push(yield* wi(s(n)))
+        : i.push(oa(o, s(n), !0, !0, `inherit`));
     }
     return (
       i.length > 0 && (r = yield* fiberAwaitAll(i)), yield* exitAsVoidAll(r)
     );
   }),
-  scopeFork = (e, t) => R(() => scopeForkUnsafe(e, t)),
+  scopeFork = (e, t) => L(() => scopeForkUnsafe(e, t)),
   scopeForkUnsafe = (e, t) => {
     let n = scopeMakeUnsafe(t);
     if (e.state._tag === `Closed`) return ((n.state = e.state), n);
@@ -2776,16 +2823,16 @@ const dr = { interruptChildren: void 0 },
     return (
       scopeAddFinalizerUnsafe(e, r, (e) => scopeClose(n, e)),
       scopeAddFinalizerUnsafe(n, r, (t) =>
-        R(() => scopeRemoveFinalizerUnsafe(e, r)),
+        L(() => scopeRemoveFinalizerUnsafe(e, r)),
       ),
       n
     );
   },
   scopeAddFinalizerExit = (e, t) =>
-    z(() =>
+    R(() =>
       e.state._tag === `Closed`
         ? t(e.state.exit)
-        : (scopeAddFinalizerUnsafe(e, {}, t), B),
+        : (scopeAddFinalizerUnsafe(e, {}, t), z),
     ),
   scopeAddFinalizer = (e, t) => scopeAddFinalizerExit(e, constant(t)),
   scopeAddFinalizerUnsafe = (e, t, n) => {
@@ -2797,111 +2844,115 @@ const dr = { interruptChildren: void 0 },
     e.state._tag === `Open` && e.state.finalizers.delete(t);
   },
   scopeMakeUnsafe = (e = `sequential`) => ({
-    [xi]: xi,
-    [bi]: bi,
+    [Oi]: Oi,
+    [Di]: Di,
     strategy: e,
-    state: wi,
+    state: ji,
   }),
-  wi = { _tag: `Empty` },
-  Ti = Si,
-  Ei = $r(Si),
-  Di = __name(
+  ji = { _tag: `Empty` },
+  Mi = ki,
+  Ni = ii(ki),
+  Pi = __name(
     (e) =>
-      O((t) => {
+      E((t) => {
         let n = t.context,
           r = scopeMakeUnsafe();
         return (
-          t.setContext(sn(t.context, Si, r)),
-          ji(e, (e) => (t.setContext(n), scopeCloseUnsafe(r, e)))
+          t.setContext(un(t.context, ki, r)),
+          Ri(e, (e) => (t.setContext(n), scopeCloseUnsafe(r, e)))
         );
       }),
     `scoped`,
   ),
-  Oi = __name(
+  Fi = __name(
     (e) =>
-      z(() => {
+      R(() => {
         let t = scopeMakeUnsafe();
-        return Mi(e(t), (e) => z(() => scopeCloseUnsafe(t, e) ?? B));
+        return zi(e(t), (e) => R(() => scopeCloseUnsafe(t, e) ?? z));
       }),
     `scopedWith`,
   ),
-  ki = __name(
+  Ii = __name(
     (e, t, n) =>
-      Zr((r) =>
-        Ki((i) =>
-          H(Ti, (a) =>
-            Mr(n?.interruptible ? i(e) : e, (e) =>
-              scopeAddFinalizerExit(a, (n) => Qr(t(e, n), r)),
+      ni((r) =>
+        ea((i) =>
+          V(Mi, (a) =>
+            Lr(n?.interruptible ? i(e) : e, (e) =>
+              scopeAddFinalizerExit(a, (n) => ri(t(e, n), r)),
             ),
           ),
         ),
       ),
     `acquireRelease`,
   ),
-  Ai = __name(
+  Li = __name(
     (e) =>
-      H(Ti, (t) => Zr((n) => scopeAddFinalizerExit(t, (t) => Qr(e(t), n)))),
+      V(Mi, (t) => ni((n) => scopeAddFinalizerExit(t, (t) => ri(e(t), n)))),
     `addFinalizer`,
   ),
-  ji = makePrimitive({
+  Ri = makePrimitive({
     op: `OnExit`,
     single: !1,
-    [S](e) {
-      return (e._stack.push(this), this[x][0]);
+    [x](e) {
+      return (e._stack.push(this), this[b][0]);
     },
-    [De](e) {
+    [ke](e) {
       e.interruptible &&
-        this[x][2] !== !0 &&
-        (e._stack.push(Wi), (e.interruptible = !1));
+        this[b][2] !== !0 &&
+        (e._stack.push(Qi), (e.interruptible = !1));
     },
-    [C](e, t, n) {
-      n ??= E(e);
-      let r = this[x][1](n);
-      return r ? H(r, (e) => n) : n;
+    [S](e, t, n) {
+      n ??= w(e);
+      let r = this[b][1](n);
+      return r ? V(r, (e) => n) : n;
     },
-    [w](e, t, n) {
-      n ??= D(e);
-      let r = this[x][1](n);
-      return r ? H(r, (e) => n) : n;
+    [Oe](e, t, n) {
+      n ??= T(e);
+      let r = this[b][1](n);
+      return r ? V(r, (e) => n) : n;
     },
   }),
-  Mi = dual(2, ji),
-  Ni = dual(2, (e, t) => Mi(e, (e) => t)),
-  Pi = dual(3, (e, t, n) =>
-    Mi(e, (e) => {
+  zi = dual(2, Ri),
+  Bi = dual(2, (e, t) => zi(e, (e) => t)),
+  Vi = dual(3, (e, t, n) =>
+    zi(e, (e) => {
       let r = t(e);
-      return N(r) ? B : n(r.success, e);
+      return j(r) ? z : n(r.success, e);
     }),
   ),
-  Fi = dual(2, (e, t) => Pi(e, exitFilterCause, t)),
-  Ii = dual(3, (e, t, n) =>
-    Mi(e, (e) => {
-      if (e._tag !== `Failure`) return B;
+  Hi = dual(2, (e, t) => Vi(e, exitFilterCause, t)),
+  Ui = dual(3, (e, t, n) =>
+    zi(e, (e) => {
+      if (e._tag !== `Failure`) return z;
       let r = t(e.cause);
-      return N(r) ? B : n(r.success, e.cause);
+      return j(r) ? z : n(r.success, e.cause);
     }),
   ),
-  Li = dual(2, (e, t) => Ii(causeFilterInterruptors, t)(e)),
-  Ri = dual(2, (e, t) =>
-    R(() => {
+  Wi = dual(2, (e, t) => Ui(causeFilterInterruptors, t)(e)),
+  Gi = __name(
+    (e, t, n) => ea((r) => V(e, (e) => Ri(r(t(e)), (t) => n(e, t), !0))),
+    `acquireUseRelease`,
+  ),
+  Ki = dual(2, (e, t) =>
+    L(() => {
       let n = toMillis(fromInputUnsafe(t)),
         r = Number.isFinite(n),
         i = makeLatchUnsafe(!1),
         a = 0,
         o = !1,
         s,
-        c = H(i.await, () => s);
+        c = V(i.await, () => s);
       return [
-        O((t) => {
-          let l = t.getRef(ga),
+        E((t) => {
+          let l = t.getRef(wa),
             u = r ? l.currentTimeMillisUnsafe() : 0;
           return o || u < a
             ? (s ?? c)
             : ((o = !0),
               i.closeUnsafe(),
               (s = void 0),
-              Mi(e, (e) =>
-                R(() => {
+              zi(e, (e) =>
+                L(() => {
                   ((o = !1),
                     (a = l.currentTimeMillisUnsafe() + n),
                     (s = e),
@@ -2909,65 +2960,65 @@ const dr = { interruptChildren: void 0 },
                 }),
               ));
         }),
-        R(() => {
+        L(() => {
           ((a = 0), i.closeUnsafe(), (s = void 0));
         }),
       ];
     }),
   ),
-  zi = dual(2, (e, t) => Rr(Ri(e, t), (e) => e[0])),
-  Bi = __name((e) => zi(e, Tn), `cached`),
-  Vi = O((e) => L(causeInterrupt(e.id))),
-  Hi = __name(
+  qi = dual(2, (e, t) => H(Ki(e, t), (e) => e[0])),
+  Ji = __name((e) => qi(e, On), `cached`),
+  Yi = E((e) => I(causeInterrupt(e.id))),
+  Xi = __name(
     (e) =>
-      O((t) =>
-        t.interruptible ? ((t.interruptible = !1), t._stack.push(Wi), e) : e,
+      E((t) =>
+        t.interruptible ? ((t.interruptible = !1), t._stack.push(Qi), e) : e,
       ),
     `uninterruptible`,
   ),
-  Ui = makePrimitive({
+  Zi = makePrimitive({
     op: `SetInterruptible`,
-    [De](e) {
-      if (((e.interruptible = this[x]), e._interruptedCause && e.interruptible))
-        return () => L(e._interruptedCause);
+    [ke](e) {
+      if (((e.interruptible = this[b]), e._interruptedCause && e.interruptible))
+        return () => I(e._interruptedCause);
     },
   }),
-  Wi = Ui(!0),
-  Gi = Ui(!1),
+  Qi = Zi(!0),
+  $i = Zi(!1),
   interruptible = (e) =>
-    O((t) =>
+    E((t) =>
       t.interruptible
         ? e
         : ((t.interruptible = !0),
-          t._stack.push(Gi),
-          t._interruptedCause ? L(t._interruptedCause) : e),
+          t._stack.push($i),
+          t._interruptedCause ? I(t._interruptedCause) : e),
     ),
-  Ki = __name(
+  ea = __name(
     (e) =>
-      O((t) =>
+      E((t) =>
         t.interruptible
-          ? ((t.interruptible = !1), t._stack.push(Wi), e(interruptible))
+          ? ((t.interruptible = !1), t._stack.push(Qi), e(interruptible))
           : e(identity),
       ),
     `uninterruptibleMask`,
   ),
-  qi = __name(
+  ta = __name(
     (e, t) =>
       isIterable(e)
         ? t?.mode === `result`
-          ? Yi(e, result, t)
-          : Yi(e, identity, t)
+          ? ra(e, result, t)
+          : ra(e, identity, t)
         : t?.discard
           ? t.mode === `result`
-            ? Yi(Object.values(e), result, t)
-            : Yi(Object.values(e), identity, t)
-          : z(() => {
+            ? ra(Object.values(e), result, t)
+            : ra(Object.values(e), identity, t)
+          : R(() => {
               let n = {};
-              return Ar(
-                Yi(
+              return Fr(
+                ra(
                   Object.entries(e),
                   ([e, r]) =>
-                    Rr(t?.mode === `result` ? result(r) : r, (t) => {
+                    H(t?.mode === `result` ? result(r) : r, (t) => {
                       n[e] = t;
                     }),
                   { discard: !0, concurrency: t?.concurrency },
@@ -2977,42 +3028,42 @@ const dr = { interruptChildren: void 0 },
             }),
     `all`,
   ),
-  Ji = makePrimitive({
+  na = makePrimitive({
     op: `While`,
-    [C](e, t) {
+    [S](e, t) {
       return (
-        this[x].step(e),
-        this[x].while() ? (t._stack.push(this), this[x].body()) : U
+        this[b].step(e),
+        this[b].while() ? (t._stack.push(this), this[b].body()) : U
       );
     },
-    [S](e) {
-      return this[x].while() ? (e._stack.push(this), this[x].body()) : U;
+    [x](e) {
+      return this[b].while() ? (e._stack.push(this), this[b].body()) : U;
     },
   }),
-  Yi = dual(
+  ra = dual(
     (e) => typeof e[1] == `function`,
     (e, t, n) =>
-      O((r) => {
+      E((r) => {
         let i =
-            n?.concurrency === `inherit` ? r.getRef(Gn) : (n?.concurrency ?? 1),
+            n?.concurrency === `inherit` ? r.getRef(Xn) : (n?.concurrency ?? 1),
           a = i === `unbounded` ? 1 / 0 : Math.max(1, i);
         if (a === 1) return forEachSequential(e, t, n);
         let o = fromIterable(e),
           s = o.length;
-        if (s === 0) return n?.discard ? B : I([]);
+        if (s === 0) return n?.discard ? z : F([]);
         let c = n?.discard ? void 0 : Array(s),
-          l = Xi({ f: t, out: c }, o, { concurrency: a });
-        return l ? Ar(l, c) : I(c);
+          l = ia({ f: t, out: c }, o, { concurrency: a });
+        return l ? Fr(l, c) : F(c);
       }),
   ),
   forEachSequential = (e, t, n) =>
-    z(() => {
+    R(() => {
       let r = n?.discard ? void 0 : [],
         i = e[Symbol.iterator](),
         a = i.next(),
         o = 0;
-      return Ar(
-        Ji({
+      return Fr(
+        na({
           while: () => !a.done,
           body: () => t(a.value, o++),
           step: (e) => {
@@ -3033,53 +3084,53 @@ const dr = { interruptChildren: void 0 },
         l,
         u,
         d,
-        f = !1,
+        ee = !1,
+        f,
         p,
-        m,
         go = () => {
           let i = !1;
-          for (; !p && a < o; a++) {
+          for (; !f && a < o; a++) {
             let o = r[a],
-              h = m ?? t(e, o, a);
-            if (effectIsExit(h)) {
-              if (((p = n(e, o, h, a)), p)) break;
+              m = p ?? t(e, o, a);
+            if (effectIsExit(m)) {
+              if (((f = n(e, o, m, a)), f)) break;
             } else if (s === 1)
-              return H(
-                _i(h),
-                (t) => ((p = n(e, o, t, a)), a++, p ?? go() ?? B),
+              return V(
+                wi(m),
+                (t) => ((f = n(e, o, t, a)), a++, f ?? go() ?? z),
               );
             else if (l) {
-              m = void 0;
-              let t = Qi(l, h, !0, !0, `inherit`);
+              p = void 0;
+              let t = oa(l, m, !0, !0, `inherit`);
               if (t._exit) {
-                if (((p = n(e, o, t._exit, a)), p)) break;
+                if (((f = n(e, o, t._exit, a)), f)) break;
                 continue;
               }
               u ? u.add(t) : (u = new Set([t]));
               let r = a;
               if (
                 (t.addObserver((a) => {
-                  if ((u.delete(t), p)) {
-                    if (!f && a._tag === `Failure`)
+                  if ((u.delete(t), f)) {
+                    if (!ee && a._tag === `Failure`)
                       for (let e of a.cause.reasons)
                         if (e._tag === `Interrupt`) continue;
                         else
-                          p._tag === `Failure`
-                            ? p.cause.reasons.push(e)
-                            : (p = D(causeFromReasons([e])));
+                          f._tag === `Failure`
+                            ? f.cause.reasons.push(e)
+                            : (f = T(causeFromReasons([e])));
                   } else {
                     let t = n(e, o, a, r);
                     t &&
-                      ((p =
+                      ((f =
                         t._tag === `Failure`
-                          ? D(causeFromReasons(t.cause.reasons.slice()))
+                          ? T(causeFromReasons(t.cause.reasons.slice()))
                           : t),
                       go());
                   }
                   if (i) {
                     let e = go();
                     e && d(e);
-                  } else c && u.size === 0 && d(p ?? B);
+                  } else c && u.size === 0 && d(f ?? z);
                 }),
                 u.size < s)
               )
@@ -3087,30 +3138,30 @@ const dr = { interruptChildren: void 0 },
               ((i = !0), a++);
               return;
             } else
-              return V((e) => {
-                ((l = getCurrentFiber()), (m = h), (d = e));
+              return B((e) => {
+                ((l = getCurrentFiber()), (p = m), (d = e));
                 let t = go();
                 return t
                   ? e(t)
-                  : z(() => ((p = U), (f = !0), u ? fiberInterruptAll(u) : B));
+                  : R(() => ((f = U), (ee = !0), u ? fiberInterruptAll(u) : z));
               });
           }
-          if (((c = !0), p)) {
+          if (((c = !0), f)) {
             if (u && u.size > 0) {
               let e = fiberStackAnnotations(l);
               u.forEach((t) => t.interruptUnsafe(l.id, e));
               return;
             }
-            if (d || p._tag === `Failure`) return p;
+            if (d || f._tag === `Failure`) return f;
           } else if (d)
-            if (u) u.size === 0 && d(B);
+            if (u) u.size === 0 && d(z);
             else return U;
         };
       return go();
     };
   },
   iterateEager = () => iterateEagerImpl,
-  Xi = iterateEagerImpl({
+  ia = iterateEagerImpl({
     onItem(e, t, n) {
       return e.f(t, n);
     },
@@ -3119,17 +3170,17 @@ const dr = { interruptChildren: void 0 },
       e.out && (e.out[r] = n.value);
     },
   }),
-  Zi = dual(
-    (e) => T(e[0]),
+  aa = dual(
+    (e) => C(e[0]),
     (e, t) =>
-      O(
+      E(
         (n) => (
           interruptChildrenPatch(),
-          I(Qi(n, e, t?.startImmediately, !1, t?.uninterruptible ?? !1))
+          F(oa(n, e, t?.startImmediately, !1, t?.uninterruptible ?? !1))
         ),
       ),
   ),
-  Qi = __name((e, t, n = !1, r = !1, i = !1) => {
+  oa = __name((e, t, n = !1, r = !1, i = !1) => {
     let a = i === `inherit` ? e.interruptible : !i,
       o = new FiberImpl(e.context, a);
     return (
@@ -3142,35 +3193,35 @@ const dr = { interruptChildren: void 0 },
       o
     );
   }, `forkUnsafe`),
-  $i = dual(
-    (e) => T(e[0]),
+  sa = dual(
+    (e) => C(e[0]),
     (e, t) =>
-      O((n) => I(Qi(n, e, t?.startImmediately, !0, t?.uninterruptible))),
+      E((n) => F(oa(n, e, t?.startImmediately, !0, t?.uninterruptible))),
   ),
-  ea = dual(
-    (e) => T(e[0]),
+  ca = dual(
+    (e) => C(e[0]),
     (e, t, n) =>
-      O((r) => {
-        let i = Qi(r, e, n?.startImmediately, !0, n?.uninterruptible);
+      E((r) => {
+        let i = oa(r, e, n?.startImmediately, !0, n?.uninterruptible);
         if (!i._exit)
           if (t.state._tag !== `Closed`) {
             let e = {},
               finalizer = () =>
-                withFiberId((e) => (e === i.id ? B : fiberInterrupt(i)));
+                withFiberId((e) => (e === i.id ? z : fiberInterrupt(i)));
             (scopeAddFinalizerUnsafe(t, e, finalizer),
               i.addObserver(() => scopeRemoveFinalizerUnsafe(t, e)));
           } else i.interruptUnsafe(r.id, fiberStackAnnotations(r));
-        return I(i);
+        return F(i);
       }),
   ),
-  ta = dual(
-    (e) => T(e[0]),
-    (e, t) => H(Ti, (n) => ea(e, n, t)),
+  la = dual(
+    (e) => C(e[0]),
+    (e, t) => V(Mi, (n) => ca(e, n, t)),
   ),
-  na = __name(
+  ua = __name(
     (e) => (t, n) => {
       let r = new FiberImpl(
-        n?.scheduler ? sn(e, Nn, n.scheduler) : e,
+        n?.scheduler ? un(e, Rn, n.scheduler) : e,
         n?.uninterruptible !== !0,
       );
       if ((r.evaluate(t), r._exit)) return r;
@@ -3185,7 +3236,7 @@ const dr = { interruptChildren: void 0 },
     },
     `runForkWith`,
   ),
-  ra = dual(2, (e, t) => {
+  da = dual(2, (e, t) => {
     if (e._exit) return e;
     if (t.state._tag === `Closed`) return (e.interruptUnsafe(e.id), e);
     let n = {};
@@ -3195,9 +3246,9 @@ const dr = { interruptChildren: void 0 },
       e
     );
   }),
-  ia = na(rn()),
+  fa = ua(M()),
   runPromiseExitWith = (e) => {
-    let t = na(e);
+    let t = ua(e);
     return (e, n) => {
       let r = t(e, n);
       return new Promise((e) => {
@@ -3205,7 +3256,7 @@ const dr = { interruptChildren: void 0 },
       });
     };
   },
-  aa = runPromiseExitWith(rn()),
+  pa = runPromiseExitWith(M()),
   runPromiseWith = (e) => {
     let t = runPromiseExitWith(e);
     return (e, n) =>
@@ -3214,9 +3265,9 @@ const dr = { interruptChildren: void 0 },
         return e.value;
       });
   },
-  oa = runPromiseWith(rn()),
+  ma = runPromiseWith(M()),
   runSyncExitWith = (e) => {
-    let t = na(e);
+    let t = ua(e);
     return (e) => {
       if (effectIsExit(e)) return e;
       let n = t(e, { scheduler: new MixedScheduler(`sync`) });
@@ -3225,7 +3276,7 @@ const dr = { interruptChildren: void 0 },
       );
     };
   },
-  sa = runSyncExitWith(rn()),
+  ha = runSyncExitWith(M()),
   runSyncWith = (e) => {
     let t = runSyncExitWith(e);
     return (e) => {
@@ -3234,9 +3285,9 @@ const dr = { interruptChildren: void 0 },
       return n.value;
     };
   },
-  ca = runSyncWith(rn()),
-  la = I(!0),
-  ua = I(!1);
+  ga = runSyncWith(M()),
+  _a = F(!0),
+  va = F(!1);
 var Latch = class {
   waiters = [];
   scheduled = !1;
@@ -3246,10 +3297,10 @@ var Latch = class {
   }
   scheduleUnsafe(e) {
     return this.scheduled || this.waiters.length === 0
-      ? la
+      ? _a
       : ((this.scheduled = !0),
         e.currentDispatcher.scheduleTask(this.flushWaiters, 0),
-        la);
+        _a);
   }
   flushWaiters = () => {
     this.scheduled = !1;
@@ -3257,18 +3308,18 @@ var Latch = class {
     this.waiters = [];
     for (let t = 0; t < e.length; t++) e[t](U);
   };
-  open = O((e) =>
-    this.isOpen ? ua : ((this.isOpen = !0), this.scheduleUnsafe(e)),
+  open = E((e) =>
+    this.isOpen ? va : ((this.isOpen = !0), this.scheduleUnsafe(e)),
   );
-  release = O((e) => (this.isOpen ? ua : this.scheduleUnsafe(e)));
+  release = E((e) => (this.isOpen ? va : this.scheduleUnsafe(e)));
   openUnsafe() {
     return this.isOpen ? !1 : ((this.isOpen = !0), this.flushWaiters(), !0);
   }
-  await = V((e) =>
+  await = B((e) =>
     this.isOpen
-      ? e(B)
+      ? e(z)
       : (this.waiters.push(e),
-        R(() => {
+        L(() => {
           let t = this.waiters.indexOf(e);
           t !== -1 && this.waiters.splice(t, 1);
         })),
@@ -3276,18 +3327,18 @@ var Latch = class {
   closeUnsafe() {
     return this.isOpen ? ((this.isOpen = !1), !0) : !1;
   }
-  close = R(() => this.closeUnsafe());
-  whenOpen = (e) => H(this.await, () => e);
+  close = L(() => this.closeUnsafe());
+  whenOpen = (e) => V(this.await, () => e);
 };
 const makeLatchUnsafe = (e) => new Latch(e ?? !1),
-  makeLatch = (e) => R(() => makeLatchUnsafe(e)),
-  da = BigInt(0),
-  fa = {
+  makeLatch = (e) => L(() => makeLatchUnsafe(e)),
+  ya = BigInt(0),
+  ba = {
     _tag: `Span`,
     spanId: `noop`,
     traceId: `noop`,
     sampled: !1,
-    status: { _tag: `Ended`, startTime: da, endTime: da, exit: U },
+    status: { _tag: `Ended`, startTime: ya, endTime: ya, exit: U },
     attributes: new Map(),
     links: [],
     kind: `internal`,
@@ -3296,49 +3347,49 @@ const makeLatchUnsafe = (e) => new Latch(e ?? !1),
     end() {},
     addLinks() {},
   },
-  noopSpan = (e) => Object.assign(Object.create(fa), e),
+  noopSpan = (e) => Object.assign(Object.create(ba), e),
   filterDisablePropagation = (e) =>
     e
-      ? un(e.annotations, zn)
+      ? pn(e.annotations, Wn)
         ? e._tag === `Span`
-          ? filterDisablePropagation(yt(e.parent))
+          ? filterDisablePropagation(Ct(e.parent))
           : none()
-        : k(e)
+        : D(e)
       : none(),
   makeSpanUnsafe = (e, t, n) => {
-    let r = !e.getRef(qn) || (n?.annotations && un(n.annotations, zn)),
+    let r = !e.getRef($n) || (n?.annotations && pn(n.annotations, Wn)),
       i =
         n?.parent === void 0
           ? n?.root
             ? none()
             : filterDisablePropagation(e.currentSpan)
-          : k(n.parent),
+          : D(n.parent),
       a;
     if (r)
       a = noopSpan({
         name: t,
         parent: i,
-        annotations: sn(n?.annotations ?? rn(), zn, !0),
+        annotations: un(n?.annotations ?? M(), Wn, !0),
       });
     else {
-      let r = e.getRef(Un),
-        o = e.getRef(ga),
-        s = e.getRef(Jn),
-        c = e.getRef(Yn),
-        l = e.getRef(Xn),
-        u = n?.level ?? e.getRef(Bn),
+      let r = e.getRef(Jn),
+        o = e.getRef(wa),
+        s = e.getRef(er),
+        c = e.getRef(tr),
+        l = e.getRef(nr),
+        u = n?.level ?? e.getRef(Gn),
         d = n?.links === void 0 ? l.slice() : [...l, ...n.links];
       a = r.span({
         name: t,
         parent: i,
-        annotations: n?.annotations ?? rn(),
+        annotations: n?.annotations ?? M(),
         links: d,
         startTime: s ? o.currentTimeNanosUnsafe() : BigInt(0),
         kind: n?.kind ?? `internal`,
-        root: n?.root ?? A(i),
+        root: n?.root ?? O(i),
         sampled:
           n?.sampled ??
-          (gt(i) && i.value.sampled === !1 ? !1 : !Ea(e.getRef(Vn), u)),
+          (bt(i) && i.value.sampled === !1 ? !1 : !Pa(e.getRef(Kn), u)),
       });
       for (let [e, t] of Object.entries(c)) a.attribute(e, t);
       if (n?.attributes !== void 0)
@@ -3348,26 +3399,26 @@ const makeLatchUnsafe = (e) => new Latch(e ?? !1),
   },
   provideSpanStackFrame = (e, t) => (
     (t = typeof t == `function` ? t : u),
-    Jr(Kn, (n) => ({ name: e, stack: t, parent: n }))
+    $r(Qn, (n) => ({ name: e, stack: t, parent: n }))
   ),
-  pa = __name((e, ...t) => {
+  xa = __name((e, ...t) => {
     let n = t.length === 1 ? void 0 : t[0],
       r = t[t.length - 1];
-    return O((t) => {
+    return E((t) => {
       let i = makeSpanUnsafe(t, e, n),
-        a = t.getRef(ga);
-      return Mi(
-        b(() => r(i)),
+        a = t.getRef(wa);
+      return zi(
+        y(() => r(i)),
         (e) =>
-          R(() => {
+          L(() => {
             i.status._tag !== `Ended` && i.end(a.currentTimeNanosUnsafe(), e);
           }),
       );
     });
   }, `useSpan`),
-  ma = $r(ParentSpan),
-  ha = __name(function () {
-    let e = T(arguments[0]),
+  Sa = ii(ParentSpan),
+  Ca = __name(function () {
+    let e = C(arguments[0]),
       t = e ? arguments[1] : arguments[0],
       n = e ? arguments[2] : arguments[1],
       r = identity;
@@ -3375,32 +3426,32 @@ const makeLatchUnsafe = (e) => new Latch(e ?? !1),
       t._tag === `Span` &&
         ((n = addSpanStackTrace(n)),
         (r = provideSpanStackFrame(t.name, n?.captureStackTrace))),
-      e ? ma(r(arguments[0]), t) : (e) => ma(r(e), t)
+      e ? Sa(r(arguments[0]), t) : (e) => Sa(r(e), t)
     );
   }, `withParentSpan`),
-  ga = P(`effect/Clock`, { defaultValue: () => new ClockImpl() }),
-  _a = 2 ** 31 - 1;
+  wa = N(`effect/Clock`, { defaultValue: () => new ClockImpl() }),
+  Ta = 2 ** 31 - 1;
 var ClockImpl = class {
   currentTimeMillisUnsafe() {
     return Date.now();
   }
-  currentTimeMillis = R(() => this.currentTimeMillisUnsafe());
+  currentTimeMillis = L(() => this.currentTimeMillisUnsafe());
   currentTimeNanosUnsafe() {
-    return ya();
+    return Da();
   }
-  currentTimeNanos = R(() => this.currentTimeNanosUnsafe());
+  currentTimeNanos = L(() => this.currentTimeNanosUnsafe());
   sleep(e) {
     let t = toMillis(e);
     return t <= 0
-      ? hr
-      : V((e) => {
-          if (t > _a) return;
-          let n = setTimeout(() => e(B), t);
-          return R(() => clearTimeout(n));
+      ? br
+      : B((e) => {
+          if (t > Ta) return;
+          let n = setTimeout(() => e(z), t);
+          return L(() => clearTimeout(n));
         });
   }
 };
-const va = (function () {
+const Ea = (function () {
     let e = BigInt(1e6);
     if (typeof performance > `u` || performance.now === void 0)
       return () => BigInt(Date.now()) * e;
@@ -3413,34 +3464,34 @@ const va = (function () {
       BigInt(Date.now()) * e - BigInt(Math.round(performance.now() * 1e6));
     return () => t + BigInt(Math.round(performance.now() * 1e6));
   })(),
-  ya = (function () {
+  Da = (function () {
     let e =
       typeof process == `object` &&
       `hrtime` in process &&
       typeof process.hrtime.bigint == `function`
         ? process.hrtime
         : void 0;
-    if (!e) return va;
-    let t = va() - e.bigint();
+    if (!e) return Ea;
+    let t = Ea() - e.bigint();
     return () => t + e.bigint();
   })(),
-  ba = __name((e) => O((t) => e(t.getRef(ga))), `clockWith`),
-  xa = __name((e) => ba((t) => t.sleep(fromInputUnsafe(e))), `sleep`);
-Ue(`TimeoutError`);
-const Sa = `~effect/Cause/IllegalArgumentError`;
-((class extends Ue(`IllegalArgumentError`) {
+  Oa = __name((e) => E((t) => e(t.getRef(wa))), `clockWith`),
+  ka = __name((e) => Oa((t) => t.sleep(fromInputUnsafe(e))), `sleep`);
+Ge(`TimeoutError`);
+const Aa = `~effect/Cause/IllegalArgumentError`;
+((class extends Ge(`IllegalArgumentError`) {
   static {
     __name(this, `IllegalArgumentError`);
   }
-  [Sa] = Sa;
+  [Aa] = Aa;
   constructor(e) {
     super({ message: e });
   }
 }),
-  Ue(`ExceededCapacityError`));
-const Ca = `~effect/Cause/AsyncFiberError`;
-var AsyncFiberError = class extends Ue(`AsyncFiberError`) {
-  [Ca] = Ca;
+  Ge(`ExceededCapacityError`));
+const ja = `~effect/Cause/AsyncFiberError`;
+var AsyncFiberError = class extends Ge(`AsyncFiberError`) {
+  [ja] = ja;
   constructor(e) {
     super({
       message: `An asynchronous Effect was executed with Effect.runSync`,
@@ -3448,17 +3499,17 @@ var AsyncFiberError = class extends Ue(`AsyncFiberError`) {
     });
   }
 };
-const wa = `~effect/Cause/UnknownError`;
-var UnknownError$1 = class extends Ue(`UnknownError`) {
+const Ma = `~effect/Cause/UnknownError`;
+var UnknownError$1 = class extends Ge(`UnknownError`) {
   static {
     __name(this, `UnknownError`);
   }
-  [wa] = wa;
+  [Ma] = Ma;
   constructor(e, t) {
     super({ message: t, cause: e });
   }
 };
-const Ta = P(`effect/Console/CurrentConsole`, {
+const Na = N(`effect/Console/CurrentConsole`, {
     defaultValue: () => globalThis.console,
   }),
   logLevelToOrder = (e) => {
@@ -3481,19 +3532,19 @@ const Ta = P(`effect/Console/CurrentConsole`, {
         return 2 ** 53 - 1;
     }
   },
-  Ea = ht(mt(pt, logLevelToOrder)),
-  Da = P(`effect/Loggers/CurrentLoggers`, {
-    defaultValue: () => new Set([Fa, Ia]),
+  Pa = vt(_t(gt, logLevelToOrder)),
+  Fa = N(`effect/Loggers/CurrentLoggers`, {
+    defaultValue: () => new Set([Ua, Wa]),
   }),
-  Oa = P(`effect/Logger/LogToStderr`, { defaultValue: l }),
-  ka = {
+  Ia = N(`effect/Logger/LogToStderr`, { defaultValue: l }),
+  La = {
     "~effect/Logger": { _Message: identity, _Output: identity },
     pipe() {
       return pipeArguments(this, arguments);
     },
   },
   loggerMake = (e) => {
-    let t = Object.create(ka);
+    let t = Object.create(La);
     return ((t.log = e), t);
   },
   formatLabel = (e) => e.replace(/[\s="]/g, `_`),
@@ -3520,18 +3571,18 @@ const Ta = P(`effect/Console/CurrentConsole`, {
           e--);
       }
       return (
-        n === void 0 && (n = Fe),
-        O((r) => {
+        n === void 0 && (n = Le),
+        E((r) => {
           let i = e ?? r.currentLogLevel;
-          if (Ea(r.minimumLogLevel, i)) return B;
-          let a = r.getRef(ga),
-            o = r.getRef(Da);
+          if (Pa(r.minimumLogLevel, i)) return z;
+          let a = r.getRef(wa),
+            o = r.getRef(Fa);
           if (o.size > 0) {
             let e = new Date(a.currentTimeMillisUnsafe());
             for (let a of o)
               a.log({ cause: n, fiber: r, date: e, logLevel: i, message: t });
           }
-          return B;
+          return z;
         })
       );
     },
@@ -3553,7 +3604,7 @@ const Ta = P(`effect/Console/CurrentConsole`, {
     black: `30`,
     bgBrightRed: `101`,
   },
-  Aa = {
+  Ra = {
     None: [],
     All: [],
     Trace: [W.gray],
@@ -3563,7 +3614,7 @@ const Ta = P(`effect/Console/CurrentConsole`, {
     Error: [W.red],
     Fatal: [W.bgBrightRed, W.black],
   },
-  ja = {
+  za = {
     None: ``,
     All: ``,
     Trace: `color:gray`,
@@ -3575,17 +3626,17 @@ const Ta = P(`effect/Console/CurrentConsole`, {
   },
   defaultDateFormat = (e) =>
     `${e.getHours().toString().padStart(2, `0`)}:${e.getMinutes().toString().padStart(2, `0`)}:${e.getSeconds().toString().padStart(2, `0`)}.${e.getMilliseconds().toString().padStart(3, `0`)}`,
-  Ma =
+  Ba =
     typeof process == `object` &&
     process !== null &&
     typeof process.stdout == `object` &&
     process.stdout !== null,
-  Na = Ma && process.stdout.isTTY === !0,
-  Pa = Ma || `Deno` in globalThis,
+  Va = Ba && process.stdout.isTTY === !0,
+  Ha = Ba || `Deno` in globalThis,
   consolePretty = (e) => {
     let t = e?.mode ?? `auto`,
-      n = (t === `auto` ? (Pa ? `tty` : `browser`) : t) === `browser`,
-      r = typeof e?.colors == `boolean` ? e.colors : Na || n,
+      n = (t === `auto` ? (Ha ? `tty` : `browser`) : t) === `browser`,
+      r = typeof e?.colors == `boolean` ? e.colors : Va || n,
       i = e?.formatDate ?? defaultDateFormat;
     return n
       ? prettyLoggerBrowser({ colors: r, formatDate: i })
@@ -3599,30 +3650,30 @@ const Ta = P(`effect/Console/CurrentConsole`, {
       n = e.colors ? withColor : withColorNoop;
     return loggerMake(
       ({ cause: r, date: i, fiber: a, logLevel: o, message: s }) => {
-        let c = a.getRef(Ta),
-          l = a.getRef(Oa) ? c.error : c.log,
+        let c = a.getRef(Na),
+          l = a.getRef(Ia) ? c.error : c.log,
           u = Array.isArray(s) ? s.slice() : [s],
           d =
             n(`[${e.formatDate(i)}]`, W.white) +
-            ` ${n(o.toUpperCase(), ...Aa[o])} (#${a.id})`,
-          f = i.getTime(),
-          p = a.getRef(er);
-        for (let e of p) d += ` ` + formatLogSpan(e, f);
+            ` ${n(o.toUpperCase(), ...Ra[o])} (#${a.id})`,
+          ee = i.getTime(),
+          f = a.getRef(or);
+        for (let e of f) d += ` ` + formatLogSpan(e, ee);
         d += `:`;
-        let m = 0;
+        let p = 0;
         if (u.length > 0) {
           let e = structuredMessage(u[0]);
-          typeof e == `string` && ((d += ` ` + n(e, W.bold, W.cyan)), m++);
+          typeof e == `string` && ((d += ` ` + n(e, W.bold, W.cyan)), p++);
         }
         if (
           (l(d),
           t || c.group(),
           r.reasons.length > 0 && l(causePretty(r)),
-          m < u.length)
+          p < u.length)
         )
-          for (; m < u.length; m++) l(redact(u[m]));
-        let h = a.getRef(Zn);
-        for (let [e, t] of Object.entries(h))
+          for (; p < u.length; p++) l(redact(u[p]));
+        let m = a.getRef(rr);
+        for (let [e, t] of Object.entries(m))
           l(n(`${e}:`, W.bold, W.white), redact(t));
         t || c.groupEnd();
       },
@@ -3632,31 +3683,31 @@ const Ta = P(`effect/Console/CurrentConsole`, {
     let t = e.colors ? `%c` : ``;
     return loggerMake(
       ({ cause: n, date: r, fiber: i, logLevel: a, message: o }) => {
-        let s = i.getRef(Ta),
+        let s = i.getRef(Na),
           c = Array.isArray(o) ? o.slice() : [o],
           l = `${t}[${e.formatDate(r)}]`,
           u = [];
         (e.colors && u.push(`color:gray`),
           (l += ` ${t}${a.toUpperCase()}${t} (#${i.id})`),
-          e.colors && u.push(ja[a], ``));
+          e.colors && u.push(za[a], ``));
         let d = r.getTime(),
-          f = i.getRef(er);
-        for (let e of f) l += ` ` + formatLogSpan(e, d);
+          ee = i.getRef(or);
+        for (let e of ee) l += ` ` + formatLogSpan(e, d);
         l += `:`;
-        let p = 0;
+        let f = 0;
         if (c.length > 0) {
           let n = structuredMessage(c[0]);
           typeof n == `string` &&
-            ((l += ` ${t}${n}`), e.colors && u.push(`color:deepskyblue`), p++);
+            ((l += ` ${t}${n}`), e.colors && u.push(`color:deepskyblue`), f++);
         }
         if (
           (s.groupCollapsed(l, ...u),
           n.reasons.length > 0 && s.error(causePretty(n)),
-          p < c.length)
+          f < c.length)
         )
-          for (; p < c.length; p++) s.log(redact(c[p]));
-        let m = i.getRef(Zn);
-        for (let [t, n] of Object.entries(m)) {
+          for (; f < c.length; f++) s.log(redact(c[f]));
+        let p = i.getRef(rr);
+        for (let [t, n] of Object.entries(p)) {
           let r = redact(n);
           e.colors ? s.log(`%c${t}:`, `color:gray`, r) : s.log(`${t}:`, r);
         }
@@ -3664,26 +3715,26 @@ const Ta = P(`effect/Console/CurrentConsole`, {
       },
     );
   },
-  Fa = loggerMake(
+  Ua = loggerMake(
     ({ cause: e, date: t, fiber: n, logLevel: r, message: i }) => {
       let a = Array.isArray(i) ? i.slice() : [i];
       e.reasons.length > 0 && a.push(causePretty(e));
       let o = t.getTime(),
-        s = n.getRef(er),
+        s = n.getRef(or),
         c = ``;
       for (let e of s) c += ` ${formatLogSpan(e, o)}`;
-      let l = n.getRef(Zn);
+      let l = n.getRef(rr);
       Object.keys(l).length > 0 && a.push(l);
-      let u = n.getRef(Ta);
-      (n.getRef(Oa) ? u.error : u.log)(
+      let u = n.getRef(Na);
+      (n.getRef(Ia) ? u.error : u.log)(
         `[${defaultDateFormat(t)}] ${r.toUpperCase()} (#${n.id})${c}:`,
         ...a,
       );
     },
   ),
-  Ia = loggerMake(({ cause: e, fiber: t, logLevel: n, message: r }) => {
-    let i = t.getRef(ga),
-      a = t.getRef(Zn),
+  Wa = loggerMake(({ cause: e, fiber: t, logLevel: n, message: r }) => {
+    let i = t.getRef(wa),
+      a = t.getRef(rr),
       o = t.currentSpan;
     if (o === void 0 || o._tag === `ExternalSpan`) return;
     let s = {};
@@ -3698,57 +3749,71 @@ const Ta = P(`effect/Console/CurrentConsole`, {
       ));
   });
 function interruptChildrenPatch() {
-  dr.interruptChildren ??= fiberInterruptChildren;
+  gr.interruptChildren ??= fiberInterruptChildren;
 }
-const La = Le,
-  Ra = Re,
-  za = causeFail,
-  Ba = ar,
-  Va = causeSquash,
-  Ha = nr,
-  Ua = rr,
-  Wa = ir,
-  Ga = causeFilterInterruptors,
-  Ka = Ge,
-  qa = qe,
-  G = Ye,
-  Ja = UnknownError$1;
+const reportCauseUnsafe = (e, t, n) => {
+    let r = e.getRef(Zn);
+    if (r.size === 0 || (n && !hasDies(t))) return;
+    let i = {
+      cause: t,
+      fiber: e,
+      timestamp: e.getRef(wa).currentTimeNanosUnsafe(),
+    };
+    r.forEach((e) => e.report(i));
+  },
+  Ga = ze,
+  Ka = Be,
+  qa = causeFromReasons,
+  Ja = causeFail,
+  makeDieReason = (e) => new Die(e),
+  Ya = ur,
+  Xa = causeSquash,
+  Za = cr,
+  Qa = lr,
+  $a = causeFilterInterruptors,
+  eo = Ke,
+  to = Je,
+  no = Xe,
+  G = Qe,
+  ro = UnknownError$1;
 var StackTrace = class extends Service()(`effect/Cause/StackTrace`) {};
 Service()(`effect/Cause/InterruptorStackTrace`);
-const Ya = He,
-  Xa = Ue,
-  Za = E,
-  Qa = D,
-  $a = exitFail,
-  eo = U,
-  to = exitIsSuccess,
-  no = exitIsFailure,
-  ro = exitGetSuccess,
-  io = {
+const io = We,
+  ao = Ge,
+  oo = w,
+  so = T,
+  co = exitFail,
+  lo = U,
+  uo = exitIsSuccess,
+  fo = exitIsFailure,
+  po = exitGetSuccess,
+  mo = {
     "~effect/Deferred": { _A: identity, _E: identity },
     pipe() {
       return pipeArguments(this, arguments);
     },
   },
-  ao = __name(() => {
-    let e = Object.create(io);
+  ho = __name(() => {
+    let e = Object.create(mo);
     return ((e.resumes = void 0), (e.effect = void 0), e);
   }, `makeUnsafe`),
+  _o = __name(() => L(() => ho()), `make`),
   _await = (e) =>
-    V((t) =>
+    B((t) =>
       e.effect
         ? t(e.effect)
         : ((e.resumes ??= []),
           e.resumes.push(t),
-          R(() => {
+          L(() => {
             let n = e.resumes.indexOf(t);
             e.resumes.splice(n, 1);
           })),
     ),
-  oo = dual(2, (e, t) => R(() => doneUnsafe(e, t))),
-  so = dual(2, (e, t) => oo(e, exitFail(t))),
-  isDone = (e) => R(() => isDoneUnsafe(e)),
+  vo = dual(2, (e, t) => L(() => doneUnsafe(e, t))),
+  yo = dual(2, (e, t) => vo(e, exitFail(t))),
+  isDone = (e) => L(() => isDoneUnsafe(e)),
   isDoneUnsafe = (e) => e.effect !== void 0,
+  bo = dual(2, (e, t) => vo(e, w(t))),
   doneUnsafe = (e, t) => {
     if (e.effect) return !1;
     if (((e.effect = t), e.resumes)) {
@@ -3757,70 +3822,72 @@ const Ya = He,
     }
     return !0;
   },
-  co = dual(2, (e, t) => Ki((n) => H(_i(n(e)), (e) => oo(t, e)))),
-  lo = Zn,
-  uo = er,
-  fo = $n,
-  po = Si,
-  mo = scopeMakeUnsafe,
-  ho = Ei,
-  _o = scopeAddFinalizerExit,
-  vo = scopeAddFinalizer,
-  yo = scopeFork,
+  xo = dual(2, (e, t) => ea((n) => V(wi(n(e)), (e) => vo(t, e)))),
+  So = rr,
+  Co = or,
+  wo = ar,
+  To = $n,
+  Eo = ki,
+  Do = scopeMakeUnsafe,
+  Oo = Ni,
+  ko = scopeAddFinalizerExit,
+  Ao = scopeAddFinalizer,
+  jo = scopeFork,
   K = scopeForkUnsafe,
-  bo = scopeClose,
-  xo = `~effect/Layer/MemoMap`,
+  Mo = scopeClose,
+  No = scopeCloseUnsafe,
+  Po = `~effect/Layer/MemoMap`,
   memoMapReuse = (e, t) => (
     e.observers++,
-    jr(
+    Ir(
       scopeAddFinalizerExit(t, (t) => e.finalizer(t)),
       e.effect,
     )
   ),
-  So = {
+  Fo = {
     "~effect/Layer": { _ROut: identity, _E: identity, _RIn: identity },
     pipe() {
       return pipeArguments(this, arguments);
     },
   },
   fromBuildUnsafe = (e) => {
-    let t = Object.create(So);
+    let t = Object.create(Fo);
     return ((t.build = e), t);
   },
   fromBuild = (e) =>
     fromBuildUnsafe((t, n) => {
       let r = K(n);
-      return Mi(e(t, r), (e) => (e._tag === `Failure` ? bo(r, e) : B));
+      return zi(e(t, r), (e) => (e._tag === `Failure` ? Mo(r, e) : z));
     }),
   fromBuildMemo = (e) => {
     let t = fromBuild((n, r) => n.getOrElseMemoize(t, r, e));
     return t;
   },
   memoMapBuild = (e, t, n, r) => {
-    let i = mo(),
-      a = ao(),
+    let i = Do(),
+      a = ho(),
       o = {
         observers: 1,
         effect: _await(a),
         finalizer: (n) =>
-          z(
+          R(
             () => (
               o.observers--,
-              o.observers === 0 ? (e.map.delete(t), bo(i, n)) : B
+              o.observers === 0 ? (e.map.delete(t), Mo(i, n)) : z
             ),
           ),
       };
     return (
       e.map.set(t, o),
       scopeAddFinalizerExit(n, o.finalizer).pipe(
-        H(() => r(e, i)),
-        Mi((e) => ((o.effect = e), oo(a, e))),
+        V(() => r(e, i)),
+        zi((e) => ((o.effect = e), vo(a, e))),
       )
     );
   };
 var MemoMapImpl = class {
-  get [xo]() {
-    return xo;
+  get [Po]() {
+    return Po;
   }
   parent;
   constructor(e) {
@@ -3837,224 +3904,319 @@ var MemoMapImpl = class {
 };
 const makeMemoMapUnsafe = () => new MemoMapImpl();
 var CurrentMemoMap = class extends Service()(`effect/Layer/CurrentMemoMap`) {
-  static getOrCreate = cn(this, makeMemoMapUnsafe);
+  static getOrCreate = dn(this, makeMemoMapUnsafe);
 };
-const Co = dual(3, (e, t, n) =>
-    $r(Rr(e.build(t, n), sn(CurrentMemoMap, t)), CurrentMemoMap, t),
+const Io = dual(3, (e, t, n) =>
+    ii(H(e.build(t, n), un(CurrentMemoMap, t)), CurrentMemoMap, t),
   ),
-  wo = dual(2, (e, t) =>
-    O((n) => Co(e, CurrentMemoMap.getOrCreate(n.context), t)),
+  Lo = dual(2, (e, t) =>
+    E((n) => Io(e, CurrentMemoMap.getOrCreate(n.context), t)),
   ),
-  To = __name(function () {
+  Ro = __name(function () {
     return arguments.length === 1
-      ? (e) => succeedContext(on(arguments[0], e))
-      : succeedContext(on(arguments[0], arguments[1]));
+      ? (e) => succeedContext(ln(arguments[0], e))
+      : succeedContext(ln(arguments[0], arguments[1]));
   }, `succeed`),
-  succeedContext = (e) => fromBuildUnsafe(constant(I(e))),
-  Eo = succeedContext(rn()),
-  Do = __name(function () {
+  succeedContext = (e) => fromBuildUnsafe(constant(F(e))),
+  zo = succeedContext(M()),
+  Bo = __name(function () {
     return arguments.length === 1
-      ? (e) => syncContext(() => on(arguments[0], e()))
-      : syncContext(() => on(arguments[0], arguments[1]()));
+      ? (e) => syncContext(() => ln(arguments[0], e()))
+      : syncContext(() => ln(arguments[0], arguments[1]()));
   }, `sync`),
-  syncContext = (e) => fromBuildMemo(constant(R(e))),
+  syncContext = (e) => fromBuildMemo(constant(L(e))),
   effect = function () {
     return arguments.length === 1
       ? (e) => effectImpl(arguments[0], e)
       : effectImpl(arguments[0], arguments[1]);
   },
-  effectImpl = (e, t) => effectContext(Rr(t, (t) => on(e, t))),
-  effectContext = (e) => fromBuildMemo((t, n) => ho(e, n)),
-  Oo = __name((e) => {
+  effectImpl = (e, t) => effectContext(H(t, (t) => ln(e, t))),
+  effectContext = (e) => fromBuildMemo((t, n) => Oo(e, n)),
+  Vo = __name((e) => {
     let t = Service(`effect/Layer/unwrap`);
-    return No(effect(t)(e), un(t));
+    return Ko(effect(t)(e), pn(t));
   }, `unwrap`),
   mergeAllEffect = (e, t, n) => {
     let r = K(n, `parallel`);
-    return Yi(e, (e) => e.build(t, K(r, `sequential`)), {
+    return ra(e, (e) => e.build(t, K(r, `sequential`)), {
       concurrency: e.length,
-    }).pipe(Rr((e) => mn(...e)));
+    }).pipe(H((e) => _n(...e)));
   },
-  ko = __name(
+  Ho = __name(
     (...e) => fromBuild((t, n) => mergeAllEffect(e, t, n)),
     `mergeAll`,
   ),
-  Ao = dual(2, (e, t) => ko(e, ...(Array.isArray(t) ? t : [t]))),
+  Uo = dual(2, (e, t) => Ho(e, ...(Array.isArray(t) ? t : [t]))),
   provideWith = (e, t, n) =>
     fromBuild((r, i) =>
-      H(Array.isArray(t) ? mergeAllEffect(t, r, i) : t.build(r, i), (t) =>
+      V(Array.isArray(t) ? mergeAllEffect(t, r, i) : t.build(r, i), (t) =>
         e.build(r, i).pipe(
-          Qr(t),
-          Rr((e) => n(e, t)),
+          ri(t),
+          H((e) => n(e, t)),
         ),
       ),
     ),
-  jo = dual(2, (e, t) => provideWith(e, t, identity)),
-  Mo = dual(2, (e, t) => provideWith(e, t, (e, t) => pn(t, e))),
-  No = dual(2, (e, t) =>
-    fromBuild((n, r) => H(e.build(n, r), (e) => t(e).build(n, r))),
+  Wo = dual(2, (e, t) => provideWith(e, t, identity)),
+  Go = dual(2, (e, t) => provideWith(e, t, (e, t) => gn(t, e))),
+  Ko = dual(2, (e, t) =>
+    fromBuild((n, r) => V(e.build(n, r), (e) => t(e).build(n, r))),
   ),
-  Po = `~effect/time/DateTime`,
-  Fo = `~effect/time/DateTime/TimeZone`,
-  Io = {
-    [Po]: Po,
+  qo = wa,
+  Jo = `~effect/time/DateTime`,
+  Yo = `~effect/time/DateTime/TimeZone`,
+  Xo = {
+    [Jo]: Jo,
     pipe() {
       return pipeArguments(this, arguments);
     },
-    [y]() {
+    [v]() {
       return this.toString();
     },
     toJSON() {
-      return Ro(this).toJSON();
+      return Qo(this).toJSON();
     },
   };
-(({ ...Io }), { ...Io });
-const Lo = {
-  [Fo]: Fo,
-  [y]() {
+(({ ...Xo }), { ...Xo });
+const Zo = {
+  [Yo]: Yo,
+  [v]() {
     return this.toString();
   },
 };
-(({ ...Lo }), { ...Lo });
-const Ro = __name((e) => new Date(e.epochMilliseconds), `toDateUtc`),
-  zo = dual(2, (e, t) => ri(e, Ho, (e) => t(e))),
+(({ ...Zo }), { ...Zo });
+const Qo = __name((e) => new Date(e.epochMilliseconds), `toDateUtc`),
+  $o = dual(2, (e, t) => ui(e, ns, (e) => t(e))),
   isDoneCause = (e) => e.reasons.some(isDoneFailure),
-  isDoneFailure = (e) => e._tag === `Fail` && Ka(e.error),
-  Bo = Mn(Ha, (e) => (Ka(e) ? j(e) : M(e))),
-  Vo = fromPredicate((e) => e.reasons.every((e) => !isDoneFailure(e))),
-  Ho = Mn(Ha, (e) => (Ka(e) ? j(e.value) : M(e))),
+  isDoneFailure = (e) => e._tag === `Fail` && to(e.error),
+  es = Ln(Za, (e) => (to(e) ? k(e) : A(e))),
+  ts = fromPredicate((e) => e.reasons.every((e) => !isDoneFailure(e))),
+  ns = Ln(Za, (e) => (to(e) ? k(e.value) : A(e))),
   doneExitFromCause = (e) => {
-    let t = Bo(e);
-    return N(t) ? Qa(t.failure) : Za(t.success.value);
+    let t = es(e);
+    return j(t) ? so(t.failure) : oo(t.success.value);
   },
-  Uo = dual(2, (e, t) =>
-    fi(e, {
+  rs = dual(2, (e, t) =>
+    yi(e, {
       onSuccess: t.onSuccess,
       onFailure: (e) => {
-        let n = Bo(e);
-        return N(n) ? t.onFailure(n.failure) : t.onDone(n.success.value);
+        let n = es(e);
+        return j(n) ? t.onFailure(n.failure) : t.onDone(n.success.value);
       },
     }),
   ),
-  provideLayer = (e, t, n) =>
-    Oi((r) =>
-      H(n?.local ? Co(t, makeMemoMapUnsafe(), r) : wo(t, r), (t) => Qr(e, t)),
+  is = {
+    "~effect/Schedule": { _Out: identity, _In: identity, _Env: identity },
+    pipe() {
+      return pipeArguments(this, arguments);
+    },
+  },
+  fromStep = (e) => {
+    let t = Object.create(is);
+    return ((t.step = e), t);
+  },
+  metadataFn = () => {
+    let e = 0,
+      t,
+      n;
+    return (r, i) => {
+      n === void 0 && (n = r);
+      let a = r - n,
+        o = t === void 0 ? 0 : r - t;
+      return (
+        (t = r),
+        {
+          input: i,
+          attempt: ++e,
+          start: n,
+          now: r,
+          elapsed: a,
+          elapsedSincePrevious: o,
+        }
+      );
+    };
+  },
+  fromStepWithMetadata = (e) =>
+    fromStep(
+      H(e, (e) => {
+        let t = metadataFn();
+        return (n, r) => e(t(n, r));
+      }),
     ),
-  Wo = dual(
-    (e) => T(e[0]),
+  toStep = (e) => ci(e.step, (e) => F(() => I(e))),
+  as = dual(2, (e, t) => os(e, t, (e, t) => [e, t])),
+  os = dual(3, (e, t, n) =>
+    fromStep(
+      H(
+        ai(toStep(e), toStep(t)),
+        ([e, t]) =>
+          (r, i) =>
+            rs(e(r, i), {
+              onSuccess: (e) =>
+                t(r, i).pipe(
+                  H((t) => [n(e[0], t[0]), Pn(e[1], t[1])]),
+                  $o((t) => G(n(e[0], t))),
+                ),
+              onDone: (e) =>
+                t(r, i).pipe(
+                  V((t) => G(n(e, t[0]))),
+                  $o((t) => G(n(e, t))),
+                ),
+              onFailure: I,
+            }),
+      ),
+    ),
+  ),
+  exponential = (e, t = 2) => {
+    let n = toMillis(fromInputUnsafe(e));
+    return fromStepWithMetadata(
+      F((e) => {
+        let r = millis(n * t ** (e.attempt - 1));
+        return F([r, r]);
+      }),
+    );
+  },
+  recurs = (e) => ss(cs, ({ attempt: t }) => F(t <= e)),
+  spaced = (e) => {
+    let t = fromInputUnsafe(e);
+    return fromStepWithMetadata(F((e) => F([e.attempt - 1, t])));
+  },
+  ss = dual(2, (e, t) =>
+    fromStep(
+      H(toStep(e), (e) => {
+        let n = metadataFn();
+        return (r, i) =>
+          V(e(r, i), (e) => {
+            let [a, o] = e,
+              s = t({ ...n(r, i), output: a, duration: o });
+            return V(C(s) ? s : F(s), (t) => (t ? F(e) : G(a)));
+          });
+      }),
+    ),
+  ),
+  cs = spaced(Dn),
+  provideLayer = (e, t, n) =>
+    Fi((r) =>
+      V(n?.local ? Io(t, makeMemoMapUnsafe(), r) : Lo(t, r), (t) => ri(e, t)),
+    ),
+  ls = dual(
+    (e) => C(e[0]),
     (e, t, n) =>
       isContext(t)
-        ? Qr(e, t)
-        : provideLayer(e, Array.isArray(t) ? ko(...t) : t, n),
+        ? ri(e, t)
+        : provideLayer(e, Array.isArray(t) ? Ho(...t) : t, n),
   ),
-  Go = T,
-  Ko = qi,
-  qo = Yi,
-  Jo = Ji,
-  Yo = br,
-  Xo = xr,
-  q = I,
-  Zo = _r,
-  Qo = gr,
-  J = z,
-  $o = R,
-  es = B,
-  ts = V,
-  ns = wr,
-  Y = pr,
-  rs = L,
-  is = vr,
-  as = yr,
-  os = hr,
-  ss = O,
-  cs = mr,
-  X = H,
-  ls = Lr,
-  us = jr,
-  ds = Mr,
-  fs = _i,
-  ps = Rr,
-  ms = Ar,
-  hs = Nr,
-  gs = ii,
-  _s = si,
-  vs = ti,
-  ys = oi,
-  bs = ri,
-  xs = ci,
-  Ss = li,
-  Cs = di,
-  ws = ui,
-  Ts = yi,
-  Es = xa,
-  Ds = Pr,
-  Os = fi,
-  ks = mi,
-  As = Yr,
-  js = Zr,
-  Ms = Wo,
-  Ns = Qr,
-  Ps = Kr,
-  Fs = qr,
-  Is = $r,
-  Ls = Ti,
-  Rs = Di,
-  zs = Oi,
-  Bs = ki,
-  Vs = Ai,
-  Hs = Ni,
-  Us = Fi,
-  Ws = Mi,
-  Gs = Bi,
-  Ks = Vi,
-  qs = Li,
-  Js = Hi,
-  Ys = Ki,
-  Xs = ei,
-  Zs = pa,
-  Qs = ha,
-  $s = Zi,
-  ec = ea,
-  tc = ta,
-  nc = ia,
-  rc = na,
-  ic = oa,
-  ac = aa,
-  oc = ca,
-  sc = sa,
-  cc = Tr,
-  lc = Dr,
-  uc = ba,
-  dc = logWithLevel(`Error`);
+  us = C,
+  ds = ta,
+  fs = ra,
+  ps = na,
+  ms = Tr,
+  hs = Er,
+  q = F,
+  gs = Sr,
+  _s = xr,
+  J = R,
+  vs = L,
+  ys = z,
+  bs = B,
+  xs = kr,
+  Y = vr,
+  Ss = I,
+  Cs = Cr,
+  ws = wr,
+  Ts = br,
+  Es = E,
+  Ds = yr,
+  X = V,
+  Os = Ur,
+  ks = Ir,
+  As = Lr,
+  js = wi,
+  Ms = H,
+  Ns = Fr,
+  Ps = Rr,
+  Fs = ai,
+  Is = di,
+  Ls = mi,
+  Rs = ci,
+  zs = pi,
+  Bs = ui,
+  Vs = hi,
+  Hs = gi,
+  Us = vi,
+  Ws = _i,
+  Gs = Ei,
+  Ks = ka,
+  qs = zr,
+  Js = Vr,
+  Ys = yi,
+  Xs = xi,
+  Zs = ei,
+  Qs = ni,
+  $s = ls,
+  ec = ri,
+  tc = Zr,
+  nc = Qr,
+  rc = ii,
+  ic = Mi,
+  ac = Pi,
+  oc = Fi,
+  sc = Ii,
+  cc = Gi,
+  lc = Li,
+  uc = Bi,
+  dc = Hi,
+  fc = Ri,
+  pc = zi,
+  mc = Ji,
+  hc = Yi,
+  gc = Wi,
+  _c = Xi,
+  vc = ea,
+  yc = si,
+  bc = xa,
+  xc = Ca,
+  Sc = aa,
+  Cc = ca,
+  wc = la,
+  Tc = fa,
+  Ec = ua,
+  Dc = ma,
+  Oc = pa,
+  kc = ga,
+  Ac = ha,
+  jc = Ar,
+  Mc = Mr,
+  Nc = Oa,
+  Pc = logWithLevel(`Error`);
 Service()(`effect/Effect/Transaction`);
 const effectify =
     (e, t, n) =>
     (...r) =>
-      ts((i) => {
+      bs((i) => {
         try {
           e(...r, (e, n) => {
             i(e ? Y(t ? t(e, r) : e) : q(n));
           });
         } catch (e) {
-          i(n ? Y(n(e, r)) : is(e));
+          i(n ? Y(n(e, r)) : Cs(e));
         }
       }),
-  fc = zr,
-  pc = Br,
-  mc = Ir,
-  hc = Vr,
-  gc = Or;
-(Service()(`effect/DateTime/CurrentTimeZone`), Xa(`EncodingError`));
+  Fc = Wr,
+  Ic = Gr,
+  Lc = Hr,
+  Rc = Kr,
+  zc = Nr;
+(Service()(`effect/DateTime/CurrentTimeZone`), ao(`EncodingError`));
 function resolve(e) {
   return e.checks ? e.checks[e.checks.length - 1].annotations : e.annotations;
 }
 function resolveAt(e) {
   return (t) => resolve(t)?.[e];
 }
-const _c = resolveAt(`identifier`),
-  vc = memoize((e) => {
-    let t = _c(e);
-    return typeof t == `string` ? t : e.getExpected(vc);
+const Bc = resolveAt(`identifier`),
+  Vc = memoize((e) => {
+    let t = Bc(e);
+    return typeof t == `string` ? t : e.getExpected(Vc);
   });
 function set(e, t, n) {
   return (
@@ -4071,49 +4233,49 @@ function set(e, t, n) {
 }
 globalThis.RegExp;
 const escape = (e) => e.replace(/[/\\^$*+?.()|[\]{}]/g, `\\$&`),
-  yc = new WeakMap(),
-  bc = __name((e) => {
-    if (yc.has(e)) return yc.get(e);
+  Hc = new WeakMap(),
+  Uc = __name((e) => {
+    if (Hc.has(e)) return Hc.get(e);
     throw Error(
       `Unable to get redacted value` +
         (e.label ? ` with label: "${e.label}"` : ``),
     );
   }, `value`),
-  xc = `~effect/data/Redacted`,
-  isRedacted = (e) => p(e, xc),
-  Sc = __name((e, t) => {
-    let n = Object.create(Cc);
-    return (t?.label && (n.label = t.label), yc.set(n, e), n);
+  Wc = `~effect/data/Redacted`,
+  isRedacted = (e) => f(e, Wc),
+  Gc = __name((e, t) => {
+    let n = Object.create(Kc);
+    return (t?.label && (n.label = t.label), Hc.set(n, e), n);
   }, `make`),
-  Cc = {
-    [xc]: { _A: (e) => e },
+  Kc = {
+    [Wc]: { _A: (e) => e },
     label: void 0,
-    ...ke,
+    ...je,
     toJSON() {
       return this.toString();
     },
     toString() {
       return `<redacted${isString(this.label) ? `:` + this.label : ``}>`;
     },
-    [h]() {
-      return hash(yc.get(this));
+    [m]() {
+      return hash(Hc.get(this));
     },
-    [v](e) {
-      return isRedacted(e) && equals$2(yc.get(this), yc.get(e));
+    [_](e) {
+      return isRedacted(e) && equals$2(Hc.get(this), Hc.get(e));
     },
   },
-  wc = bc,
-  Tc = `~effect/SchemaIssue/Issue`;
+  qc = Uc,
+  Jc = `~effect/SchemaIssue/Issue`;
 function isIssue(e) {
-  return p(e, Tc);
+  return f(e, Jc);
 }
 var Base$1 = class {
     static {
       __name(this, `Base`);
     }
-    [Tc] = Tc;
+    [Jc] = Jc;
     toString() {
-      return Ec(this);
+      return Yc(this);
     }
   },
   Filter$1 = class extends Base$1 {
@@ -4205,10 +4367,10 @@ var Base$1 = class {
   };
 function makeFilterIssue(e, t) {
   if (isIssue(t)) return t;
-  if (typeof t == `string`) return new InvalidValue(k(e), { message: t });
+  if (typeof t == `string`) return new InvalidValue(D(e), { message: t });
   let n =
     typeof t.issue == `string`
-      ? new InvalidValue(k(e), { message: t.issue })
+      ? new InvalidValue(D(e), { message: t.issue })
       : t.issue;
   return new Pointer(t.path, n);
 }
@@ -4217,18 +4379,18 @@ function makeSingle(e, t) {
     return typeof t == `boolean`
       ? t
         ? void 0
-        : new InvalidValue(k(e))
+        : new InvalidValue(D(e))
       : makeFilterIssue(e, t);
 }
 function make$7(e, t, n) {
   return Array.isArray(n)
-    ? Pt(n)
+    ? Rt(n)
       ? n.length === 1
         ? makeFilterIssue(e, n[0])
         : new Composite(
             t,
-            k(e),
-            zt(n, (t) => makeFilterIssue(e, t)),
+            D(e),
+            Ut(n, (t) => makeFilterIssue(e, t)),
           )
       : void 0
     : makeSingle(e, n);
@@ -4239,7 +4401,7 @@ const defaultLeafHook = (e) => {
     if (t !== void 0) return t;
     switch (e._tag) {
       case `InvalidType`:
-        return getExpectedMessage(vc(e.ast), formatOption(e.actual));
+        return getExpectedMessage(Vc(e.ast), formatOption(e.actual));
       case `InvalidValue`:
         return `Invalid data ${formatOption(e.actual)}`;
       case `MissingKey`:
@@ -4289,7 +4451,7 @@ function toDefaultIssues(e, t, n, r) {
           ? [
               {
                 path: t,
-                message: getExpectedMessage(vc(e.ast), format$1(e.actual)),
+                message: getExpectedMessage(Vc(e.ast), format$1(e.actual)),
               },
             ]
           : [{ path: t, message: i }]
@@ -4316,7 +4478,7 @@ function makeFormatterDefault() {
     ).join(`
 `);
 }
-const Ec = makeFormatterDefault();
+const Yc = makeFormatterDefault();
 function formatDefaultIssue(e) {
   let t = e.message;
   if (e.path && e.path.length > 0) {
@@ -4350,50 +4512,50 @@ function getMessageAnnotation(e, t = `message`) {
   if (typeof n == `string`) return n;
 }
 function formatOption(e) {
-  return A(e) ? `no value provided` : format$1(e.value);
+  return O(e) ? `no value provided` : format$1(e.value);
 }
-var Dc = class Getter extends s {
+var Xc = class Getter extends s {
   run;
   constructor(e) {
     (super(), (this.run = e));
   }
   map(e) {
-    return new Getter((t, n) => this.run(t, n).pipe(fc(bt(e))));
+    return new Getter((t, n) => this.run(t, n).pipe(Fc(wt(e))));
   }
   compose(e) {
     return isPassthrough(this)
       ? e
       : isPassthrough(e)
         ? this
-        : new Getter((t, n) => this.run(t, n).pipe(mc((t) => e.run(t, n))));
+        : new Getter((t, n) => this.run(t, n).pipe(Lc((t) => e.run(t, n))));
   }
 };
-const Oc = new Dc(q);
+const Zc = new Xc(q);
 function isPassthrough(e) {
-  return e.run === Oc.run;
+  return e.run === Zc.run;
 }
 function passthrough$1() {
-  return Oc;
+  return Zc;
 }
 __name(passthrough$1, `passthrough`);
 function onSome(e) {
-  return new Dc((t, n) => (A(t) ? Zo : e(t.value, n)));
+  return new Xc((t, n) => (O(t) ? gs : e(t.value, n)));
 }
 function transform$1(e) {
-  return transformOptional(bt(e));
+  return transformOptional(wt(e));
 }
 __name(transform$1, `transform`);
 function transformOrFail$1(e) {
-  return onSome((t, n) => e(t, n).pipe(fc(k)));
+  return onSome((t, n) => e(t, n).pipe(Fc(D)));
 }
 __name(transformOrFail$1, `transformOrFail`);
 function transformOptional(e) {
-  return new Dc((t) => q(e(t)));
+  return new Xc((t) => q(e(t)));
 }
 function withDefault(e) {
-  return new Dc((t) => {
-    let n = St(t, isNotUndefined);
-    return gt(n) ? q(n) : fc(e, k);
+  return new Xc((t) => {
+    let n = Et(t, isNotUndefined);
+    return bt(n) ? q(n) : Fc(e, D);
   });
 }
 function String$3() {
@@ -4416,9 +4578,9 @@ function split(e) {
   let t = e?.separator ?? `,`;
   return transform$1((e) => (e === `` ? [] : e.split(t)));
 }
-const kc = `~effect/SchemaTransformation/Transformation`;
+const Qc = `~effect/SchemaTransformation/Transformation`;
 var Z = class Transformation {
-  [kc] = kc;
+  [Qc] = Qc;
   _tag = `Transformation`;
   decode;
   encode;
@@ -4436,20 +4598,20 @@ var Z = class Transformation {
   }
 };
 function isTransformation(e) {
-  return p(e, kc);
+  return f(e, Qc);
 }
-const Ac = __name(
+const $c = __name(
   (e) => (isTransformation(e) ? e : new Z(e.decode, e.encode)),
   `make`,
 );
 function transform(e) {
   return new Z(transform$1(e.decode), transform$1(e.encode));
 }
-const jc = new Z(passthrough$1(), passthrough$1());
+const el = new Z(passthrough$1(), passthrough$1());
 function passthrough() {
-  return jc;
+  return el;
 }
-const Mc = new Z(Number$3(), String$3()),
+const tl = new Z(Number$3(), String$3()),
   errorFromErrorJsonEncoded = (e) =>
     transform({
       decode: (e) => {
@@ -4471,13 +4633,13 @@ const Mc = new Z(Number$3(), String$3()),
 function makeGuard(e) {
   return (t) => t._tag === e;
 }
-const Nc = makeGuard(`Declaration`),
-  Pc = makeGuard(`Never`),
-  Fc = makeGuard(`Literal`),
-  Ic = makeGuard(`UniqueSymbol`),
-  Lc = makeGuard(`Arrays`),
-  Rc = makeGuard(`Objects`),
-  zc = makeGuard(`Union`);
+const nl = makeGuard(`Declaration`),
+  rl = makeGuard(`Never`),
+  il = makeGuard(`Literal`),
+  al = makeGuard(`UniqueSymbol`),
+  ol = makeGuard(`Arrays`),
+  sl = makeGuard(`Objects`),
+  cl = makeGuard(`Union`);
 var Link = class {
   to;
   transformation;
@@ -4485,7 +4647,7 @@ var Link = class {
     ((this.to = e), (this.transformation = t));
   }
 };
-const Bc = {};
+const ll = {};
 var Context = class {
   isOptional;
   isMutable;
@@ -4498,9 +4660,9 @@ var Context = class {
       (this.annotations = r));
   }
 };
-const Vc = `~effect/Schema`;
+const ul = `~effect/Schema`;
 var Base = class {
-    [Vc] = Vc;
+    [ul] = ul;
     annotations;
     checks;
     encoding;
@@ -4515,7 +4677,7 @@ var Base = class {
       return `<${this._tag}>`;
     }
   },
-  Hc = class Declaration extends Base {
+  dl = class Declaration extends Base {
     _tag = `Declaration`;
     typeParameters;
     run;
@@ -4524,7 +4686,7 @@ var Base = class {
     }
     getParser() {
       let e = this.run(this.typeParameters);
-      return (t, n) => (A(t) ? Zo : fc(e(t.value, this, n), k));
+      return (t, n) => (O(t) ? gs : Fc(e(t.value, this, n), D));
     }
     recur(e) {
       let t = mapOrSame(this.typeParameters, e);
@@ -4553,7 +4715,7 @@ var Base = class {
       return `null`;
     }
   };
-const Uc = new Null();
+const fl = new Null();
 var Undefined$1 = class extends Base {
   static {
     __name(this, `Undefined`);
@@ -4563,20 +4725,20 @@ var Undefined$1 = class extends Base {
     return fromConst(this, void 0);
   }
   toCodecJson() {
-    return replaceEncoding(this, [Wc]);
+    return replaceEncoding(this, [pl]);
   }
   getExpected() {
     return `undefined`;
   }
 };
-const Wc = new Link(
-    Uc,
+const pl = new Link(
+    fl,
     new Z(
       transform$1(() => void 0),
       transform$1(() => null),
     ),
   ),
-  Gc = new Undefined$1();
+  ml = new Undefined$1();
 var Any$1 = class extends Base {
   static {
     __name(this, `Any`);
@@ -4589,7 +4751,7 @@ var Any$1 = class extends Base {
     return `any`;
   }
 };
-const Kc = new Any$1();
+const hl = new Any$1();
 var Unknown$1 = class extends Base {
   static {
     __name(this, `Unknown`);
@@ -4602,7 +4764,7 @@ var Unknown$1 = class extends Base {
     return `unknown`;
   }
 };
-const qc = new Unknown$1();
+const gl = new Unknown$1();
 var Literal$1 = class extends Base {
   static {
     __name(this, `Literal`);
@@ -4656,7 +4818,7 @@ var String$2 = class extends Base {
     return `string`;
   }
 };
-const Jc = new String$2();
+const _l = new String$2();
 var Number$2 = class extends Base {
   static {
     __name(this, `Number`);
@@ -4669,13 +4831,13 @@ var Number$2 = class extends Base {
     return this.checks &&
       (hasCheck(this.checks, `isFinite`) || hasCheck(this.checks, `isInt`))
       ? this
-      : replaceEncoding(this, [sl]);
+      : replaceEncoding(this, [Al]);
   }
   toCodecStringTree() {
     return this.checks &&
       (hasCheck(this.checks, `isFinite`) || hasCheck(this.checks, `isInt`))
-      ? replaceEncoding(this, [yl])
-      : replaceEncoding(this, [bl]);
+      ? replaceEncoding(this, [Hl])
+      : replaceEncoding(this, [Ul]);
   }
   getExpected() {
     return `number`;
@@ -4691,8 +4853,8 @@ function hasCheck(e, t) {
     }
   });
 }
-const Yc = new Number$2();
-var Xc = class Arrays extends Base {
+const vl = new Number$2();
+var yl = class Arrays extends Base {
   _tag = `Arrays`;
   isMutable;
   elements;
@@ -4723,7 +4885,7 @@ var Xc = class Arrays extends Base {
     function getParser(e, t) {
       return t < i ? n[t] : t >= e ? o[t - e] : a;
     }
-    return gc(function* (e, n) {
+    return zc(function* (e, n) {
       if (e._tag === `None`) return e;
       let r = e.value;
       if (!Array.isArray(r)) return yield* Y(new InvalidType(t, e));
@@ -4738,7 +4900,7 @@ var Xc = class Arrays extends Base {
           issues: void 0,
           options: n,
         },
-        c = Zc(o, r, {
+        c = bl(o, r, {
           concurrency: resolveConcurrency(n?.concurrency)?.concurrency,
           end: t.rest.length === 0 ? i : Math.max(a, i + s),
         });
@@ -4749,7 +4911,7 @@ var Xc = class Arrays extends Base {
             o.issues ? o.issues.push(i) : (o.issues = [i]);
           else return yield* Y(new Composite(t, e, [i]));
         }
-      return o.issues ? yield* Y(new Composite(t, e, o.issues)) : k(o.output);
+      return o.issues ? yield* Y(new Composite(t, e, o.issues)) : D(o.output);
     });
   }
   recur(e) {
@@ -4771,9 +4933,9 @@ var Xc = class Arrays extends Base {
     return `array`;
   }
 };
-const Zc = iterateEager()({
+const bl = iterateEager()({
   onItem(e, t, n) {
-    let r = n < e.len ? k(t) : none();
+    let r = n < e.len ? D(t) : none();
     return e.getParser(e.tailThreshold, n).parser(r, e.options);
   },
   step(e, t, n, r) {
@@ -4785,7 +4947,7 @@ const Zc = iterateEager()({
       let n = new Pointer([r], new MissingKey(t.ast.context?.annotations));
       if (e.options.errors === `all`)
         e.issues ? e.issues.push(n) : (e.issues = [n]);
-      else return $a(new Composite(e.ast, e.oinput, [n]));
+      else return co(new Composite(e.ast, e.oinput, [n]));
     }
   },
 });
@@ -4797,28 +4959,28 @@ const resolveConcurrency = (e) => (
     e > 1 ? { concurrency: e } : void 0
   ),
   wrapPropertyKeyIssue = (e, t, n, r) => {
-    let i = Ha(r.cause);
-    if (N(i)) return r;
+    let i = Za(r.cause);
+    if (j(i)) return r;
     let a = new Pointer([n], i.success);
     if (e.options.errors === `all`)
       e.issues ? e.issues.push(a) : (e.issues = [a]);
-    else return $a(new Composite(t, e.oinput, [a]));
+    else return co(new Composite(t, e.oinput, [a]));
   },
-  Qc = `[+-]?\\d*\\.?\\d+(?:[Ee][+-]?\\d+)?`,
-  $c = new globalThis.RegExp(`(?:${Qc}|Infinity|-Infinity|NaN)`);
+  xl = `[+-]?\\d*\\.?\\d+(?:[Ee][+-]?\\d+)?`,
+  Sl = new globalThis.RegExp(`(?:${xl}|Infinity|-Infinity|NaN)`);
 function getIndexSignatureKeys(e, t) {
-  let n = fl(t);
+  let n = Fl(t);
   switch (n._tag) {
     case `String`:
       return Object.keys(e);
     case `TemplateLiteral`: {
-      let t = ml(n);
+      let t = Ll(n);
       return Object.keys(e).filter((e) => t.test(e));
     }
     case `Symbol`:
       return Object.getOwnPropertySymbols(e);
     case `Number`:
-      return Object.keys(e).filter((e) => $c.test(e));
+      return Object.keys(e).filter((e) => Sl.test(e));
     case `Union`:
       return [...new Set(n.types.flatMap((t) => getIndexSignatureKeys(e, t)))];
     default:
@@ -4832,7 +4994,7 @@ var PropertySignature = class {
       ((this.name = e), (this.type = t));
     }
   },
-  el = class KeyValueCombiner {
+  Cl = class KeyValueCombiner {
     decode;
     encode;
     constructor(e, t) {
@@ -4858,7 +5020,7 @@ var PropertySignature = class {
         );
     }
   },
-  tl = class Objects extends Base {
+  wl = class Objects extends Base {
     _tag = `Objects`;
     propertySignatures;
     indexSignatures;
@@ -4885,17 +5047,17 @@ var PropertySignature = class {
       let o =
         a > 0
           ? iterateEager()({
-              onItem: gc(function* (n, [r, i]) {
-                let a = e(hl(i.parameter))(k(r), n.options),
-                  o = effectIsExit(a) ? a : yield* fs(a);
+              onItem: zc(function* (n, [r, i]) {
+                let a = e(Rl(i.parameter))(D(r), n.options),
+                  o = effectIsExit(a) ? a : yield* js(a);
                 if (o._tag === `Failure`) {
                   let e = wrapPropertyKeyIssue(n, t, r, o);
                   e && (yield* e);
                   return;
                 }
-                let s = k(n.input[r]),
+                let s = D(n.input[r]),
                   c = e(i.type)(s, n.options),
-                  l = effectIsExit(c) ? c : yield* fs(c);
+                  l = effectIsExit(c) ? c : yield* js(c);
                 if (l._tag === `Failure`) {
                   let e = wrapPropertyKeyIssue(n, t, r, l);
                   e && (yield* e);
@@ -4912,7 +5074,7 @@ var PropertySignature = class {
               step: (e, t, n) => (n._tag === `Failure` ? n : void 0),
             })
           : void 0;
-      return gc(function* (e, s) {
+      return zc(function* (e, s) {
         if (e._tag === `None`) return e;
         let c = e.value;
         if (!(typeof c == `object` && c && !Array.isArray(c)))
@@ -4927,15 +5089,15 @@ var PropertySignature = class {
             options: s,
           },
           d = s.errors === `all`,
-          f = s.onExcessProperty === `error`,
-          p = s.onExcessProperty === `preserve`,
-          m;
-        if (t.indexSignatures.length === 0 && (f || p)) {
-          m = Reflect.ownKeys(c);
-          for (let n = 0; n < m.length; n++) {
-            let i = m[n];
+          ee = s.onExcessProperty === `error`,
+          f = s.onExcessProperty === `preserve`,
+          p;
+        if (t.indexSignatures.length === 0 && (ee || f)) {
+          p = Reflect.ownKeys(c);
+          for (let n = 0; n < p.length; n++) {
+            let i = p[n];
             if (!r.has(i))
-              if (f) {
+              if (ee) {
                 let n = new Pointer([i], new UnexpectedKey(t, c[i]));
                 if (d) {
                   u.issues ? u.issues.push(n) : (u.issues = [n]);
@@ -4944,10 +5106,10 @@ var PropertySignature = class {
               } else set(l, i, c[i]);
           }
         }
-        let h = resolveConcurrency(s?.concurrency),
-          g = nl(u, i, h);
-        if ((g && (yield* g), o)) {
-          let e = Rt();
+        let m = resolveConcurrency(s?.concurrency),
+          h = Tl(u, i, m);
+        if ((h && (yield* h), o)) {
+          let e = Ht();
           for (let n = 0; n < a; n++) {
             let r = t.indexSignatures[n],
               i = getIndexSignatureKeys(c, r.parameter);
@@ -4956,17 +5118,17 @@ var PropertySignature = class {
               e.push([n, r]);
             }
           }
-          let n = o(u, e, h);
+          let n = o(u, e, m);
           n && (yield* n);
         }
         if (u.issues) return yield* Y(new Composite(t, e, u.issues));
         if (s.propertyOrder === `original`) {
-          let e = (m ?? Reflect.ownKeys(c)).concat(n),
+          let e = (p ?? Reflect.ownKeys(c)).concat(n),
             t = {};
           for (let n of e) Object.hasOwn(l, n) && set(t, n, l[n]);
-          return k(t);
+          return D(t);
         }
-        return k(l);
+        return D(l);
       });
     }
     rebuild(e, t) {
@@ -5006,9 +5168,9 @@ var PropertySignature = class {
         : `object`;
     }
   };
-const nl = iterateEager()({
+const Tl = iterateEager()({
   onItem(e, t) {
-    let n = Object.hasOwn(e.input, t.name) ? k(e.input[t.name]) : none();
+    let n = Object.hasOwn(e.input, t.name) ? D(e.input[t.name]) : none();
     return t.parser(n, e.options);
   },
   step(e, t, n) {
@@ -5022,12 +5184,12 @@ const nl = iterateEager()({
       if (e.options.errors === `all`) {
         e.issues ? e.issues.push(n) : (e.issues = [n]);
         return;
-      } else return $a(new Composite(e.ast, e.oinput, [n]));
+      } else return co(new Composite(e.ast, e.oinput, [n]));
     }
   },
 });
 function struct(e, t, n) {
-  return new tl(
+  return new wl(
     Reflect.ownKeys(e).map((t) => new PropertySignature(t, e[t].ast)),
     [],
     n,
@@ -5038,7 +5200,7 @@ function getAST(e) {
   return e.ast;
 }
 function tuple(e, t = void 0) {
-  return new Xc(
+  return new yl(
     !1,
     e.map((e) => e.ast),
     [],
@@ -5047,7 +5209,7 @@ function tuple(e, t = void 0) {
   );
 }
 function union(e, t, n) {
-  return new il(e.map(getAST), t, void 0, n);
+  return new Dl(e.map(getAST), t, void 0, n);
 }
 function getCandidateTypes(e) {
   switch (e._tag) {
@@ -5109,27 +5271,27 @@ function collectSentinels(e) {
       return e.propertySignatures.flatMap((e) => {
         let t = e.type;
         if (!isOptional(t)) {
-          if (Fc(t)) return [{ key: e.name, literal: t.literal }];
-          if (Ic(t)) return [{ key: e.name, literal: t.symbol }];
+          if (il(t)) return [{ key: e.name, literal: t.literal }];
+          if (al(t)) return [{ key: e.name, literal: t.symbol }];
         }
         return [];
       });
     case `Arrays`:
       return e.elements.flatMap((e, t) =>
-        Fc(e) && !isOptional(e) ? [{ key: t, literal: e.literal }] : [],
+        il(e) && !isOptional(e) ? [{ key: t, literal: e.literal }] : [],
       );
     case `Suspend`:
       return collectSentinels(e.thunk());
   }
 }
-const rl = new WeakMap();
+const El = new WeakMap();
 function getIndex(e) {
-  let t = rl.get(e);
+  let t = El.get(e);
   if (t) return t;
   t = {};
   for (let n of e) {
-    let e = fl(n);
-    if (Pc(e)) continue;
+    let e = Fl(n);
+    if (rl(e)) continue;
     let r = getCandidateTypes(e),
       i = collectSentinels(e);
     t.byType ??= {};
@@ -5147,11 +5309,11 @@ function getIndex(e) {
       for (let e of r) (t.otherwise[e] ??= []).push(n);
     }
   }
-  return (rl.set(e, t), t);
+  return (El.set(e, t), t);
 }
 function filterLiterals(e) {
   return (t) => {
-    let n = fl(t);
+    let n = Fl(t);
     return n._tag === `Literal`
       ? n.literal === e
       : n._tag === `UniqueSymbol`
@@ -5175,7 +5337,7 @@ function getCandidates(e, t) {
   }
   return (n.byType?.[r] ?? []).filter(filterLiterals(e));
 }
-var il = class Union$1 extends Base {
+var Dl = class Union$1 extends Base {
   static {
     __name(this, `Union`);
   }
@@ -5201,7 +5363,7 @@ var il = class Union$1 extends Base {
           issues: void 0,
           options: r,
         },
-        s = al(o, a, resolveConcurrency(r?.concurrency));
+        s = Ol(o, a, resolveConcurrency(r?.concurrency));
       return s
         ? X(s, (e) => (o.out ? q(o.out) : Y(new AnyOf(t, i, o.issues ?? []))))
         : o.out
@@ -5227,16 +5389,16 @@ var il = class Union$1 extends Base {
     if (typeof t == `string`) return t;
     if (this.types.length === 0) return `never`;
     let n = this.types.map((t) => {
-      let n = fl(t);
+      let n = Fl(t);
       switch (n._tag) {
         case `Arrays`: {
-          let t = n.elements.filter(Fc);
+          let t = n.elements.filter(il);
           if (t.length > 0)
             return `${formatIsMutable(n.isMutable)}[ ${t.map((t) => e(t) + formatIsOptional(t.context?.isOptional)).join(`, `)}, ... ]`;
           break;
         }
         case `Objects`: {
-          let t = n.propertySignatures.filter((e) => Fc(e.type));
+          let t = n.propertySignatures.filter((e) => il(e.type));
           if (t.length > 0)
             return `{ ${t.map((t) => `${formatIsMutable(t.type.context?.isMutable)}${formatPropertyKey(t.name)}${formatIsOptional(t.type.context?.isOptional)}: ${e(t.type)}`).join(`, `)}, ... }`;
           break;
@@ -5247,26 +5409,26 @@ var il = class Union$1 extends Base {
     return Array.from(new Set(n)).join(` | `);
   }
 };
-const al = iterateEager()({
+const Ol = iterateEager()({
     onItem(e, t) {
       return e.recur(t)(e.oinput, e.options);
     },
     step(e, t, n) {
       if (n._tag === `Failure`) {
-        let t = Ha(n.cause);
-        if (N(t)) return n;
+        let t = Za(n.cause);
+        if (j(t)) return n;
         e.issues ? e.issues.push(t.success) : (e.issues = [t.success]);
       } else {
         if (e.out && e.ast.mode === `oneOf`)
           return (
-            e.successes.push(t), $a(new OneOf(e.ast, e.input, e.successes))
+            e.successes.push(t), co(new OneOf(e.ast, e.input, e.successes))
           );
         if (((e.out = n.value), e.successes.push(t), e.ast.mode === `anyOf`))
-          return eo;
+          return lo;
       }
     },
   }),
-  ol = new il(
+  kl = new Dl(
     [
       new Literal$1(`Infinity`),
       new Literal$1(`-Infinity`),
@@ -5274,8 +5436,8 @@ const al = iterateEager()({
     ],
     `anyOf`,
   ),
-  sl = new Link(
-    new il([Yc, ol], `anyOf`),
+  Al = new Link(
+    new Dl([vl, kl], `anyOf`),
     new Z(
       Number$3(),
       transform$1((e) =>
@@ -5289,7 +5451,7 @@ function formatIsMutable(e) {
 function formatIsOptional(e) {
   return e ? `?` : ``;
 }
-var cl = class Filter extends s {
+var jl = class Filter extends s {
     _tag = `Filter`;
     run;
     annotations;
@@ -5304,10 +5466,10 @@ var cl = class Filter extends s {
       return new Filter(this.run, this.annotations, !0);
     }
     and(e, t) {
-      return new ll([this, e], t);
+      return new Ml([this, e], t);
     }
   },
-  ll = class FilterGroup extends s {
+  Ml = class FilterGroup extends s {
     _tag = `FilterGroup`;
     checks;
     annotations;
@@ -5322,7 +5484,7 @@ var cl = class Filter extends s {
     }
   };
 function makeFilter$1(e, t, n = !1) {
-  return new cl((t, n, r) => make$7(t, n, e(t, n, r)), t, n);
+  return new jl((t, n, r) => make$7(t, n, e(t, n, r)), t, n);
 }
 __name(makeFilter$1, `makeFilter`);
 function isPattern$1(e, t) {
@@ -5356,7 +5518,7 @@ function replaceContext(e, t) {
 function annotate(e, t) {
   if (e.checks) {
     let n = e.checks[e.checks.length - 1];
-    return replaceChecks(e, jt(e.checks.slice(0, -1), n.annotate(t)));
+    return replaceChecks(e, Ft(e.checks.slice(0, -1), n.annotate(t)));
   }
   return modifyOwnPropertyDescriptors(e, (e) => {
     e.annotations.value = { ...e.annotations.value, ...t };
@@ -5378,7 +5540,7 @@ function updateLastLink(e, t) {
     i = t(r.to);
   return i === r.to
     ? e
-    : jt(e.slice(0, e.length - 1), new Link(i, r.transformation));
+    : Ft(e.slice(0, e.length - 1), new Link(i, r.transformation));
 }
 function applyToLastLink(e) {
   return (t) =>
@@ -5411,9 +5573,9 @@ function annotateKey(e, t) {
       : new Context(!1, !1, void 0, t),
   );
 }
-const ul = applyToLastLink(optionalKey$1);
+const Nl = applyToLastLink(optionalKey$1);
 function optionalKey$1(e) {
-  return ul(
+  return Nl(
     replaceContext(
       e,
       e.context
@@ -5431,7 +5593,7 @@ function optionalKey$1(e) {
 }
 __name(optionalKey$1, `optionalKey`);
 function withConstructorDefault$1(e, t) {
-  let n = [new Link(qc, new Z(withDefault(t), passthrough$1()))];
+  let n = [new Link(gl, new Z(withDefault(t), passthrough$1()))];
   return replaceContext(
     e,
     e.context
@@ -5477,7 +5639,7 @@ function parseParameter(e) {
 }
 function record(e, t, n) {
   let { literals: r, parameters: i } = parseParameter(e);
-  return new tl(
+  return new wl(
     r.map((e) => new PropertySignature(e, t)),
     i.map((e) => new IndexSignature(e, t, n)),
   );
@@ -5485,28 +5647,28 @@ function record(e, t, n) {
 function isOptional(e) {
   return e.context?.isOptional ?? !1;
 }
-const dl = memoize((e) => {
-    if (e.encoding) return dl(replaceEncoding(e, void 0));
+const Pl = memoize((e) => {
+    if (e.encoding) return Pl(replaceEncoding(e, void 0));
     let t = e;
-    return t.recur?.(dl) ?? t;
+    return t.recur?.(Pl) ?? t;
   }),
-  fl = memoize((e) => dl(pl(e)));
+  Fl = memoize((e) => Pl(Il(e)));
 function flipEncoding(e, t) {
   let n = t,
     r = n.length,
     i = n[r - 1],
-    a = [new Link(pl(replaceEncoding(e, void 0)), n[0].transformation.flip())];
+    a = [new Link(Il(replaceEncoding(e, void 0)), n[0].transformation.flip())];
   for (let e = 1; e < r; e++)
-    a.unshift(new Link(pl(n[e - 1].to), n[e].transformation.flip()));
-  let o = pl(i.to);
+    a.unshift(new Link(Il(n[e - 1].to), n[e].transformation.flip()));
+  let o = Il(i.to);
   return o.encoding
     ? replaceEncoding(o, [...o.encoding, ...a])
     : replaceEncoding(o, a);
 }
-const pl = memoize((e) => {
+const Il = memoize((e) => {
   if (e.encoding) return flipEncoding(e, e.encoding);
   let t = e;
-  return t.flip?.(pl) ?? t.recur?.(pl) ?? t;
+  return t.flip?.(Il) ?? t.recur?.(Il) ?? t;
 });
 function containsUndefined(e) {
   switch (e._tag) {
@@ -5529,7 +5691,7 @@ function getTemplateLiteralSource(e, t) {
     )
     .join(``);
 }
-const ml = memoize(
+const Ll = memoize(
   (e) => new globalThis.RegExp(`^${getTemplateLiteralSource(e, !0)}$`),
 );
 function getTemplateLiteralASTPartPattern(e) {
@@ -5537,11 +5699,11 @@ function getTemplateLiteralASTPartPattern(e) {
     case `Literal`:
       return escape(globalThis.String(e.literal));
     case `String`:
-      return gl;
+      return zl;
     case `Number`:
-      return Qc;
-    case `BigInt`:
       return xl;
+    case `BigInt`:
+      return Wl;
     case `TemplateLiteral`:
       return getTemplateLiteralSource(e, !1);
     case `Union`:
@@ -5549,19 +5711,19 @@ function getTemplateLiteralASTPartPattern(e) {
   }
 }
 function handleTemplateLiteralASTPartParens(e, t, n) {
-  if (zc(e)) {
+  if (cl(e)) {
     if (!n) return `(?:${t})`;
   } else if (!n) return t;
   return `(${t})`;
 }
 function fromConst(e, t) {
-  let n = Qo(t);
+  let n = _s(t);
   return (r) =>
-    r._tag === `None` ? Zo : r.value === t ? n : Y(new InvalidType(e, r));
+    r._tag === `None` ? gs : r.value === t ? n : Y(new InvalidType(e, r));
 }
 function fromRefinement(e, t) {
   return (n) =>
-    n._tag === `None` ? Zo : t(n.value) ? q(n) : Y(new InvalidType(e, n));
+    n._tag === `None` ? gs : t(n.value) ? q(n) : Y(new InvalidType(e, n));
 }
 function toCodec(e) {
   function out(t) {
@@ -5571,30 +5733,30 @@ function toCodec(e) {
   }
   return memoize(out);
 }
-const hl = toCodec((e) => {
+const Rl = toCodec((e) => {
     switch (e._tag) {
       default:
         return e;
       case `Number`:
         return e.toCodecStringTree();
       case `Union`:
-        return e.recur(hl);
+        return e.recur(Rl);
     }
   }),
-  gl = `[\\s\\S]*?`,
-  _l = new globalThis.RegExp(`^${Qc}$`);
+  zl = `[\\s\\S]*?`,
+  Bl = new globalThis.RegExp(`^${xl}$`);
 function isStringFinite(e) {
-  return isPattern$1(_l, {
+  return isPattern$1(Bl, {
     expected: `a string representing a finite number`,
-    meta: { _tag: `isStringFinite`, regExp: _l },
+    meta: { _tag: `isStringFinite`, regExp: Bl },
     ...e,
   });
 }
-const vl = appendChecks(Jc, [isStringFinite()]),
-  yl = new Link(vl, Mc),
-  bl = new Link(new il([vl, ol], `anyOf`), Mc),
-  xl = `-?\\d+`;
-`${xl}`;
+const Vl = appendChecks(_l, [isStringFinite()]),
+  Hl = new Link(Vl, tl),
+  Ul = new Link(new Dl([Vl, kl], `anyOf`), tl),
+  Wl = `-?\\d+`;
+`${Wl}`;
 function collectIssues(e, t, n, r, i) {
   for (let a = 0; a < e.length; a++) {
     let o = e[a];
@@ -5609,7 +5771,7 @@ function collectIssues(e, t, n, r, i) {
     }
   }
 }
-const Sl = `~effect/Schema/Class`;
+const Gl = `~effect/Schema/Class`;
 function isStringTree(e) {
   let t = new Set();
   return recur(e);
@@ -5624,25 +5786,25 @@ function isStringTree(e) {
             : Object.keys(e).every((t) => recur(e[t])));
   }
 }
-const Cl = new Link(
-    new Hc(
+const Kl = new Link(
+    new dl(
       [],
-      () => (e, t) => (isStringTree(e) ? q(e) : Y(new InvalidType(t, k(e)))),
+      () => (e, t) => (isStringTree(e) ? q(e) : Y(new InvalidType(t, D(e)))),
       {
         expected: `StringTree`,
-        toCodecStringTree: () => new Link(qc, passthrough()),
+        toCodecStringTree: () => new Link(gl, passthrough()),
       },
     ),
     passthrough(),
   ),
   lambda = (e) => e,
-  wl = memoize((e) => {
+  ql = memoize((e) => {
     switch (e._tag) {
       case `Declaration`: {
-        let t = e.annotations?.[Sl];
+        let t = e.annotations?.[Gl];
         if (isFunction(t)) {
           let n = t(e.typeParameters),
-            r = wl(n.to);
+            r = ql(n.to);
           return replaceEncoding(
             e,
             r === n.to ? [n] : [new Link(r, n.transformation)],
@@ -5654,16 +5816,16 @@ const Cl = new Link(
       case `Arrays`:
         return e.recur((e) => {
           let t = e.context?.defaultValue;
-          return t ? replaceEncoding(wl(e), t) : wl(e);
+          return t ? replaceEncoding(ql(e), t) : ql(e);
         });
       case `Suspend`:
-        return e.recur(wl);
+        return e.recur(ql);
       default:
         return e;
     }
   });
 function makeEffect(e) {
-  let t = run(wl(dl(e.ast)));
+  let t = run(ql(Pl(e.ast)));
   return (e, n) =>
     t(
       e,
@@ -5676,16 +5838,16 @@ function makeEffect(e) {
 }
 function makeOption(e) {
   let t = makeEffect(e);
-  return (e, n) => ro(sc(t(e, n)));
+  return (e, n) => po(Ac(t(e, n)));
 }
 function make$5(e) {
   let t = makeEffect(e);
-  return (e, n) => oc(pc(t(e, n), (e) => Error(e.toString(), { cause: e })));
+  return (e, n) => kc(Ic(t(e, n), (e) => Error(e.toString(), { cause: e })));
 }
 __name(make$5, `make`);
 function _is(e) {
-  let t = asExit(run(dl(e)));
-  return (e) => to(t(e, Bc));
+  let t = asExit(run(Pl(e)));
+  return (e) => uo(t(e, ll));
 }
 function decodeUnknownEffect(e, t) {
   let n = run(e.ast);
@@ -5693,25 +5855,25 @@ function decodeUnknownEffect(e, t) {
 }
 const mergeParseOptions = (e, t) => (t === void 0 ? e : { ...e, ...t });
 function run(e) {
-  let t = Tl(e);
+  let t = Jl(e);
   return (e, n) =>
-    mc(t(k(e), n ?? Bc), (e) =>
+    Lc(t(D(e), n ?? ll), (e) =>
       e._tag === `None` ? Y(new InvalidValue(e)) : q(e.value),
     );
 }
 function asExit(e) {
-  return (t, n) => sc(e(t, n));
+  return (t, n) => Ac(e(t, n));
 }
-const Tl = memoize((e) => {
+const Jl = memoize((e) => {
     let t,
       n = resolve(e)?.parseOptions;
     if (!e.context && !e.encoding && !e.checks)
       return (r, i) => (
-        (t ??= e.getParser(Tl)),
+        (t ??= e.getParser(Jl)),
         n && (i = { ...i, ...n }),
         t(r, i)
       );
-    let r = Lc(e) || Rc(e) || (Nc(e) && e.typeParameters.length > 0);
+    let r = ol(e) || sl(e) || (nl(e) && e.typeParameters.length > 0);
     return (i, a) => {
       n && (a = { ...a, ...n });
       let o = e.encoding,
@@ -5722,25 +5884,25 @@ const Tl = memoize((e) => {
         for (let e = n - 1; e >= 0; e--) {
           let n = t[e],
             r = n.to,
-            o = Tl(r);
+            o = Jl(r);
           if (
-            ((s = s ? mc(s, (e) => o(e, a)) : o(i, a)),
+            ((s = s ? Lc(s, (e) => o(e, a)) : o(i, a)),
             n.transformation._tag === `Transformation`)
           ) {
             let e = n.transformation.decode;
-            s = mc(s, (t) => e.run(t, a));
+            s = Lc(s, (t) => e.run(t, a));
           } else s = n.transformation.decode(s, a);
         }
-        s = pc(s, (t) => new Encoding(e, i, t));
+        s = Ic(s, (t) => new Encoding(e, i, t));
       }
-      t ??= e.getParser(Tl);
-      let c = s ? mc(s, (e) => t(e, a)) : t(i, a);
+      t ??= e.getParser(Jl);
+      let c = s ? Lc(s, (e) => t(e, a)) : t(i, a);
       if (e.checks && !a?.disableChecks) {
         let t = e.checks;
         (a?.errors === `all` &&
           r &&
-          gt(i) &&
-          (c = hc(c, (n) => {
+          bt(i) &&
+          (c = Rc(c, (n) => {
             let r = [];
             return (
               collectIssues(
@@ -5751,7 +5913,7 @@ const Tl = memoize((e) => {
                 a,
               ),
               Y(
-                Nt(r)
+                Lt(r)
                   ? n._tag === `Composite` && n.ast === e
                     ? new Composite(e, n.actual, [...n.issues, ...r])
                     : new Composite(e, i, [n, ...r])
@@ -5759,11 +5921,11 @@ const Tl = memoize((e) => {
               )
             );
           })),
-          (c = mc(c, (n) => {
-            if (gt(n)) {
+          (c = Lc(c, (n) => {
+            if (bt(n)) {
               let r = n.value,
                 i = [];
-              if ((collectIssues(t, r, i, e, a), Nt(i)))
+              if ((collectIssues(t, r, i, e, a), Lt(i)))
                 return Y(new Composite(e, n, i));
             }
             return q(n);
@@ -5772,9 +5934,9 @@ const Tl = memoize((e) => {
       return c;
     };
   }),
-  El = `~effect/Schema/Schema`,
-  Dl = {
-    [El]: El,
+  Yl = `~effect/Schema/Schema`,
+  Xl = {
+    [Yl]: Yl,
     pipe() {
       return pipeArguments(this, arguments);
     },
@@ -5789,14 +5951,14 @@ const Tl = memoize((e) => {
     },
   };
 function make$4(e, t) {
-  let n = Object.create(Dl);
+  let n = Object.create(Xl);
   return (
     t && Object.assign(n, t),
     (n.ast = e),
     (n.rebuild = (e) => make$4(e, t)),
     (n.makeEffect = flow(
       makeEffect(n),
-      pc((e) => new SchemaError(e)),
+      Ic((e) => new SchemaError(e)),
     )),
     (n.make = make$5(n)),
     (n.makeOption = makeOption(n)),
@@ -5804,9 +5966,9 @@ function make$4(e, t) {
   );
 }
 __name(make$4, `make`);
-const Ol = `~effect/Schema/SchemaError`;
+const Zl = `~effect/Schema/SchemaError`;
 var SchemaError = class {
-  [Ol] = Ol;
+  [Zl] = Zl;
   _tag = `SchemaError`;
   name = `SchemaError`;
   issue;
@@ -5823,9 +5985,9 @@ var SchemaError = class {
 function makeReorder(e) {
   return (t) => {
     let n = new Map();
-    for (let e = 0; e < t.length; e++) n.set(fl(t[e]), e);
+    for (let e = 0; e < t.length; e++) n.set(Fl(t[e]), e);
     let r = [...t].sort((t, r) => {
-      ((t = fl(t)), (r = fl(r)));
+      ((t = Fl(t)), (r = Fl(r)));
       let i = e(t),
         a = e(r);
       return i === a ? n.get(t) - n.get(r) : i - a;
@@ -5833,26 +5995,26 @@ function makeReorder(e) {
     return r.some((e, n) => e !== t[n]) ? r : t;
   };
 }
-const kl = El;
+const Ql = Yl;
 function declareConstructor() {
-  return (e, t, n) => Q(new Hc(e.map(getAST), (e) => t(e.map((e) => Q(e))), n));
+  return (e, t, n) => Q(new dl(e.map(getAST), (e) => t(e.map((e) => Q(e))), n));
 }
 function declare(e, t) {
   return declareConstructor()(
     [],
-    () => (t, n) => (e(t) ? q(t) : Y(new InvalidType(n, k(t)))),
+    () => (t, n) => (e(t) ? q(t) : Y(new InvalidType(n, D(t)))),
     t,
   );
 }
 function isSchemaError(e) {
-  return p(e, Ol);
+  return f(e, Zl);
 }
 const Q = make$4;
 function isSchema(e) {
-  return p(e, kl) && e[kl] === kl;
+  return f(e, Ql) && e[Ql] === Ql;
 }
-const Al = lambda((e) => Q(optionalKey$1(e.ast), { schema: e })),
-  jl = lambda((e) => Al(zl(e)));
+const $l = lambda((e) => Q(optionalKey$1(e.ast), { schema: e })),
+  eu = lambda((e) => $l(cu(e)));
 function Literal(e) {
   let t = Q(new Literal$1(e), {
     literal: e,
@@ -5867,11 +6029,11 @@ function Literal(e) {
   });
   return t;
 }
-const Ml = Q(Kc),
-  Nl = Q(qc),
-  Pl = Q(Gc),
-  Fl = Q(Jc),
-  Il = Q(Yc);
+const tu = Q(hl),
+  nu = Q(gl),
+  ru = Q(ml),
+  iu = Q(_l),
+  au = Q(vl);
 function makeStruct(e, t) {
   return Q(e, {
     fields: t,
@@ -5890,7 +6052,7 @@ function Struct(e) {
 function Record(e, t, n) {
   let r =
     n?.keyValueCombiner?.decode || n?.keyValueCombiner?.encode
-      ? new el(n.keyValueCombiner.decode, n.keyValueCombiner.encode)
+      ? new Cl(n.keyValueCombiner.decode, n.keyValueCombiner.encode)
       : void 0;
   return Q(record(e.ast, t.ast, r), { key: e, value: t });
 }
@@ -5909,8 +6071,8 @@ function makeTuple(e, t) {
 function Tuple(e) {
   return makeTuple(tuple(e), e);
 }
-const Ll = lambda((e) => Q(new Xc(!1, [], [e.ast]), { value: e })),
-  Rl = lambda((e) => Q(new Xc(!1, [e.ast], [e.ast]), { value: e }));
+const ou = lambda((e) => Q(new yl(!1, [], [e.ast]), { value: e })),
+  su = lambda((e) => Q(new yl(!1, [e.ast], [e.ast]), { value: e }));
 function makeUnion(e, t) {
   return Q(e, {
     members: t,
@@ -5946,17 +6108,17 @@ function Literals(e) {
     },
   });
 }
-const zl = lambda((e) => Union([e, Pl]));
+const cu = lambda((e) => Union([e, ru]));
 function decodeTo(e, t) {
   return (n) =>
-    Q(decodeTo$1(n.ast, e.ast, t ? Ac(t) : passthrough()), { from: n, to: e });
+    Q(decodeTo$1(n.ast, e.ast, t ? $c(t) : passthrough()), { from: n, to: e });
 }
 function withConstructorDefault(e) {
   return (t) =>
     Q(
       withConstructorDefault$1(
         t.ast,
-        pc(e, (e) => e.issue),
+        Ic(e, (e) => e.issue),
       ),
       { schema: t },
     );
@@ -5971,18 +6133,18 @@ function instanceOf(e, t) {
   return declare((t) => t instanceof e, t);
 }
 function link() {
-  return (e, t) => new Link(e.ast, Ac(t));
+  return (e, t) => new Link(e.ast, $c(t));
 }
-const Bl = Struct({ message: Fl, name: Al(Fl), stack: Al(Fl) }),
-  Vl = instanceOf(globalThis.Error, {
+const lu = Struct({ message: iu, name: $l(iu), stack: $l(iu) }),
+  uu = instanceOf(globalThis.Error, {
     typeConstructor: { _tag: `Error` },
     generation: { runtime: `Schema.Error`, Type: `globalThis.Error` },
     expected: `Error`,
-    toCodecJson: () => link()(Bl, errorFromErrorJsonEncoded()),
+    toCodecJson: () => link()(lu, errorFromErrorJsonEncoded()),
     toArbitrary: () => (e) => e.string().map((e) => new globalThis.Error(e)),
   });
 globalThis.Error;
-const Hl = new Z(
+const du = new Z(
     passthrough$1(),
     transform$1((e) => {
       try {
@@ -5992,15 +6154,15 @@ const Hl = new Z(
       }
     }),
   ),
-  Ul = Union([
-    Bl.pipe(decodeTo(Vl, errorFromErrorJsonEncoded())),
-    Ml.pipe(
+  fu = Union([
+    lu.pipe(decodeTo(uu, errorFromErrorJsonEncoded())),
+    tu.pipe(
       decodeTo(
-        Nl.annotate({
-          toCodecJson: () => link()(Ml, Hl),
+        nu.annotate({
+          toCodecJson: () => link()(tu, du),
           toArbitrary: () => (e) => e.json(),
         }),
-        Hl,
+        du,
       ),
     ),
   ]);
@@ -6010,7 +6172,7 @@ const Hl = new Z(
   globalThis.FormData,
   globalThis.URLSearchParams,
   globalThis.Uint8Array);
-const Wl = globalThis.Symbol.for(`immer-draftable`);
+const pu = globalThis.Symbol.for(`immer-draftable`);
 function makeClass(e, t, n, r, i) {
   let a = getClassSchemaFactory(n, t, r),
     o = getClassTypeId(t),
@@ -6020,11 +6182,11 @@ function makeClass(e, t, n, r, i) {
         let r = n.make(e, t);
         super({ ...e, ...r }, { ...t, disableChecks: !0 });
       }
-      static [kl] = kl;
+      static [Ql] = Ql;
       get [o]() {
         return o;
       }
-      static [Wl] = !0;
+      static [pu] = !0;
       static identifier = t;
       static fields = n.fields;
       static get ast() {
@@ -6087,15 +6249,15 @@ function getClassSchemaFactory(e, t, n) {
     if (r === void 0) {
       let a = getClassTransformation(i),
         o = Q(
-          new Hc(
+          new dl(
             [e.ast],
             () => (e, n) =>
-              e instanceof i || p(e, getClassTypeId(t))
+              e instanceof i || f(e, getClassTypeId(t))
                 ? q(e)
-                : Y(new InvalidType(n, k(e))),
+                : Y(new InvalidType(n, D(e))),
             {
               identifier: t,
-              [Sl]: ([e]) => new Link(e, a),
+              [Gl]: ([e]) => new Link(e, a),
               toCodec: ([e]) => new Link(e.ast, a),
               toArbitrary:
                 ([e]) =>
@@ -6119,7 +6281,7 @@ function isStruct(e) {
   return isSchema(e);
 }
 const ErrorClass = (e) => (t, n) =>
-    makeClass(He, e, isStruct(t) ? t : Struct(t), n, (e) => ({ name: e })),
+    makeClass(We, e, isStruct(t) ? t : Struct(t), n, (e) => ({ name: e })),
   TaggedErrorClass = (e) => (t, n, r) => {
     let i = isStruct(n)
       ? n.mapFields((e) => ({ _tag: tag(t), ...e }), {
@@ -6129,7 +6291,7 @@ const ErrorClass = (e) => (t, n) =>
     return ErrorClass(e ?? t)(i, r);
   };
 function toCodecStringTree(e, t) {
-  return Q(Ql(t?.keepDeclarations === !0 ? Xl(e.ast) : Jl(e.ast)));
+  return Q(xu(t?.keepDeclarations === !0 ? yu(e.ast) : _u(e.ast)));
 }
 function getStringTreePriority(e) {
   switch (e._tag) {
@@ -6144,13 +6306,13 @@ function getStringTreePriority(e) {
       return 1;
   }
 }
-const Gl = makeReorder(getStringTreePriority);
+const mu = makeReorder(getStringTreePriority);
 function serializerTree(e, t, n) {
   switch (e._tag) {
     case `Declaration`: {
       let r = e.annotations?.toCodecJson ?? e.annotations?.toCodec;
       if (isFunction(r)) {
-        let n = r(Nc(e) ? e.typeParameters.map((e) => Q(t(fl(e)))) : []),
+        let n = r(nl(e) ? e.typeParameters.map((e) => Q(t(Fl(e)))) : []),
           i = t(n.to);
         return replaceEncoding(
           e,
@@ -6160,12 +6322,12 @@ function serializerTree(e, t, n) {
       return n(e);
     }
     case `Null`:
-      return replaceEncoding(e, [Kl]);
+      return replaceEncoding(e, [hu]);
     case `Boolean`:
-      return replaceEncoding(e, [ql]);
+      return replaceEncoding(e, [gu]);
     case `Unknown`:
     case `ObjectKeyword`:
-      return replaceEncoding(e, [Cl]);
+      return replaceEncoding(e, [Kl]);
     case `Enum`:
     case `Number`:
     case `Literal`:
@@ -6180,10 +6342,10 @@ function serializerTree(e, t, n) {
         });
       return e.recur(t);
     case `Union`: {
-      let n = Gl(e.types);
+      let n = mu(e.types);
       return n === e.types
         ? e.recur(t)
-        : new il(
+        : new Dl(
             n,
             e.mode,
             e.annotations,
@@ -6198,44 +6360,44 @@ function serializerTree(e, t, n) {
   }
   return e;
 }
-const Kl = new Link(
+const hu = new Link(
     new Literal$1(`null`),
     new Z(
       transform$1(() => null),
       transform$1(() => `null`),
     ),
   ),
-  ql = new Link(
-    new il([new Literal$1(`true`), new Literal$1(`false`)], `anyOf`),
+  gu = new Link(
+    new Dl([new Literal$1(`true`), new Literal$1(`false`)], `anyOf`),
     new Z(
       transform$1((e) => e === `true`),
       String$3(),
     ),
   ),
-  Jl = toCodec((e) => {
-    let t = serializerTree(e, Jl, (e) => replaceEncoding(e, [Yl]));
-    return t !== e && isOptional(e) ? ul(t) : t;
+  _u = toCodec((e) => {
+    let t = serializerTree(e, _u, (e) => replaceEncoding(e, [vu]));
+    return t !== e && isOptional(e) ? Nl(t) : t;
   }),
-  Yl = new Link(
-    Gc,
+  vu = new Link(
+    ml,
     new Z(
       passthrough$1(),
       transform$1(() => void 0),
     ),
   ),
-  Xl = toCodec((e) => {
-    let t = serializerTree(e, Xl, identity);
-    return t !== e && isOptional(e) ? ul(t) : t;
+  yu = toCodec((e) => {
+    let t = serializerTree(e, yu, identity);
+    return t !== e && isOptional(e) ? Nl(t) : t;
   }),
-  Zl = `~effect/Schema/SERIALIZER_ENSURE_ARRAY`,
-  Ql = toCodec((e) => {
-    if (zc(e) && e.annotations?.[Zl]) return e;
+  bu = `~effect/Schema/SERIALIZER_ENSURE_ARRAY`,
+  xu = toCodec((e) => {
+    if (cl(e) && e.annotations?.[bu]) return e;
     let t = onSerializerEnsureArray(e);
-    if (Lc(t)) {
-      let n = new il(
-        [t, decodeTo$1(Jc, t, new Z(split(), passthrough$1()))],
+    if (ol(t)) {
+      let n = new Dl(
+        [t, decodeTo$1(_l, t, new Z(split(), passthrough$1()))],
         `anyOf`,
-        { [Zl]: !0 },
+        { [bu]: !0 },
       );
       return isOptional(e) ? optionalKey$1(n) : n;
     }
@@ -6250,17 +6412,18 @@ function onSerializerEnsureArray(e) {
     case `Objects`:
     case `Union`:
     case `Suspend`:
-      return e.recur(Ql);
+      return e.recur(xu);
   }
 }
-const $l = fiberJoin,
-  eu = fiberInterrupt,
-  tu = fiberInterruptAll,
-  nu = ra,
-  ru = makeLatchUnsafe,
-  iu = makeLatch,
-  au = Symbol.for(`effect/MutableList/Empty`),
-  ou = __name(() => ({ head: void 0, tail: void 0, length: 0 }), `make`),
+const Su = fiberJoin,
+  Cu = fiberInterrupt,
+  wu = fiberInterruptAll,
+  Tu = getCurrentFiber,
+  Eu = da,
+  Du = makeLatchUnsafe,
+  Ou = makeLatch,
+  ku = Symbol.for(`effect/MutableList/Empty`),
+  Au = __name(() => ({ head: void 0, tail: void 0, length: 0 }), `make`),
   emptyBucket = () => ({ array: [], mutable: !0, offset: 0, next: void 0 }),
   append = (e, t) => {
     (e.tail
@@ -6298,8 +6461,8 @@ const $l = fiberJoin,
     }
     return (clear(e), n);
   },
-  su = __name((e) => {
-    if (!e.head) return au;
+  ju = __name((e) => {
+    if (!e.head) return ku;
     let t = e.head.array[e.head.offset];
     return (
       e.head.mutable && (e.head.array[e.head.offset] = void 0),
@@ -6310,12 +6473,12 @@ const $l = fiberJoin,
       t
     );
   }, `take`),
-  cu = { _A: identity, _E: identity },
-  lu = {
-    "~effect/Queue": cu,
-    "~effect/Queue/Enqueue": cu,
-    "~effect/Queue/Dequeue": cu,
-    ...ke,
+  Mu = { _A: identity, _E: identity },
+  Nu = {
+    "~effect/Queue": Mu,
+    "~effect/Queue/Enqueue": Mu,
+    "~effect/Queue/Dequeue": Mu,
+    ...je,
     toJSON() {
       return {
         _id: `effect/Queue`,
@@ -6325,13 +6488,13 @@ const $l = fiberJoin,
     },
   },
   make = (e) =>
-    O((t) => {
-      let n = Object.create(lu);
+    E((t) => {
+      let n = Object.create(Nu);
       return (
         (n.dispatcher = t.currentDispatcher),
         (n.capacity = e?.capacity ?? 1 / 0),
         (n.strategy = e?.strategy ?? `suspend`),
-        (n.messages = ou()),
+        (n.messages = Au()),
         (n.scheduleRunning = !1),
         (n.state = {
           _tag: `Open`,
@@ -6339,90 +6502,90 @@ const $l = fiberJoin,
           offers: new Set(),
           awaiters: new Set(),
         }),
-        I(n)
+        F(n)
       );
     }),
   bounded = (e) => make({ capacity: e }),
   offer = (e, t) =>
-    z(() => {
-      if (e.state._tag !== `Open`) return du;
+    R(() => {
+      if (e.state._tag !== `Open`) return Fu;
       if (e.messages.length >= e.capacity)
         switch (e.strategy) {
           case `dropping`:
-            return du;
+            return Fu;
           case `suspend`:
             return e.capacity <= 0 && e.state.takers.size > 0
-              ? (append(e.messages, t), releaseTakers(e), fu)
+              ? (append(e.messages, t), releaseTakers(e), Iu)
               : offerRemainingSingle(e, t);
           case `sliding`:
-            return (su(e.messages), append(e.messages, t), fu);
+            return (ju(e.messages), append(e.messages, t), Iu);
         }
-      return (append(e.messages, t), scheduleReleaseTaker(e), fu);
+      return (append(e.messages, t), scheduleReleaseTaker(e), Iu);
     }),
   offerUnsafe = (e, t) =>
     e.state._tag === `Open`
       ? e.messages.length >= e.capacity
         ? e.strategy === `sliding`
-          ? (su(e.messages), append(e.messages, t), !0)
+          ? (ju(e.messages), append(e.messages, t), !0)
           : e.capacity <= 0 && e.state.takers.size > 0
             ? (append(e.messages, t), releaseTakers(e), !0)
             : !1
         : (append(e.messages, t), scheduleReleaseTaker(e), !0)
       : !1,
-  $ = dual(2, (e, t) => R(() => failCauseUnsafe(e, t))),
+  $ = dual(2, (e, t) => L(() => failCauseUnsafe(e, t))),
   failCauseUnsafe = (e, t) => {
     if (e.state._tag !== `Open`) return !1;
-    let n = Gr(D(t), pu);
+    let n = Xr(T(t), Lu);
     return e.state.offers.size === 0 && e.messages.length === 0
       ? (finalize(e, n), !0)
       : ((e.state = { ...e.state, _tag: `Closing`, exit: n }), !0);
   },
-  end = (e) => $(e, causeFail(qe())),
-  endUnsafe = (e) => failCauseUnsafe(e, causeFail(qe())),
+  end = (e) => $(e, causeFail(Xe())),
+  endUnsafe = (e) => failCauseUnsafe(e, causeFail(Xe())),
   shutdown = (e) =>
-    R(() => {
+    L(() => {
       if (e.state._tag === `Done`) return !0;
       clear(e.messages);
       let t = e.state.offers;
       if (
-        (finalize(e, e.state._tag === `Open` ? mu : e.state.exit), t.size > 0)
+        (finalize(e, e.state._tag === `Open` ? Ru : e.state.exit), t.size > 0)
       ) {
         for (let e of t)
           e._tag === `Single`
-            ? e.resume(du)
-            : e.resume(E(e.remaining.slice(e.offset)));
+            ? e.resume(Fu)
+            : e.resume(w(e.remaining.slice(e.offset)));
         t.clear();
       }
       return !0;
     }),
   takeAll = (e) => takeBetween(e, 1, 1 / 0),
   takeBetween = (e, t, n) =>
-    z(
+    R(
       () =>
-        takeBetweenUnsafe(e, t, n) ?? jr(awaitTake(e), takeBetween(e, 1, n)),
+        takeBetweenUnsafe(e, t, n) ?? Ir(awaitTake(e), takeBetween(e, 1, n)),
     ),
-  take = (e) => z(() => takeUnsafe(e) ?? jr(awaitTake(e), take(e))),
+  take = (e) => R(() => takeUnsafe(e) ?? Ir(awaitTake(e), take(e))),
   takeUnsafe = (e) => {
     if (e.state._tag === `Done`) return e.state.exit;
     if (e.messages.length > 0) {
-      let t = su(e.messages);
-      return (releaseCapacity(e), E(t));
+      let t = ju(e.messages);
+      return (releaseCapacity(e), w(t));
     } else if (e.capacity <= 0 && e.state.offers.size > 0) {
       ((e.capacity = 1), releaseCapacity(e), (e.capacity = 0));
-      let t = su(e.messages);
-      return (releaseCapacity(e), E(t));
+      let t = ju(e.messages);
+      return (releaseCapacity(e), w(t));
     }
   },
   sizeUnsafe = (e) => (e.state._tag === `Done` ? 0 : e.messages.length),
-  uu = dual(2, (e, t) =>
-    Ki((n) =>
-      fi(n(e), { onFailure: (e) => $(t, e), onSuccess: (e) => end(t) }),
+  Pu = dual(2, (e, t) =>
+    ea((n) =>
+      yi(n(e), { onFailure: (e) => $(t, e), onSuccess: (e) => end(t) }),
     ),
   ),
-  du = E(!1),
-  fu = E(!0),
-  pu = exitFail(qe()),
-  mu = Hr(),
+  Fu = w(!1),
+  Iu = w(!0),
+  Lu = exitFail(Xe()),
+  Ru = qr(),
   releaseTakers = (e) => {
     if (
       ((e.scheduleRunning = !1),
@@ -6441,24 +6604,24 @@ const $l = fiberJoin,
   },
   takeBetweenUnsafe = (e, t, n) => {
     if (e.state._tag === `Done`) return e.state.exit;
-    if (n <= 0 || t <= 0) return E([]);
+    if (n <= 0 || t <= 0) return w([]);
     if (e.capacity <= 0 && e.state.offers.size > 0) {
       ((e.capacity = 1), releaseCapacity(e), (e.capacity = 0));
-      let t = [su(e.messages)];
-      return (releaseCapacity(e), E(t));
+      let t = [ju(e.messages)];
+      return (releaseCapacity(e), w(t));
     }
     if (((t = Math.min(t, e.capacity || 1)), t <= e.messages.length)) {
       let t = takeN(e.messages, n);
-      return (releaseCapacity(e), E(t));
+      return (releaseCapacity(e), w(t));
     }
   },
   offerRemainingSingle = (e, t) =>
-    V((n) => {
-      if (e.state._tag !== `Open`) return n(du);
+    B((n) => {
+      if (e.state._tag !== `Open`) return n(Fu);
       let r = { _tag: `Single`, message: t, resume: n };
       return (
         e.state.offers.add(r),
-        R(() => {
+        L(() => {
           e.state._tag === `Open` && e.state.offers.delete(r);
         })
       );
@@ -6475,23 +6638,23 @@ const $l = fiberJoin,
       else if (n._tag === `Single`)
         (append(e.messages, n.message),
           t--,
-          n.resume(fu),
+          n.resume(Iu),
           e.state.offers.delete(n));
       else {
         for (; n.offset < n.remaining.length; n.offset++) {
           if (t === 0) return !1;
           (append(e.messages, n.remaining[n.offset]), t--);
         }
-        (n.resume(E([])), e.state.offers.delete(n));
+        (n.resume(w([])), e.state.offers.delete(n));
       }
     return !1;
   },
   awaitTake = (e) =>
-    V((t) =>
+    B((t) =>
       e.state._tag === `Done`
         ? t(e.state.exit)
         : (e.state.takers.add(t),
-          R(() => {
+          L(() => {
             e.state._tag !== `Done` && e.state.takers.delete(t);
           })),
     ),
@@ -6516,21 +6679,21 @@ var SemaphoreImpl = class {
     return this.permits - this.taken;
   }
   take(e) {
-    let t = z(() =>
+    let t = R(() =>
       this.free < e
-        ? V((n) => {
+        ? B((n) => {
             if (this.free >= e) return n(t);
             let observer = () => {
               this.free < e || (this.waiters.delete(observer), n(t));
             };
             return (
               this.waiters.add(observer),
-              R(() => {
+              L(() => {
                 this.waiters.delete(observer);
               })
             );
           })
-        : ((this.taken += e), I(e)),
+        : ((this.taken += e), F(e)),
     );
     return t;
   }
@@ -6547,14 +6710,14 @@ var SemaphoreImpl = class {
     );
   }
   updateTaken(e) {
-    return O((t) => I(this.updateTakenUnsafe(t, e)));
+    return E((t) => F(this.updateTakenUnsafe(t, e)));
   }
   resize(e) {
-    return O(
+    return E(
       (t) => (
         (this.permits = e),
         this.free < 0 || this.updateTakenUnsafe(t, (e) => e),
-        B
+        z
       ),
     );
   }
@@ -6566,9 +6729,9 @@ var SemaphoreImpl = class {
   }
   withPermits(e) {
     return (t) =>
-      Ki((n) =>
-        H(n(this.take(e)), (e) =>
-          ji(
+      ea((n) =>
+        V(n(this.take(e)), (e) =>
+          Ri(
             n(t),
             () => {
               this.updateTakenUnsafe(getCurrentFiber(), (t) => t - e);
@@ -6581,11 +6744,11 @@ var SemaphoreImpl = class {
   withPermit = this.withPermits(1);
   withPermitsIfAvailable(e) {
     return (t) =>
-      Ki((n) =>
+      ea((n) =>
         this.free < e
-          ? _r
+          ? Sr
           : ((this.taken += e),
-            ji(
+            Ri(
               n(asSome(t)),
               () => {
                 this.updateTakenUnsafe(getCurrentFiber(), (t) => t - e);
@@ -6595,10 +6758,10 @@ var SemaphoreImpl = class {
       );
   }
 };
-const hu = `~effect/Channel`,
-  isChannel = (e) => p(e, hu),
-  gu = {
-    [hu]: {
+const zu = `~effect/Channel`,
+  isChannel = (e) => f(e, zu),
+  Bu = {
+    [zu]: {
       _Env: identity,
       _InErr: identity,
       _InElem: identity,
@@ -6610,33 +6773,33 @@ const hu = `~effect/Channel`,
     },
   },
   fromTransform = (e) => {
-    let t = Object.create(gu);
-    return ((t.transform = (t, n) => vs(e(t, n), (e) => q(rs(e)))), t);
+    let t = Object.create(Bu);
+    return ((t.transform = (t, n) => Rs(e(t, n), (e) => q(Ss(e)))), t);
   },
   transformPull = (e, t) =>
     fromTransform((n, r) => X(toTransform(e)(n, r), (e) => t(e, r))),
   fromPull = (e) => fromTransform((t, n) => e),
   fromTransformBracket = (e) =>
     fromTransform(
-      cc(function* (t, n) {
+      jc(function* (t, n) {
         let r = K(n),
-          onCause = (e) => bo(r, doneExitFromCause(e));
-        return Us(yield* Us(e(t, n, r), onCause), onCause);
+          onCause = (e) => Mo(r, doneExitFromCause(e));
+        return dc(yield* dc(e(t, n, r), onCause), onCause);
       }),
     ),
   toTransform = (e) => e.transform,
-  _u = 4096,
+  Vu = 4096,
   asyncQueue = (e, t, n) =>
     make({ capacity: n?.bufferSize, strategy: n?.strategy }).pipe(
-      ds((t) => vo(e, shutdown(t))),
-      ds((n) => ec(ho(t(n), e), e)),
+      As((t) => Ao(e, shutdown(t))),
+      As((n) => Cc(Oo(t(n), e), e)),
     ),
   callbackArray = (e, t) =>
-    fromTransform((n, r) => ps(asyncQueue(r, e, t), takeAll)),
+    fromTransform((n, r) => Ms(asyncQueue(r, e, t), takeAll)),
   suspend = (e) => fromTransform((t, n) => J(() => toTransform(e())(t, n))),
-  fromIteratorArray = (e, t = _u) =>
+  fromIteratorArray = (e, t = Vu) =>
     fromPull(
-      $o(() => {
+      vs(() => {
         let n = e(),
           r = none();
         return J(() => {
@@ -6646,7 +6809,7 @@ const hu = `~effect/Channel`,
             let t = n.next();
             if (t.done) {
               if (e.length === 0) return G(t.value);
-              r = k(t.value);
+              r = D(t.value);
               break;
             }
             e.push(t.value);
@@ -6655,32 +6818,32 @@ const hu = `~effect/Channel`,
         });
       }),
     ),
-  fromIterableArray = (e, t = _u) =>
+  fromIterableArray = (e, t = Vu) =>
     fromIteratorArray(() => e[Symbol.iterator](), t),
   succeed = (e) => fromEffect(q(e)),
-  vu = fromPull(q(G())),
+  Hu = fromPull(q(G())),
   fail = (e) => fromPull(q(Y(e))),
-  failCause = (e) => fromPull(rs(e)),
+  failCause = (e) => fromPull(Ss(e)),
   fromEffect = (e) =>
     fromPull(
-      $o(() => {
+      vs(() => {
         let t = !1;
         return J(() => (t ? G() : ((t = !0), e)));
       }),
     ),
-  yu = dual(2, (e, t) =>
+  Uu = dual(2, (e, t) =>
     transformPull(e, (e) =>
-      $o(() => {
+      vs(() => {
         let n = 0;
-        return ps(e, (e) => t(e, n++));
+        return Ms(e, (e) => t(e, n++));
       }),
     ),
   ),
-  bu = dual(2, (e, t) => xu(e, (e) => q(t(e)))),
-  xu = dual(2, (e, t) => transformPull(e, (e) => q(zo(e, (e) => X(t(e), G))))),
+  Wu = dual(2, (e, t) => Gu(e, (e) => q(t(e)))),
+  Gu = dual(2, (e, t) => transformPull(e, (e) => q($o(e, (e) => X(t(e), G))))),
   concurrencyIsSequential = (e) =>
     e === void 0 || (e !== `unbounded` && e <= 1),
-  Su = dual(
+  Ku = dual(
     (e) => isChannel(e[0]),
     (e, t, n) =>
       concurrencyIsSequential(n?.concurrency)
@@ -6690,44 +6853,44 @@ const hu = `~effect/Channel`,
   mapEffectSequential = (e, t) =>
     fromTransform((n, r) => {
       let i = 0;
-      return ps(
+      return Ms(
         toTransform(e)(n, r),
         X((e) => t(e, i++)),
       );
     }),
   mapEffectConcurrent = (e, t, n) =>
     fromTransformBracket(
-      cc(function* (r, i, a) {
+      jc(function* (r, i, a) {
         let o = 0,
           s = yield* toTransform(e)(r, i),
           c = n.concurrency === `unbounded` ? 2 ** 53 - 1 : n.concurrency,
           l = yield* bounded(0);
-        yield* vo(a, shutdown(l));
-        let u = rc(yield* As()),
-          d = nu(a);
+        yield* Ao(a, shutdown(l));
+        let u = Ec(yield* Zs()),
+          d = Eu(a);
         if (n.unordered) {
           let e = makeUnsafe(c),
             n = constant(e.release(1)),
-            r = Os({
+            r = Ys({
               onFailure: (e) => X($(l, e), n),
               onSuccess: (e) => X(offer(l, e), n),
             });
           yield* e.take(1).pipe(
             X(() => s),
-            X((e) => (d(u(r(t(e, o++)))), es)),
-            Xs({ disableYield: !0 }),
-            vs((t) => e.withPermits(c - 1)($(l, t))),
-            ec(a),
+            X((e) => (d(u(r(t(e, o++)))), ys)),
+            yc({ disableYield: !0 }),
+            Rs((t) => e.withPermits(c - 1)($(l, t))),
+            Cc(a),
           );
         } else {
           let e = yield* bounded(c - 2);
-          (yield* vo(a, shutdown(l)),
+          (yield* Ao(a, shutdown(l)),
             yield* take(e).pipe(
-              ls,
+              Os,
               X((e) => offer(l, e)),
-              Xs({ disableYield: !0 }),
-              vs((e) => $(l, e)),
-              ec(a),
+              yc({ disableYield: !0 }),
+              Rs((e) => $(l, e)),
+              Cc(a),
             ));
           let n,
             onExit = (e) => {
@@ -6736,19 +6899,19 @@ const hu = `~effect/Channel`,
             };
           yield* s.pipe(
             X((r) => {
-              if (n) return rs(n);
+              if (n) return Ss(n);
               let i = u(t(r, o++));
-              return (d(i), i.addObserver(onExit), offer(e, $l(i)));
+              return (d(i), i.addObserver(onExit), offer(e, Su(i)));
             }),
-            Xs({ disableYield: !0 }),
-            vs((t) => offer(e, Qa(t)).pipe(us($(e, t)))),
-            ec(a),
+            yc({ disableYield: !0 }),
+            Rs((t) => offer(e, so(t)).pipe(ks($(e, t)))),
+            Cc(a),
           );
         }
         return take(l);
       }),
     ),
-  Cu = dual(
+  qu = dual(
     (e) => isChannel(e[0]),
     (e, t, n) =>
       concurrencyIsSequential(n?.concurrency)
@@ -6757,29 +6920,29 @@ const hu = `~effect/Channel`,
   ),
   flatMapSequential = (e, t) =>
     fromTransform((n, r) =>
-      ps(toTransform(e)(n, r), (e) => {
+      Ms(toTransform(e)(n, r), (e) => {
         let i,
           a,
           o = X(
             e,
             (e) => (
               (a ??= K(r)),
-              mc(toTransform(t(e))(n, a), (e) => ((i = s(e)), i))
+              Lc(toTransform(t(e))(n, a), (e) => ((i = s(e)), i))
             ),
           ),
-          s = zo((e) => {
+          s = $o((e) => {
             if (
               ((i = void 0),
               a.state._tag === `Open` && a.state.finalizers.size === 1)
             )
               return o;
-            let t = bo(a, eo);
+            let t = Mo(a, lo);
             return ((a = void 0), X(t, () => o));
           });
         return J(() => i ?? o);
       }),
     ),
-  flatMapConcurrent = (e, t, n) => e.pipe(yu(t), ku(n)),
+  flatMapConcurrent = (e, t, n) => e.pipe(Uu(t), $u(n)),
   flattenArray = (e) =>
     transformPull(e, (e) => {
       let t,
@@ -6802,29 +6965,29 @@ const hu = `~effect/Channel`,
         }),
       );
     }),
-  wu = dual(2, (e, t) =>
+  Ju = dual(2, (e, t) =>
     transformPull(e, (e) =>
       q(
         X(e, function loop(n) {
           let r = [];
           for (let e = 0; e < n.length; e++) t(n[e]) && r.push(n[e]);
-          return Pt(r) ? q(r) : X(e, loop);
+          return Rt(r) ? q(r) : X(e, loop);
         }),
       ),
     ),
   ),
-  Tu = dual(2, (e, t) =>
+  Yu = dual(2, (e, t) =>
     fromTransform((n, r) => {
       let i = K(r);
-      return ps(toTransform(e)(n, i), (e) => {
+      return Ms(toTransform(e)(n, i), (e) => {
         let a = e.pipe(
-          vs((e) => {
-            if (isDoneCause(e)) return rs(e);
+          Rs((e) => {
+            if (isDoneCause(e)) return Ss(e);
             let o = i;
             return (
               (i = K(r)),
-              bo(o, Qa(e)).pipe(
-                us(toTransform(t(e))(n, i)),
+              Mo(o, so(e)).pipe(
+                ks(toTransform(t(e))(n, i)),
                 X((e) => ((a = e), e)),
               )
             );
@@ -6834,85 +6997,85 @@ const hu = `~effect/Channel`,
       });
     }),
   ),
-  Eu = dual(3, (e, t, n) =>
-    Tu(e, (e) => {
+  Xu = dual(3, (e, t, n) =>
+    Yu(e, (e) => {
       let r = t(e);
-      return N(r) ? failCause(r.failure) : n(r.success, e);
+      return j(r) ? failCause(r.failure) : n(r.success, e);
     }),
   ),
-  Du = dual(2, (e, t) => Eu(e, Ha, (e) => t(e))),
-  Ou = dual(2, (e, t) => Du(e, (e) => fail(t(e)))),
-  ku = dual(2, (e, { bufferSize: t = 16, concurrency: n, switch: r = !1 }) =>
+  Zu = dual(2, (e, t) => Xu(e, Za, (e) => t(e))),
+  Qu = dual(2, (e, t) => Zu(e, (e) => fail(t(e)))),
+  $u = dual(2, (e, { bufferSize: t = 16, concurrency: n, switch: r = !1 }) =>
     fromTransformBracket(
-      cc(function* (i, a, o) {
+      jc(function* (i, a, o) {
         let s = n === `unbounded` ? 2 ** 53 - 1 : Math.max(1, n),
           c = r ? void 0 : makeUnsafe(s),
-          l = yield* iu(!0),
+          l = yield* Ou(!0),
           u = new Set(),
           d = yield* bounded(t);
-        yield* vo(o, shutdown(d));
-        let f = yield* toTransform(e)(i, a);
+        yield* Ao(o, shutdown(d));
+        let ee = yield* toTransform(e)(i, a);
         return (
-          yield* ns(function* () {
+          yield* xs(function* () {
             for (;;) {
               c && (yield* c.take(1));
-              let e = yield* f,
+              let e = yield* ee,
                 t = K(o),
                 n = yield* toTransform(e)(i, t);
               for (; u.size >= s; ) {
                 let e = headUnsafe(u);
-                (u.delete(e), u.size === 0 && (yield* l.open), yield* eu(e));
+                (u.delete(e), u.size === 0 && (yield* l.open), yield* Cu(e));
               }
               let r = yield* n.pipe(
-                ds(() => os),
+                As(() => Ts),
                 X((e) => offer(d, e)),
-                Xs({ disableYield: !0 }),
-                Us(
-                  cc(function* (e) {
-                    let n = Bo(e);
+                yc({ disableYield: !0 }),
+                dc(
+                  jc(function* (e) {
+                    let n = es(e);
                     if (
-                      (yield* fs(
-                        bo(t, N(n) ? Qa(n.failure) : Za(n.success.value)),
+                      (yield* js(
+                        Mo(t, j(n) ? so(n.failure) : oo(n.success.value)),
                       ),
                       u.has(r) &&
                         (u.delete(r),
                         c && (yield* c.release(1)),
                         u.size === 0 && (yield* l.open),
-                        !Ct(n)))
+                        !Dt(n)))
                     )
                       return yield* $(d, e);
                   }),
                 ),
-                $s,
+                Sc,
               );
               (l.closeUnsafe(), u.add(r));
             }
           }).pipe(
-            vs((e) => l.whenOpen($(d, e))),
-            ec(o),
+            Rs((e) => l.whenOpen($(d, e))),
+            Cc(o),
           ),
           take(d)
         );
       }),
     ),
   ),
-  Au = dual(
+  ed = dual(
     (e) => isChannel(e[0]) && isChannel(e[1]),
     (e, t, n) =>
       fromTransformBracket(
-        cc(function* (r, i, a) {
+        jc(function* (r, i, a) {
           let o = n?.haltStrategy ?? `both`,
             s = yield* bounded(0);
-          yield* vo(a, shutdown(s));
+          yield* Ao(a, shutdown(s));
           let c = 0;
           function onExit(e, t) {
             if ((c++, !isDoneCause(t))) return $(s, t);
             switch (o) {
               case `both`:
-                return c === 2 ? $(s, t) : es;
+                return c === 2 ? $(s, t) : ys;
               case `left`:
               case `right`:
-                return e === o ? $(s, t) : es;
+                return e === o ? $(s, t) : ys;
               case `either`:
                 return $(s, t);
             }
@@ -6922,11 +7085,11 @@ const hu = `~effect/Channel`,
               X((e) =>
                 e.pipe(
                   X((e) => offer(s, e)),
-                  Xs,
+                  yc,
                 ),
               ),
-              Us((t) => us(bo(n, doneExitFromCause(t)), onExit(e, t))),
-              ec(a),
+              dc((t) => ks(Mo(n, doneExitFromCause(t)), onExit(e, t))),
+              Cc(a),
             );
           return (
             yield* runSide(`left`, e, K(a)),
@@ -6938,7 +7101,7 @@ const hu = `~effect/Channel`,
   ),
   splitLines = () =>
     fromTransform((e, t) =>
-      $o(() => {
+      vs(() => {
         let t = ``,
           n = !1,
           r = none();
@@ -6989,16 +7152,16 @@ const hu = `~effect/Channel`,
               t += i.substring(e, i.length - +!!n);
             }
           }
-          return Pt(r) ? r : null;
+          return Rt(r) ? r : null;
         }
         let i = J(() =>
           r._tag === `Some`
             ? G(r.value)
-            : Uo(e, {
+            : rs(e, {
                 onSuccess: loop,
-                onFailure: rs,
+                onFailure: Ss,
                 onDone: (e) => {
-                  if (((r = k(e)), t.length > 0 || n)) {
+                  if (((r = D(e)), t.length > 0 || n)) {
                     let e = t;
                     return ((t = ``), (n = !1), q([e]));
                   }
@@ -7013,7 +7176,7 @@ const hu = `~effect/Channel`,
         return i;
       }),
     ),
-  ju = dual(2, (e, t) =>
+  td = dual(2, (e, t) =>
     fromTransform((n, r) =>
       X(toTransform(e)(n, r), (e) => toTransform(t)(e, r)),
     ),
@@ -7026,30 +7189,30 @@ const hu = `~effect/Channel`,
           () =>
             r ||
             e.pipe(
-              ho(n),
+              Oo(n),
               X((e) => toTransform(e)(t, n)),
               X((e) => (r = e)),
             ),
         ),
       );
     }),
-  Mu = dual(2, (e, t) =>
-    fromTransformBracket((n, r, i) => _o(i, t).pipe(us(toTransform(e)(n, r)))),
+  nd = dual(2, (e, t) =>
+    fromTransformBracket((n, r, i) => ko(i, t).pipe(ks(toTransform(e)(n, r)))),
   ),
-  Nu = dual(2, (e, t) => Mu(e, (e) => t)),
+  rd = dual(2, (e, t) => nd(e, (e) => t)),
   runWith = (e, t, n) =>
     J(() => {
-      let r = mo();
-      return zo(X(toTransform(e)(G(), r), t), n || q).pipe(Ws((e) => bo(r, e)));
+      let r = Do();
+      return $o(X(toTransform(e)(G(), r), t), n || q).pipe(pc((e) => Mo(r, e)));
     }),
-  Pu = dual(2, (e, t) => runWith(e, (e) => Xs(X(e, t), { disableYield: !0 }))),
-  Fu = dual(3, (e, t, n) =>
+  id = dual(2, (e, t) => runWith(e, (e) => yc(X(e, t), { disableYield: !0 }))),
+  ad = dual(3, (e, t, n) =>
     J(() => {
       let r = t();
       return runWith(
         e,
         (e) =>
-          Jo({
+          ps({
             while: c,
             body: () => e,
             step: (e) => {
@@ -7060,302 +7223,324 @@ const hu = `~effect/Channel`,
       );
     }),
   ),
-  Iu = cc(
+  od = jc(
     function* (e) {
       let t = makeUnsafe(1),
-        n = yield* As(),
-        r = un(n, po);
-      return (yield* toTransform(e)(G(), r)).pipe(Ns(n), t.withPermits(1));
+        n = yield* Zs(),
+        r = pn(n, Eo);
+      return (yield* toTransform(e)(G(), r)).pipe(ec(n), t.withPermits(1));
     },
-    vs((e) => q(rs(e))),
+    Rs((e) => q(Ss(e))),
   ),
   toPullScoped = (e, t) => toTransform(e)(G(), t);
 export {
-  isSchemaError as $,
-  isNotNull as $i,
-  ho as $n,
-  toPredicate as $r,
-  Ws as $t,
-  failCauseUnsafe as A,
-  yt as Ai,
-  Jo as An,
-  jr as Ar,
-  effectify as At,
-  Ll as B,
-  ve as Bi,
-  ko as Bn,
-  formatLogSpan as Br,
-  ec as Bt,
-  Iu as C,
-  N as Ci,
-  Xo as Cn,
-  Wa as Cr,
-  ys as Ct,
-  makeUnsafe as D,
-  fromNullishOr as Di,
-  Fs as Dn,
-  Va as Dr,
-  As as Dt,
-  unwrap as E,
-  xt as Ei,
-  Ys as En,
-  La as Er,
-  uc as Et,
-  takeAll as F,
-  k as Fi,
-  isDoneCause as Fn,
-  H as Fr,
-  mc as Ft,
-  Il as G,
-  redact as Gi,
-  Do as Gn,
-  scopeAddFinalizerExit as Gr,
-  Ks as Gt,
-  ErrorClass as H,
-  y as Hi,
-  Mo as Hn,
-  di as Hr,
-  cs as Ht,
-  ru as I,
-  ke as Ii,
-  wo as In,
-  Tr as Ir,
-  lc as It,
-  TaggedErrorClass as J,
-  strictEqual as Ji,
-  vo as Jn,
-  Ki as Jr,
-  ps as Jt,
-  Record as K,
-  me as Ki,
-  Oo as Kn,
-  xa as Kr,
-  Go as Kt,
-  eu as L,
-  T as Li,
-  effect as Ln,
-  ei as Lr,
-  cc as Lt,
-  make as M,
-  gt as Mi,
-  Qs as Mn,
-  causePretty as Mr,
-  Y as Mt,
-  offer as N,
-  _t as Ni,
-  zo as Nn,
-  consolePretty as Nr,
-  rs as Nt,
-  endUnsafe as O,
-  fromUndefinedOr as Oi,
-  Zs as On,
-  Da as Or,
-  js as Ot,
-  offerUnsafe as P,
-  none as Pi,
-  Vo as Pn,
-  fiberInterrupt as Pr,
-  X as Pt,
-  decodeTo as Q,
-  p as Qi,
-  mo as Qn,
-  has as Qr,
-  ks as Qt,
-  tu as R,
-  O as Ri,
-  Eo as Rn,
-  $i as Rr,
-  qo as Rt,
-  suspend as S,
-  M as Si,
-  Ts as Sn,
-  Ua as Sr,
-  bs as St,
-  toTransform as T,
-  j as Ti,
-  Js as Tn,
-  Ra as Tr,
-  gs as Tt,
-  Literals as U,
-  toJson as Ui,
-  To as Un,
-  loggerMake as Ur,
-  ns as Ut,
-  Ul as V,
-  Class$1 as Vi,
-  jo as Vn,
-  wr as Vr,
-  tc as Vt,
-  Rl as W,
-  format$1 as Wi,
-  succeedContext as Wn,
-  Ti as Wr,
-  Cs as Wt,
-  Union as X,
-  te as Xi,
-  bo as Xn,
-  zn as Xr,
-  pc as Xt,
-  Tuple as Y,
-  v as Yi,
-  _o as Yn,
-  B as Yr,
-  xs as Yt,
-  declare as Z,
-  h as Zi,
-  yo as Zn,
-  jn as Zr,
-  Os as Zt,
-  ju as _,
-  __toESM as _a,
-  of as _i,
-  Es as _n,
-  StackTrace as _r,
-  ms as _t,
+  declare as $,
+  O as $i,
+  Wo as $n,
+  V as $r,
+  Vs as $t,
+  $ as A,
+  constant as Aa,
+  pn as Ai,
+  ws as An,
+  io as Ar,
+  Zs as At,
+  wu as B,
+  isEmptyRecord as Bi,
+  as as Bn,
+  Ya as Br,
+  jc as Bt,
+  suspend as C,
+  isNullish as Ca,
+  isFinite as Ci,
+  Ks as Cn,
+  ho as Cr,
+  bs as Ct,
+  unwrap as D,
+  c as Da,
+  Service as Di,
+  As as Dn,
+  fo as Dr,
+  Ls as Dt,
+  toTransform as E,
+  l as Ea,
+  N as Ei,
+  vs as En,
+  so as Er,
+  zs as Et,
+  offerUnsafe as F,
+  pipeArguments as Fa,
+  fromIterable as Fi,
+  ys as Fn,
+  G as Fr,
+  Y as Ft,
+  Literals as G,
+  j as Gi,
+  ts as Gn,
+  Xa as Gr,
+  Ds as Gt,
+  ou as H,
+  Mt as Hi,
+  recurs as Hn,
+  Ga as Hr,
+  yc as Ht,
+  takeAll as I,
+  __commonJSMin as Ia,
+  Rt as Ii,
+  ps as In,
+  Ja as Ir,
+  Ss as It,
+  Record as J,
+  Tt as Ji,
+  Lo as Jn,
+  Ir as Jr,
+  hc as Jt,
+  su as K,
+  Dt as Ki,
+  isDoneCause as Kn,
+  Fa as Kr,
+  xs as Kt,
+  Du as L,
+  __exportAll as La,
+  Wt as Li,
+  Es as Ln,
+  $a as Lr,
+  X as Lt,
+  Pu as M,
+  flow as Ma,
+  gn as Mi,
+  vc as Mn,
+  no as Mr,
+  Cs as Mt,
+  make as N,
+  identity as Na,
+  Prototype as Ni,
+  nc as Nn,
+  StackTrace as Nr,
+  effectify as Nt,
+  makeUnsafe as O,
+  u as Oa,
+  un as Oi,
+  Gs as On,
+  oo as Or,
+  Is as Ot,
+  offer as P,
+  pipe as Pa,
+  ensure as Pi,
+  bc as Pn,
+  ro as Pr,
+  uc as Pt,
+  Union as Q,
+  Ct as Qi,
+  Ho as Qn,
+  fiberInterrupt as Qr,
+  Fc as Qt,
+  Tu as R,
+  __name as Ra,
+  Ut as Ri,
+  xc as Rn,
+  qa as Rr,
+  Lc as Rt,
+  succeed as S,
+  isNotUndefined as Sa,
+  fromInputUnsafe as Si,
+  tc as Sn,
+  _o as Sr,
+  mc as St,
+  toPullScoped as T,
+  isUndefined as Ta,
+  toSeconds as Ti,
+  J as Tn,
+  co as Tr,
+  Bs as Tt,
+  fu as U,
+  kt as Ui,
+  spaced as Un,
+  eo as Ur,
+  Cc as Ut,
+  Eu as V,
+  Nt as Vi,
+  exponential as Vn,
+  Ka as Vr,
+  fs as Vt,
+  ErrorClass as W,
+  A as Wi,
+  $o as Wn,
+  makeDieReason as Wr,
+  wc as Wt,
+  TaggedErrorClass as X,
+  fromUndefinedOr as Xi,
+  zo as Xn,
+  causePretty as Xr,
+  Pc as Xt,
+  iu as Y,
+  fromNullishOr as Yi,
+  effect as Yn,
+  Fr as Yr,
+  us as Yt,
+  Tuple as Z,
+  St as Zi,
+  Uo as Zn,
+  consolePretty as Zr,
+  Ms as Zt,
+  nd as _,
+  _ as _a,
+  ParentSpan as _i,
+  Oc as _n,
+  _await as _r,
+  lc as _t,
   fail as a,
-  c as aa,
-  Service as ai,
-  Ns as an,
-  so as ar,
-  _is as at,
-  splitLines as b,
-  Ot as bi,
-  $o as bn,
-  za as br,
-  ts as bt,
+  C as aa,
+  kr as ai,
+  fc as an,
+  Eo as ar,
+  toCodecStringTree as at,
+  id as b,
+  f as ba,
+  has as bi,
+  ac as bn,
+  xo as br,
+  Ns as bt,
   flattenArray as c,
-  constant as ca,
-  un as ci,
-  nc as cn,
-  ao as cr,
-  transform as ct,
+  ye as ca,
+  makeSpanUnsafe as ci,
+  Ws as cn,
+  Mo as cr,
+  decodeUnknownEffect as ct,
   fromTransform as d,
-  identity as da,
-  Prototype as di,
-  ac as dn,
-  no as dr,
-  Sc as dt,
-  isNotUndefined as ea,
-  fromInputUnsafe as ei,
-  qs as en,
-  lo as er,
-  link as et,
-  yu as f,
-  pipe as fa,
-  ensure as fi,
-  oc as fn,
-  Za as fr,
-  wc as ft,
-  Au as g,
-  __name as ga,
-  zt as gi,
-  Ps as gn,
-  qa as gr,
-  us as gt,
-  Ou as h,
-  __exportAll as ha,
-  Bt as hi,
-  zs as hn,
-  Xa as hr,
-  Ko as ht,
-  Nu as i,
-  l as ia,
-  P as ii,
-  Ms as in,
-  doneUnsafe as ir,
-  SchemaError as it,
-  uu as j,
-  A as ji,
-  ss as jn,
-  Ar as jr,
-  Hs as jt,
-  $ as k,
-  vt as ki,
-  es as kn,
-  Ai as kr,
-  is as kt,
+  toJson as da,
+  scopeAddFinalizerExit as di,
+  ec as dn,
+  Do as dr,
+  Pointer as dt,
+  bt as ea,
+  Ar as ei,
+  Ic as en,
+  Go as er,
+  decodeTo as et,
+  Uu as f,
+  format$1 as fa,
+  ka as fi,
+  rc as fn,
+  Oo as fr,
+  isRedacted as ft,
+  ed as g,
+  strictEqual as ga,
+  Wn as gi,
+  Dc as gn,
+  To as gr,
+  cc as gt,
+  Qu as h,
+  pe as ha,
+  z as hi,
+  Ec as hn,
+  wo as hr,
+  sc as ht,
+  rd as i,
+  je as ia,
+  formatLogSpan as ii,
+  pc as in,
+  Vo as ir,
+  tag as it,
+  failCauseUnsafe as j,
+  dual as ja,
+  fn as ji,
+  _c as jn,
+  ao as jr,
+  Qs as jt,
+  endUnsafe as k,
+  d as ka,
+  M as ki,
+  hs as kn,
+  lo as kr,
+  Nc as kt,
   fromIterableArray as l,
-  dual as la,
-  ln as li,
-  rc as ln,
-  $a as lr,
-  Pointer as lt,
-  Su as m,
-  __commonJSMin as ma,
-  Pt as mi,
-  Rs as mn,
-  Ya as mr,
-  Vs as mt,
-  Tu as n,
-  isObject as na,
-  seconds as ni,
-  ws as nn,
-  fo as nr,
-  tag as nt,
-  wu as o,
-  u as oa,
-  sn as oi,
-  Is as on,
-  co as or,
-  decodeUnknownEffect as ot,
-  bu as p,
-  pipeArguments as pa,
-  fromIterable as pi,
-  Ls as pn,
-  eo as pr,
-  Bs as pt,
-  Fl as q,
-  fe as qi,
-  po as qn,
-  z as qr,
-  dc as qt,
-  vu as r,
-  isUndefined as ra,
-  toSeconds as ri,
-  Yo as rn,
-  _await as rr,
-  toCodecStringTree as rt,
-  Cu as s,
-  d as sa,
-  rn as si,
-  Ds as sn,
-  isDone as sr,
-  fl as st,
+  Class$1 as la,
+  reportCauseUnsafe as li,
+  ms as ln,
+  No as lr,
+  Fl as lt,
+  Ku as m,
+  he as ma,
+  ea as mi,
+  Tc as mn,
+  Co as mr,
+  qc as mt,
+  Yu as n,
+  none as na,
+  sa as ni,
+  Js as nn,
+  succeedContext as nr,
+  link as nt,
+  Ju as o,
+  E as oa,
+  vi as oi,
+  gc as on,
+  Ao as or,
+  SchemaError as ot,
+  Wu as p,
+  redact as pa,
+  R as pi,
+  qs as pn,
+  So as pr,
+  Gc as pt,
+  au as q,
+  k as qi,
+  qo as qn,
+  Li as qr,
+  Us as qt,
+  Hu as r,
+  D as ra,
+  formatLabel as ri,
+  Xs as rn,
+  Bo as rr,
+  eu as rt,
+  qu as s,
+  be as sa,
+  loggerMake as si,
+  Hs as sn,
+  ko as sr,
+  _is as st,
   callbackArray as t,
-  isNullish as ta,
-  isFinite as ti,
-  Ss as tn,
-  uo as tr,
-  jl as tt,
+  xt as ta,
+  si as ti,
+  Ys as tn,
+  Ro as tr,
+  isSchemaError as tt,
   fromPull as u,
-  flow as ua,
-  pn as ui,
-  ic as un,
-  Qa as ur,
-  isRedacted as ut,
-  Fu as v,
-  isEmptyRecord as vi,
-  q as vn,
-  Ja as vr,
-  hs as vt,
-  toPullScoped as w,
-  Ct as wi,
-  as as wn,
-  Ba as wr,
-  _s as wt,
-  succeed as x,
-  Tt as xi,
-  ds as xn,
-  Ga as xr,
-  vs as xt,
-  Pu as y,
-  kt as yi,
-  J as yn,
-  G as yr,
-  Gs as yt,
-  nu as z,
-  ye as zi,
-  Ao as zn,
-  formatLabel as zr,
-  Xs as zt,
+  v as ua,
+  Mi as ui,
+  $s as un,
+  jo as ur,
+  transform as ut,
+  td as v,
+  ne as va,
+  externalSpan as vi,
+  kc as vn,
+  doneUnsafe as vr,
+  ds as vt,
+  od as w,
+  isObject as wa,
+  seconds as wi,
+  q as wn,
+  bo as wr,
+  Rs as wt,
+  splitLines as x,
+  isNotNull as xa,
+  toPredicate as xi,
+  oc as xn,
+  isDone as xr,
+  Ps as xt,
+  ad as y,
+  m as ya,
+  In as yi,
+  ic as yn,
+  yo as yr,
+  ks as yt,
+  Cu as z,
+  __toESM as za,
+  of as zi,
+  Fs as zn,
+  Qa as zr,
+  Mc as zt,
 };

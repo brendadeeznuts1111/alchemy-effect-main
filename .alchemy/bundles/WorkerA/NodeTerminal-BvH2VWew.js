@@ -1,3 +1,2138 @@
-import{$n as e,$t as t,An as n,B as r,Bi as i,Bt as a,C as o,Ca as s,Ci as c,Cn as l,Cr as u,D as d,Dn as ee,Dt as te,E as ne,En as re,Et as ie,F as ae,Fi as oe,Ft as f,Gt as se,Hi as p,Hn as m,Ht as h,Jn as g,Kt as ce,L as le,Li as ue,Mi as de,Mn as fe,Mr as pe,Mt as me,N as he,Ni as _,Nt as v,O as ge,Ot as _e,P as ve,Pi as ye,Pt as be,Qn as xe,R as Se,Rn as y,Rt as b,S as Ce,Si as we,St as Te,T as Ee,Tn as x,Tr as De,Tt as Oe,U as ke,Ui as Ae,Vi as S,Wt as C,Xi as je,Yt as w,_ as Me,_n as Ne,_r as Pe,_t as Fe,a as Ie,aa as Le,ai as Re,b as ze,ba as T,bi as Be,bn as E,br as Ve,c as He,ca as Ue,cn as We,cr as D,d as O,di as Ge,dn as Ke,er as qe,f as Je,fi as Ye,fr as Xe,g as Ze,ga as k,gi as Qe,gn as $e,h as et,hn as tt,ht as nt,i as rt,in as it,j as at,ji as ot,jn as st,jt as A,k as ct,l as lt,ln as ut,lr as dt,m as ft,ma as pt,mi as mt,mn as ht,mr as j,mt as M,n as gt,nn as _t,o as vt,oa as N,oi as yt,on as bt,p as xt,pi as St,pr as Ct,qi as wt,r as Tt,rr as Et,rt as Dt,s as Ot,sa as kt,t as At,tr as P,u as jt,ua as F,ui as I,un as Mt,v as L,va as R,vn as Nt,vr as z,vt as B,w as Pt,wn as Ft,wr as V,x as It,xn as H,xr as Lt,xt as U,y as Rt,ya as zt,yi as Bt,yn as W,yr as Vt,yt as Ht,zi as Ut,zt as Wt}from"./Channel-Udu1G47X.js";import*as G from"node:fs";import*as K from"node:path";import*as Gt from"node:os";import*as Kt from"node:readline";import"node:stream";import*as qt from"node:crypto";import*as Jt from"node:url";import*as Yt from"node:child_process";const Xt=`~effect/MutableRef`,Zt={[Xt]:Xt,...Ae,toJSON(){return{_id:`MutableRef`,current:je(this.current)}}},Qt=s(e=>{let t=Object.create(Zt);return t.current=e,t},`make`),$t={"~effect/Stream":{_R:R,_E:R,_A:R},pipe(){return T(this,arguments)}},en=s(e=>{let t=Object.create($t);return t.channel=e,t},`fromChannel`),tn={_tag:`Empty`},nn={_tag:`Closed`},rn={_A:R,_E:R};var RcRefImpl=class{"~effect/RcRef"=rn;pipe(){return T(this,arguments)}state=tn;semaphore=ge(1);acquire;context;scope;idleTimeToLive;constructor(e,t,n,r){this.acquire=e,this.context=t,this.scope=n,this.idleTimeToLive=r}};const an=s(e=>fe(t=>{let r=t.context,i=St(r,xe),a=new RcRefImpl(e.acquire,r,i,e.idleTimeToLive?Re(e.idleTimeToLive):void 0);return B(qe(i,()=>{let e=a.state._tag===`Acquired`?P(a.state.scope,z):n;return a.state=nn,e}),a)}),`make`),getState=e=>ee(t=>{switch(e.state._tag){case`Closed`:return ce;case`Acquired`:return e.state.refCount++,e.state.fiber?B(Se(e.state.fiber),e.state):W(e.state);case`Empty`:{let n=Et();return e.semaphore.withPermits(1)(t(bt(e.acquire,Ge(e.context,xe,n))).pipe(w(t=>{let r={_tag:`Acquired`,value:t,scope:n,fiber:void 0,refCount:1,invalidated:!1};return e.state=r,r})))}}}),on=b(function*(e){let t=e,i=yield*getState(t),a=yield*ht,o=t.idleTimeToLive!==void 0&&yt(t.idleTimeToLive);return yield*qe(a,()=>(i.refCount--,i.refCount>0?n:t.idleTimeToLive===void 0?(t.state=tn,P(i.scope,z)):i.invalidated?P(i.scope,z):(o&&(i.fiber=Nt(t.idleTimeToLive).pipe(f(()=>t.state._tag===`Acquired`&&t.state.refCount===0?(t.state=tn,P(i.scope,z)):n),me(H(()=>{i.fiber=void 0})),Mt(t.context),r(t.scope))),n))),i.value}),sn=an,cn=on,ln=`~effect/Sink`,un=W([void 0]),dn={_A:R,_In:R,_L:R,_E:R,_R:R},fn={[ln]:dn,pipe(){return T(this,arguments)}},isSink=e=>Le(e,ln),pn=s(e=>fromTransform((t,n)=>ne(e)(t,n).pipe(f(a({disableYield:!0})),y(W))),`fromChannel`),fromTransform=e=>{let t=Object.create(fn);return t.transform=e,t},mn=s(e=>O((t,n)=>W(f(e.transform(t,n),V))),`toChannel`),q=fromTransform(e=>y(a(e,{disableYield:!0}),()=>un)),reduceWhile=(e,t,r)=>fromTransform(i=>{let o=e(),s;return t(o)?i.pipe(f(e=>{for(let n=0;n<e.length;n++)if(o=r(o,e[n]),!t(o))return n+1<e.length&&(s=e.slice(n+1)),V();return n}),a({disableYield:!0}),y(()=>W([o,s]))):W([o])}),hn=reduceWhile(S,ue,(e,t)=>p(t)),head=()=>hn,forEach=e=>forEachArray(Wt(t=>e(t),{discard:!0})),forEachArray=e=>fromTransform(t=>t.pipe(f(e),a({disableYield:!0}),y(()=>un))),gn=s(e=>pn(d(w(e,mn))),`unwrap`),isStream=e=>Le(e,`~effect/Stream`),J=en,fromPull=e=>J(jt(e)),transformPull=(e,t)=>J(O((n,r)=>f(Ee(e.channel,r),e=>t(e,r)))),toChannel=e=>e.channel,callback=(e,t)=>J(At(e,t)),Y=J(Tt),succeed=e=>J(Ce(c(e))),suspend=e=>J(o(()=>e().channel)),fail=e=>J(Ie(e)),fromIterable=(e,t)=>Array.isArray(e)&&t?.chunkSize===void 0?fromArray(e):J(lt(e,t?.chunkSize)),fromIterableEffect=e=>unwrap(w(e,fromIterable)),fromArray=e=>Be(e)?J(Ce(e)):Y,fromReadableStream=t=>J(O(b(function*(n,r){let i=t.evaluate().getReader();return yield*e(r,t.releaseLockOnEnd?H(()=>i.releaseLock()):it(()=>i.cancel())),f(Ft({try:()=>i.read(),catch:e=>t.onError(e)}),({done:e,value:t})=>e?V():W(c(t)))}))),unwrap=e=>J(d(w(e,toChannel))),_n=k(2,(e,t)=>suspend(()=>{let n=0;return J(Je(e.channel,we(e=>t(e,n++))))})),vn=k(e=>isStream(e[0]),(e,t,n)=>e.channel.pipe(He,ft(t,n),Je(c),J)),yn=k(e=>isStream(e[0]),(e,t,n)=>e.channel.pipe(He,Ot(e=>t(e).channel,n),J)),bn=k(e=>isStream(e[0]),(e,t)=>yn(e,R,t)),xn=k(2,(e,t)=>bn(fromArray([e,t]))),Sn=k(2,(e,t)=>xn(fromIterable(t),e)),Cn=k(e=>isStream(e[0])&&isStream(e[1]),(e,t,n)=>J(Ze(toChannel(e),toChannel(t),n))),wn=k(2,(e,t)=>J(vt(toChannel(e),t))),Tn=k(2,b(function*(e,t){let n,r=yield*Pt(e.channel),i=fromPull(W(Te(r,e=>(n=e,be(e))))),a=yield*X(i,t);return n?[a,Y]:(i=fromPull(W(r)),[a,i])})),En=k(2,(e,t)=>e.channel.pipe(gt(e=>t(e).channel),J)),Dn=k(2,(e,t)=>J(et(e.channel,t))),On=k(2,(e,t)=>t<1?Y:kn(e,(e,n)=>n===t-1)),kn=k(e=>isStream(e[0]),(e,t,n)=>transformPull(e,(e,r)=>H(()=>{let r=0,i=!1;return f(E(()=>i?V():e),e=>{let a=e.findIndex(e=>t(e,r++));if(a>=0){i=!0;let t=e.slice(0,n?.excludeLast?a:a+1);return Be(t)?W(t):V()}return W(e)})}))),An=k(2,(e,t)=>transformPull(e,(e,n)=>H(()=>{let r,i,a=E(()=>{if(i!==void 0){let e=i;return i=void 0,W(e)}return e}).pipe(ie(e=>(r=j(e),V()))),o=w(E(()=>t.transform(a,n)),([e,t])=>(i=t,c(e)));return E(()=>r||o)}))),jn=k(2,(e,t)=>J(Me(e.channel,t))),Mn=k(e=>isStream(e[0]),(e,t)=>suspend(()=>{let n=new TextDecoder(t?.encoding);return _n(e,e=>n.decode(e,{stream:!0}))})),encodeText=e=>suspend(()=>{let t=new TextEncoder;return _n(e,e=>t.encode(e))}),splitLines=e=>e.channel.pipe(Me(It()),J),Nn=k(2,(e,t)=>J(rt(e.channel,t))),X=k(2,(e,t)=>$e(n=>Ee(e.channel,n).pipe(f(e=>t.transform(e,n)),w(([e])=>e)))),runCollect=e=>L(e.channel,()=>[],(e,t)=>{for(let n=0;n<t.length;n++)e.push(t[n]);return e}),runHead=e=>w(ze(e.channel),Ut(Bt(0))),Pn=k(2,(e,t)=>Rt(e.channel,e=>{let n=0;return st({while:()=>n<e.length,body:()=>t(e[n++]),step:pt})})),Fn=k(2,(e,t)=>Rt(e.channel,t)),mkString=e=>L(e.channel,()=>``,(e,t)=>e+t.join(``)),mkUint8Array=e=>w(L(e.channel,()=>({bytes:0,arrays:[]}),(e,t)=>{for(let n=0;n<t.length;n++)e.bytes+=t[n].length,e.arrays.push(t[n]);return e}),({arrays:e,bytes:t})=>{let n=new Uint8Array(t),r=0;for(let t=0;t<e.length;t++){let i=e[t];n.set(i,r),r+=i.length}return n}),In=k(e=>isStream(e[0]),(e,t,n)=>{let r,i,a=le(!1);return new ReadableStream({start(n){i=ut(bt(Fn(e,e=>a.whenOpen(H(()=>{a.closeUnsafe();for(let t=0;t<e.length;t++)n.enqueue(e[t]);r(),r=void 0}))),t)),i.addObserver(e=>{e._tag===`Failure`?n.error(pe(e.cause)):n.close()})},pull(){return new Promise(e=>{r=e,a.openUnsafe()})},cancel(){if(i)return Ke(Ht(Se(i)))}},n?.strategy)}),Ln=k(e=>isStream(e[0]),(e,t)=>In(e,Ye(),t)),Rn=k(e=>isStream(e[0]),(e,t)=>w(_e(),n=>In(e,n,t)));function nominal(){return Object.assign(e=>e,{option:e=>p(e),result:e=>ot(e),is:e=>!0})}const zn=`~effect/platform/PlatformError`;var BadArgument=class extends Ve(`BadArgument`){get message(){return`${this.module}.${this.method}${this.description?`: ${this.description}`:``}`}},SystemError=class extends Vt{get message(){return`${this._tag}: ${this.module}.${this.method}${this.pathOrDescriptor===void 0?``:` (${this.pathOrDescriptor})`}${this.description?`: ${this.description}`:``}`}},PlatformError=class extends Ve(`PlatformError`){constructor(e){`cause`in e?super({reason:e,cause:e.cause}):super({reason:e})}[zn]=zn;get message(){return this.reason.message}};const systemError=e=>new PlatformError(new SystemError(e)),badArgument=e=>new PlatformError(new BadArgument(e)),Bn=`~effect/platform/FileSystem`,Size=e=>typeof e==`bigint`?e:BigInt(e),Z=BigInt(1024);Z*Z*Z*Z*Z;const Q=I(`effect/platform/FileSystem`),Vn=s(e=>Q.of({...e,[Bn]:Bn,exists:t=>zt(e.access(t),B(!0),Oe(`PlatformError`,e=>e.reason._tag===`NotFound`?W(!1):v(e))),readFileString:(t,n)=>f(e.readFile(t),e=>x({try:()=>new TextDecoder(n).decode(e),catch:e=>badArgument({module:`FileSystem`,method:`readFileString`,description:`invalid encoding`,cause:e})})),stream:b(function*(t,n){let r=yield*e.open(t,{flag:`r`});n?.offset&&(yield*r.seek(n.offset,`start`));let a=n?.bytesToRead===void 0?void 0:Size(n.bytesToRead),o=BigInt(0),s=Size(n?.chunkSize??64*1024),l=r.readAlloc(s);return fromPull(W(f(E(()=>a!==void 0&&a<=o?V():a!==void 0&&a-o<s?r.readAlloc(a-o):l),i({onNone:()=>V(),onSome:e=>(o+=BigInt(e.length),W(c(e)))}))))},unwrap),sink:(t,n)=>zt(e.open(t,{flag:`w`,...n}),w(e=>forEach(t=>e.writeAll(t))),gn),writeFileString:(t,n,r)=>f(x({try:()=>new TextEncoder().encode(n),catch:e=>badArgument({module:`FileSystem`,method:`writeFileString`,description:`could not encode string`,cause:e})}),n=>e.writeFile(t,n,r))}),`make`),Hn=`~effect/platform/FileSystem/File`,Un=nominal();var WatchBackend=class extends I()(`effect/platform/FileSystem/WatchBackend`){};const Wn=`~effect/platform/Path`,Gn=I(`effect/Path`),Kn=nominal(),qn=nominal(),Jn=`~effect/ChildProcessSpawner/ChildProcessHandle`,Yn={[Jn]:Jn,...wt,toJSON(){return{_id:`ChildProcessHandle`,pid:this.pid}}},makeHandle=e=>Object.assign(Object.create(Yn),e),Xn=s(e=>{let streamString=(t,n)=>e(t).pipe(w(e=>Mn(n?.includeStderr===!0?e.all:e.stdout)),unwrap),streamLines=(e,t)=>splitLines(streamString(e,t));return ChildProcessSpawner.of({spawn:e,exitCode:t=>tt(f(e(t),e=>e.exitCode)),streamString,streamLines,lines:(e,t)=>runCollect(streamLines(e,t)),string:(e,t)=>mkString(streamString(e,t))})},`make`);var ChildProcessSpawner=class extends I()(`effect/process/ChildProcessSpawner`){};const Zn=`~effect/unstable/process/ChildProcess`,Qn={...Qe({label:`Command`,evaluate(e){return mt(e.context,ChildProcessSpawner).spawn(this)}}),[Zn]:Zn},makeStandardCommand=(e,t,n)=>Object.assign(Object.create(Qn),{_tag:`StandardCommand`,command:e,args:t,options:n}),$n=function make(...e){if(isTemplateString(e[0])){let[t,...n]=e,r=parseTemplates(t,n);return makeStandardCommand(r[0]??``,r.slice(1),{})}if(typeof e[0]==`object`&&!Array.isArray(e[0])&&!isTemplateString(e[0])){let t=e[0];return function(e,...n){let r=parseTemplates(e,n);return makeStandardCommand(r[0]??``,r.slice(1),t)}}if(typeof e[0]==`string`&&!Array.isArray(e[1])){let[t,n={}]=e;return makeStandardCommand(t,[],n)}let[t,n=[],r={}]=e;return makeStandardCommand(t,n,r)},isTemplateString=e=>Array.isArray(e)&&`raw`in e&&Array.isArray(e.raw),parseFdName=e=>{let t=/^fd(\d+)$/.exec(e);if(t===null)return;let n=parseInt(t[1],10);return n>=3?n:void 0},fdName=e=>`fd${e}`,parseTemplates=(e,t)=>{let n=[];for(let[r,i]of e.entries())n=parseTemplate(e,t,n,i,r);return n},parseTemplate=(e,t,n,r,i)=>{let a=e.raw[i];if(a===void 0)throw Error(`Invalid backslash sequence: ${e.raw[i]}`);let{hasLeadingWhitespace:o,hasTrailingWhitespace:s,tokens:c}=splitByWhitespaces(r,a),l=concatTokens(n,c,o);if(i===t.length)return l;let u=t[i];return concatTokens(l,Array.isArray(u)?u.map(e=>parseExpression(e)):[parseExpression(u)],s)},parseExpression=e=>typeof e==`string`?e:String(e),er=new Set([` `,`	`,`\r`,`
-`]),tr={x:3,u:5},splitByWhitespaces=(e,t)=>{if(t.length===0)return{tokens:[],hasLeadingWhitespace:!1,hasTrailingWhitespace:!1};let n=er.has(t[0]),r=[],i=0;for(let n=0,a=0;n<e.length;n+=1,a+=1){let o=t[a];if(er.has(o))i!==n&&r.push(e.slice(i,n)),i=n+1;else if(o===`\\`){let e=t[a+1];e===`
-`?(--n,a+=1):e===`u`&&t[a+2]===`{`?a=t.indexOf(`}`,a+3):a+=tr[e]??1}}let a=i===e.length;return a||r.push(e.slice(i)),{tokens:r,hasLeadingWhitespace:n,hasTrailingWhitespace:a}},concatTokens=(e,t,n)=>n||e.length===0||t.length===0?[...e,...t]:[...e.slice(0,-1),`${e.at(-1)}${t.at(0)}`,...t.slice(1)],handleErrnoException=(e,t)=>(n,[r])=>{let i=`Unknown`;switch(n.code){case`ENOENT`:i=`NotFound`;break;case`EACCES`:i=`PermissionDenied`;break;case`EEXIST`:i=`AlreadyExists`;break;case`EISDIR`:i=`BadResource`;break;case`ENOTDIR`:i=`BadResource`;break;case`EBUSY`:i=`Busy`;break;case`ELOOP`:i=`BadResource`;break}return systemError({_tag:i,module:e,method:t,pathOrDescriptor:r,syscall:n.syscall,cause:n})},fromWritable=e=>pn(xt(fromWritableChannel(e),e=>[e])),fromWritableChannel=e=>O(t=>{let n=e.evaluate();return W(pullIntoWritable({...e,writable:n,pull:t}))}),pullIntoWritable=e=>e.pull.pipe(f(t=>{let r=0;return U(function loop(i){for(;r<t.length;)if(!e.writable.write(t[r++],e.encoding)){e.writable.once(`drain`,()=>loop(i));return}i(n)})}),a({disableYield:!0}),We(U(t=>{let onError=n=>t(v(e.onError(n)));return e.writable.once(`error`,onError),H(()=>{e.writable.off(`error`,onError)})})),e.endOnDone===!1?R:y(t=>`closed`in e.writable&&e.writable.closed?V(t):U(n=>{e.writable.once(`finish`,()=>n(V(t))),e.writable.end()}))),fromReadable=e=>J(fromReadableChannel(e)),fromReadableChannel=e=>O((t,n)=>readableToPullUnsafe({scope:n,readable:e.evaluate(),onError:e.onError??defaultOnError,chunkSize:e.chunkSize,closeOnDone:e.closeOnDone})),readableToPullUnsafe=t=>{let n=t.readable;if(n.readableEnded)return W(V());let r=t.closeOnDone??!0,i=t.exit??Qt(void 0),a=le(!1);function onReadable(){a.openUnsafe()}function onError(e){i.current=j(t.onError(e)),a.openUnsafe()}function onEnd(){i.current=j(Lt()),a.openUnsafe()}n.on(`readable`,onReadable),n.once(`error`,onError),n.once(`end`,onEnd);let o=E(function loop(){let e=t.readable.read(t.chunkSize);if(e===null)return i.current?i.current:(a.closeUnsafe(),f(a.await,loop));let n=c(e);for(;e=t.readable.read(t.chunkSize),e!==null;)n.push(e);return W(n)});return B(e(t.scope,H(()=>{n.off(`readable`,onReadable),n.off(`error`,onError),n.off(`end`,onEnd),r&&`closed`in t.readable&&!t.readable.closed&&t.readable.destroy()})),o)},defaultOnError=e=>new u(e),toError=e=>e instanceof globalThis.Error?e:new globalThis.Error(String(e)),toPlatformError=(e,t,n)=>{let{commands:r}=flattenCommand(n),i=r.reduce((e,t)=>{let n=`${t.command} ${t.args.join(` `)}`;return e.length===0?n:`${e} | ${n}`},``);return handleErrnoException(`ChildProcess`,e)(t,[i])},nr=m(ChildProcessSpawner,C(function*(){let e=yield*Q,t=yield*Gn,r=b(function*(n){if(!F(n.cwd))return yield*e.access(n.cwd),t.resolve(n.cwd)}),resolveEnvironment=e=>e.extendEnv?{...globalThis.process.env,...e.env}:e.env,inputToStdioOption=e=>isStream(e)?`pipe`:e,outputToStdioOption=e=>isSink(e)?`pipe`:e,resolveStdinOption=e=>{let t={stream:`pipe`,encoding:`utf-8`,endOnDone:!0};return F(e.stdin)?t:typeof e.stdin==`string`||isStream(e.stdin)?{...t,stream:e.stdin}:{stream:e.stdin.stream,encoding:e.stdin.encoding??t.encoding,endOnDone:e.stdin.endOnDone??t.endOnDone}},resolveOutputOption=(e,t)=>{let n=e[t];return F(n)?{stream:`pipe`}:typeof n==`string`||isSink(n)?{stream:n}:{stream:n.stream}},resolveAdditionalFds=e=>{if(F(e.additionalFds))return[];let t=[];for(let[n,r]of Object.entries(e.additionalFds)){let e=parseFdName(n);kt(e)&&t.push({fd:e,config:r})}return t.sort((e,t)=>e.fd-t.fd)},buildStdioArray=(e,t,n,r)=>{let i=[inputToStdioOption(e.stream),outputToStdioOption(t.stream),outputToStdioOption(n.stream)];if(r.length===0)return i;let a=r.reduce((e,{fd:t})=>Math.max(e,t),2);for(let e=3;e<=a;e++)i[e]=`ignore`;for(let{fd:e}of r)i[e]=`pipe`;return i},i=b(function*(e,t,n){if(n.length===0)return{getInputFd:()=>q,getOutputFd:()=>Y};let r=new Map,i=new Map;for(let{config:a,fd:o}of n){let n=t.stdio[o];switch(a.type){case`input`:{let t=q;n&&`write`in n&&(t=fromWritable({evaluate:()=>n,onError:t=>toPlatformError(`fromWritable(fd${o})`,toError(t),e)})),a.stream&&(yield*h(X(a.stream,t))),r.set(o,t);break}case`output`:{let t=Y;n&&`read`in n&&(t=fromReadable({evaluate:()=>n,onError:t=>toPlatformError(`fromReadable(fd${o})`,toError(t),e)})),a.sink&&(t=An(t,a.sink)),i.set(o,t);break}}}return{getInputFd:e=>r.get(e)??q,getOutputFd:e=>i.get(e)??Y}}),setupChildStdin=(e,t,n)=>E(()=>{let r=q;return N(t.stdin)&&(r=fromWritable({evaluate:()=>t.stdin,onError:t=>toPlatformError(`fromWritable(stdin)`,toError(t),e),endOnDone:n.endOnDone,encoding:n.encoding})),isStream(n.stream)?B(h(X(n.stream,r)),r):W(r)}),setupChildOutputStreams=(e,t,n,r)=>{let i=t.stdout?fromReadable({evaluate:()=>t.stdout,onError:t=>toPlatformError(`fromReadable(stdout)`,toError(t),e)}):Y,a=t.stderr?fromReadable({evaluate:()=>t.stderr,onError:t=>toPlatformError(`fromReadable(stderr)`,toError(t),e)}):Y;isSink(n.stream)&&(i=An(i,n.stream)),isSink(r.stream)&&(a=An(a,r.stream));let o=Cn(i,a);return{stdout:i,stderr:a,all:o}},spawn=(e,t)=>U(n=>{let r=Ct(),i=Yt.spawn(e.command,e.args,t);return i.on(`error`,t=>{n(v(toPlatformError(`spawn`,t,e)))}),i.on(`exit`,(...e)=>{dt(r,Pe(e))}),i.on(`spawn`,()=>{n(W([i,r]))}),H(()=>{i.kill(`SIGTERM`)})}),killProcessGroup=(e,t,r)=>globalThis.process.platform===`win32`?U(r=>{Yt.exec(`taskkill /pid ${t.pid} /T /F`,t=>{r(t?v(toPlatformError(`kill`,toError(t),e)):n)})}):x({try:()=>{globalThis.process.kill(-t.pid,r)},catch:t=>toPlatformError(`kill`,toError(t),e)}),killProcessGroupOnExit=(e,t)=>{if(globalThis.process.platform===`win32`){Yt.exec(`taskkill /pid ${e.pid} /T /F`,()=>{});return}try{globalThis.process.kill(-e.pid,t)}catch{}},killProcess=(e,t,r)=>E(()=>t.kill(r)?n:v(toPlatformError(`kill`,new globalThis.Error(`Failed to kill child process`),e))),withTimeout=(e,t,n)=>r=>{let i=n?.killSignal??`SIGTERM`;return F(n?.forceKillAfter)?r(t,e,i):l(r(t,e,i),{duration:n.forceKillAfter,orElse:()=>r(t,e,`SIGKILL`)})},getSourceStream=(e,t)=>{let n=t??`stdout`;switch(n){case`stdout`:return e.stdout;case`stderr`:return e.stderr;case`all`:return e.all;default:{let t=parseFdName(n);return kt(t)?e.getOutputFd(t):e.stdout}}},a=b(function*(e){switch(e._tag){case`StandardCommand`:{let t=resolveStdinOption(e.options),a=resolveOutputOption(e.options,`stdout`),o=resolveOutputOption(e.options,`stderr`),s=resolveAdditionalFds(e.options),c=!0,l=!1,[u,d]=yield*M(spawn(e,{cwd:yield*r(e.options),env:resolveEnvironment(e.options),stdio:buildStdioArray(t,a,o,s),detached:e.options.detached??process.platform!==`win32`,shell:e.options.shell}),b(function*([t,r]){let i=yield*Xe(r),a=withTimeout(t,e,e.options);if(i){let[e]=yield*D(r);return e!==0&&N(e)?yield*se(a(killProcessGroup)):yield*n}return c?yield*a((e,t,n)=>ie(killProcessGroup(e,t,n),()=>killProcess(e,t,n))).pipe(Fe(D(r)),se):yield*n})),ee=qn(u.pid);u.on(`exit`,t=>{l&&t!==0&&N(t)&&killProcessGroupOnExit(u,e.options.killSignal??`SIGTERM`)});let te=H(()=>{c||(u.ref(),c=!0,l=!1)}),ne=H(()=>(c&&(u.unref(),c=!1,l=!0),te)),re=yield*setupChildStdin(e,u,t),{all:ae,stderr:oe,stdout:p}=setupChildOutputStreams(e,u,a,o),{getInputFd:m,getOutputFd:h}=yield*i(e,u,s),g=w(Xe(d),e=>!e),ce=f(D(d),([t,n])=>N(t)?W(Kn(t)):v(toPlatformError(`exitCode`,new globalThis.Error(`Process interrupted due to receipt of signal: '${n}'`),e))),kill=t=>withTimeout(u,e,t)((e,t,n)=>ie(killProcessGroup(e,t,n),()=>killProcess(e,t,n))).pipe(Fe(D(d)),Ht);return makeHandle({pid:ee,exitCode:ce,isRunning:g,kill,stdin:re,stdout:p,stderr:oe,all:ae,getInputFd:m,getOutputFd:h,unref:ne})}case`PipedCommand`:{let{commands:t,pipeOptions:n}=flattenCommand(e),[r,...i]=t,o=[yield*a(r)];for(let e=0;e<i.length;e++){let t=i[e],r=n[e]??{},s=resolveStdinOption(t.options),c=unwrap(W(getSourceStream(o[o.length-1],r.from))),l=r.to??`stdin`;if(l===`stdin`)o.push(yield*a($n(t.command,t.args,{...t.options,stdin:{...s,stream:c}})));else{let e=parseFdName(l);if(kt(e)){let n=fdName(e),r=t.options.additionalFds??{};o.push(yield*a($n(t.command,t.args,{...t.options,additionalFds:{...r,[n]:{type:`input`,stream:c}}})))}else o.push(yield*a($n(t.command,t.args,{...t.options,stdin:{...s,stream:c}})))}}let s=o[o.length-1],c=C(function*(){let e=[];for(let t of o)e.push(yield*t.unref);return Wt([...e].reverse(),e=>e,{discard:!0})});return makeHandle({pid:s.pid,exitCode:s.exitCode,isRunning:s.isRunning,kill:s.kill,stdin:s.stdin,stdout:s.stdout,stderr:s.stderr,all:s.all,getInputFd:s.getInputFd,getOutputFd:s.getOutputFd,unref:c})}}});return Xn(a)})),flattenCommand=e=>{let t=[],n=[],flatten=e=>{switch(e._tag){case`StandardCommand`:t.push(e);break;case`PipedCommand`:flatten(e.left),n.push(e.options),flatten(e.right);break}};if(flatten(e),t.length===0)throw Error(`flattenCommand produced empty commands array`);let[r,...i]=t;return{commands:[r,...i],pipeOptions:n}},rr=`~effect/platform/Crypto`,ir=I(`effect/Crypto`),ar=s(e=>{let t=e.randomBytes,randomBytes=e=>w(validateSize(`randomBytes`,e),t),nextDoubleUnsafe=()=>{let e=t(7);return((e[0]&31)*2**48+e[1]*2**40+e[2]*2**32+e[3]*2**24+e[4]*2**16+e[5]*2**8+e[6])/2**53},nextIntUnsafe=()=>Math.floor(nextDoubleUnsafe()*(2**53-1- -(2**53-1)+1))+-(2**53-1);return ir.of({[rr]:rr,randomBytes,nextDoubleUnsafe,nextIntUnsafe,digest:e.digest,random:H(()=>nextDoubleUnsafe()),randomBoolean:H(()=>nextDoubleUnsafe()>.5),randomInt:H(()=>nextIntUnsafe()),randomBetween:(e,t)=>H(()=>nextDoubleUnsafe()*(t-e)+e),randomIntBetween(e,t,n){let r=n?.halfOpen===!0?0:1;return H(()=>{let n=Math.ceil(e),i=Math.floor(t);return Math.floor(nextDoubleUnsafe()*(i-n+r))+n})},randomShuffle:e=>H(()=>{let t=Array.from(e);for(let e=t.length-1;e>=1;--e){let n=Math.min(e,Math.floor(nextDoubleUnsafe()*(e+1))),r=t[e];t[e]=t[n],t[n]=r}return t}),randomUUIDv4:H(()=>formatUUIDv4(t(16))),randomUUIDv7:te(e=>W(formatUUIDv7(e.currentTimeMillisUnsafe(),t(16))))})},`make`),validateSize=(e,t)=>Number.isSafeInteger(t)&&t>=0?W(t):v(badArgument({module:`Crypto`,method:e,description:`size must be a non-negative safe integer`})),hex=e=>e.toString(16).padStart(2,`0`),formatUUID=e=>[e.subarray(0,4),e.subarray(4,6),e.subarray(6,8),e.subarray(8,10),e.subarray(10,16)].map(e=>Array.from(e,hex).join(``)).join(`-`),formatUUIDv4=e=>(e[6]=e[6]&15|64,e[8]=e[8]&63|128,formatUUID(e)),or=2**48-1,formatUUIDv7=(e,t)=>{let n=Math.min(Math.max(0,Math.trunc(e)),or);return t[0]=Math.floor(n/2**40),t[1]=Math.floor(n/2**32)&255,t[2]=Math.floor(n/2**24)&255,t[3]=Math.floor(n/2**16)&255,t[4]=Math.floor(n/2**8)&255,t[5]=n&255,t[6]=t[6]&15|112,t[8]=t[8]&63|128,formatUUID(t)},toHashAlgorithm=e=>{switch(e){case`SHA-1`:return`sha1`;case`SHA-256`:return`sha256`;case`SHA-384`:return`sha384`;case`SHA-512`:return`sha512`}},digest=(e,t)=>x({try:()=>Uint8Array.from(qt.createHash(toHashAlgorithm(e)).update(t).digest()),catch:e=>systemError({module:`Crypto`,method:`digest`,_tag:`Unknown`,description:`Could not compute digest`,cause:e})}),sr=g(ir,ar({randomBytes:qt.randomBytes,digest})),handleBadArgument=e=>t=>badArgument({module:`FileSystem`,method:e,description:t.message??String(t)}),cr=(()=>{let e=A(G.access,handleErrnoException(`FileSystem`,`access`),handleBadArgument(`access`));return(t,n)=>{let r=G.constants.F_OK;return n?.readable&&(r|=G.constants.R_OK),n?.writable&&(r|=G.constants.W_OK),e(t,r)}})(),lr=(()=>{let e=A(G.cp,handleErrnoException(`FileSystem`,`copy`),handleBadArgument(`copy`));return(t,n,r)=>e(t,n,{force:r?.overwrite??!1,preserveTimestamps:r?.preserveTimestamps??!1,recursive:!0})})(),ur=(()=>{let e=A(G.copyFile,handleErrnoException(`FileSystem`,`copyFile`),handleBadArgument(`copyFile`));return(t,n)=>e(t,n)})(),dr=(()=>{let e=A(G.chmod,handleErrnoException(`FileSystem`,`chmod`),handleBadArgument(`chmod`));return(t,n)=>e(t,n)})(),fr=(()=>{let e=A(G.chown,handleErrnoException(`FileSystem`,`chown`),handleBadArgument(`chown`));return(t,n,r)=>e(t,n,r)})(),pr=(()=>{let e=A(G.link,handleErrnoException(`FileSystem`,`link`),handleBadArgument(`link`));return(t,n)=>e(t,n)})(),mr=(()=>{let e=A(G.mkdir,handleErrnoException(`FileSystem`,`makeDirectory`),handleBadArgument(`makeDirectory`));return(t,n)=>e(t,{recursive:n?.recursive??!1,mode:n?.mode})})(),makeTempDirectoryFactory=e=>{let t=A(G.mkdtemp,handleErrnoException(`FileSystem`,e),handleBadArgument(e));return e=>E(()=>{let n=e?.prefix??``,r=typeof e?.directory==`string`?K.join(e.directory,`.`):Gt.tmpdir();return t(n?K.join(r,n):r+`/`)})},hr=makeTempDirectoryFactory(`makeTempDirectory`),removeFactory=e=>{let t=A(G.rm,handleErrnoException(`FileSystem`,e),handleBadArgument(e));return(e,n)=>t(e,{recursive:n?.recursive??!1,force:n?.force??!1})},gr=removeFactory(`remove`),_r=(()=>{let e=makeTempDirectoryFactory(`makeTempDirectoryScoped`),t=removeFactory(`makeTempDirectoryScoped`);return n=>M(e(n),e=>_t(t(e,{recursive:!0})))})(),openFactory=e=>{let t=A(G.open,handleErrnoException(`FileSystem`,e),handleBadArgument(e)),n=A(G.close,handleErrnoException(`FileSystem`,e),handleBadArgument(e));return(e,r)=>zt(M(t(e,r?.flag??`r`,r?.mode),e=>_t(n(e))),w(e=>yr(Un(e),r?.flag?.startsWith(`a`)??!1)))},vr=openFactory(`open`),yr=(()=>{let nodeReadFactory=e=>A(G.read,handleErrnoException(`FileSystem`,e),handleBadArgument(e)),e=nodeReadFactory(`read`),t=nodeReadFactory(`readAlloc`),r=A(G.fstat,handleErrnoException(`FileSystem`,`stat`),handleBadArgument(`stat`)),i=A(G.ftruncate,handleErrnoException(`FileSystem`,`truncate`),handleBadArgument(`truncate`)),a=A(G.fsync,handleErrnoException(`FileSystem`,`sync`),handleBadArgument(`sync`)),nodeWriteFactory=e=>A(G.write,handleErrnoException(`FileSystem`,e),handleBadArgument(e)),o=nodeWriteFactory(`write`),s=nodeWriteFactory(`writeAll`);class FileImpl{[Hn];fd;append;position=BigInt(0);constructor(e,t){this[Hn]=Hn,this.fd=e,this.append=t}get stat(){return w(r(this.fd),makeFileInfo)}get sync(){return a(this.fd)}seek(e,t){let n=Size(e);return H(()=>(t===`start`?this.position=n:t===`current`&&(this.position+=n),this.position))}read(t){return E(()=>{let n=this.position;return w(e(this.fd,{buffer:t,position:n}),e=>{let t=Size(e);return this.position=n+t,t})})}readAlloc(e){let n=Number(e);return E(()=>{let e=Buffer.allocUnsafeSlow(n),r=this.position;return w(t(this.fd,{buffer:e,position:r}),t=>{if(t===0)return S();if(this.position=r+BigInt(t),t===n)return p(e);let i=Buffer.allocUnsafeSlow(t);return e.copy(i,0,0,t),p(i)})})}truncate(e){return w(i(this.fd,e?Number(e):void 0),()=>{if(!this.append){let t=BigInt(e??0);this.position>t&&(this.position=t)}})}write(e){return E(()=>{let t=this.position;return w(o(this.fd,e,void 0,void 0,this.append?void 0:Number(t)),e=>{let n=Size(e);return this.append||(this.position=t+n),n})})}writeAllChunk(e){return E(()=>{let t=this.position;return f(s(this.fd,e,void 0,void 0,this.append?void 0:Number(t)),r=>r===0?v(systemError({module:`FileSystem`,method:`writeAll`,_tag:`WriteZero`,pathOrDescriptor:this.fd,description:`write returned 0 bytes written`})):(this.append||(this.position=t+BigInt(r)),r<e.length?this.writeAllChunk(e.subarray(r)):n))})}writeAll(e){return this.writeAllChunk(e)}}return(e,t)=>new FileImpl(e,t)})(),makeTempFileFactory=e=>{let t=makeTempDirectoryFactory(e);return b(function*(e){let n=yield*t(e),r=qt.randomBytes(6).toString(`hex`),i=K.join(n,e?.suffix?`${r}${e.suffix}`:r);return yield*writeFile(i,new Uint8Array),i})},br=makeTempFileFactory(`makeTempFile`),xr=(()=>{let e=makeTempFileFactory(`makeTempFileScoped`),t=removeFactory(`makeTempFileScoped`);return n=>M(e(n),e=>_t(t(K.dirname(e),{recursive:!0})))})(),readDirectory=(e,t)=>Ft({try:()=>G.promises.readdir(e,t),catch:t=>handleErrnoException(`FileSystem`,`readDirectory`)(t,[e])}),readFile=e=>U((t,n)=>{try{G.readFile(e,{signal:n},(n,r)=>{t(n?v(handleErrnoException(`FileSystem`,`readFile`)(n,[e])):W(r))})}catch(e){t(v(handleBadArgument(`readFile`)(e)))}}),Sr=(()=>{let e=A(G.readlink,handleErrnoException(`FileSystem`,`readLink`),handleBadArgument(`readLink`));return t=>e(t)})(),Cr=(()=>{let e=A(G.realpath,handleErrnoException(`FileSystem`,`realPath`),handleBadArgument(`realPath`));return t=>e(t)})(),wr=(()=>{let e=A(G.rename,handleErrnoException(`FileSystem`,`rename`),handleBadArgument(`rename`));return(t,n)=>e(t,n)})(),makeFileInfo=e=>({type:e.isFile()?`File`:e.isDirectory()?`Directory`:e.isSymbolicLink()?`SymbolicLink`:e.isBlockDevice()?`BlockDevice`:e.isCharacterDevice()?`CharacterDevice`:e.isFIFO()?`FIFO`:e.isSocket()?`Socket`:`Unknown`,mtime:_(e.mtime),atime:_(e.atime),birthtime:_(e.birthtime),dev:e.dev,rdev:_(e.rdev),ino:_(e.ino),mode:e.mode,nlink:_(e.nlink),uid:_(e.uid),gid:_(e.gid),size:Size(e.size),blksize:e.blksize===void 0?S():p(Size(e.blksize)),blocks:_(e.blocks)}),Tr=(()=>{let e=A(G.stat,handleErrnoException(`FileSystem`,`stat`),handleBadArgument(`stat`));return t=>w(e(t),makeFileInfo)})(),Er=(()=>{let e=A(G.symlink,handleErrnoException(`FileSystem`,`symlink`),handleBadArgument(`symlink`));return(t,n)=>e(t,n)})(),Dr=(()=>{let e=A(G.truncate,handleErrnoException(`FileSystem`,`truncate`),handleBadArgument(`truncate`));return(t,n)=>e(t,n===void 0?void 0:Number(n))})(),Or=(()=>{let e=A(G.utimes,handleErrnoException(`FileSystem`,`utime`),handleBadArgument(`utime`));return(t,n,r)=>e(t,n,r)})(),watchNode=e=>callback(n=>M(H(()=>{let r=G.watch(e,{recursive:!0},(e,r)=>{if(r)switch(e){case`rename`:ut(t(Tr(r),{onSuccess:e=>ve(n,{_tag:`Create`,path:r}),onFailure:e=>ve(n,{_tag:`Remove`,path:r})}));return;case`change`:ae(n,{_tag:`Update`,path:r});return}});return r.on(`error`,t=>{at(n,De(systemError({module:`FileSystem`,_tag:`Unknown`,method:`watch`,pathOrDescriptor:e,cause:t})))}),r.on(`close`,()=>{ct(n)}),r}),e=>H(()=>e.close()))),watch=(e,t)=>Tr(t).pipe(w(n=>e.pipe(de(e=>e.register(t,n)),oe(()=>watchNode(t)))),unwrap),writeFile=(e,t,r)=>U((i,a)=>{try{G.writeFile(e,t,{signal:a,flag:r?.flag,mode:r?.mode},t=>{i(t?v(handleErrnoException(`FileSystem`,`writeFile`)(t,[e])):n)})}catch(e){i(v(handleBadArgument(`writeFile`)(e)))}}),kr=w(Ne(WatchBackend),e=>Vn({access:cr,chmod:dr,chown:fr,copy:lr,copyFile:ur,link:pr,makeDirectory:mr,makeTempDirectory:hr,makeTempDirectoryScoped:_r,makeTempFile:br,makeTempFileScoped:xr,open:vr,readDirectory,readFile,readLink:Sr,realPath:Cr,remove:gr,rename:wr,stat:Tr,symlink:Er,truncate:Dr,utimes:Or,watch(t){return watch(e,t)},writeFile})),Ar=m(Q)(kr),fromFileUrl=e=>x({try:()=>Jt.fileURLToPath(e),catch:e=>new BadArgument({module:`Path`,method:`fromFileUrl`,cause:e})}),toFileUrl=e=>x({try:()=>Jt.pathToFileURL(e),catch:e=>new BadArgument({module:`Path`,method:`toFileUrl`,cause:e})});({...K.posix}),{...K.win32};const jr=g(Gn)({[Wn]:Wn,...K,fromFileUrl,toFileUrl}),$=`~effect/Stdio`,Mr=g(I($),s(e=>({[$]:$,...e}),`make`)({args:H(()=>process.argv.slice(2)),stdout:e=>fromWritable({evaluate:()=>process.stdout,onError:e=>systemError({module:`Stdio`,method:`stdout`,_tag:`Unknown`,cause:e}),endOnDone:e?.endOnDone??!1}),stderr:e=>fromWritable({evaluate:()=>process.stderr,onError:e=>systemError({module:`Stdio`,method:`stderr`,_tag:`Unknown`,cause:e}),endOnDone:e?.endOnDone??!1}),stdin:fromReadable({evaluate:()=>process.stdin,onError:e=>systemError({module:`Stdio`,method:`stdin`,_tag:`Unknown`,cause:e}),closeOnDone:!1})})),Nr=`~effect/platform/Terminal`;ke(`QuitError`)({_tag:Dt(`QuitError`)});const Pr=I(`effect/platform/Terminal`),Fr=s(e=>Pr.of({...e,[Nr]:Nr}),`make`),Ir=m(Pr,b(function*(e=defaultShouldQuit){let t=process.stdin,r=process.stdout,i=yield*sn({acquire:M(H(()=>{let e=Kt.createInterface({input:t,escapeCodeTimeout:50});return Kt.emitKeypressEvents(t,e),t.isTTY&&t.setRawMode(!0),e}),e=>H(()=>{t.isTTY&&t.setRawMode(!1),e.close()}))}),a=H(()=>r.columns??0),o=H(()=>r.rows??0),s=C(function*(){yield*cn(i);let n=yield*he(),handleKeypress=(t,r)=>{let i={input:ye(t),key:{name:r.name??``,ctrl:!!r.ctrl,meta:!!r.meta,shift:!!r.shift}};ae(n,i),e(i)&&ct(n)};return yield*nt(()=>H(()=>t.off(`keypress`,handleKeypress))),t.on(`keypress`,handleKeypress),n}),c=tt(f(cn(i),e=>U(t=>{let onLine=e=>t(W(e));return e.once(`line`,onLine),H(()=>e.off(`line`,onLine))}))),display=e=>re(U(t=>{r.write(e,e=>Ue(e)?t(n):t(v(badArgument({module:`Terminal`,method:`display`,description:`Failed to write prompt to stdout`,cause:e}))))}));return Fr({columns:a,rows:o,readInput:s,readLine:c,display})})(defaultShouldQuit));function defaultShouldQuit(e){return e.key.ctrl&&(e.key.name===`c`||e.key.name===`d`)}export{X as A,In as B,_n as C,Tn as D,mkUint8Array as E,succeed as F,head as H,suspend as I,On as L,Pn as M,runHead as N,jn as O,splitLines as P,Ln as R,isStream as S,Dn as T,unwrap as V,yn as _,sr as a,fromIterableEffect as b,Q as c,Mn as d,Y as f,wn as g,fail as h,Ar as i,runCollect as j,Sn as k,Size as l,Nn as m,Mr as n,nr as o,encodeText as p,jr as r,Gn as s,Ir as t,En as u,J as v,vn as w,fromReadableStream as x,fromIterable as y,Rn as z};
+import {
+  $n as e,
+  $t as t,
+  An as n,
+  B as r,
+  Bi as i,
+  Bt as a,
+  C as o,
+  Ca as s,
+  Ci as c,
+  Cn as l,
+  Cr as u,
+  D as d,
+  Dn as ee,
+  Dt as te,
+  E as ne,
+  En as re,
+  Et as ie,
+  F as ae,
+  Fi as oe,
+  Ft as f,
+  Gt as se,
+  Hi as p,
+  Hn as m,
+  Ht as h,
+  Jn as g,
+  Kt as ce,
+  L as le,
+  Li as ue,
+  Mi as de,
+  Mn as fe,
+  Mr as pe,
+  Mt as me,
+  N as he,
+  Ni as _,
+  Nt as v,
+  O as ge,
+  Ot as _e,
+  P as ve,
+  Pi as ye,
+  Pt as be,
+  Qn as xe,
+  R as Se,
+  Rn as y,
+  Rt as b,
+  S as Ce,
+  Si as we,
+  St as Te,
+  T as Ee,
+  Tn as x,
+  Tr as De,
+  Tt as Oe,
+  U as ke,
+  Ui as Ae,
+  Vi as S,
+  Wt as C,
+  Xi as je,
+  Yt as w,
+  _ as Me,
+  _n as Ne,
+  _r as Pe,
+  _t as Fe,
+  a as Ie,
+  aa as Le,
+  ai as Re,
+  b as ze,
+  ba as T,
+  bi as Be,
+  bn as E,
+  br as Ve,
+  c as He,
+  ca as Ue,
+  cn as We,
+  cr as D,
+  d as O,
+  di as Ge,
+  dn as Ke,
+  er as qe,
+  f as Je,
+  fi as Ye,
+  fr as Xe,
+  g as Ze,
+  ga as k,
+  gi as Qe,
+  gn as $e,
+  h as et,
+  hn as tt,
+  ht as nt,
+  i as rt,
+  in as it,
+  j as at,
+  ji as ot,
+  jn as st,
+  jt as A,
+  k as ct,
+  l as lt,
+  ln as ut,
+  lr as dt,
+  m as ft,
+  ma as pt,
+  mi as mt,
+  mn as ht,
+  mr as j,
+  mt as M,
+  n as gt,
+  nn as _t,
+  o as vt,
+  oa as N,
+  oi as yt,
+  on as bt,
+  p as xt,
+  pi as St,
+  pr as Ct,
+  qi as wt,
+  r as Tt,
+  rr as Et,
+  rt as Dt,
+  s as Ot,
+  sa as kt,
+  t as At,
+  tr as P,
+  u as jt,
+  ua as F,
+  ui as I,
+  un as Mt,
+  v as L,
+  va as R,
+  vn as Nt,
+  vr as z,
+  vt as B,
+  w as Pt,
+  wn as Ft,
+  wr as V,
+  x as It,
+  xn as H,
+  xr as Lt,
+  xt as U,
+  y as Rt,
+  ya as zt,
+  yi as Bt,
+  yn as W,
+  yr as Vt,
+  yt as Ht,
+  zi as Ut,
+  zt as Wt,
+} from "./Channel-Udu1G47X.js";
+import * as G from "node:fs";
+import * as K from "node:path";
+import * as Gt from "node:os";
+import * as Kt from "node:readline";
+import "node:stream";
+import * as qt from "node:crypto";
+import * as Jt from "node:url";
+import * as Yt from "node:child_process";
+const Xt = `~effect/MutableRef`,
+  Zt = {
+    [Xt]: Xt,
+    ...Ae,
+    toJSON() {
+      return { _id: `MutableRef`, current: je(this.current) };
+    },
+  },
+  Qt = s((e) => {
+    let t = Object.create(Zt);
+    return ((t.current = e), t);
+  }, `make`),
+  $t = {
+    "~effect/Stream": { _R: R, _E: R, _A: R },
+    pipe() {
+      return T(this, arguments);
+    },
+  },
+  en = s((e) => {
+    let t = Object.create($t);
+    return ((t.channel = e), t);
+  }, `fromChannel`),
+  tn = { _tag: `Empty` },
+  nn = { _tag: `Closed` },
+  rn = { _A: R, _E: R };
+var RcRefImpl = class {
+  "~effect/RcRef" = rn;
+  pipe() {
+    return T(this, arguments);
+  }
+  state = tn;
+  semaphore = ge(1);
+  acquire;
+  context;
+  scope;
+  idleTimeToLive;
+  constructor(e, t, n, r) {
+    ((this.acquire = e),
+      (this.context = t),
+      (this.scope = n),
+      (this.idleTimeToLive = r));
+  }
+};
+const an = s(
+    (e) =>
+      fe((t) => {
+        let r = t.context,
+          i = St(r, xe),
+          a = new RcRefImpl(
+            e.acquire,
+            r,
+            i,
+            e.idleTimeToLive ? Re(e.idleTimeToLive) : void 0,
+          );
+        return B(
+          qe(i, () => {
+            let e = a.state._tag === `Acquired` ? P(a.state.scope, z) : n;
+            return ((a.state = nn), e);
+          }),
+          a,
+        );
+      }),
+    `make`,
+  ),
+  getState = (e) =>
+    ee((t) => {
+      switch (e.state._tag) {
+        case `Closed`:
+          return ce;
+        case `Acquired`:
+          return (
+            e.state.refCount++,
+            e.state.fiber ? B(Se(e.state.fiber), e.state) : W(e.state)
+          );
+        case `Empty`: {
+          let n = Et();
+          return e.semaphore.withPermits(1)(
+            t(bt(e.acquire, Ge(e.context, xe, n))).pipe(
+              w((t) => {
+                let r = {
+                  _tag: `Acquired`,
+                  value: t,
+                  scope: n,
+                  fiber: void 0,
+                  refCount: 1,
+                  invalidated: !1,
+                };
+                return ((e.state = r), r);
+              }),
+            ),
+          );
+        }
+      }
+    }),
+  on = b(function* (e) {
+    let t = e,
+      i = yield* getState(t),
+      a = yield* ht,
+      o = t.idleTimeToLive !== void 0 && yt(t.idleTimeToLive);
+    return (
+      yield* qe(
+        a,
+        () => (
+          i.refCount--,
+          i.refCount > 0
+            ? n
+            : t.idleTimeToLive === void 0
+              ? ((t.state = tn), P(i.scope, z))
+              : i.invalidated
+                ? P(i.scope, z)
+                : (o &&
+                    (i.fiber = Nt(t.idleTimeToLive).pipe(
+                      f(() =>
+                        t.state._tag === `Acquired` && t.state.refCount === 0
+                          ? ((t.state = tn), P(i.scope, z))
+                          : n,
+                      ),
+                      me(
+                        H(() => {
+                          i.fiber = void 0;
+                        }),
+                      ),
+                      Mt(t.context),
+                      r(t.scope),
+                    )),
+                  n)
+        ),
+      ),
+      i.value
+    );
+  }),
+  sn = an,
+  cn = on,
+  ln = `~effect/Sink`,
+  un = W([void 0]),
+  dn = { _A: R, _In: R, _L: R, _E: R, _R: R },
+  fn = {
+    [ln]: dn,
+    pipe() {
+      return T(this, arguments);
+    },
+  },
+  isSink = (e) => Le(e, ln),
+  pn = s(
+    (e) =>
+      fromTransform((t, n) =>
+        ne(e)(t, n).pipe(f(a({ disableYield: !0 })), y(W)),
+      ),
+    `fromChannel`,
+  ),
+  fromTransform = (e) => {
+    let t = Object.create(fn);
+    return ((t.transform = e), t);
+  },
+  mn = s((e) => O((t, n) => W(f(e.transform(t, n), V))), `toChannel`),
+  q = fromTransform((e) => y(a(e, { disableYield: !0 }), () => un)),
+  reduceWhile = (e, t, r) =>
+    fromTransform((i) => {
+      let o = e(),
+        s;
+      return t(o)
+        ? i.pipe(
+            f((e) => {
+              for (let n = 0; n < e.length; n++)
+                if (((o = r(o, e[n])), !t(o)))
+                  return (n + 1 < e.length && (s = e.slice(n + 1)), V());
+              return n;
+            }),
+            a({ disableYield: !0 }),
+            y(() => W([o, s])),
+          )
+        : W([o]);
+    }),
+  hn = reduceWhile(S, ue, (e, t) => p(t)),
+  head = () => hn,
+  forEach = (e) => forEachArray(Wt((t) => e(t), { discard: !0 })),
+  forEachArray = (e) =>
+    fromTransform((t) =>
+      t.pipe(
+        f(e),
+        a({ disableYield: !0 }),
+        y(() => un),
+      ),
+    ),
+  gn = s((e) => pn(d(w(e, mn))), `unwrap`),
+  isStream = (e) => Le(e, `~effect/Stream`),
+  J = en,
+  fromPull = (e) => J(jt(e)),
+  transformPull = (e, t) => J(O((n, r) => f(Ee(e.channel, r), (e) => t(e, r)))),
+  toChannel = (e) => e.channel,
+  callback = (e, t) => J(At(e, t)),
+  Y = J(Tt),
+  succeed = (e) => J(Ce(c(e))),
+  suspend = (e) => J(o(() => e().channel)),
+  fail = (e) => J(Ie(e)),
+  fromIterable = (e, t) =>
+    Array.isArray(e) && t?.chunkSize === void 0
+      ? fromArray(e)
+      : J(lt(e, t?.chunkSize)),
+  fromIterableEffect = (e) => unwrap(w(e, fromIterable)),
+  fromArray = (e) => (Be(e) ? J(Ce(e)) : Y),
+  fromReadableStream = (t) =>
+    J(
+      O(
+        b(function* (n, r) {
+          let i = t.evaluate().getReader();
+          return (
+            yield* e(
+              r,
+              t.releaseLockOnEnd
+                ? H(() => i.releaseLock())
+                : it(() => i.cancel()),
+            ),
+            f(
+              Ft({ try: () => i.read(), catch: (e) => t.onError(e) }),
+              ({ done: e, value: t }) => (e ? V() : W(c(t))),
+            )
+          );
+        }),
+      ),
+    ),
+  unwrap = (e) => J(d(w(e, toChannel))),
+  _n = k(2, (e, t) =>
+    suspend(() => {
+      let n = 0;
+      return J(
+        Je(
+          e.channel,
+          we((e) => t(e, n++)),
+        ),
+      );
+    }),
+  ),
+  vn = k(
+    (e) => isStream(e[0]),
+    (e, t, n) => e.channel.pipe(He, ft(t, n), Je(c), J),
+  ),
+  yn = k(
+    (e) => isStream(e[0]),
+    (e, t, n) =>
+      e.channel.pipe(
+        He,
+        Ot((e) => t(e).channel, n),
+        J,
+      ),
+  ),
+  bn = k(
+    (e) => isStream(e[0]),
+    (e, t) => yn(e, R, t),
+  ),
+  xn = k(2, (e, t) => bn(fromArray([e, t]))),
+  Sn = k(2, (e, t) => xn(fromIterable(t), e)),
+  Cn = k(
+    (e) => isStream(e[0]) && isStream(e[1]),
+    (e, t, n) => J(Ze(toChannel(e), toChannel(t), n)),
+  ),
+  wn = k(2, (e, t) => J(vt(toChannel(e), t))),
+  Tn = k(
+    2,
+    b(function* (e, t) {
+      let n,
+        r = yield* Pt(e.channel),
+        i = fromPull(W(Te(r, (e) => ((n = e), be(e))))),
+        a = yield* X(i, t);
+      return n ? [a, Y] : ((i = fromPull(W(r))), [a, i]);
+    }),
+  ),
+  En = k(2, (e, t) =>
+    e.channel.pipe(
+      gt((e) => t(e).channel),
+      J,
+    ),
+  ),
+  Dn = k(2, (e, t) => J(et(e.channel, t))),
+  On = k(2, (e, t) => (t < 1 ? Y : kn(e, (e, n) => n === t - 1))),
+  kn = k(
+    (e) => isStream(e[0]),
+    (e, t, n) =>
+      transformPull(e, (e, r) =>
+        H(() => {
+          let r = 0,
+            i = !1;
+          return f(
+            E(() => (i ? V() : e)),
+            (e) => {
+              let a = e.findIndex((e) => t(e, r++));
+              if (a >= 0) {
+                i = !0;
+                let t = e.slice(0, n?.excludeLast ? a : a + 1);
+                return Be(t) ? W(t) : V();
+              }
+              return W(e);
+            },
+          );
+        }),
+      ),
+  ),
+  An = k(2, (e, t) =>
+    transformPull(e, (e, n) =>
+      H(() => {
+        let r,
+          i,
+          a = E(() => {
+            if (i !== void 0) {
+              let e = i;
+              return ((i = void 0), W(e));
+            }
+            return e;
+          }).pipe(ie((e) => ((r = j(e)), V()))),
+          o = w(
+            E(() => t.transform(a, n)),
+            ([e, t]) => ((i = t), c(e)),
+          );
+        return E(() => r || o);
+      }),
+    ),
+  ),
+  jn = k(2, (e, t) => J(Me(e.channel, t))),
+  Mn = k(
+    (e) => isStream(e[0]),
+    (e, t) =>
+      suspend(() => {
+        let n = new TextDecoder(t?.encoding);
+        return _n(e, (e) => n.decode(e, { stream: !0 }));
+      }),
+  ),
+  encodeText = (e) =>
+    suspend(() => {
+      let t = new TextEncoder();
+      return _n(e, (e) => t.encode(e));
+    }),
+  splitLines = (e) => e.channel.pipe(Me(It()), J),
+  Nn = k(2, (e, t) => J(rt(e.channel, t))),
+  X = k(2, (e, t) =>
+    $e((n) =>
+      Ee(e.channel, n).pipe(
+        f((e) => t.transform(e, n)),
+        w(([e]) => e),
+      ),
+    ),
+  ),
+  runCollect = (e) =>
+    L(
+      e.channel,
+      () => [],
+      (e, t) => {
+        for (let n = 0; n < t.length; n++) e.push(t[n]);
+        return e;
+      },
+    ),
+  runHead = (e) => w(ze(e.channel), Ut(Bt(0))),
+  Pn = k(2, (e, t) =>
+    Rt(e.channel, (e) => {
+      let n = 0;
+      return st({ while: () => n < e.length, body: () => t(e[n++]), step: pt });
+    }),
+  ),
+  Fn = k(2, (e, t) => Rt(e.channel, t)),
+  mkString = (e) =>
+    L(
+      e.channel,
+      () => ``,
+      (e, t) => e + t.join(``),
+    ),
+  mkUint8Array = (e) =>
+    w(
+      L(
+        e.channel,
+        () => ({ bytes: 0, arrays: [] }),
+        (e, t) => {
+          for (let n = 0; n < t.length; n++)
+            ((e.bytes += t[n].length), e.arrays.push(t[n]));
+          return e;
+        },
+      ),
+      ({ arrays: e, bytes: t }) => {
+        let n = new Uint8Array(t),
+          r = 0;
+        for (let t = 0; t < e.length; t++) {
+          let i = e[t];
+          (n.set(i, r), (r += i.length));
+        }
+        return n;
+      },
+    ),
+  In = k(
+    (e) => isStream(e[0]),
+    (e, t, n) => {
+      let r,
+        i,
+        a = le(!1);
+      return new ReadableStream(
+        {
+          start(n) {
+            ((i = ut(
+              bt(
+                Fn(e, (e) =>
+                  a.whenOpen(
+                    H(() => {
+                      a.closeUnsafe();
+                      for (let t = 0; t < e.length; t++) n.enqueue(e[t]);
+                      (r(), (r = void 0));
+                    }),
+                  ),
+                ),
+                t,
+              ),
+            )),
+              i.addObserver((e) => {
+                e._tag === `Failure` ? n.error(pe(e.cause)) : n.close();
+              }));
+          },
+          pull() {
+            return new Promise((e) => {
+              ((r = e), a.openUnsafe());
+            });
+          },
+          cancel() {
+            if (i) return Ke(Ht(Se(i)));
+          },
+        },
+        n?.strategy,
+      );
+    },
+  ),
+  Ln = k(
+    (e) => isStream(e[0]),
+    (e, t) => In(e, Ye(), t),
+  ),
+  Rn = k(
+    (e) => isStream(e[0]),
+    (e, t) => w(_e(), (n) => In(e, n, t)),
+  );
+function nominal() {
+  return Object.assign((e) => e, {
+    option: (e) => p(e),
+    result: (e) => ot(e),
+    is: (e) => !0,
+  });
+}
+const zn = `~effect/platform/PlatformError`;
+var BadArgument = class extends Ve(`BadArgument`) {
+    get message() {
+      return `${this.module}.${this.method}${this.description ? `: ${this.description}` : ``}`;
+    }
+  },
+  SystemError = class extends Vt {
+    get message() {
+      return `${this._tag}: ${this.module}.${this.method}${this.pathOrDescriptor === void 0 ? `` : ` (${this.pathOrDescriptor})`}${this.description ? `: ${this.description}` : ``}`;
+    }
+  },
+  PlatformError = class extends Ve(`PlatformError`) {
+    constructor(e) {
+      `cause` in e
+        ? super({ reason: e, cause: e.cause })
+        : super({ reason: e });
+    }
+    [zn] = zn;
+    get message() {
+      return this.reason.message;
+    }
+  };
+const systemError = (e) => new PlatformError(new SystemError(e)),
+  badArgument = (e) => new PlatformError(new BadArgument(e)),
+  Bn = `~effect/platform/FileSystem`,
+  Size = (e) => (typeof e == `bigint` ? e : BigInt(e)),
+  Z = BigInt(1024);
+Z * Z * Z * Z * Z;
+const Q = I(`effect/platform/FileSystem`),
+  Vn = s(
+    (e) =>
+      Q.of({
+        ...e,
+        [Bn]: Bn,
+        exists: (t) =>
+          zt(
+            e.access(t),
+            B(!0),
+            Oe(`PlatformError`, (e) =>
+              e.reason._tag === `NotFound` ? W(!1) : v(e),
+            ),
+          ),
+        readFileString: (t, n) =>
+          f(e.readFile(t), (e) =>
+            x({
+              try: () => new TextDecoder(n).decode(e),
+              catch: (e) =>
+                badArgument({
+                  module: `FileSystem`,
+                  method: `readFileString`,
+                  description: `invalid encoding`,
+                  cause: e,
+                }),
+            }),
+          ),
+        stream: b(function* (t, n) {
+          let r = yield* e.open(t, { flag: `r` });
+          n?.offset && (yield* r.seek(n.offset, `start`));
+          let a = n?.bytesToRead === void 0 ? void 0 : Size(n.bytesToRead),
+            o = BigInt(0),
+            s = Size(n?.chunkSize ?? 64 * 1024),
+            l = r.readAlloc(s);
+          return fromPull(
+            W(
+              f(
+                E(() =>
+                  a !== void 0 && a <= o
+                    ? V()
+                    : a !== void 0 && a - o < s
+                      ? r.readAlloc(a - o)
+                      : l,
+                ),
+                i({
+                  onNone: () => V(),
+                  onSome: (e) => ((o += BigInt(e.length)), W(c(e))),
+                }),
+              ),
+            ),
+          );
+        }, unwrap),
+        sink: (t, n) =>
+          zt(
+            e.open(t, { flag: `w`, ...n }),
+            w((e) => forEach((t) => e.writeAll(t))),
+            gn,
+          ),
+        writeFileString: (t, n, r) =>
+          f(
+            x({
+              try: () => new TextEncoder().encode(n),
+              catch: (e) =>
+                badArgument({
+                  module: `FileSystem`,
+                  method: `writeFileString`,
+                  description: `could not encode string`,
+                  cause: e,
+                }),
+            }),
+            (n) => e.writeFile(t, n, r),
+          ),
+      }),
+    `make`,
+  ),
+  Hn = `~effect/platform/FileSystem/File`,
+  Un = nominal();
+var WatchBackend = class extends I()(
+  `effect/platform/FileSystem/WatchBackend`,
+) {};
+const Wn = `~effect/platform/Path`,
+  Gn = I(`effect/Path`),
+  Kn = nominal(),
+  qn = nominal(),
+  Jn = `~effect/ChildProcessSpawner/ChildProcessHandle`,
+  Yn = {
+    [Jn]: Jn,
+    ...wt,
+    toJSON() {
+      return { _id: `ChildProcessHandle`, pid: this.pid };
+    },
+  },
+  makeHandle = (e) => Object.assign(Object.create(Yn), e),
+  Xn = s((e) => {
+    let streamString = (t, n) =>
+        e(t).pipe(
+          w((e) => Mn(n?.includeStderr === !0 ? e.all : e.stdout)),
+          unwrap,
+        ),
+      streamLines = (e, t) => splitLines(streamString(e, t));
+    return ChildProcessSpawner.of({
+      spawn: e,
+      exitCode: (t) => tt(f(e(t), (e) => e.exitCode)),
+      streamString,
+      streamLines,
+      lines: (e, t) => runCollect(streamLines(e, t)),
+      string: (e, t) => mkString(streamString(e, t)),
+    });
+  }, `make`);
+var ChildProcessSpawner = class extends I()(
+  `effect/process/ChildProcessSpawner`,
+) {};
+const Zn = `~effect/unstable/process/ChildProcess`,
+  Qn = {
+    ...Qe({
+      label: `Command`,
+      evaluate(e) {
+        return mt(e.context, ChildProcessSpawner).spawn(this);
+      },
+    }),
+    [Zn]: Zn,
+  },
+  makeStandardCommand = (e, t, n) =>
+    Object.assign(Object.create(Qn), {
+      _tag: `StandardCommand`,
+      command: e,
+      args: t,
+      options: n,
+    }),
+  $n = function make(...e) {
+    if (isTemplateString(e[0])) {
+      let [t, ...n] = e,
+        r = parseTemplates(t, n);
+      return makeStandardCommand(r[0] ?? ``, r.slice(1), {});
+    }
+    if (
+      typeof e[0] == `object` &&
+      !Array.isArray(e[0]) &&
+      !isTemplateString(e[0])
+    ) {
+      let t = e[0];
+      return function (e, ...n) {
+        let r = parseTemplates(e, n);
+        return makeStandardCommand(r[0] ?? ``, r.slice(1), t);
+      };
+    }
+    if (typeof e[0] == `string` && !Array.isArray(e[1])) {
+      let [t, n = {}] = e;
+      return makeStandardCommand(t, [], n);
+    }
+    let [t, n = [], r = {}] = e;
+    return makeStandardCommand(t, n, r);
+  },
+  isTemplateString = (e) =>
+    Array.isArray(e) && `raw` in e && Array.isArray(e.raw),
+  parseFdName = (e) => {
+    let t = /^fd(\d+)$/.exec(e);
+    if (t === null) return;
+    let n = parseInt(t[1], 10);
+    return n >= 3 ? n : void 0;
+  },
+  fdName = (e) => `fd${e}`,
+  parseTemplates = (e, t) => {
+    let n = [];
+    for (let [r, i] of e.entries()) n = parseTemplate(e, t, n, i, r);
+    return n;
+  },
+  parseTemplate = (e, t, n, r, i) => {
+    let a = e.raw[i];
+    if (a === void 0) throw Error(`Invalid backslash sequence: ${e.raw[i]}`);
+    let {
+        hasLeadingWhitespace: o,
+        hasTrailingWhitespace: s,
+        tokens: c,
+      } = splitByWhitespaces(r, a),
+      l = concatTokens(n, c, o);
+    if (i === t.length) return l;
+    let u = t[i];
+    return concatTokens(
+      l,
+      Array.isArray(u)
+        ? u.map((e) => parseExpression(e))
+        : [parseExpression(u)],
+      s,
+    );
+  },
+  parseExpression = (e) => (typeof e == `string` ? e : String(e)),
+  er = new Set([
+    ` `,
+    `	`,
+    `\r`,
+    `
+`,
+  ]),
+  tr = { x: 3, u: 5 },
+  splitByWhitespaces = (e, t) => {
+    if (t.length === 0)
+      return {
+        tokens: [],
+        hasLeadingWhitespace: !1,
+        hasTrailingWhitespace: !1,
+      };
+    let n = er.has(t[0]),
+      r = [],
+      i = 0;
+    for (let n = 0, a = 0; n < e.length; n += 1, a += 1) {
+      let o = t[a];
+      if (er.has(o)) (i !== n && r.push(e.slice(i, n)), (i = n + 1));
+      else if (o === `\\`) {
+        let e = t[a + 1];
+        e ===
+        `
+`
+          ? (--n, (a += 1))
+          : e === `u` && t[a + 2] === `{`
+            ? (a = t.indexOf(`}`, a + 3))
+            : (a += tr[e] ?? 1);
+      }
+    }
+    let a = i === e.length;
+    return (
+      a || r.push(e.slice(i)),
+      { tokens: r, hasLeadingWhitespace: n, hasTrailingWhitespace: a }
+    );
+  },
+  concatTokens = (e, t, n) =>
+    n || e.length === 0 || t.length === 0
+      ? [...e, ...t]
+      : [...e.slice(0, -1), `${e.at(-1)}${t.at(0)}`, ...t.slice(1)],
+  handleErrnoException =
+    (e, t) =>
+    (n, [r]) => {
+      let i = `Unknown`;
+      switch (n.code) {
+        case `ENOENT`:
+          i = `NotFound`;
+          break;
+        case `EACCES`:
+          i = `PermissionDenied`;
+          break;
+        case `EEXIST`:
+          i = `AlreadyExists`;
+          break;
+        case `EISDIR`:
+          i = `BadResource`;
+          break;
+        case `ENOTDIR`:
+          i = `BadResource`;
+          break;
+        case `EBUSY`:
+          i = `Busy`;
+          break;
+        case `ELOOP`:
+          i = `BadResource`;
+          break;
+      }
+      return systemError({
+        _tag: i,
+        module: e,
+        method: t,
+        pathOrDescriptor: r,
+        syscall: n.syscall,
+        cause: n,
+      });
+    },
+  fromWritable = (e) => pn(xt(fromWritableChannel(e), (e) => [e])),
+  fromWritableChannel = (e) =>
+    O((t) => {
+      let n = e.evaluate();
+      return W(pullIntoWritable({ ...e, writable: n, pull: t }));
+    }),
+  pullIntoWritable = (e) =>
+    e.pull.pipe(
+      f((t) => {
+        let r = 0;
+        return U(function loop(i) {
+          for (; r < t.length; )
+            if (!e.writable.write(t[r++], e.encoding)) {
+              e.writable.once(`drain`, () => loop(i));
+              return;
+            }
+          i(n);
+        });
+      }),
+      a({ disableYield: !0 }),
+      We(
+        U((t) => {
+          let onError = (n) => t(v(e.onError(n)));
+          return (
+            e.writable.once(`error`, onError),
+            H(() => {
+              e.writable.off(`error`, onError);
+            })
+          );
+        }),
+      ),
+      e.endOnDone === !1
+        ? R
+        : y((t) =>
+            `closed` in e.writable && e.writable.closed
+              ? V(t)
+              : U((n) => {
+                  (e.writable.once(`finish`, () => n(V(t))), e.writable.end());
+                }),
+          ),
+    ),
+  fromReadable = (e) => J(fromReadableChannel(e)),
+  fromReadableChannel = (e) =>
+    O((t, n) =>
+      readableToPullUnsafe({
+        scope: n,
+        readable: e.evaluate(),
+        onError: e.onError ?? defaultOnError,
+        chunkSize: e.chunkSize,
+        closeOnDone: e.closeOnDone,
+      }),
+    ),
+  readableToPullUnsafe = (t) => {
+    let n = t.readable;
+    if (n.readableEnded) return W(V());
+    let r = t.closeOnDone ?? !0,
+      i = t.exit ?? Qt(void 0),
+      a = le(!1);
+    function onReadable() {
+      a.openUnsafe();
+    }
+    function onError(e) {
+      ((i.current = j(t.onError(e))), a.openUnsafe());
+    }
+    function onEnd() {
+      ((i.current = j(Lt())), a.openUnsafe());
+    }
+    (n.on(`readable`, onReadable),
+      n.once(`error`, onError),
+      n.once(`end`, onEnd));
+    let o = E(function loop() {
+      let e = t.readable.read(t.chunkSize);
+      if (e === null)
+        return i.current ? i.current : (a.closeUnsafe(), f(a.await, loop));
+      let n = c(e);
+      for (; (e = t.readable.read(t.chunkSize)), e !== null; ) n.push(e);
+      return W(n);
+    });
+    return B(
+      e(
+        t.scope,
+        H(() => {
+          (n.off(`readable`, onReadable),
+            n.off(`error`, onError),
+            n.off(`end`, onEnd),
+            r &&
+              `closed` in t.readable &&
+              !t.readable.closed &&
+              t.readable.destroy());
+        }),
+      ),
+      o,
+    );
+  },
+  defaultOnError = (e) => new u(e),
+  toError = (e) =>
+    e instanceof globalThis.Error ? e : new globalThis.Error(String(e)),
+  toPlatformError = (e, t, n) => {
+    let { commands: r } = flattenCommand(n),
+      i = r.reduce((e, t) => {
+        let n = `${t.command} ${t.args.join(` `)}`;
+        return e.length === 0 ? n : `${e} | ${n}`;
+      }, ``);
+    return handleErrnoException(`ChildProcess`, e)(t, [i]);
+  },
+  nr = m(
+    ChildProcessSpawner,
+    C(function* () {
+      let e = yield* Q,
+        t = yield* Gn,
+        r = b(function* (n) {
+          if (!F(n.cwd)) return (yield* e.access(n.cwd), t.resolve(n.cwd));
+        }),
+        resolveEnvironment = (e) =>
+          e.extendEnv ? { ...globalThis.process.env, ...e.env } : e.env,
+        inputToStdioOption = (e) => (isStream(e) ? `pipe` : e),
+        outputToStdioOption = (e) => (isSink(e) ? `pipe` : e),
+        resolveStdinOption = (e) => {
+          let t = { stream: `pipe`, encoding: `utf-8`, endOnDone: !0 };
+          return F(e.stdin)
+            ? t
+            : typeof e.stdin == `string` || isStream(e.stdin)
+              ? { ...t, stream: e.stdin }
+              : {
+                  stream: e.stdin.stream,
+                  encoding: e.stdin.encoding ?? t.encoding,
+                  endOnDone: e.stdin.endOnDone ?? t.endOnDone,
+                };
+        },
+        resolveOutputOption = (e, t) => {
+          let n = e[t];
+          return F(n)
+            ? { stream: `pipe` }
+            : typeof n == `string` || isSink(n)
+              ? { stream: n }
+              : { stream: n.stream };
+        },
+        resolveAdditionalFds = (e) => {
+          if (F(e.additionalFds)) return [];
+          let t = [];
+          for (let [n, r] of Object.entries(e.additionalFds)) {
+            let e = parseFdName(n);
+            kt(e) && t.push({ fd: e, config: r });
+          }
+          return t.sort((e, t) => e.fd - t.fd);
+        },
+        buildStdioArray = (e, t, n, r) => {
+          let i = [
+            inputToStdioOption(e.stream),
+            outputToStdioOption(t.stream),
+            outputToStdioOption(n.stream),
+          ];
+          if (r.length === 0) return i;
+          let a = r.reduce((e, { fd: t }) => Math.max(e, t), 2);
+          for (let e = 3; e <= a; e++) i[e] = `ignore`;
+          for (let { fd: e } of r) i[e] = `pipe`;
+          return i;
+        },
+        i = b(function* (e, t, n) {
+          if (n.length === 0)
+            return { getInputFd: () => q, getOutputFd: () => Y };
+          let r = new Map(),
+            i = new Map();
+          for (let { config: a, fd: o } of n) {
+            let n = t.stdio[o];
+            switch (a.type) {
+              case `input`: {
+                let t = q;
+                (n &&
+                  `write` in n &&
+                  (t = fromWritable({
+                    evaluate: () => n,
+                    onError: (t) =>
+                      toPlatformError(`fromWritable(fd${o})`, toError(t), e),
+                  })),
+                  a.stream && (yield* h(X(a.stream, t))),
+                  r.set(o, t));
+                break;
+              }
+              case `output`: {
+                let t = Y;
+                (n &&
+                  `read` in n &&
+                  (t = fromReadable({
+                    evaluate: () => n,
+                    onError: (t) =>
+                      toPlatformError(`fromReadable(fd${o})`, toError(t), e),
+                  })),
+                  a.sink && (t = An(t, a.sink)),
+                  i.set(o, t));
+                break;
+              }
+            }
+          }
+          return {
+            getInputFd: (e) => r.get(e) ?? q,
+            getOutputFd: (e) => i.get(e) ?? Y,
+          };
+        }),
+        setupChildStdin = (e, t, n) =>
+          E(() => {
+            let r = q;
+            return (
+              N(t.stdin) &&
+                (r = fromWritable({
+                  evaluate: () => t.stdin,
+                  onError: (t) =>
+                    toPlatformError(`fromWritable(stdin)`, toError(t), e),
+                  endOnDone: n.endOnDone,
+                  encoding: n.encoding,
+                })),
+              isStream(n.stream) ? B(h(X(n.stream, r)), r) : W(r)
+            );
+          }),
+        setupChildOutputStreams = (e, t, n, r) => {
+          let i = t.stdout
+              ? fromReadable({
+                  evaluate: () => t.stdout,
+                  onError: (t) =>
+                    toPlatformError(`fromReadable(stdout)`, toError(t), e),
+                })
+              : Y,
+            a = t.stderr
+              ? fromReadable({
+                  evaluate: () => t.stderr,
+                  onError: (t) =>
+                    toPlatformError(`fromReadable(stderr)`, toError(t), e),
+                })
+              : Y;
+          (isSink(n.stream) && (i = An(i, n.stream)),
+            isSink(r.stream) && (a = An(a, r.stream)));
+          let o = Cn(i, a);
+          return { stdout: i, stderr: a, all: o };
+        },
+        spawn = (e, t) =>
+          U((n) => {
+            let r = Ct(),
+              i = Yt.spawn(e.command, e.args, t);
+            return (
+              i.on(`error`, (t) => {
+                n(v(toPlatformError(`spawn`, t, e)));
+              }),
+              i.on(`exit`, (...e) => {
+                dt(r, Pe(e));
+              }),
+              i.on(`spawn`, () => {
+                n(W([i, r]));
+              }),
+              H(() => {
+                i.kill(`SIGTERM`);
+              })
+            );
+          }),
+        killProcessGroup = (e, t, r) =>
+          globalThis.process.platform === `win32`
+            ? U((r) => {
+                Yt.exec(`taskkill /pid ${t.pid} /T /F`, (t) => {
+                  r(t ? v(toPlatformError(`kill`, toError(t), e)) : n);
+                });
+              })
+            : x({
+                try: () => {
+                  globalThis.process.kill(-t.pid, r);
+                },
+                catch: (t) => toPlatformError(`kill`, toError(t), e),
+              }),
+        killProcessGroupOnExit = (e, t) => {
+          if (globalThis.process.platform === `win32`) {
+            Yt.exec(`taskkill /pid ${e.pid} /T /F`, () => {});
+            return;
+          }
+          try {
+            globalThis.process.kill(-e.pid, t);
+          } catch {}
+        },
+        killProcess = (e, t, r) =>
+          E(() =>
+            t.kill(r)
+              ? n
+              : v(
+                  toPlatformError(
+                    `kill`,
+                    new globalThis.Error(`Failed to kill child process`),
+                    e,
+                  ),
+                ),
+          ),
+        withTimeout = (e, t, n) => (r) => {
+          let i = n?.killSignal ?? `SIGTERM`;
+          return F(n?.forceKillAfter)
+            ? r(t, e, i)
+            : l(r(t, e, i), {
+                duration: n.forceKillAfter,
+                orElse: () => r(t, e, `SIGKILL`),
+              });
+        },
+        getSourceStream = (e, t) => {
+          let n = t ?? `stdout`;
+          switch (n) {
+            case `stdout`:
+              return e.stdout;
+            case `stderr`:
+              return e.stderr;
+            case `all`:
+              return e.all;
+            default: {
+              let t = parseFdName(n);
+              return kt(t) ? e.getOutputFd(t) : e.stdout;
+            }
+          }
+        },
+        a = b(function* (e) {
+          switch (e._tag) {
+            case `StandardCommand`: {
+              let t = resolveStdinOption(e.options),
+                a = resolveOutputOption(e.options, `stdout`),
+                o = resolveOutputOption(e.options, `stderr`),
+                s = resolveAdditionalFds(e.options),
+                c = !0,
+                l = !1,
+                [u, d] = yield* M(
+                  spawn(e, {
+                    cwd: yield* r(e.options),
+                    env: resolveEnvironment(e.options),
+                    stdio: buildStdioArray(t, a, o, s),
+                    detached:
+                      e.options.detached ?? process.platform !== `win32`,
+                    shell: e.options.shell,
+                  }),
+                  b(function* ([t, r]) {
+                    let i = yield* Xe(r),
+                      a = withTimeout(t, e, e.options);
+                    if (i) {
+                      let [e] = yield* D(r);
+                      return e !== 0 && N(e)
+                        ? yield* se(a(killProcessGroup))
+                        : yield* n;
+                    }
+                    return c
+                      ? yield* a((e, t, n) =>
+                          ie(killProcessGroup(e, t, n), () =>
+                            killProcess(e, t, n),
+                          ),
+                        ).pipe(Fe(D(r)), se)
+                      : yield* n;
+                  }),
+                ),
+                ee = qn(u.pid);
+              u.on(`exit`, (t) => {
+                l &&
+                  t !== 0 &&
+                  N(t) &&
+                  killProcessGroupOnExit(u, e.options.killSignal ?? `SIGTERM`);
+              });
+              let te = H(() => {
+                  c || (u.ref(), (c = !0), (l = !1));
+                }),
+                ne = H(() => (c && (u.unref(), (c = !1), (l = !0)), te)),
+                re = yield* setupChildStdin(e, u, t),
+                {
+                  all: ae,
+                  stderr: oe,
+                  stdout: p,
+                } = setupChildOutputStreams(e, u, a, o),
+                { getInputFd: m, getOutputFd: h } = yield* i(e, u, s),
+                g = w(Xe(d), (e) => !e),
+                ce = f(D(d), ([t, n]) =>
+                  N(t)
+                    ? W(Kn(t))
+                    : v(
+                        toPlatformError(
+                          `exitCode`,
+                          new globalThis.Error(
+                            `Process interrupted due to receipt of signal: '${n}'`,
+                          ),
+                          e,
+                        ),
+                      ),
+                ),
+                kill = (t) =>
+                  withTimeout(
+                    u,
+                    e,
+                    t,
+                  )((e, t, n) =>
+                    ie(killProcessGroup(e, t, n), () => killProcess(e, t, n)),
+                  ).pipe(Fe(D(d)), Ht);
+              return makeHandle({
+                pid: ee,
+                exitCode: ce,
+                isRunning: g,
+                kill,
+                stdin: re,
+                stdout: p,
+                stderr: oe,
+                all: ae,
+                getInputFd: m,
+                getOutputFd: h,
+                unref: ne,
+              });
+            }
+            case `PipedCommand`: {
+              let { commands: t, pipeOptions: n } = flattenCommand(e),
+                [r, ...i] = t,
+                o = [yield* a(r)];
+              for (let e = 0; e < i.length; e++) {
+                let t = i[e],
+                  r = n[e] ?? {},
+                  s = resolveStdinOption(t.options),
+                  c = unwrap(W(getSourceStream(o[o.length - 1], r.from))),
+                  l = r.to ?? `stdin`;
+                if (l === `stdin`)
+                  o.push(
+                    yield* a(
+                      $n(t.command, t.args, {
+                        ...t.options,
+                        stdin: { ...s, stream: c },
+                      }),
+                    ),
+                  );
+                else {
+                  let e = parseFdName(l);
+                  if (kt(e)) {
+                    let n = fdName(e),
+                      r = t.options.additionalFds ?? {};
+                    o.push(
+                      yield* a(
+                        $n(t.command, t.args, {
+                          ...t.options,
+                          additionalFds: {
+                            ...r,
+                            [n]: { type: `input`, stream: c },
+                          },
+                        }),
+                      ),
+                    );
+                  } else
+                    o.push(
+                      yield* a(
+                        $n(t.command, t.args, {
+                          ...t.options,
+                          stdin: { ...s, stream: c },
+                        }),
+                      ),
+                    );
+                }
+              }
+              let s = o[o.length - 1],
+                c = C(function* () {
+                  let e = [];
+                  for (let t of o) e.push(yield* t.unref);
+                  return Wt([...e].reverse(), (e) => e, { discard: !0 });
+                });
+              return makeHandle({
+                pid: s.pid,
+                exitCode: s.exitCode,
+                isRunning: s.isRunning,
+                kill: s.kill,
+                stdin: s.stdin,
+                stdout: s.stdout,
+                stderr: s.stderr,
+                all: s.all,
+                getInputFd: s.getInputFd,
+                getOutputFd: s.getOutputFd,
+                unref: c,
+              });
+            }
+          }
+        });
+      return Xn(a);
+    }),
+  ),
+  flattenCommand = (e) => {
+    let t = [],
+      n = [],
+      flatten = (e) => {
+        switch (e._tag) {
+          case `StandardCommand`:
+            t.push(e);
+            break;
+          case `PipedCommand`:
+            (flatten(e.left), n.push(e.options), flatten(e.right));
+            break;
+        }
+      };
+    if ((flatten(e), t.length === 0))
+      throw Error(`flattenCommand produced empty commands array`);
+    let [r, ...i] = t;
+    return { commands: [r, ...i], pipeOptions: n };
+  },
+  rr = `~effect/platform/Crypto`,
+  ir = I(`effect/Crypto`),
+  ar = s((e) => {
+    let t = e.randomBytes,
+      randomBytes = (e) => w(validateSize(`randomBytes`, e), t),
+      nextDoubleUnsafe = () => {
+        let e = t(7);
+        return (
+          ((e[0] & 31) * 2 ** 48 +
+            e[1] * 2 ** 40 +
+            e[2] * 2 ** 32 +
+            e[3] * 2 ** 24 +
+            e[4] * 2 ** 16 +
+            e[5] * 2 ** 8 +
+            e[6]) /
+          2 ** 53
+        );
+      },
+      nextIntUnsafe = () =>
+        Math.floor(nextDoubleUnsafe() * (2 ** 53 - 1 - -(2 ** 53 - 1) + 1)) +
+        -(2 ** 53 - 1);
+    return ir.of({
+      [rr]: rr,
+      randomBytes,
+      nextDoubleUnsafe,
+      nextIntUnsafe,
+      digest: e.digest,
+      random: H(() => nextDoubleUnsafe()),
+      randomBoolean: H(() => nextDoubleUnsafe() > 0.5),
+      randomInt: H(() => nextIntUnsafe()),
+      randomBetween: (e, t) => H(() => nextDoubleUnsafe() * (t - e) + e),
+      randomIntBetween(e, t, n) {
+        let r = n?.halfOpen === !0 ? 0 : 1;
+        return H(() => {
+          let n = Math.ceil(e),
+            i = Math.floor(t);
+          return Math.floor(nextDoubleUnsafe() * (i - n + r)) + n;
+        });
+      },
+      randomShuffle: (e) =>
+        H(() => {
+          let t = Array.from(e);
+          for (let e = t.length - 1; e >= 1; --e) {
+            let n = Math.min(e, Math.floor(nextDoubleUnsafe() * (e + 1))),
+              r = t[e];
+            ((t[e] = t[n]), (t[n] = r));
+          }
+          return t;
+        }),
+      randomUUIDv4: H(() => formatUUIDv4(t(16))),
+      randomUUIDv7: te((e) =>
+        W(formatUUIDv7(e.currentTimeMillisUnsafe(), t(16))),
+      ),
+    });
+  }, `make`),
+  validateSize = (e, t) =>
+    Number.isSafeInteger(t) && t >= 0
+      ? W(t)
+      : v(
+          badArgument({
+            module: `Crypto`,
+            method: e,
+            description: `size must be a non-negative safe integer`,
+          }),
+        ),
+  hex = (e) => e.toString(16).padStart(2, `0`),
+  formatUUID = (e) =>
+    [
+      e.subarray(0, 4),
+      e.subarray(4, 6),
+      e.subarray(6, 8),
+      e.subarray(8, 10),
+      e.subarray(10, 16),
+    ]
+      .map((e) => Array.from(e, hex).join(``))
+      .join(`-`),
+  formatUUIDv4 = (e) => (
+    (e[6] = (e[6] & 15) | 64),
+    (e[8] = (e[8] & 63) | 128),
+    formatUUID(e)
+  ),
+  or = 2 ** 48 - 1,
+  formatUUIDv7 = (e, t) => {
+    let n = Math.min(Math.max(0, Math.trunc(e)), or);
+    return (
+      (t[0] = Math.floor(n / 2 ** 40)),
+      (t[1] = Math.floor(n / 2 ** 32) & 255),
+      (t[2] = Math.floor(n / 2 ** 24) & 255),
+      (t[3] = Math.floor(n / 2 ** 16) & 255),
+      (t[4] = Math.floor(n / 2 ** 8) & 255),
+      (t[5] = n & 255),
+      (t[6] = (t[6] & 15) | 112),
+      (t[8] = (t[8] & 63) | 128),
+      formatUUID(t)
+    );
+  },
+  toHashAlgorithm = (e) => {
+    switch (e) {
+      case `SHA-1`:
+        return `sha1`;
+      case `SHA-256`:
+        return `sha256`;
+      case `SHA-384`:
+        return `sha384`;
+      case `SHA-512`:
+        return `sha512`;
+    }
+  },
+  digest = (e, t) =>
+    x({
+      try: () =>
+        Uint8Array.from(qt.createHash(toHashAlgorithm(e)).update(t).digest()),
+      catch: (e) =>
+        systemError({
+          module: `Crypto`,
+          method: `digest`,
+          _tag: `Unknown`,
+          description: `Could not compute digest`,
+          cause: e,
+        }),
+    }),
+  sr = g(ir, ar({ randomBytes: qt.randomBytes, digest })),
+  handleBadArgument = (e) => (t) =>
+    badArgument({
+      module: `FileSystem`,
+      method: e,
+      description: t.message ?? String(t),
+    }),
+  cr = (() => {
+    let e = A(
+      G.access,
+      handleErrnoException(`FileSystem`, `access`),
+      handleBadArgument(`access`),
+    );
+    return (t, n) => {
+      let r = G.constants.F_OK;
+      return (
+        n?.readable && (r |= G.constants.R_OK),
+        n?.writable && (r |= G.constants.W_OK),
+        e(t, r)
+      );
+    };
+  })(),
+  lr = (() => {
+    let e = A(
+      G.cp,
+      handleErrnoException(`FileSystem`, `copy`),
+      handleBadArgument(`copy`),
+    );
+    return (t, n, r) =>
+      e(t, n, {
+        force: r?.overwrite ?? !1,
+        preserveTimestamps: r?.preserveTimestamps ?? !1,
+        recursive: !0,
+      });
+  })(),
+  ur = (() => {
+    let e = A(
+      G.copyFile,
+      handleErrnoException(`FileSystem`, `copyFile`),
+      handleBadArgument(`copyFile`),
+    );
+    return (t, n) => e(t, n);
+  })(),
+  dr = (() => {
+    let e = A(
+      G.chmod,
+      handleErrnoException(`FileSystem`, `chmod`),
+      handleBadArgument(`chmod`),
+    );
+    return (t, n) => e(t, n);
+  })(),
+  fr = (() => {
+    let e = A(
+      G.chown,
+      handleErrnoException(`FileSystem`, `chown`),
+      handleBadArgument(`chown`),
+    );
+    return (t, n, r) => e(t, n, r);
+  })(),
+  pr = (() => {
+    let e = A(
+      G.link,
+      handleErrnoException(`FileSystem`, `link`),
+      handleBadArgument(`link`),
+    );
+    return (t, n) => e(t, n);
+  })(),
+  mr = (() => {
+    let e = A(
+      G.mkdir,
+      handleErrnoException(`FileSystem`, `makeDirectory`),
+      handleBadArgument(`makeDirectory`),
+    );
+    return (t, n) => e(t, { recursive: n?.recursive ?? !1, mode: n?.mode });
+  })(),
+  makeTempDirectoryFactory = (e) => {
+    let t = A(
+      G.mkdtemp,
+      handleErrnoException(`FileSystem`, e),
+      handleBadArgument(e),
+    );
+    return (e) =>
+      E(() => {
+        let n = e?.prefix ?? ``,
+          r =
+            typeof e?.directory == `string`
+              ? K.join(e.directory, `.`)
+              : Gt.tmpdir();
+        return t(n ? K.join(r, n) : r + `/`);
+      });
+  },
+  hr = makeTempDirectoryFactory(`makeTempDirectory`),
+  removeFactory = (e) => {
+    let t = A(
+      G.rm,
+      handleErrnoException(`FileSystem`, e),
+      handleBadArgument(e),
+    );
+    return (e, n) =>
+      t(e, { recursive: n?.recursive ?? !1, force: n?.force ?? !1 });
+  },
+  gr = removeFactory(`remove`),
+  _r = (() => {
+    let e = makeTempDirectoryFactory(`makeTempDirectoryScoped`),
+      t = removeFactory(`makeTempDirectoryScoped`);
+    return (n) => M(e(n), (e) => _t(t(e, { recursive: !0 })));
+  })(),
+  openFactory = (e) => {
+    let t = A(
+        G.open,
+        handleErrnoException(`FileSystem`, e),
+        handleBadArgument(e),
+      ),
+      n = A(
+        G.close,
+        handleErrnoException(`FileSystem`, e),
+        handleBadArgument(e),
+      );
+    return (e, r) =>
+      zt(
+        M(t(e, r?.flag ?? `r`, r?.mode), (e) => _t(n(e))),
+        w((e) => yr(Un(e), r?.flag?.startsWith(`a`) ?? !1)),
+      );
+  },
+  vr = openFactory(`open`),
+  yr = (() => {
+    let nodeReadFactory = (e) =>
+        A(G.read, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
+      e = nodeReadFactory(`read`),
+      t = nodeReadFactory(`readAlloc`),
+      r = A(
+        G.fstat,
+        handleErrnoException(`FileSystem`, `stat`),
+        handleBadArgument(`stat`),
+      ),
+      i = A(
+        G.ftruncate,
+        handleErrnoException(`FileSystem`, `truncate`),
+        handleBadArgument(`truncate`),
+      ),
+      a = A(
+        G.fsync,
+        handleErrnoException(`FileSystem`, `sync`),
+        handleBadArgument(`sync`),
+      ),
+      nodeWriteFactory = (e) =>
+        A(G.write, handleErrnoException(`FileSystem`, e), handleBadArgument(e)),
+      o = nodeWriteFactory(`write`),
+      s = nodeWriteFactory(`writeAll`);
+    class FileImpl {
+      [Hn];
+      fd;
+      append;
+      position = BigInt(0);
+      constructor(e, t) {
+        ((this[Hn] = Hn), (this.fd = e), (this.append = t));
+      }
+      get stat() {
+        return w(r(this.fd), makeFileInfo);
+      }
+      get sync() {
+        return a(this.fd);
+      }
+      seek(e, t) {
+        let n = Size(e);
+        return H(
+          () => (
+            t === `start`
+              ? (this.position = n)
+              : t === `current` && (this.position += n),
+            this.position
+          ),
+        );
+      }
+      read(t) {
+        return E(() => {
+          let n = this.position;
+          return w(e(this.fd, { buffer: t, position: n }), (e) => {
+            let t = Size(e);
+            return ((this.position = n + t), t);
+          });
+        });
+      }
+      readAlloc(e) {
+        let n = Number(e);
+        return E(() => {
+          let e = Buffer.allocUnsafeSlow(n),
+            r = this.position;
+          return w(t(this.fd, { buffer: e, position: r }), (t) => {
+            if (t === 0) return S();
+            if (((this.position = r + BigInt(t)), t === n)) return p(e);
+            let i = Buffer.allocUnsafeSlow(t);
+            return (e.copy(i, 0, 0, t), p(i));
+          });
+        });
+      }
+      truncate(e) {
+        return w(i(this.fd, e ? Number(e) : void 0), () => {
+          if (!this.append) {
+            let t = BigInt(e ?? 0);
+            this.position > t && (this.position = t);
+          }
+        });
+      }
+      write(e) {
+        return E(() => {
+          let t = this.position;
+          return w(
+            o(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
+            (e) => {
+              let n = Size(e);
+              return (this.append || (this.position = t + n), n);
+            },
+          );
+        });
+      }
+      writeAllChunk(e) {
+        return E(() => {
+          let t = this.position;
+          return f(
+            s(this.fd, e, void 0, void 0, this.append ? void 0 : Number(t)),
+            (r) =>
+              r === 0
+                ? v(
+                    systemError({
+                      module: `FileSystem`,
+                      method: `writeAll`,
+                      _tag: `WriteZero`,
+                      pathOrDescriptor: this.fd,
+                      description: `write returned 0 bytes written`,
+                    }),
+                  )
+                : (this.append || (this.position = t + BigInt(r)),
+                  r < e.length ? this.writeAllChunk(e.subarray(r)) : n),
+          );
+        });
+      }
+      writeAll(e) {
+        return this.writeAllChunk(e);
+      }
+    }
+    return (e, t) => new FileImpl(e, t);
+  })(),
+  makeTempFileFactory = (e) => {
+    let t = makeTempDirectoryFactory(e);
+    return b(function* (e) {
+      let n = yield* t(e),
+        r = qt.randomBytes(6).toString(`hex`),
+        i = K.join(n, e?.suffix ? `${r}${e.suffix}` : r);
+      return (yield* writeFile(i, new Uint8Array()), i);
+    });
+  },
+  br = makeTempFileFactory(`makeTempFile`),
+  xr = (() => {
+    let e = makeTempFileFactory(`makeTempFileScoped`),
+      t = removeFactory(`makeTempFileScoped`);
+    return (n) => M(e(n), (e) => _t(t(K.dirname(e), { recursive: !0 })));
+  })(),
+  readDirectory = (e, t) =>
+    Ft({
+      try: () => G.promises.readdir(e, t),
+      catch: (t) => handleErrnoException(`FileSystem`, `readDirectory`)(t, [e]),
+    }),
+  readFile = (e) =>
+    U((t, n) => {
+      try {
+        G.readFile(e, { signal: n }, (n, r) => {
+          t(
+            n
+              ? v(handleErrnoException(`FileSystem`, `readFile`)(n, [e]))
+              : W(r),
+          );
+        });
+      } catch (e) {
+        t(v(handleBadArgument(`readFile`)(e)));
+      }
+    }),
+  Sr = (() => {
+    let e = A(
+      G.readlink,
+      handleErrnoException(`FileSystem`, `readLink`),
+      handleBadArgument(`readLink`),
+    );
+    return (t) => e(t);
+  })(),
+  Cr = (() => {
+    let e = A(
+      G.realpath,
+      handleErrnoException(`FileSystem`, `realPath`),
+      handleBadArgument(`realPath`),
+    );
+    return (t) => e(t);
+  })(),
+  wr = (() => {
+    let e = A(
+      G.rename,
+      handleErrnoException(`FileSystem`, `rename`),
+      handleBadArgument(`rename`),
+    );
+    return (t, n) => e(t, n);
+  })(),
+  makeFileInfo = (e) => ({
+    type: e.isFile()
+      ? `File`
+      : e.isDirectory()
+        ? `Directory`
+        : e.isSymbolicLink()
+          ? `SymbolicLink`
+          : e.isBlockDevice()
+            ? `BlockDevice`
+            : e.isCharacterDevice()
+              ? `CharacterDevice`
+              : e.isFIFO()
+                ? `FIFO`
+                : e.isSocket()
+                  ? `Socket`
+                  : `Unknown`,
+    mtime: _(e.mtime),
+    atime: _(e.atime),
+    birthtime: _(e.birthtime),
+    dev: e.dev,
+    rdev: _(e.rdev),
+    ino: _(e.ino),
+    mode: e.mode,
+    nlink: _(e.nlink),
+    uid: _(e.uid),
+    gid: _(e.gid),
+    size: Size(e.size),
+    blksize: e.blksize === void 0 ? S() : p(Size(e.blksize)),
+    blocks: _(e.blocks),
+  }),
+  Tr = (() => {
+    let e = A(
+      G.stat,
+      handleErrnoException(`FileSystem`, `stat`),
+      handleBadArgument(`stat`),
+    );
+    return (t) => w(e(t), makeFileInfo);
+  })(),
+  Er = (() => {
+    let e = A(
+      G.symlink,
+      handleErrnoException(`FileSystem`, `symlink`),
+      handleBadArgument(`symlink`),
+    );
+    return (t, n) => e(t, n);
+  })(),
+  Dr = (() => {
+    let e = A(
+      G.truncate,
+      handleErrnoException(`FileSystem`, `truncate`),
+      handleBadArgument(`truncate`),
+    );
+    return (t, n) => e(t, n === void 0 ? void 0 : Number(n));
+  })(),
+  Or = (() => {
+    let e = A(
+      G.utimes,
+      handleErrnoException(`FileSystem`, `utime`),
+      handleBadArgument(`utime`),
+    );
+    return (t, n, r) => e(t, n, r);
+  })(),
+  watchNode = (e) =>
+    callback((n) =>
+      M(
+        H(() => {
+          let r = G.watch(e, { recursive: !0 }, (e, r) => {
+            if (r)
+              switch (e) {
+                case `rename`:
+                  ut(
+                    t(Tr(r), {
+                      onSuccess: (e) => ve(n, { _tag: `Create`, path: r }),
+                      onFailure: (e) => ve(n, { _tag: `Remove`, path: r }),
+                    }),
+                  );
+                  return;
+                case `change`:
+                  ae(n, { _tag: `Update`, path: r });
+                  return;
+              }
+          });
+          return (
+            r.on(`error`, (t) => {
+              at(
+                n,
+                De(
+                  systemError({
+                    module: `FileSystem`,
+                    _tag: `Unknown`,
+                    method: `watch`,
+                    pathOrDescriptor: e,
+                    cause: t,
+                  }),
+                ),
+              );
+            }),
+            r.on(`close`, () => {
+              ct(n);
+            }),
+            r
+          );
+        }),
+        (e) => H(() => e.close()),
+      ),
+    ),
+  watch = (e, t) =>
+    Tr(t).pipe(
+      w((n) =>
+        e.pipe(
+          de((e) => e.register(t, n)),
+          oe(() => watchNode(t)),
+        ),
+      ),
+      unwrap,
+    ),
+  writeFile = (e, t, r) =>
+    U((i, a) => {
+      try {
+        G.writeFile(e, t, { signal: a, flag: r?.flag, mode: r?.mode }, (t) => {
+          i(t ? v(handleErrnoException(`FileSystem`, `writeFile`)(t, [e])) : n);
+        });
+      } catch (e) {
+        i(v(handleBadArgument(`writeFile`)(e)));
+      }
+    }),
+  kr = w(Ne(WatchBackend), (e) =>
+    Vn({
+      access: cr,
+      chmod: dr,
+      chown: fr,
+      copy: lr,
+      copyFile: ur,
+      link: pr,
+      makeDirectory: mr,
+      makeTempDirectory: hr,
+      makeTempDirectoryScoped: _r,
+      makeTempFile: br,
+      makeTempFileScoped: xr,
+      open: vr,
+      readDirectory,
+      readFile,
+      readLink: Sr,
+      realPath: Cr,
+      remove: gr,
+      rename: wr,
+      stat: Tr,
+      symlink: Er,
+      truncate: Dr,
+      utimes: Or,
+      watch(t) {
+        return watch(e, t);
+      },
+      writeFile,
+    }),
+  ),
+  Ar = m(Q)(kr),
+  fromFileUrl = (e) =>
+    x({
+      try: () => Jt.fileURLToPath(e),
+      catch: (e) =>
+        new BadArgument({ module: `Path`, method: `fromFileUrl`, cause: e }),
+    }),
+  toFileUrl = (e) =>
+    x({
+      try: () => Jt.pathToFileURL(e),
+      catch: (e) =>
+        new BadArgument({ module: `Path`, method: `toFileUrl`, cause: e }),
+    });
+(({ ...K.posix }), { ...K.win32 });
+const jr = g(Gn)({ [Wn]: Wn, ...K, fromFileUrl, toFileUrl }),
+  $ = `~effect/Stdio`,
+  Mr = g(
+    I($),
+    s(
+      (e) => ({ [$]: $, ...e }),
+      `make`,
+    )({
+      args: H(() => process.argv.slice(2)),
+      stdout: (e) =>
+        fromWritable({
+          evaluate: () => process.stdout,
+          onError: (e) =>
+            systemError({
+              module: `Stdio`,
+              method: `stdout`,
+              _tag: `Unknown`,
+              cause: e,
+            }),
+          endOnDone: e?.endOnDone ?? !1,
+        }),
+      stderr: (e) =>
+        fromWritable({
+          evaluate: () => process.stderr,
+          onError: (e) =>
+            systemError({
+              module: `Stdio`,
+              method: `stderr`,
+              _tag: `Unknown`,
+              cause: e,
+            }),
+          endOnDone: e?.endOnDone ?? !1,
+        }),
+      stdin: fromReadable({
+        evaluate: () => process.stdin,
+        onError: (e) =>
+          systemError({
+            module: `Stdio`,
+            method: `stdin`,
+            _tag: `Unknown`,
+            cause: e,
+          }),
+        closeOnDone: !1,
+      }),
+    }),
+  ),
+  Nr = `~effect/platform/Terminal`;
+ke(`QuitError`)({ _tag: Dt(`QuitError`) });
+const Pr = I(`effect/platform/Terminal`),
+  Fr = s((e) => Pr.of({ ...e, [Nr]: Nr }), `make`),
+  Ir = m(
+    Pr,
+    b(function* (e = defaultShouldQuit) {
+      let t = process.stdin,
+        r = process.stdout,
+        i = yield* sn({
+          acquire: M(
+            H(() => {
+              let e = Kt.createInterface({ input: t, escapeCodeTimeout: 50 });
+              return (
+                Kt.emitKeypressEvents(t, e), t.isTTY && t.setRawMode(!0), e
+              );
+            }),
+            (e) =>
+              H(() => {
+                (t.isTTY && t.setRawMode(!1), e.close());
+              }),
+          ),
+        }),
+        a = H(() => r.columns ?? 0),
+        o = H(() => r.rows ?? 0),
+        s = C(function* () {
+          yield* cn(i);
+          let n = yield* he(),
+            handleKeypress = (t, r) => {
+              let i = {
+                input: ye(t),
+                key: {
+                  name: r.name ?? ``,
+                  ctrl: !!r.ctrl,
+                  meta: !!r.meta,
+                  shift: !!r.shift,
+                },
+              };
+              (ae(n, i), e(i) && ct(n));
+            };
+          return (
+            yield* nt(() => H(() => t.off(`keypress`, handleKeypress))),
+            t.on(`keypress`, handleKeypress),
+            n
+          );
+        }),
+        c = tt(
+          f(cn(i), (e) =>
+            U((t) => {
+              let onLine = (e) => t(W(e));
+              return (e.once(`line`, onLine), H(() => e.off(`line`, onLine)));
+            }),
+          ),
+        ),
+        display = (e) =>
+          re(
+            U((t) => {
+              r.write(e, (e) =>
+                Ue(e)
+                  ? t(n)
+                  : t(
+                      v(
+                        badArgument({
+                          module: `Terminal`,
+                          method: `display`,
+                          description: `Failed to write prompt to stdout`,
+                          cause: e,
+                        }),
+                      ),
+                    ),
+              );
+            }),
+          );
+      return Fr({ columns: a, rows: o, readInput: s, readLine: c, display });
+    })(defaultShouldQuit),
+  );
+function defaultShouldQuit(e) {
+  return e.key.ctrl && (e.key.name === `c` || e.key.name === `d`);
+}
+export {
+  X as A,
+  In as B,
+  _n as C,
+  Tn as D,
+  mkUint8Array as E,
+  succeed as F,
+  head as H,
+  suspend as I,
+  On as L,
+  Pn as M,
+  runHead as N,
+  jn as O,
+  splitLines as P,
+  Ln as R,
+  isStream as S,
+  Dn as T,
+  unwrap as V,
+  yn as _,
+  sr as a,
+  fromIterableEffect as b,
+  Q as c,
+  Mn as d,
+  Y as f,
+  wn as g,
+  fail as h,
+  Ar as i,
+  runCollect as j,
+  Sn as k,
+  Size as l,
+  Nn as m,
+  Mr as n,
+  nr as o,
+  encodeText as p,
+  jr as r,
+  Gn as s,
+  Ir as t,
+  En as u,
+  J as v,
+  vn as w,
+  fromReadableStream as x,
+  fromIterable as y,
+  Rn as z,
+};
