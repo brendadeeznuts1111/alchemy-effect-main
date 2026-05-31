@@ -46,14 +46,39 @@ export default Cloudflare.Worker(
           );
         }
 
+        if (parts[0] === "chat") {
+          const name = parts[1] || "lobby";
+          return HttpServerResponse.text(
+            `<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Chat: ${name}</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font:14px/1.5 system-ui,sans-serif;max-width:600px;margin:2rem auto;padding:1rem}
+  #log{border:1px solid #ccc;height:300px;overflow-y:auto;padding:.5rem;margin-bottom:.5rem;background:#fafafa}
+  #log div{margin:2px 0}
+  form{display:flex;gap:.5rem}
+  input{flex:1;padding:.4rem;border:1px solid #ccc}
+  button{padding:.4rem 1rem}
+</style>
+<h2>Chat: ${name}</h2>
+<div id="log"></div>
+<form onsubmit="send();return false">
+  <input id="msg" autofocus placeholder="Type a message...">
+  <button>Send</button>
+</form>
+<div><small>Try <code>/remind 30 hello</code> for a scheduled message</small></div>
+<script>
+  const log=document.getElementById("log"),msg=document.getElementById("msg");
+  const ws=new WebSocket(\`wss://\${location.host}/room/${name}\`);
+  ws.onmessage=e => {const d=document.createElement("div");d.textContent=e.data;log.appendChild(d);log.scrollTop=log.scrollHeight};
+  function send(){ws.send(msg.value);msg.value=""}
+</script>`, { status: 200, headers: { "content-type": "text/html" } });
+        }
+
         if (parts[0] === "room") {
           const name = parts[1];
-          if (!name) return HttpServerResponse.json({ usage: "GET (upgrade) | POST (broadcast) /room/:name" });
-          if (request.method === "POST") {
-            const body = yield* request.text;
-            yield* rooms.getByName(name).broadcast(body);
-            return HttpServerResponse.json({ sent: true });
-          }
+          if (!name) return HttpServerResponse.text("Usage: GET /room/:name (WebSocket upgrade)", { status: 400 });
           return yield* rooms.getByName(name).fetch(request);
         }
 
