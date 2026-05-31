@@ -2,9 +2,9 @@ import * as Cloudflare from "alchemy/Cloudflare";
 import * as Effect from "effect/Effect";
 import { HttpServerRequest } from "effect/unstable/http/HttpServerRequest";
 import * as HttpServerResponse from "effect/unstable/http/HttpServerResponse";
-import * as Layer from "effect/Layer";
 import { Bucket } from "./bucket.ts";
 import Counter from "./counter.ts";
+import Room from "./room.ts";
 
 // WorkerA hosts the Counter DO
 export default Cloudflare.Worker(
@@ -13,6 +13,7 @@ export default Cloudflare.Worker(
   Effect.gen(function* () {
     const bucket = yield* Cloudflare.R2Bucket.bind(Bucket);
     const counters = yield* Counter;
+    const rooms = yield* Room;
 
     return {
       fetch: Effect.gen(function* () {
@@ -23,6 +24,10 @@ export default Cloudflare.Worker(
           return HttpServerResponse.text(
             [
               "WorkerA (hosts Counter DO)",
+              "",
+              "── Room (WebSocket) ──",
+              "  GET  /room/:name    — join chat room",
+              "  POST /room/:name    — broadcast message",
               "",
               "── Counter ──",
               "  POST /counter/:name — increment",
@@ -39,6 +44,17 @@ export default Cloudflare.Worker(
             ].join("\n"),
             { status: 200 },
           );
+        }
+
+        if (parts[0] === "room") {
+          const name = parts[1];
+          if (!name) return HttpServerResponse.json({ usage: "GET (upgrade) | POST (broadcast) /room/:name" });
+          if (request.method === "POST") {
+            const body = yield* request.text;
+            yield* rooms.getByName(name).broadcast(body);
+            return HttpServerResponse.json({ sent: true });
+          }
+          return yield* rooms.getByName(name).fetch(request);
         }
 
         if (parts[0] === "counter") {

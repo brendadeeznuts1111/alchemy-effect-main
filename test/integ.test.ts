@@ -1,6 +1,6 @@
 import * as Cloudflare from "alchemy/Cloudflare";
-import * as Test from "alchemy/Test/Bun";
-import { expect } from "bun:test";
+import * as Test from "alchemy/Test/Vitest";
+import { expect } from "vitest";
 import * as Effect from "effect/Effect";
 import * as HttpBody from "effect/unstable/http/HttpBody";
 import * as HttpClient from "effect/unstable/http/HttpClient";
@@ -9,66 +9,115 @@ import Stack from "../alchemy.run.ts";
 
 const { test, beforeAll, afterAll, deploy, destroy } = Test.make({
   providers: Cloudflare.providers(),
-  state: Cloudflare.state(),
 });
 
 const stack = beforeAll(deploy(Stack), { timeout: 300_000 });
-afterAll.skipIf(!!process.env.NO_DESTROY)(destroy(Stack), { timeout: 300_000 });
+afterAll(destroy(Stack), { timeout: 300_000 });
 
-test("both workers have URLs", () =>
+test("worker URLs", () =>
   Effect.gen(function* () {
-    const { urlA, urlB } = yield* stack;
-    expect(urlA).toBeString();
-    expect(urlB).toBeString();
+    const { urlA, urlC } = yield* stack;
+    expect(urlA).toBeTruthy();
+    expect(urlC).toBeTruthy();
   }),
 );
 
 test("health endpoint returns healthy", () =>
   Effect.gen(function* () {
     const { urlA } = yield* stack;
-    const response = yield* HttpClient.get(`${urlA}/__health`);
-    expect(response.status).toBe(200);
+    const client = yield* HttpClient.HttpClient;
+    const r = yield* client.get(`${urlA}/__health`);
+    expect(r.status).toBe(200);
+    const body = (yield* r.json) as { status: string };
+    expect(body.status).toBe("healthy");
   }),
 );
 
 test("PUT and GET an R2 object", () =>
   Effect.gen(function* () {
     const { urlA } = yield* stack;
+    const client = yield* HttpClient.HttpClient;
     const key = `test-${Date.now()}`;
     const value = "alchemy rocks";
 
-    const put = yield* HttpClient.execute(
-      HttpClientRequest.put(`${urlA}/${key}`).pipe(
-        HttpClientRequest.setBody(HttpBody.text(value)),
-      ),
+    const put = yield* client.execute(
+      HttpClientRequest.put(`${urlA}/${key}`).pipe(HttpClientRequest.setBody(HttpBody.text(value))),
     );
     expect(put.status).toBe(201);
 
-    const get = yield* HttpClient.get(`${urlA}/${key}`);
+    const get = yield* client.get(`${urlA}/${key}`);
     expect(get.status).toBe(200);
     expect(yield* get.text).toBe(value);
   }),
 );
 
-test("WorkerB reads counter written by WorkerA", () =>
+test("GET nonexistent key returns 404", () =>
   Effect.gen(function* () {
-    const { urlA, urlB } = yield* stack;
+    const { urlA } = yield* stack;
+    const client = yield* HttpClient.HttpClient;
+    const r = yield* client.get(`${urlA}/no-such-key-${Date.now()}`);
+    expect(r.status).toBe(404);
+  }),
+);
 
-    yield* HttpClient.execute(HttpClientRequest.post(`${urlA}/counter/shared`));
-    yield* HttpClient.execute(HttpClientRequest.post(`${urlA}/counter/shared`));
+test("Counter persists per key", () =>
+  Effect.gen(function* () {
+    const { urlA } = yield* stack;
+    const client = yield* HttpClient.HttpClient;
+    const key = `test-${Date.now()}`;
 
-    const res = yield* HttpClient.get(`${urlB}/counter/shared`);
-    const body = (yield* res.json) as { name: string; count: number };
+    yield* client.post(`${urlA}/counter/${key}`);
+    yield* client.post(`${urlA}/counter/${key}`);
+
+    const r = yield* client.get(`${urlA}/counter/${key}`);
+    const body = (yield* r.json) as { count: number };
     expect(body.count).toBe(2);
   }),
 );
 
-test("tick from WorkerB", () =>
+test("tick returns sequential values", () =>
   Effect.gen(function* () {
-    const { urlB } = yield* stack;
-    const res = yield* HttpClient.get(`${urlB}/tick/3`);
-    const values = (yield* res.json) as number[];
-    expect(values).toEqual([0, 1, 2]);
+    const { urlA } = yield* stack;
+    const client = yield* HttpClient.HttpClient;
+    const r = yield* client.get(`${urlA}/tick/3`);
+    expect((yield* r.json) as number[]).toEqual([0, 1, 2]);
   }),
   { timeout: 15_000 },
+);
+
+test("WorkerA and WorkerC have isolated Counter namespaces", () =>
+  Effect.gen(function* () {
+    const { urlA, urlC } = yield* stack;
+    const client = yield* HttpClient.HttpClient;
+
+    yield* client.post(`${urlA}/counter/iso`);
+    yield* client.post(`${urlA}/counter/iso`);
+
+    const rC = yield* client.get(`${urlC}/counter/iso`);
+    const bodyC = (yield* rC.json) as { count: number };
+    expect(bodyC.count).toBe(0);
+
+    yield* client.post(`${urlC}/counter/iso`);
+
+    const rA = yield* client.get(`${urlA}/counter/iso`);
+    const bodyA = (yield* rA.json) as { count: number };
+    expect(bodyA.count).toBe(2);
+  }),
+);
+
+test("room WebSocket upgrade succeeds", () =>
+  Effect.gen(function* () {
+    const { urlA } = yield* stack;
+    const wsUrl = urlA.replace("https://", "wss://");
+    const ws = new WebSocket(`${wsUrl}/room/test`);
+    const open = yield* Effect.promise(() =>
+      new Promise<boolean>((resolve) => {
+        ws.onopen = () => resolve(true);
+        ws.onerror = () => resolve(false);
+      }),
+    );
+    expect(open).toBe(true);
+    ws.close();
+  }),
+  { timeout: 10_000 },
 );
