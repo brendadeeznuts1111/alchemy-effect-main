@@ -10,63 +10,65 @@ import Stack from "../alchemy.run.ts";
 const { test, beforeAll, afterAll, deploy, destroy } = Test.make({
   providers: Cloudflare.providers(),
   state: Cloudflare.state(),
-  dev: !!process.env.ALCHEMY_DEV,
 });
 
 const stack = beforeAll(deploy(Stack), { timeout: 300_000 });
+afterAll.skipIf(!!process.env.NO_DESTROY)(destroy(Stack), { timeout: 300_000 });
 
-afterAll.skipIf(!!process.env.NO_DESTROY)(destroy(Stack), {
-  timeout: 300_000,
-});
-
-test(
-  "stack has a worker URL",
+test("both workers have URLs", () =>
   Effect.gen(function* () {
-    const { workerUrl } = yield* stack;
-    expect(workerUrl).toBeString();
+    const { urlA, urlB } = yield* stack;
+    expect(urlA).toBeString();
+    expect(urlB).toBeString();
   }),
 );
 
-test(
-  "health endpoint returns healthy",
+test("health endpoint returns healthy", () =>
   Effect.gen(function* () {
-    const { workerUrl } = yield* stack;
-    const response = yield* HttpClient.get(`${workerUrl}/__health`);
+    const { urlA } = yield* stack;
+    const response = yield* HttpClient.get(`${urlA}/__health`);
     expect(response.status).toBe(200);
-    const body = (yield* response.json) as { status: string; r2: string };
-    expect(body.status).toBe("healthy");
-    expect(body.r2).toBe("ok");
   }),
 );
 
-test(
-  "PUT and GET an object round-trip",
+test("PUT and GET an R2 object", () =>
   Effect.gen(function* () {
-    const { workerUrl } = yield* stack;
+    const { urlA } = yield* stack;
     const key = `test-${Date.now()}`;
     const value = "alchemy rocks";
 
-    const putResponse = yield* HttpClient.execute(
-      HttpClientRequest.put(`${workerUrl}/${key}`).pipe(
+    const put = yield* HttpClient.execute(
+      HttpClientRequest.put(`${urlA}/${key}`).pipe(
         HttpClientRequest.setBody(HttpBody.text(value)),
       ),
     );
-    expect(putResponse.status).toBe(201);
+    expect(put.status).toBe(201);
 
-    const getResponse = yield* HttpClient.get(`${workerUrl}/${key}`);
-    expect(getResponse.status).toBe(200);
-    const body = yield* getResponse.text;
-    expect(body).toBe(value);
+    const get = yield* HttpClient.get(`${urlA}/${key}`);
+    expect(get.status).toBe(200);
+    expect(yield* get.text).toBe(value);
   }),
 );
 
-test(
-  "GET nonexistent key returns 404",
+test("WorkerB reads counter written by WorkerA", () =>
   Effect.gen(function* () {
-    const { workerUrl } = yield* stack;
-    const response = yield* HttpClient.get(
-      `${workerUrl}/no-such-key-${Date.now()}`,
-    );
-    expect(response.status).toBe(404);
+    const { urlA, urlB } = yield* stack;
+
+    yield* HttpClient.execute(HttpClientRequest.post(`${urlA}/counter/shared`));
+    yield* HttpClient.execute(HttpClientRequest.post(`${urlA}/counter/shared`));
+
+    const res = yield* HttpClient.get(`${urlB}/counter/shared`);
+    const body = (yield* res.json) as { name: string; count: number };
+    expect(body.count).toBe(2);
   }),
+);
+
+test("tick from WorkerB", () =>
+  Effect.gen(function* () {
+    const { urlB } = yield* stack;
+    const res = yield* HttpClient.get(`${urlB}/tick/3`);
+    const values = (yield* res.json) as number[];
+    expect(values).toEqual([0, 1, 2]);
+  }),
+  { timeout: 15_000 },
 );

@@ -1,22 +1,26 @@
 import * as Alchemy from "alchemy";
 import * as Cloudflare from "alchemy/Cloudflare";
 import * as Effect from "effect/Effect";
+import * as State from "alchemy/State";
 import { Bucket } from "./src/bucket.ts";
-import Worker from "./src/worker.ts";
+import WorkerA from "./src/workerA.ts";
+import WorkerB from "./src/workerB.ts";
 
 export default Alchemy.Stack(
-  "MyApp",
+  "CrossWorkerDO",
   {
     providers: Cloudflare.providers(),
-    state: Cloudflare.state(),
+    state: State.localState(),
   },
   Effect.gen(function* () {
     const bucket = yield* Bucket;
-    const worker = yield* Worker;
+    const a = yield* WorkerA;
+    const b = yield* WorkerB;
 
     return {
       bucketName: bucket.bucketName,
-      workerUrl: worker.url,
+      urlA: a.url,
+      urlB: b.url,
     };
   }),
 );
