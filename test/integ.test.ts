@@ -10,6 +10,7 @@ import Stack from "../alchemy.run.ts";
 const { test, beforeAll, afterAll, deploy, destroy } = Test.make({
   providers: Cloudflare.providers(),
   state: Cloudflare.state(),
+  dev: !!process.env.ALCHEMY_DEV,
 });
 
 const stack = beforeAll(deploy(Stack), { timeout: 300_000 });
