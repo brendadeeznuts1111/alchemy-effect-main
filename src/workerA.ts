@@ -2,7 +2,9 @@ import * as Cloudflare from "alchemy/Cloudflare";
 import * as Effect from "effect/Effect";
 import { HttpServerRequest } from "effect/unstable/http/HttpServerRequest";
 import * as HttpServerResponse from "effect/unstable/http/HttpServerResponse";
+import * as Layer from "effect/Layer";
 import { Bucket } from "./bucket.ts";
+import { Gateway } from "./ai-gateway.ts";
 import Counter from "./counter.ts";
 import Room from "./room.ts";
 
@@ -12,6 +14,7 @@ export default Cloudflare.Worker(
   { main: import.meta.filename },
   Effect.gen(function* () {
     const bucket = yield* Cloudflare.R2Bucket.bind(Bucket);
+    const aiGateway = yield* Cloudflare.AiGateway.bind(Gateway);
     const counters = yield* Counter;
     const rooms = yield* Room;
 
@@ -25,9 +28,11 @@ export default Cloudflare.Worker(
             [
               "WorkerA (hosts Counter DO)",
               "",
+              "── AI Gateway ──",
+              "  POST /ai            — prompt Workers AI (llama 3.1 8B)",
+              "",
               "── Room (WebSocket) ──",
               "  GET  /room/:name    — join chat room",
-              "  POST /room/:name    — broadcast message",
               "",
               "── Counter ──",
               "  POST /counter/:name — increment",
@@ -74,6 +79,18 @@ export default Cloudflare.Worker(
   ws.onmessage=e => {const d=document.createElement("div");d.textContent=e.data;log.appendChild(d);log.scrollTop=log.scrollHeight};
   function send(){ws.send(msg.value);msg.value=""}
 </script>`, { status: 200, headers: { "content-type": "text/html" } });
+        }
+
+        if (parts[0] === "ai" && request.method === "POST") {
+          const text = yield* request.text;
+          const { prompt } = JSON.parse(text || "{}") as { prompt?: string };
+          const response = yield* aiGateway.run({
+            provider: "workers-ai",
+            endpoint: "@cf/meta/llama-3.1-8b-instruct",
+            headers: { "content-type": "application/json" },
+            query: { prompt: prompt ?? "Say hello in one short sentence." },
+          });
+          return HttpServerResponse.fromWeb(response);
         }
 
         if (parts[0] === "room") {
@@ -140,5 +157,5 @@ export default Cloudflare.Worker(
         return HttpServerResponse.text("Method Not Allowed", { status: 405 });
       }),
     };
-  }).pipe(Effect.provide(Cloudflare.R2BucketBindingLive)),
+  }).pipe(Effect.provide(Layer.mergeAll(Cloudflare.R2BucketBindingLive, Cloudflare.AiGatewayBindingLive))),
 );
